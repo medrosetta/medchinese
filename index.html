@@ -770,8 +770,8 @@
     /* Mobile nav labels */
     .top-nav-zh { display: none; }
     .top-nav-en { display: none; }
-    .top-nav-mobile { display: block; font-size: 0.72rem; font-family: 'DM Mono', monospace; letter-spacing: 0.04em; }
-    .top-nav-btn { padding: 10px 0; flex: 1; font-size: 0.65rem; }
+    .top-nav-mobile { display: block; font-size: 0.9rem; font-family: 'DM Mono', monospace; letter-spacing: 0.04em; }
+    .top-nav-btn { padding: 10px 0; flex: 1; font-size: 0.7rem; display: flex; flex-direction: column; align-items: center; justify-content: center; }
     .top-nav { overflow-x: visible; }
 
     /* Header adjustments */
@@ -2887,7 +2887,7 @@
   <button class="top-nav-btn" id="nav-favorites" onclick="navSelectFavorites()">
     <span class="top-nav-zh">★ 我的詞彙</span>
     <span class="top-nav-en">Favorites <span id="fav-count-badge" style="display:none"></span></span>
-    <span class="top-nav-mobile">★</span>
+    <span class="top-nav-mobile" style="font-size:1.4rem;line-height:1">★</span>
   </button>
   <button class="top-nav-btn" id="nav-pathway" onclick="navSelectPathway()">
     <span class="top-nav-zh">路徑</span>
@@ -2897,11 +2897,10 @@
   <button class="top-nav-btn" id="nav-setup" onclick="navSelectSetup()">
     <span class="top-nav-zh">設定</span>
     <span class="top-nav-en">Setup & Feedback</span>
-    <span class="top-nav-mobile">⚙</span>
+    <span class="top-nav-mobile" style="font-size:1.4rem;line-height:1">⚙</span>
   </button>
   <button class="top-nav-btn" id="nav-search-btn" onclick="toggleSearch()" title="Search 搜尋" style="margin-left:auto;padding:12px 16px;border-right:none">
-    <span style="font-size:1.1rem">🔍</span>
-    <span class="top-nav-en">Search</span>
+    <span class="top-nav-en">🔍 Search</span>
     <span class="top-nav-mobile">🔍</span>
   </button>
 </nav>
@@ -5797,7 +5796,7 @@ const LESSONS = [
   dialogue:{
     title:"Dialogue: Psychiatry — Depression Screening",
     lines:[
-      {sp:"doctor",zh:"陳生，歡迎嚟仁德診所。你今日話感覺好攰，我想多了解一下。你最近兩個星期係咪有情緒低落？",jp:"can4 saang1, nei5 gam1 jat6 waa6 gam2 gok3 hou2 gui6, ngo5 soeng2 do1 liu5 gaai2 jat1 haa5. nei5 zeoi3 gan6 loeng5 go3 sing1 kei4 hai6 mai6 jau5 cing4 seoi2 dai1 lok6?",en:"Mr. Chan, you mentioned feeling exhausted today. I'd like to understand more. Over the past two weeks, have you felt down or depressed?"},
+      {sp:"doctor",zh:"你好，歡迎嚟仁德診所。你今日話感覺好攰，我想多了解一下。你最近兩個星期係咪有情緒低落？",jp:"can4 saang1, nei5 gam1 jat6 waa6 gam2 gok3 hou2 gui6, ngo5 soeng2 do1 liu5 gaai2 jat1 haa5. nei5 zeoi3 gan6 loeng5 go3 sing1 kei4 hai6 mai6 jau5 cing4 seoi2 dai1 lok6?",en:"Mr. Chan, you mentioned feeling exhausted today. I'd like to understand more. Over the past two weeks, have you felt down or depressed?"},
       {sp:"patient",zh:"係囉，好耐了。我唔知係點解，就係提不起勁。",jp:"hai6 lo3, hou2 noi6 laa3. ngo5 m4 zi1 hai6 dim2 gaai2, zau6 hai6 tai4 m4 hei2 gan6.",en:"Yes, for a long time now. I don't know why, I just can't find the energy for anything."},
       {sp:"doctor",zh:"你有冇失去對以前鍾意嘅事情嘅興趣呀？",jp:"nei5 jau5 mou5 sat1 heoi3 deoi3 ji5 cin4 zung1 ji3 ge3 si6 cing4 ge3 hing3 ceoi3 aa3?",en:"Have you lost interest in things you used to enjoy?"},
       {sp:"patient",zh:"有，我以前好鍾意打麻雀，但係而家完全冇心機。",jp:"jau5, ngo5 ji5 cin4 hou2 zung1 ji3 daa2 maa4 zoek3, daan6 hai6 ji4 gaa1 jyun4 cyun4 mou5 sam1 gei1.",en:"Yes, I used to love playing mahjong, but now I have no interest at all."},
@@ -6191,7 +6190,7 @@ const LESSONS = [
   dialogue:{
     title:"Dialogue: Nutrition — Renal Diet Counseling",
     lines:[
-      {sp:"doctor",zh:"陳太太，歡迎返嚟仁德診所。你嘅腎功能報告顯示需要調整飲食。你平時食咩？",jp:"can4 taai3 taai3, nei5 ge3 san5 gung1 nang4 bou3 gou3 jin2 si6 seoi1 jiu3 tiu4 zing2 jam2 sik6. nei5 ping4 si4 sik6 me1?",en:"Mrs. Chan, your kidney function results show we need to adjust your diet. What do you normally eat?"},
+      {sp:"doctor",zh:"你好，歡迎返嚟仁德診所。你嘅腎功能報告顯示需要調整飲食。你平時食咩？",jp:"can4 taai3 taai3, nei5 ge3 san5 gung1 nang4 bou3 gou3 jin2 si6 seoi1 jiu3 tiu4 zing2 jam2 sik6. nei5 ping4 si4 sik6 me1?",en:"Mrs. Chan, your kidney function results show we need to adjust your diet. What do you normally eat?"},
       {sp:"patient",zh:"我食好多白飯，有時候會落蠔油炒菜。",jp:"ngo5 sik6 hou2 do1 baak6 faan6, jau5 si4 hau6 wui5 lok6 hou4 jau4 caau2 coi3.",en:"I eat a lot of white rice, and sometimes stir-fry vegetables with oyster sauce."},
       {sp:"doctor",zh:"蠔油同醬油含有好多鹽分，對你嘅腎臟唔好。你嘅腎臟病飲食需要限制呢啲調味料。",jp:"hou4 jau4 tung4 zoeng3 jau4 ham4 jau5 hou2 do1 jim4 fan6, deoi3 nei5 ge3 san5 zong6 m4 hou2. nei5 ge3 san5 zong6 beng6 jam2 sik6 seoi1 jiu3 haan6 zai3 ni1 di1 diu6 mei6 liu2.",en:"Oyster sauce and soy sauce contain a lot of sodium which is hard on your kidneys. Your renal diet requires limiting these condiments."},
       {sp:"patient",zh:"咁我點樣煮餸先好？",jp:"gam3 ngo5 dim2 joeng2 zyu2 sung3 sin1 hou2?",en:"So how should I cook my food then?"},
@@ -6865,7 +6864,7 @@ const LESSONS = [
   dialogue:{
     title:"Dialogue: Palliative Care — Goals of Care Conversation",
     lines:[
-      {sp:"doctor",zh:"陳太太，我想同你講一個比較重要嘅話題。你係咪準備好？",jp:"can4 taai3 taai3, ngo5 soeng2 tung4 nei5 gong2 jat1 go3 bei2 gaau3 zung6 jiu3 ge3 waa6 tai4. nei5 hai6 mai6 zeon2 bei6 hou2?",en:"Mrs. Chan, I'd like to talk with you about something important. Are you ready?"},
+      {sp:"doctor",zh:"你好，我想同你講一個比較重要嘅話題。你係咪準備好？",jp:"can4 taai3 taai3, ngo5 soeng2 tung4 nei5 gong2 jat1 go3 bei2 gaau3 zung6 jiu3 ge3 waa6 tai4. nei5 hai6 mai6 zeon2 bei6 hou2?",en:"Mrs. Chan, I'd like to talk with you about something important. Are you ready?"},
       {sp:"patient",zh:"係，請講。",jp:"hai6, cing2 gong2.",en:"Yes, please go ahead."},
       {sp:"doctor",zh:"你嘅癌症已經去到唔能夠用積極治療嘅階段。我哋而家嘅重點係令你舒適同有尊嚴地度過呢段時間。",jp:"nei5 ge3 ngaam4 zing3 ji5 ging1 heoi3 dou3 m4 nang4 gau3 jung6 zik1 gik6 zi6 liu4 ge3 gai1 dyun6. ngo5 dei6 ji4 gaa1 ge3 zung6 dim2 hai6 ling6 nei5 syu1 sik1 tung4 jau5 zyun1 jim4 dei6 dou6 gwo3 ni1 dyun6 si4 gaan3.",en:"Your cancer has reached a stage where active treatment is no longer possible. Our focus now is on keeping you comfortable and with dignity during this time."},
       {sp:"patient",zh:"我明白。我最希望係喺屋企，同家人一齊。",jp:"ngo5 ming4 baak6. ngo5 zeoi3 hei1 mong6 hai6 hai2 uk1 kei2, tung4 gaa1 jan4 jat1 cai4.",en:"I understand. What I hope most is to be at home, with my family."},
@@ -7151,7 +7150,7 @@ const LESSONS = [
   dialogue:{
     title:"Dialogue: End-of-Life — Supporting a Family",
     lines:[
-      {sp:"doctor",zh:"陳生，你媽媽嘅情況已經係最後嘅階段。你哋有冇問題想問我？",jp:"can4 saang1, nei5 maa1 maa1 ge3 cing4 fong3 ji5 ging1 hai6 zeoi3 hau6 ge3 gai1 dyun6. nei5 dei6 jau5 mou5 man6 tai4 soeng2 man6 ngo5?",en:"Mr. Chan, your mother's condition is in its final stage. Do you have any questions for me?"},
+      {sp:"doctor",zh:"你好，你媽媽嘅情況已經係最後嘅階段。你哋有冇問題想問我？",jp:"can4 saang1, nei5 maa1 maa1 ge3 cing4 fong3 ji5 ging1 hai6 zeoi3 hau6 ge3 gai1 dyun6. nei5 dei6 jau5 mou5 man6 tai4 soeng2 man6 ngo5?",en:"Mr. Chan, your mother's condition is in its final stage. Do you have any questions for me?"},
       {sp:"patient",zh:"佢係咪痛苦？",jp:"keoi5 hai6 mai6 tung3 fu2?",en:"Is she in pain?"},
       {sp:"doctor",zh:"唔係。我哋已經幫佢好好控制疼痛同呼吸困難。佢係平靜嘅。",jp:"m4 hai6. ngo5 dei6 ji5 ging1 bong1 keoi5 hou2 hou2 hung3 zai3 ting4 tung3 tung4 fu1 hap3 kwan3 naan4. keoi5 hai6 ping4 zing6 ge3.",en:"No. We have managed her pain and breathlessness well. She is peaceful."},
       {sp:"patient",zh:"我哋係咪做得唔夠？",jp:"ngo5 dei6 hai6 mai6 zou6 dak1 m4 gau3?",en:"Did we do enough?"},
@@ -7556,7 +7555,7 @@ const LESSONS = [
   dialogue:{
     title:"Dialogue: Asian Health Disparities — Hepatitis B Carrier",
     lines:[
-      {sp:"doctor",zh:"陳太太，歡迎返嚟仁德診所。你嘅乙型肝炎血液報告顯示你係帶菌者。",jp:"can4 taai3 taai3, nei5 ge3 jyut6 jing4 gon1 jim4 hyut3 jik6 bou3 gou3 jin2 si6 nei5 hai6 daai3 kwan2 ze2.",en:"Mrs. Chan, your hepatitis B blood results show that you are a carrier."},
+      {sp:"doctor",zh:"你好，歡迎返嚟仁德診所。你嘅乙型肝炎血液報告顯示你係帶菌者。",jp:"can4 taai3 taai3, nei5 ge3 jyut6 jing4 gon1 jim4 hyut3 jik6 bou3 gou3 jin2 si6 nei5 hai6 daai3 kwan2 ze2.",en:"Mrs. Chan, your hepatitis B blood results show that you are a carrier."},
       {sp:"patient",zh:"即係我有肝炎？我有冇事？",jp:"zik1 hai6 ngo5 jau5 gon1 jim4? ngo5 jau5 mou5 si6?",en:"Does that mean I have hepatitis? Am I okay?"},
       {sp:"doctor",zh:"你係帶菌者，即係病毒係你身體裏面，但你而家冇病徵。好多廣東人同亞裔人係唔知道自己係帶菌者嘅。",jp:"nei5 hai6 daai3 kwan2 ze2, zik1 hai6 beng6 duk6 hai6 nei5 san1 tai2 lei5 min6, daan6 nei5 ji4 gaa1 mou5 beng6 zing1. hou2 do1 gwong2 dung1 jan4 tung4 nga3 ji2 jan4 hai6 m4 zi1 dou3 zi6 gei2 hai6 daai3 kwan2 ze2 ge3.",en:"You are a carrier, meaning the virus is in your body, but you have no symptoms right now. Many Cantonese and Asian people don't know they are carriers."},
       {sp:"patient",zh:"咁即係點？我需要食藥嗎？",jp:"gam3 zik1 hai6 dim2? ngo5 seoi1 jiu3 sik6 joek6 maa3?",en:"So what does that mean? Do I need medication?"},
@@ -12946,6 +12945,66 @@ function pickPatientZhVoice(voices) {
 }
 
 // Speak a dialogue line using the speaker-appropriate voice
+
+// ── DIALOGUE VOICE SELECTION ─────────────────────────────────────────────────
+const LOCKED_MALE_PATIENT = ['Urology'];
+const LOCKED_FEMALE_PATIENT = ['OB/GYN', 'Pregnancy', 'Gynecol', 'Breast', 'Cervical', 'Postpartum', 'Fertility'];
+
+function getDialogueVoice(speaker, lang) {
+  const lessons = getLessons();
+  const dialogueTitle = lessons[cur]?.dialogue?.title || '';
+
+  if (lang === 'cmn') {
+    if (speaker === 'doctor') return VOICE_MAP.cmn;
+    // Patient voice — check locked dialogues
+    if (LOCKED_MALE_PATIENT.some(k => dialogueTitle.includes(k)))
+      return 'zh-CN-YunxiNeural';
+    if (LOCKED_FEMALE_PATIENT.some(k => dialogueTitle.includes(k)))
+      return 'zh-CN-XiaoyiNeural';
+    return VOICE_MAP.cmn_patient;
+  } else {
+    if (speaker === 'doctor') return VOICE_MAP.yue;
+    // Patient voice — check locked dialogues
+    if (LOCKED_MALE_PATIENT.some(k => dialogueTitle.includes(k)))
+      return 'zh-HK-WanLungNeural';
+    if (LOCKED_FEMALE_PATIENT.some(k => dialogueTitle.includes(k)))
+      return 'zh-HK-HiuMaanNeural';
+    return VOICE_MAP.yue_patient;
+  }
+}
+
+async function speakAzureVoice(text, voice, onEnd) {
+  if (!AZURE_WORKER_URL) return false;
+  try {
+    if (!window._audioCtx) window._audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (window._audioCtx.state === 'suspended') await window._audioCtx.resume();
+    if (window._currentAzureAudio) {
+      window._currentAzureAudio.pause();
+      window._currentAzureAudio = null;
+    }
+    const response = await fetch(AZURE_WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text, voice, rate: '0%', pitch: '0%' })
+    });
+    if (!response.ok) return false;
+    const audioBlob = await response.blob();
+    const audioUrl = URL.createObjectURL(audioBlob);
+    const audio = new Audio(audioUrl);
+    window._currentAzureAudio = audio;
+    audio.onended = () => {
+      URL.revokeObjectURL(audioUrl);
+      window._currentAzureAudio = null;
+      if (onEnd) onEnd();
+    };
+    await audio.play().catch(e => { URL.revokeObjectURL(audioUrl); throw e; });
+    return true;
+  } catch (err) {
+    console.warn('Azure TTS voice failed:', err);
+    return false;
+  }
+}
+// ── END DIALOGUE VOICE SELECTION ─────────────────────────────────────────────
 function speakAs(text, speaker, onEnd) {
   const lang = currentLang;
   // Azure TTS — pass onEnd so dialogue chain works correctly
@@ -13581,8 +13640,8 @@ function renderVocab() {
   const totalWords = L.sections.reduce((n, s) => n + s.vocab.length, 0);
   let html = `
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted)">
-      🔊 Audio uses Web Speech API (${currentLang === 'cmn' ? 'Mandarin zh-CN' : 'Cantonese zh-HK'}) &nbsp;·&nbsp;
-      <button onclick="switchTab('audio')" style="background:none;border:none;cursor:pointer;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--teal);text-decoration:underline;padding:0">Setup instructions →</button>
+      🔊 Azure Neural TTS &nbsp;·&nbsp;
+      <button onclick="navSelectSetup()" style="background:none;border:none;cursor:pointer;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--teal);text-decoration:underline;padding:0">Voice settings →</button>
     </div>
     <div class="vocab-play-bar">
       <span class="play-bar-label">PLAY ALL</span>
@@ -13817,11 +13876,15 @@ function saveAzureVoice(lang, voice) {
 }
 
 function previewAzureVoice(lang) {
-  const voice = localStorage.getItem('clinlingua_azure_voice_' + lang) || VOICE_MAP[lang];
-  const sampleText = lang === 'cmn' ? '你好，歡迎使用醫學中文。' : '你好，歡迎使用醫學廣東話。';
-  const prevLang = currentLang;
-  currentLang = lang;
-  speak(sampleText, () => { currentLang = prevLang; });
+  const isPatient = lang.includes('patient');
+  const baseLang = lang.replace('_patient', '');
+  const voice = localStorage.getItem('clinlingua_azure_voice_' + lang) || VOICE_MAP[lang] || VOICE_MAP[baseLang];
+  const sampleText = baseLang === 'cmn'
+    ? (isPatient ? '我係病人，我有少少唔舒服。' : '你好，歡迎使用醫學中文。')
+    : (isPatient ? '我係病人，我有少少唔舒服。' : '你好，歡迎使用醫學廣東話。');
+  speakAzureVoice(sampleText, voice, null).then(ok => {
+    if (!ok) speak(sampleText, null);
+  });
 }
 
 function renderAudioSetup(targetEl) {
@@ -13831,6 +13894,8 @@ function renderAudioSetup(targetEl) {
   // Load saved Azure voice preferences
   const savedYueVoice = localStorage.getItem('clinlingua_azure_voice_yue') || 'zh-HK-HiuGaaiNeural';
   const savedCmnVoice = localStorage.getItem('clinlingua_azure_voice_cmn') || 'zh-CN-XiaoxiaoNeural';
+  const savedYuePatientVoice = localStorage.getItem('clinlingua_azure_voice_yue_patient') || 'zh-HK-WanLungNeural';
+  const savedCmnPatientVoice = localStorage.getItem('clinlingua_azure_voice_cmn_patient') || 'zh-CN-YunxiNeural';
 
   el.innerHTML = `
     <div class="lesson-header fade-in">
@@ -13850,35 +13915,76 @@ function renderAudioSetup(targetEl) {
     <!-- Cantonese Voice -->
     <div style="margin-bottom:28px">
       <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;font-style:italic;margin-bottom:6px">廣東話 Cantonese Voice</div>
-      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-        <select id="voice-yue-select" onchange="saveAzureVoice('yue', this.value)"
-          style="font-family:var(--mono);font-size:0.75rem;padding:8px 12px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer">
-          <option value="zh-HK-HiuGaaiNeural" ${savedYueVoice === 'zh-HK-HiuGaaiNeural' ? 'selected' : ''}>HiuGaai 曉佳 — Female, warm (recommended)</option>
-          <option value="zh-HK-HiuMaanNeural" ${savedYueVoice === 'zh-HK-HiuMaanNeural' ? 'selected' : ''}>HiuMaan 曉曼 — Female, clear</option>
-          <option value="zh-HK-WanLungNeural" ${savedYueVoice === 'zh-HK-WanLungNeural' ? 'selected' : ''}>WanLung 雲龍 — Male</option>
-        </select>
-        <button onclick="previewAzureVoice('yue')"
-          style="font-family:var(--mono);font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;background:var(--ink);color:var(--paper);border:none;padding:8px 16px;cursor:pointer">
-          ▶ Preview
-        </button>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:6px">
+        <div>
+          <div style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">DOCTOR 醫生</div>
+          <div style="display:flex;gap:6px;align-items:center">
+            <select id="voice-yue-select" onchange="saveAzureVoice('yue', this.value)"
+              style="font-family:var(--mono);font-size:0.72rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
+              <option value="zh-HK-HiuGaaiNeural" ${savedYueVoice === 'zh-HK-HiuGaaiNeural' ? 'selected' : ''}>HiuGaai — Female ★</option>
+              <option value="zh-HK-HiuMaanNeural" ${savedYueVoice === 'zh-HK-HiuMaanNeural' ? 'selected' : ''}>HiuMaan — Female</option>
+              <option value="zh-HK-WanLungNeural" ${savedYueVoice === 'zh-HK-WanLungNeural' ? 'selected' : ''}>WanLung — Male</option>
+            </select>
+            <button onclick="previewAzureVoice('yue')"
+              style="font-family:var(--mono);font-size:0.58rem;letter-spacing:0.06em;text-transform:uppercase;background:var(--ink);color:var(--paper);border:none;padding:7px 12px;cursor:pointer;white-space:nowrap">
+              ▶
+            </button>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">PATIENT 病人</div>
+          <div style="display:flex;gap:6px;align-items:center">
+            <select id="voice-yue-patient-select" onchange="saveAzureVoice('yue_patient', this.value)"
+              style="font-family:var(--mono);font-size:0.72rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
+              <option value="zh-HK-WanLungNeural" ${savedYuePatientVoice === 'zh-HK-WanLungNeural' ? 'selected' : ''}>WanLung — Male ★</option>
+              <option value="zh-HK-HiuGaaiNeural" ${savedYuePatientVoice === 'zh-HK-HiuGaaiNeural' ? 'selected' : ''}>HiuGaai — Female</option>
+              <option value="zh-HK-HiuMaanNeural" ${savedYuePatientVoice === 'zh-HK-HiuMaanNeural' ? 'selected' : ''}>HiuMaan — Female</option>
+            </select>
+            <button onclick="previewAzureVoice('yue_patient')"
+              style="font-family:var(--mono);font-size:0.58rem;letter-spacing:0.06em;text-transform:uppercase;background:var(--ink);color:var(--paper);border:none;padding:7px 12px;cursor:pointer;white-space:nowrap">
+              ▶
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- Mandarin Voice -->
     <div style="margin-bottom:28px">
       <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;font-style:italic;margin-bottom:6px">普通話 Mandarin Voice</div>
-      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-        <select id="voice-cmn-select" onchange="saveAzureVoice('cmn', this.value)"
-          style="font-family:var(--mono);font-size:0.75rem;padding:8px 12px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer">
-          <option value="zh-CN-XiaoxiaoNeural" ${savedCmnVoice === 'zh-CN-XiaoxiaoNeural' ? 'selected' : ''}>Xiaoxiao 曉曉 — Female, warm (recommended)</option>
-          <option value="zh-CN-XiaoyiNeural"   ${savedCmnVoice === 'zh-CN-XiaoyiNeural'   ? 'selected' : ''}>Xiaoyi 曉伊 — Female, lively</option>
-          <option value="zh-CN-YunxiNeural"    ${savedCmnVoice === 'zh-CN-YunxiNeural'    ? 'selected' : ''}>Yunxi 雲希 — Male</option>
-          <option value="zh-CN-YunjianNeural"  ${savedCmnVoice === 'zh-CN-YunjianNeural'  ? 'selected' : ''}>Yunjian 雲健 — Male, authoritative</option>
-        </select>
-        <button onclick="previewAzureVoice('cmn')"
-          style="font-family:var(--mono);font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;background:var(--ink);color:var(--paper);border:none;padding:8px 16px;cursor:pointer">
-          ▶ Preview
-        </button>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:6px">
+        <div>
+          <div style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">DOCTOR 醫生</div>
+          <div style="display:flex;gap:6px;align-items:center">
+            <select id="voice-cmn-select" onchange="saveAzureVoice('cmn', this.value)"
+              style="font-family:var(--mono);font-size:0.72rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
+              <option value="zh-CN-XiaoxiaoNeural" ${savedCmnVoice === 'zh-CN-XiaoxiaoNeural' ? 'selected' : ''}>Xiaoxiao — Female ★</option>
+              <option value="zh-CN-XiaoyiNeural"   ${savedCmnVoice === 'zh-CN-XiaoyiNeural'   ? 'selected' : ''}>Xiaoyi — Female</option>
+              <option value="zh-CN-YunxiNeural"    ${savedCmnVoice === 'zh-CN-YunxiNeural'    ? 'selected' : ''}>Yunxi — Male</option>
+              <option value="zh-CN-YunjianNeural"  ${savedCmnVoice === 'zh-CN-YunjianNeural'  ? 'selected' : ''}>Yunjian — Male</option>
+            </select>
+            <button onclick="previewAzureVoice('cmn')"
+              style="font-family:var(--mono);font-size:0.58rem;letter-spacing:0.06em;text-transform:uppercase;background:var(--ink);color:var(--paper);border:none;padding:7px 12px;cursor:pointer;white-space:nowrap">
+              ▶
+            </button>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">PATIENT 病人</div>
+          <div style="display:flex;gap:6px;align-items:center">
+            <select id="voice-cmn-patient-select" onchange="saveAzureVoice('cmn_patient', this.value)"
+              style="font-family:var(--mono);font-size:0.72rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
+              <option value="zh-CN-YunxiNeural"    ${savedCmnPatientVoice === 'zh-CN-YunxiNeural'    ? 'selected' : ''}>Yunxi — Male ★</option>
+              <option value="zh-CN-XiaoxiaoNeural" ${savedCmnPatientVoice === 'zh-CN-XiaoxiaoNeural' ? 'selected' : ''}>Xiaoxiao — Female</option>
+              <option value="zh-CN-XiaoyiNeural"   ${savedCmnPatientVoice === 'zh-CN-XiaoyiNeural'   ? 'selected' : ''}>Xiaoyi — Female</option>
+              <option value="zh-CN-YunjianNeural"  ${savedCmnPatientVoice === 'zh-CN-YunjianNeural'  ? 'selected' : ''}>Yunjian — Male</option>
+            </select>
+            <button onclick="previewAzureVoice('cmn_patient')"
+              style="font-family:var(--mono);font-size:0.58rem;letter-spacing:0.06em;text-transform:uppercase;background:var(--ink);color:var(--paper);border:none;padding:7px 12px;cursor:pointer;white-space:nowrap">
+              ▶
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
