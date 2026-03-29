@@ -12805,17 +12805,34 @@ async function speakAzure(text, lang) {
   if (!AZURE_WORKER_URL) return false;
   try {
     const voice = VOICE_MAP[lang] || VOICE_MAP.yue;
+
+    // Pre-create and unlock AudioContext for Chrome autoplay policy
+    if (!window._audioCtx) {
+      window._audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (window._audioCtx.state === 'suspended') {
+      await window._audioCtx.resume();
+    }
+
     const response = await fetch(AZURE_WORKER_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text, voice, rate: '0%', pitch: '0%' })
     });
-    if (!response.ok) return false;
+    if (!response.ok) {
+      console.warn('Azure TTS response not ok:', response.status);
+      return false;
+    }
     const audioBlob = await response.blob();
     const audioUrl = URL.createObjectURL(audioBlob);
     const audio = new Audio(audioUrl);
     audio.onended = () => URL.revokeObjectURL(audioUrl);
-    await audio.play();
+    // Use play() with catch to handle any remaining autoplay issues
+    await audio.play().catch(e => {
+      console.warn('Audio play failed:', e);
+      URL.revokeObjectURL(audioUrl);
+      throw e;
+    });
     return true;
   } catch (err) {
     console.warn('Azure TTS failed, falling back to Web Speech:', err);
