@@ -14330,6 +14330,109 @@ function renderMain() {
 function renderSetupPage() {
   const target = document.getElementById('setup-content');
   renderAudioSetup(target);
+  // Append feedback survey after audio setup
+  renderFeedbackSurvey(target);
+}
+
+function renderFeedbackSurvey(targetEl) {
+  const el = targetEl || document.getElementById('setup-content');
+  if (!el) return;
+  const div = document.createElement('div');
+  div.innerHTML = `
+    <div style="margin-top:36px;padding-top:24px;border-top:2px solid var(--border)">
+      <div class="lesson-label" style="margin-bottom:16px">FEEDBACK & SUGGESTIONS</div>
+
+      <div style="font-family:var(--mono);font-size:0.68rem;color:var(--muted);margin-bottom:20px">
+        Found an error? Have a suggestion? We'd love to hear from you.
+      </div>
+
+      <!-- Overall rating -->
+      <div class="survey-q">
+        <div class="survey-q-label">Overall rating</div>
+        <div style="display:flex;gap:8px;margin-top:6px">
+          ${[1,2,3,4,5].map(n => `<button class="survey-star" onclick="setStar(this,${n})" data-val="${n}">★</button>`).join('')}
+        </div>
+        <input type="hidden" id="survey-stars" value="">
+      </div>
+
+      <!-- Role -->
+      <div class="survey-q">
+        <div class="survey-q-label">Your clinical role</div>
+        <select class="survey-select" id="survey-role">
+          <option value="">— Select —</option>
+          <option>MD / DO</option>
+          <option>Resident / Fellow</option>
+          <option>NP / PA</option>
+          <option>RN / LVN</option>
+          <option>PharmD</option>
+          <option>MA / PrA</option>
+          <option>Admin / Front Desk</option>
+          <option>Medical Student</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <!-- Setting -->
+      <div class="survey-q">
+        <div class="survey-q-label">Your clinical setting</div>
+        <select class="survey-select" id="survey-setting">
+          <option value="">— Select —</option>
+          <option>Primary Care / Family Medicine</option>
+          <option>Internal Medicine</option>
+          <option>Hospital / Inpatient</option>
+          <option>Emergency Department</option>
+          <option>Specialty Clinic</option>
+          <option>Community Health / FQHC</option>
+          <option>Medical Education</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <!-- What works -->
+      <div class="survey-q">
+        <div class="survey-q-label">Most useful modules</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">
+          ${['Vocabulary','Dialogue','Audio','Body Map','Quiz','Clinical Phrases'].map(m =>
+            `<button class="survey-opt survey-opt-modules" onclick="toggleSurveyOpt(this)">${m}</button>`
+          ).join('')}
+        </div>
+      </div>
+
+      <!-- Would recommend -->
+      <div class="survey-q">
+        <div class="survey-q-label">Would you recommend MedChinese to colleagues?</div>
+        <div style="display:flex;gap:8px;margin-top:6px">
+          ${['Definitely','Probably','Unsure','No'].map(o =>
+            `<button class="survey-opt survey-opt-recommend" onclick="toggleSurveyOpt(this)">${o}</button>`
+          ).join('')}
+        </div>
+      </div>
+
+      <!-- Missing topics -->
+      <div class="survey-q">
+        <div class="survey-q-label">Missing topics or terms <span style="opacity:0.5;font-size:0.5rem">(optional)</span></div>
+        <textarea class="feedback-comment" id="survey-missing" placeholder="e.g. cardiology phrases, specific medications..."></textarea>
+      </div>
+
+      <!-- Suggested changes -->
+      <div class="survey-q">
+        <div class="survey-q-label">Suggested changes <span style="opacity:0.5;font-size:0.5rem">(optional)</span></div>
+        <textarea class="feedback-comment" id="survey-changes" placeholder="Any changes or improvements..."></textarea>
+      </div>
+
+      <!-- Other -->
+      <div class="survey-q">
+        <div class="survey-q-label">Anything else <span style="opacity:0.5;font-size:0.5rem">(optional)</span></div>
+        <textarea class="feedback-comment" id="survey-other" placeholder="Your feedback or suggestion..."></textarea>
+      </div>
+
+      <button class="feedback-submit" style="margin-top:8px" onclick="submitSurvey()">📨 SEND FEEDBACK</button>
+      <div id="survey-success" style="display:none;font-family:var(--mono);font-size:0.68rem;color:var(--teal);margin-top:12px">
+        ✓ Thank you! Your feedback has been received.
+      </div>
+    </div>
+  `;
+  el.appendChild(div);
 }
 
 function setPreferredVoice(voiceName, type) {
