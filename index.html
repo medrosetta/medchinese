@@ -13808,404 +13808,98 @@ function updateVocabPlayUI(isPlaying, activeSi) {
 }
 
 // ─── AUDIO SETUP TAB ───
+
+function saveAzureVoice(lang, voice) {
+  localStorage.setItem('clinlingua_azure_voice_' + lang, voice);
+  // Update VOICE_MAP live
+  VOICE_MAP[lang] = voice;
+  console.log('Azure voice saved:', lang, voice);
+}
+
+function previewAzureVoice(lang) {
+  const voice = localStorage.getItem('clinlingua_azure_voice_' + lang) || VOICE_MAP[lang];
+  const sampleText = lang === 'cmn' ? '你好，歡迎使用醫學中文。' : '你好，歡迎使用醫學廣東話。';
+  const prevLang = currentLang;
+  currentLang = lang;
+  speak(sampleText, () => { currentLang = prevLang; });
+}
+
 function renderAudioSetup(targetEl) {
   const el = targetEl || document.getElementById('tab-content');
-  const isMandarin = currentLang === 'cmn';
-  const langLabel = isMandarin ? 'Mandarin (zh-CN)' : 'Cantonese (zh-HK)';
-  const samplePhrase = isMandarin ? '你好，欢迎使用医学中文。' : '你好，歡迎使用醫學廣東話。';
-  const sampleBtn = isMandarin ? '▶ Play Mandarin Sample' : '▶ Play Cantonese Sample';
-  const setupDesc = isMandarin
-    ? 'This app uses your browser\'s built-in Web Speech API to speak Mandarin (zh-CN). Follow the steps below for your device.'
-    : 'This app uses your browser\'s built-in Web Speech API to speak Cantonese (zh-HK). Follow the steps below for your device.';
-  const testBannerLabel = isMandarin
-    ? '<strong>🔊 Test Audio Now</strong> — click to hear a sample Mandarin phrase'
-    : '<strong>🔊 Test Audio Now</strong> — click to hear a sample Cantonese phrase';
-  const winTip = isMandarin
-    ? '💡 <strong>Tip:</strong> After restarting, come back and click the Play Sample button above. If you hear natural-sounding Mandarin, setup is complete.'
-    : '💡 <strong>Tip:</strong> After restarting, come back and click the Play Sample button above. If you hear natural-sounding Cantonese, setup is complete.';
-  const winVoiceNote = isMandarin
-    ? '<span style="color:var(--teal)">Recommended voices: <strong>Hanhan</strong> (female) or <strong>Zhiwei</strong> (male) under Chinese (Simplified, China)</span>'
-    : '<span style="color:var(--teal)">Recommended voices: <strong>HiuMaan</strong> (female) or <strong>HiuGaai</strong> (female, warmer tone)</span>';
-  const winLangSearch = isMandarin
-    ? 'Search for <strong>Chinese (Simplified, China)</strong> and click <strong>Next → Install</strong>'
-    : 'Search for <strong>Chinese (Traditional, Hong Kong SAR)</strong> and click <strong>Next → Install</strong>';
-  const safariNote = isMandarin
-    ? 'Enable a Mandarin CN voice:<br><strong>System Settings → Accessibility → Spoken Content → System Voice → Chinese (Mandarin)</strong><br>On iOS: <strong>Settings → Accessibility → Spoken Content → Voices → Chinese → Mandarin</strong>'
-    : 'Enable the <strong>Sin-Ji</strong> Cantonese voice:<br><strong>System Settings → Accessibility → Spoken Content → System Voice → Cantonese (Sin-Ji)</strong><br>On iOS: <strong>Settings → Accessibility → Spoken Content → Voices → Chinese → Cantonese</strong>';
-  const notInstalledMsg = isMandarin
-    ? 'The Mandarin (zh-CN) voice is not yet installed. Follow the Windows steps above to install a Mandarin CN voice, then restart your browser.'
-    : 'The Cantonese (zh-HK) voice is not yet installed. Follow the Windows steps above to install <strong>HiuMaan</strong> or <strong>HiuGaai</strong>, then restart your browser.';
+  if (!el) return;
+
+  // Load saved Azure voice preferences
+  const savedYueVoice = localStorage.getItem('clinlingua_azure_voice_yue') || 'zh-HK-HiuGaaiNeural';
+  const savedCmnVoice = localStorage.getItem('clinlingua_azure_voice_cmn') || 'zh-CN-XiaoxiaoNeural';
+
   el.innerHTML = `
-    <div class="fade-in" style="max-width:780px">
+    <div class="lesson-header fade-in">
+      <div class="lesson-label">SETUP & AUDIO 設定及語音</div>
+      <div class="lesson-main-title" style="font-style:italic">Audio & Voice Settings</div>
+    </div>
 
-      <div style="margin-bottom:28px">
-        <div style="font-family:'DM Serif Display',seri
-    <div style="font-size:1.5rem;font-style:italic;margin-bottom:6px">Audio Setup Guide</div>
-        <div style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted)">${setupDesc}</div>
+    <!-- Azure TTS Status -->
+    <div style="background:var(--gold-light);border:2px solid var(--gold);padding:16px 20px;margin-bottom:28px">
+      <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;margin-bottom:6px">🔊 Neural Voice Audio</div>
+      <div style="font-family:var(--mono);font-size:0.68rem;line-height:1.8;color:var(--ink)">
+        MedChinese uses <strong>Azure Neural TTS</strong> — high-quality AI voices that work automatically in all browsers.
+        No setup required. Select your preferred voices below.
       </div>
+    </div>
 
-      <!-- Test banner -->
-      <div style="background:var(--teal);color:white;padding:14px 18px;margin-bottom:24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
-        <div style="font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;flex:1">
-          ${testBannerLabel}
-        </div>
-        <button onclick="speak('${samplePhrase}')" style="background:white;color:var(--teal);border:none;cursor:pointer;padding:8px 18px;font-family:'DM Mono',monospace;font-size:0.68rem;font-weight:600;letter-spacing:0.08em;white-space:nowrap">
-          ${sampleBtn}
+    <!-- Cantonese Voice -->
+    <div style="margin-bottom:28px">
+      <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;font-style:italic;margin-bottom:6px">廣東話 Cantonese Voice</div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <select id="voice-yue-select" onchange="saveAzureVoice('yue', this.value)"
+          style="font-family:var(--mono);font-size:0.75rem;padding:8px 12px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer">
+          <option value="zh-HK-HiuGaaiNeural" ${savedYueVoice === 'zh-HK-HiuGaaiNeural' ? 'selected' : ''}>HiuGaai 曉佳 — Female, warm (recommended)</option>
+          <option value="zh-HK-HiuMaanNeural" ${savedYueVoice === 'zh-HK-HiuMaanNeural' ? 'selected' : ''}>HiuMaan 曉曼 — Female, clear</option>
+          <option value="zh-HK-WanLungNeural" ${savedYueVoice === 'zh-HK-WanLungNeural' ? 'selected' : ''}>WanLung 雲龍 — Male</option>
+        </select>
+        <button onclick="previewAzureVoice('yue')"
+          style="font-family:var(--mono);font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;background:var(--ink);color:var(--paper);border:none;padding:8px 16px;cursor:pointer">
+          ▶ Preview
         </button>
       </div>
+    </div>
 
-      <!-- Speed Slider -->
-      <div style="background:white;border:1.5px solid var(--border);padding:14px 18px;margin-bottom:24px">
-        <div style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px">
-          🐢 Playback Speed
-        </div>
-        <div style="display:flex;align-items:center;gap:14px">
-          <span style="font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--muted);white-space:nowrap">Slower</span>
-          <input type="range" id="speed-slider" min="0.5" max="1.5" step="0.05"
-            value="${userSpeedMult}"
-            oninput="updateSpeedSlider(this.value)"
-            style="flex:1;accent-color:var(--teal);cursor:pointer">
-          <span style="font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--muted);white-space:nowrap">Faster</span>
-          <span id="speed-label" style="font-family:'DM Mono',monospace;font-size:0.7rem;font-weight:700;color:var(--teal);min-width:36px;text-align:right">${Math.round(userSpeedMult*100)}%</span>
-        </div>
-        <div style="font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--muted);margin-top:6px">
-          Cantonese base: ${Math.round(speechRate * userSpeedMult * 100)}% &nbsp;·&nbsp; Mandarin base: ${Math.round(speechRateCmn * userSpeedMult * 100)}%
-          &nbsp;·&nbsp; <button onclick="resetSpeed()"
-            style="font-family:'DM Mono',monospace;font-size:0.6rem;border:none;background:none;color:var(--teal);cursor:pointer;padding:0;text-decoration:underline">Reset</button>
-        </div>
-      </div>
-
-      <!-- Windows -->
-      <div class="section-block" style="margin-bottom:16px">
-        <div class="section-header open" style="cursor:default">
-          <div><span class="section-title-en">🪟 Windows 10 &amp; 11</span><span class="section-title-zh">　Windows系統</span></div>
-        </div>
-        <div class="section-body open" style="font-family:'DM Mono',monospace;font-size:0.68rem;line-height:2">
-          <p style="margin-bottom:10px">Windows does not include this voice by default — you need to install one:</p>
-          <ol style="padding-left:20px;margin-bottom:14px">
-            <li>Open <strong>Start → Settings → Time &amp; Language → Language &amp; Region</strong></li>
-            <li>Click <strong>Add a language</strong></li>
-            <li>${winLangSearch}</li>
-            <li>Once installed, click the language in the list → <strong>Language options</strong></li>
-            <li>Scroll to <strong>Text-to-speech</strong> and click <strong>Download</strong> next to a voice<br>
-                ${winVoiceNote}</li>
-            <li>Wait for the download to complete, then <strong>restart your browser</strong></li>
-          </ol>
-          <div style="background:var(--gold-light);border:1px solid var(--gold);padding:10px 14px;color:#7a5f00">
-            ${winTip}
-          </div>
-        </div>
-      </div>
-
-      <!-- Browser -->
-      <div class="section-block" style="margin-bottom:16px">
-        <div class="section-header open" style="cursor:default">
-          <div><span class="section-title-en">🌐 Browser Compatibility</span><span class="section-title-zh">　瀏覽器設定</span></div>
-        </div>
-        <div class="section-body open" style="font-family:'DM Mono',monospace;font-size:0.68rem;line-height:2">
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px">
-            <div style="border:2px solid var(--gold);padding:10px 12px;background:var(--gold-light)">
-              <div style="font-weight:700;color:#7a5f00;margin-bottom:4px">⭐ Microsoft Edge (recommended)</div>
-              Best overall experience. Edge has built-in high-quality neural voices for <strong>Cantonese, Mandarin, and English</strong> — no downloads needed. HiuMaan (Cantonese), Xiaoxiao (Mandarin), and Aria/Ryan (English) all work out of the box.
-            </div>
-            <div>
-              <div style="font-weight:700;color:var(--teal);margin-bottom:4px">✅ Chrome</div>
-              Works once the system voice is installed (see Windows steps above). May fall back to robotic voices (Rocko, Google UK) if no quality voice is found — use Edge to avoid this.
-            </div>
-            <div>
-              <div style="font-weight:700;color:#b8860b;margin-bottom:4px">⚠️ Firefox</div>
-              Web Speech may be disabled by default. To enable:<br>
-              1. Type <code style="background:rgba(0,0,0,0.08);padding:1px 5px">about:config</code> in the address bar<br>
-              2. Search <code style="background:rgba(0,0,0,0.08);padding:1px 5px">media.webspeech.synth.enabled</code><br>
-              3. Set the value to <strong>true</strong>
-            </div>
-            <div>
-              <div style="font-weight:700;color:var(--teal);margin-bottom:4px">✅ Safari (macOS / iOS)</div>
-              ${safariNote}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Troubleshooting -->
-      <div class="section-block">
-        <div class="section-header open" style="cursor:default">
-          <div><span class="section-title-en">🛠 Troubleshooting</span><span class="section-title-zh">　常見問題</span></div>
-        </div>
-        <div class="section-body open" style="font-family:'DM Mono',monospace;font-size:0.68rem;line-height:2">
-          <div style="display:grid;grid-template-columns:1fr;gap:10px">
-            <div style="background:var(--red-light);border:1px solid rgba(192,57,43,0.25);padding:10px 14px">
-              <strong>❌ No audio at all</strong><br>
-              Check that your browser tab isn't muted (right-click the tab → Unmute). Also check that your system volume is not zero. Some browsers block speech on pages not served over HTTPS — try opening the file in Chrome or Edge.
-            </div>
-            <div style="background:var(--gold-light);border:1px solid var(--gold);padding:10px 14px;color:#7a5f00">
-              <strong>⚠️ Wrong language or voice sounds off</strong><br>
-              ${notInstalledMsg}
-            </div>
-            <div style="background:var(--teal-light);border:1px solid rgba(26,107,107,0.25);padding:10px 14px">
-              <strong>✅ Audio plays but cuts off mid-word</strong><br>
-              This is a known Chrome/Windows bug with long utterances. The app uses a slow speech rate (0.85×) to minimize this. If it persists, try Edge instead — its speech synthesis engine is more stable.
-            </div>
-            <div style="background:var(--teal-light);border:1px solid rgba(26,107,107,0.25);padding:10px 14px">
-              <strong>⚠️ English voice sounds robotic (Rocko / Google UK English)</strong><br>
-              Chrome on Windows/iOS sometimes falls back to low-quality voices like "Rocko" or "Google UK English Female." Switch to <strong>Microsoft Edge</strong> for much better English neural voices (Aria, Libby, Ryan) built in — no install needed. On iPhone, go to <strong>Settings → Accessibility → Spoken Content → Voices → English</strong> and download <strong>Siri Voice 1</strong> or <strong>Siri Voice 2</strong> for high-quality on-device audio.
-            </div>
-            <div style="background:white;border:1.5px solid var(--border);padding:14px">
-              <strong>🎧 Voice Tester — tap each voice to hear it:</strong>
-              <div style="font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--muted);margin:4px 0 10px">Test phrase: "The patient has chest pain and shortness of breath."</div>
-              <div style="margin-bottom:12px">
-                <span style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em">Current selection: </span>
-                <span id="active-en-label" style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--teal);font-weight:700">Loading...</span>
-              </div>
-              <div id="voice-tester-en" style="margin-bottom:16px"></div>
-              <div style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">Chinese voices:</div>
-              <div id="voice-tester-zh"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- DIALOGUE VOICES -->
-      <div style="margin-top:24px">
-        <div style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;padding-bottom:6px;border-bottom:1.5px solid var(--border)">
-          🎙 Dialogue Voices
-        </div>
-        <div style="font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--muted);margin-bottom:14px;line-height:1.6">
-          Assign separate Chinese voices for the doctor and patient in dialogues.
-          If only one Chinese voice is available, both will use the same voice with slight pitch variation.
-        </div>
-        <div style="background:white;border:1.5px solid var(--border);padding:14px">
-          <div style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:10px">
-            👨‍⚕️ Doctor Voice (醫生) —
-            <span id="active-doctor-label" style="color:var(--teal);font-weight:700">Loading...</span>
-          </div>
-          <div id="voice-tester-doctor" style="margin-bottom:20px"></div>
-          <div style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:10px">
-            🧑 Patient Voice (病人) —
-            <span id="active-patient-label" style="color:var(--teal);font-weight:700">Loading...</span>
-          </div>
-          <div id="voice-tester-patient"></div>
-        </div>
-      </div>
-
-      <!-- FEEDBACK BOX -->
-      <div style="margin-top:24px">
-        <div style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;padding-bottom:6px;border-bottom:1.5px solid var(--border)">
-          ✉️ Feedback & Suggestions
-        </div>
-        <div style="background:white;border:1.5px solid var(--border);padding:14px">
-          <div style="font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--muted);margin-bottom:10px;line-height:1.6">
-            Found an error? Have a suggestion? We'd love to hear from you.
-          </div>
-          <div style="margin-bottom:10px">
-            <label style="font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--muted);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em">Your role (optional)</label>
-            <input id="feedback-role" type="text" placeholder="e.g. medical student, clinician, interpreter"
-              style="width:100%;box-sizing:border-box;font-family:'DM Mono',monospace;font-size:0.62re
-  <div class="feature-rating-bar">Was <strong>Audio Setup</strong> useful?&nbsp;<button class="feature-thumb-btn" onclick="rateFeature(this,'Audio Setup','up')">👍</button>&nbsp;<button class="feature-thumb-btn" onclick="rateFeature(this,'Audio Setup','down')">👎</button></div><div><input type="text" style="width:100%;font-family:var(--mono);font-size:0.75rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--dark);outline:none"/></div>
-          <div style="margin-bottom:12px">
-            <label style="font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--muted);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em">Message</label>
-            <textarea id="feedback-msg" rows="4" placeholder="Your feedback or suggestion..."
-              style="width:100%;box-sizing:border-box;font-family:'DM Mono',monospace;font-size:0.62rem;
-              padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--dark);
-              outline:none;resize:vertical"></textarea>
-          </div>
-          <button onclick="sendFeedback()"
-            style="font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;
-            padding:9px 18px;background:var(--ink);color:var(--paper);border:none;cursor:pointer">
-            ✉️ Send Feedback
-          </button>
-        </div>
-      </div>
-
-      <div style="margin-top:20px;text-align:center">
-        <button onclick="switchTab('vocab')" class="start-quiz-btn">← Back to Vocabulary</button>
+    <!-- Mandarin Voice -->
+    <div style="margin-bottom:28px">
+      <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;font-style:italic;margin-bottom:6px">普通話 Mandarin Voice</div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <select id="voice-cmn-select" onchange="saveAzureVoice('cmn', this.value)"
+          style="font-family:var(--mono);font-size:0.75rem;padding:8px 12px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer">
+          <option value="zh-CN-XiaoxiaoNeural" ${savedCmnVoice === 'zh-CN-XiaoxiaoNeural' ? 'selected' : ''}>Xiaoxiao 曉曉 — Female, warm (recommended)</option>
+          <option value="zh-CN-XiaoyiNeural"   ${savedCmnVoice === 'zh-CN-XiaoyiNeural'   ? 'selected' : ''}>Xiaoyi 曉伊 — Female, lively</option>
+          <option value="zh-CN-YunxiNeural"    ${savedCmnVoice === 'zh-CN-YunxiNeural'    ? 'selected' : ''}>Yunxi 雲希 — Male</option>
+          <option value="zh-CN-YunjianNeural"  ${savedCmnVoice === 'zh-CN-YunjianNeural'  ? 'selected' : ''}>Yunjian 雲健 — Male, authoritative</option>
+        </select>
+        <button onclick="previewAzureVoice('cmn')"
+          style="font-family:var(--mono);font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;background:var(--ink);color:var(--paper);border:none;padding:8px 16px;cursor:pointer">
+          ▶ Preview
+        </button>
       </div>
     </div>
 
-  <!-- Beta Feedback Survey -->
-  <div class="survey-section">
-    <div class="survey-title">📋 Beta Feedback Survey</div>
-    <div class="survey-subtitle">Help shape MedChinese. You can resubmit after each session.</div>
+    <!-- Browser compatibility note -->
+    <div style="border:1px solid var(--border);padding:14px 18px;margin-bottom:28px;font-family:var(--mono);font-size:0.65rem;line-height:1.9">
+      <div style="font-weight:700;margin-bottom:6px;font-size:0.68rem">Browser Compatibility</div>
+      <div>✅ <strong>Edge</strong> — Full neural voice support</div>
+      <div>✅ <strong>Chrome</strong> — Full neural voice support</div>
+      <div>✅ <strong>Safari (iOS/macOS)</strong> — Full neural voice support</div>
+      <div>✅ <strong>Firefox</strong> — Full neural voice support</div>
+      <div style="margin-top:8px;color:var(--muted)">If audio does not play, check that your browser tab is not muted and your device volume is on.</div>
+    </div>
 
-    <div class="survey-q">
-      <div class="survey-q-label">Overall, how useful is MedChinese for your clinical practice?</div>
-      <div class="survey-stars">
-        <button class="survey-star" onclick="setSurveyStars(1)">⭐</button>
-        <button class="survey-star" onclick="setSurveyStars(2)">⭐</button>
-        <button class="survey-star" onclick="setSurveyStars(3)">⭐</button>
-        <button class="survey-star" onclick="setSurveyStars(4)">⭐</button>
-        <button class="survey-star" onclick="setSurveyStars(5)">⭐</button>
+    <!-- Feature ratings -->
+    <div style="border-top:1px solid var(--border);padding-top:20px;margin-top:8px">
+      <div class="feature-rating-bar">Was <strong>Audio Setup</strong> useful?&nbsp;
+        <button class="feature-thumb-btn" onclick="rateFeature(this,'Audio Setup','up')">👍</button>&nbsp;
+        <button class="feature-thumb-btn" onclick="rateFeature(this,'Audio Setup','down')">👎</button>
       </div>
     </div>
-
-    <div class="survey-q">
-      <div class="survey-q-label">The lesson topics cover what I need</div>
-      <div class="survey-options">
-        <button class="survey-option survey-opt-topics" onclick="selectSurveyOpt(this,'survey-opt-topics')">Agree</button>
-        <button class="survey-option survey-opt-topics" onclick="selectSurveyOpt(this,'survey-opt-topics')">Neutral</button>
-        <button class="survey-option survey-opt-topics" onclick="selectSurveyOpt(this,'survey-opt-topics')">Disagree</button>
-      </div>
-    </div>
-
-    <div class="survey-q">
-      <div class="survey-q-label">The lesson order makes sense</div>
-      <div class="survey-options">
-        <button class="survey-option survey-opt-order" onclick="selectSurveyOpt(this,'survey-opt-order')">Agree</button>
-        <button class="survey-option survey-opt-order" onclick="selectSurveyOpt(this,'survey-opt-order')">Neutral</button>
-        <button class="survey-option survey-opt-order" onclick="selectSurveyOpt(this,'survey-opt-order')">Disagree</button>
-      </div>
-    </div>
-
-    <div class="survey-q">
-      <div class="survey-q-label">The module organization is logical</div>
-      <div class="survey-options">
-        <button class="survey-option survey-opt-modules" onclick="selectSurveyOpt(this,'survey-opt-modules')">Agree</button>
-        <button class="survey-option survey-opt-modules" onclick="selectSurveyOpt(this,'survey-opt-modules')">Neutral</button>
-        <button class="survey-option survey-opt-modules" onclick="selectSurveyOpt(this,'survey-opt-modules')">Disagree</button>
-      </div>
-    </div>
-
-    <div class="survey-q">
-      <div class="survey-q-label">Would you recommend MedChinese to a colleague?</div>
-      <div class="survey-options">
-        <button class="survey-option survey-opt-recommend" onclick="selectSurveyOpt(this,'survey-opt-recommend')">Yes</button>
-        <button class="survey-option survey-opt-recommend" onclick="selectSurveyOpt(this,'survey-opt-recommend')">Maybe</button>
-        <button class="survey-option survey-opt-recommend" onclick="selectSurveyOpt(this,'survey-opt-recommend')">No</button>
-      </div>
-    </div>
-
-    <div class="survey-q">
-      <div class="survey-q-label">Are there clinical topics missing?</div>
-      <textarea class="survey-textarea" id="survey-missing" placeholder="e.g. Cardiothoracic surgery · Palliative care phrases · Pediatric doses"></textarea>
-    </div>
-
-    <div class="survey-q">
-      <div class="survey-q-label">What would you change about the structure or content?</div>
-      <textarea class="survey-textarea" id="survey-changes" placeholder="e.g. Lesson order · Module grouping · Too many / too few terms per lesson"></textarea>
-    </div>
-
-    <div class="survey-q">
-      <div class="survey-q-label">Your clinical role</div>
-      <select class="survey-select" id="survey-role">
-        <option value="">— Select —</option>
-        <option>MD / DO</option>
-        <option>NP / PA</option>
-        <option>Resident / Fellow</option>
-        <option>RN / LVN</option>
-        <option>PharmD</option>
-        <option>MA / PrA</option>
-        <option>Admin / Front Desk</option>
-        <option>Medical Student</option>
-        <option>Other</option>
-      </select>
-    </div>
-
-    <div class="survey-q">
-      <div class="survey-q-label">Your clinical setting</div>
-      <select class="survey-select" id="survey-setting">
-        <option value="">— Select —</option>
-        <option>Primary Care / Family Medicine</option>
-        <option>Internal Medicine</option>
-        <option>Hospital / Inpatient</option>
-        <option>Emergency Department</option>
-        <option>Specialty Clinic</option>
-        <option>Community Health / FQHC</option>
-        <option>Medical Education</option>
-        <option>Other</option>
-      </select>
-    </div>
-
-    <div class="survey-q">
-      <div class="survey-q-label">Any other comments?</div>
-      <textarea class="survey-textarea" id="survey-other" placeholder="Anything else you'd like us to know"></textarea>
-    </div>
-
-    <button class="survey-submit-btn" onclick="submitSurvey()">Submit Feedback</button>
-    <div class="survey-success" id="survey-success"></div>
-  </div>`;
-
-  // Populate voice tester
-  setTimeout(() => {
-    const voices = synth ? synth.getVoices() : [];
-    const activeEn = pickEnglishVoice(voices);
-    const activeZh = pickZhVoice(voices);
-
-    // Update current selection label
-    const lbl = document.getElementById('active-en-label');
-    if (lbl) lbl.textContent = activeEn ? activeEn.name + ' (' + activeEn.lang + (activeEn.localService?' 📥':' ☁️') + ')' : 'none';
-
-    // Build English voice buttons — every en voice, playable
-    const enEl = document.getElementById('voice-tester-en');
-    const enVoices = voices.filter(v => v.lang.startsWith('en'));
-    if (enEl) {
-      if (enVoices.length === 0) {
-        enEl.innerHTML = '<span style="color:var(--red)">No English voices found</span>';
-      } else {
-        enEl.innerHTML = '<div style="font-family:\'DM Mono\',monospace;font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px">Tap ▶ to hear · tap ✓ Use to lock in that voice:</div>'
-          + enVoices.map((v, i) => {
-            const isActive = v === activeEn;
-            const id = 'vtbtn-en-' + i;
-            return `<div style="display:inline-flex;align-items:stretch;margin:2px 6px 6px 0">
-              <button id="${id}" data-voicename="${v.name.replace(/"/g,'&quot;')}" onclick="testVoice(this,'en')"
-                style="font-family:'DM Mono',monospace;font-size:0.62rem;padding:4px 8px;
-                background:${isActive?'var(--teal)':'var(--cream)'};color:${isActive?'white':'var(--dark)'};
-                border:1.5px solid ${isActive?'var(--teal)':'var(--border)'};border-right:none;cursor:pointer">
-                ▶ ${v.name} (${v.lang}${v.localService?' 📥':' ☁️'})
-              </button><button onclick="setPreferredVoice('${v.name.replace(/'/g,"\\'")}','en')"
-                style="font-family:'DM Mono',monospace;font-size:0.6rem;padding:4px 8px;
-                background:${isActive?'var(--teal)':'white'};color:${isActive?'white':'var(--teal)'};
-                border:1.5px solid var(--teal);cursor:pointer;white-space:nowrap">
-                ${isActive?'✓ Selected':'✓ Use'}
-              </button>
-            </div>`;
-          }).join('');
-      }
-    }
-
-    // Build Chinese voice buttons
-    const zhEl = document.getElementById('voice-tester-zh');
-    const zhVoices = voices.filter(v => v.lang.startsWith('zh'));
-
-    // Shared helper — builds voice pick+use button rows for any zh slot
-    function buildZhVoiceButtons(containerId, slotType, activeVoice) {
-      const el = document.getElementById(containerId);
-      if (!el) return;
-      if (zhVoices.length === 0) {
-        el.innerHTML = '<span style="color:var(--red)">No Chinese voices found</span>';
-        return;
-      }
-      el.innerHTML = zhVoices.map((v, i) => {
-        const isActive = v === activeVoice;
-        const safeName = v.name.replace(/"/g, '&quot;');
-        const safeJs   = v.name.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
-        return `<div style="display:inline-flex;align-items:stretch;margin:2px 6px 6px 0">
-          <button data-voicename="${safeName}" onclick="testVoice(this,'zh')"
-            style="font-family:'DM Mono',monospace;font-size:0.62rem;padding:4px 8px;
-            background:${isActive?'var(--teal)':'var(--cream)'};color:${isActive?'white':'var(--dark)'};
-            border:1.5px solid ${isActive?'var(--teal)':'var(--border)'};border-right:none;cursor:pointer">
-            ▶ ${v.name} (${v.lang}${v.localService?' 📥':' ☁️'})
-          </button><button onclick="setPreferredVoice('${safeJs}','${slotType}')"
-            style="font-family:'DM Mono',monospace;font-size:0.6rem;padding:4px 8px;
-            background:${isActive?'var(--teal)':'white'};color:${isActive?'white':'var(--teal)'};
-            border:1.5px solid var(--teal);cursor:pointer;white-space:nowrap">
-            ${isActive?'✓ Selected':'✓ Use'}
-          </button>
-        </div>`;
-      }).join('');
-    }
-
-    if (zhEl) buildZhVoiceButtons('voice-tester-zh', 'zh', activeZh);
-
-    // Dialogue speaker pickers
-    const activeDoctor  = pickDoctorZhVoice(voices);
-    const activePatient = pickPatientZhVoice(voices);
-    const docLbl = document.getElementById('active-doctor-label');
-    const patLbl = document.getElementById('active-patient-label');
-    if (docLbl) docLbl.textContent = activeDoctor  ? activeDoctor.name  : 'auto';
-    if (patLbl) patLbl.textContent = activePatient ? activePatient.name : 'auto';
-    buildZhVoiceButtons('voice-tester-doctor',  'doctor',  activeDoctor);
-    buildZhVoiceButtons('voice-tester-patient', 'patient', activePatient);
-  }, 400);
+  `;
 }
 
 function testVoice(btn, type) {
@@ -14353,6 +14047,11 @@ function speakEnglishLine(i) {
 }
 
 function playLine(i) {
+  if (window._currentAzureAudio) {
+    window._currentAzureAudio.pause();
+    window._currentAzureAudio.src = '';
+    window._currentAzureAudio = null;
+  }
   synth && synth.cancel();
   clearTimeout(playAllTimer);
   document.querySelectorAll('.dline-play-btn').forEach(b => { b.classList.remove('playing'); b.textContent = '▶ 中文'; });
@@ -14394,8 +14093,9 @@ function playNextLine() {
     document.getElementById(`dline-${idx}`)?.classList.remove('highlighted');
     const b = document.getElementById(`dbtn-${idx}`);
     if (b) { b.classList.remove('playing'); b.textContent = '▶ 中文'; }
+    if (playAllIdx === -1) return; // stopAll() was called
     playAllIdx++;
-    playAllTimer = setTimeout(playNextLine, 600);
+    playAllTimer = setTimeout(playNextLine, 800); // slightly longer gap for iOS
   });
 }
 
