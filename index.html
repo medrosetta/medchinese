@@ -790,14 +790,18 @@
     /* ── Layout ── */
     .app-container{grid-template-columns:1fr}
     aside{position:relative;height:auto;max-height:220px;min-width:0}
-    main{padding:20px 8px;max-width:100%;width:100%;box-sizing:border-box}
-    #favorites-content{padding:20px 14px !important}
-    .lesson-header{padding-right:14px;box-sizing:border-box}
+    main{padding:20px 0;max-width:100%;width:100%;box-sizing:border-box}
+    #favorites-content{padding:20px 8px !important}
+    .lesson-header{padding-left:8px;padding-right:8px;box-sizing:border-box}
     .vocab-play-bar{margin-left:0;margin-right:0;width:100%;box-sizing:border-box}
-    .section-header{padding-right:14px;box-sizing:border-box}
-    .lesson-rating-row{padding-right:14px;box-sizing:border-box}
-    .tab-bar{padding-right:14px;box-sizing:border-box}
-    .audio-setup-bar{padding-right:14px;box-sizing:border-box}
+    .section-block{margin-left:0;margin-right:0;border-left:none;border-right:none}
+    .section-header{padding-left:8px;padding-right:8px;box-sizing:border-box;flex-wrap:wrap;gap:6px}
+    .section-header > div:first-child{width:100%}
+    .section-header > div:last-child{width:100%;justify-content:flex-start}
+    .section-body{padding:14px 6px}
+    .lesson-rating-row{padding-left:8px;padding-right:8px;box-sizing:border-box}
+    .tab-bar{padding-left:8px;padding-right:8px;box-sizing:border-box}
+    .audio-setup-bar{padding-left:8px;padding-right:8px;box-sizing:border-box}
 
     /* ── Header ── */
     header{padding:28px 16px 20px}
@@ -830,7 +834,6 @@
     .vocab-play-progress{width:100%;margin-top:2px}
 
     /* ── Vocab cards ── */
-    .section-body{padding:14px 6px}
     .vocab-grid{gap:6px}
     .vocab-card{padding:10px 8px 6px 8px}
     
@@ -16251,7 +16254,7 @@ function closeFeedback() {
 }
 
 function submitFeedback() {
-  trackEvent('feedback_submit', { type: currentFeedbackData ? currentFeedbackData.type : 'unknown' });
+  trackEvent('feedback_submit', { type: _feedbackMode || 'unknown' });
   const comments = document.getElementById('feedback-comment').value.trim();
   const lessonName = _feedbackContext.lesson || getLessonName(cur);
 
