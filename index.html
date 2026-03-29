@@ -16064,7 +16064,7 @@ window.addEventListener('resize', () => {
 
 
 // ── Beta Feedback System ─────────────────────────────────────────────────────
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyQyVlBuZzzKipkT5rgfXzLzdnMQG92BdNVcg-XREqMaCv_nodkLZ8lapGTJ92oYR4/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzc-0FKnu-jrjo2XuFzKTN_Tvfy29NthneSgBDDWH8K6gpYCEoSNtrgH9OhxMPxoDIpgA/exec';
 const FEEDBACK_FALLBACK_EMAIL = 'MedRosettaApp@gmail.com';
 
 let _feedbackContext = {};
@@ -16080,15 +16080,15 @@ async function sendFeedback(data) {
       timestamp: new Date().toISOString(),
       language: currentLang === 'cmn' ? 'Mandarin' : 'Cantonese'
     };
-    // Use URL params — works reliably with no-cors from static HTML
+    // Use GET with query params — most reliable with no-cors from static pages
     const params = new URLSearchParams();
     Object.keys(payload).forEach(k => params.append(k, payload[k] || ''));
-    await fetch(APPS_SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      body: params
+    await fetch(APPS_SCRIPT_URL + '?' + params.toString(), {
+      method: 'GET',
+      mode: 'no-cors'
     });
   } catch(e) {
+    console.warn('Feedback send failed:', e);
     // Fallback: open pre-filled email
     const subject = encodeURIComponent('MedChinese Feedback: ' + (data.lesson || ''));
     const body = encodeURIComponent(
