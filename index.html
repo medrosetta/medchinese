@@ -34,12 +34,18 @@
     --section-bg: #faf7f2;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  html {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
   body {
     font-family: 'DM Serif Display', 'Noto Serif TC', serif;
     background: var(--paper);
     color: var(--ink);
     min-height: 100vh;
     overflow-x: hidden;
+    max-width: 100%;
+    position: relative;
   }
   /* HEADER */
   /* ── COMPACT HEADER ── */
@@ -772,7 +778,7 @@
     .top-nav-en { display: none; }
     .top-nav-mobile { display: block; font-size: 0.9rem; font-family: 'DM Mono', monospace; letter-spacing: 0.04em; }
     .top-nav-btn { padding: 10px 0; flex: 1; font-size: 0.7rem; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-    .top-nav { overflow-x: visible; }
+    .top-nav { overflow-x: auto; }
 
     /* Header adjustments */
     header { padding: 0 10px; height: 46px; }
