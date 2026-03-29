@@ -14027,15 +14027,7 @@ function testVoice(btn, type) {
   synth.speak(u);
 }
 
-function sendFeedback() {
-  const role = (document.getElementById('feedback-role')?.value || '').trim();
-  const msg  = (document.getElementById('feedback-msg')?.value  || '').trim();
-  if (!msg) { alert('Please enter a message before sending.'); return; }
-  const body = encodeURIComponent((role ? 'Role: ' + role + '\n\n' : '') + msg);
-  window.location.href = 'mailto:MedRosettaApp@gmail.com'
-    + '?subject=' + encodeURIComponent('MedChinese App Feedback')
-    + '&body=' + body;
-}
+
 
 function resetSpeed() {
   updateSpeedSlider(1.0);
@@ -16072,7 +16064,7 @@ window.addEventListener('resize', () => {
 
 
 // ── Beta Feedback System ─────────────────────────────────────────────────────
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxJ973HskdgHrCizK3nJf23Mdmj9nr5BlcwmoXWP7IVZs0TNsDMovMJy0GbF74JFpAg/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyQyVlBuZzzKipkT5rgfXzLzdnMQG92BdNVcg-XREqMaCv_nodkLZ8lapGTJ92oYR4/exec';
 const FEEDBACK_FALLBACK_EMAIL = 'MedRosettaApp@gmail.com';
 
 let _feedbackContext = {};
