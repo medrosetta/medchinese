@@ -12801,17 +12801,23 @@ const VOICE_MAP = {
   cmn: 'zh-CN-XiaoxiaoNeural',
 };
 
-async function speakAzure(text, lang) {
+async function speakAzure(text, lang, onEnd) {
   if (!AZURE_WORKER_URL) return false;
   try {
     const voice = VOICE_MAP[lang] || VOICE_MAP.yue;
 
-    // Pre-create and unlock AudioContext for Chrome autoplay policy
+    // Unlock AudioContext for Chrome autoplay policy
     if (!window._audioCtx) {
       window._audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     }
     if (window._audioCtx.state === 'suspended') {
       await window._audioCtx.resume();
+    }
+
+    // Stop any currently playing Azure audio
+    if (window._currentAzureAudio) {
+      window._currentAzureAudio.pause();
+      window._currentAzureAudio = null;
     }
 
     const response = await fetch(AZURE_WORKER_URL, {
@@ -12820,14 +12826,18 @@ async function speakAzure(text, lang) {
       body: JSON.stringify({ text, voice, rate: '0%', pitch: '0%' })
     });
     if (!response.ok) {
-      console.warn('Azure TTS response not ok:', response.status);
+      console.warn('Azure TTS response not ok:', response.status, await response.text());
       return false;
     }
     const audioBlob = await response.blob();
     const audioUrl = URL.createObjectURL(audioBlob);
     const audio = new Audio(audioUrl);
-    audio.onended = () => URL.revokeObjectURL(audioUrl);
-    // Use play() with catch to handle any remaining autoplay issues
+    window._currentAzureAudio = audio;
+    audio.onended = () => {
+      URL.revokeObjectURL(audioUrl);
+      window._currentAzureAudio = null;
+      if (onEnd) onEnd();
+    };
     await audio.play().catch(e => {
       console.warn('Audio play failed:', e);
       URL.revokeObjectURL(audioUrl);
@@ -12841,8 +12851,8 @@ async function speakAzure(text, lang) {
 }
 
 function speak(text, onEnd) {
-  speakAzure(text, currentLang).then(azureSuccess => {
-    if (azureSuccess) { if (onEnd) onEnd(); return; }
+  speakAzure(text, currentLang, onEnd).then(azureSuccess => {
+    if (azureSuccess) return; // onEnd handled inside speakAzure
     // Web Speech API fallback
     if (!synth) { if (onEnd) onEnd(); return; }
     synth.cancel();
@@ -12937,18 +12947,24 @@ function pickPatientZhVoice(voices) {
 
 // Speak a dialogue line using the speaker-appropriate voice
 function speakAs(text, speaker, onEnd) {
-  if (!synth) { if (onEnd) onEnd(); return; }
-  synth.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  const isMandarin = currentLang === 'cmn';
-  u.rate = (isMandarin ? speechRateCmn : speechRate) * userSpeedMult;
-  u.pitch = speaker === 'doctor' ? 0.9 : 1.1;
-  u.lang = isMandarin ? 'zh-CN' : 'zh-HK';
-  const voices = synth.getVoices();
-  const v = speaker === 'doctor' ? pickDoctorZhVoice(voices) : pickPatientZhVoice(voices);
-  if (v) { u.voice = v; u.lang = v.lang; }
-  u.onend = onEnd || null;
-  synth.speak(u);
+  const lang = currentLang;
+  // Azure TTS — pass onEnd so dialogue chain works correctly
+  speakAzure(text, lang, onEnd).then(azureSuccess => {
+    if (azureSuccess) return; // onEnd already handled inside speakAzure
+    // Web Speech fallback
+    if (!synth) { if (onEnd) onEnd(); return; }
+    synth.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    const isMandarin = lang === 'cmn';
+    u.rate = (isMandarin ? speechRateCmn : speechRate) * userSpeedMult;
+    u.pitch = speaker === 'doctor' ? 0.9 : 1.1;
+    u.lang = isMandarin ? 'zh-CN' : 'zh-HK';
+    const voices = synth.getVoices();
+    const v = speaker === 'doctor' ? pickDoctorZhVoice(voices) : pickPatientZhVoice(voices);
+    if (v) { u.voice = v; u.lang = v.lang; }
+    u.onend = onEnd || null;
+    synth.speak(u);
+  });
 }
 
 function speakLessonTitle(zh) {
