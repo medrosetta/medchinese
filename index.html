@@ -15,6 +15,8 @@
 <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Medical%20Chinese%22%2C%22short_name%22%3A%22Med%20Chinese%22%2C%22description%22%3A%22Medical%20Cantonese%20%26%20Mandarin%20for%20healthcare%20professionals%22%2C%22start_url%22%3A%22%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f5f0e8%22%2C%22theme_color%22%3A%22%231a6b6b%22%2C%22orientation%22%3A%22portrait%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%253D%2522http%253A%252F%252Fwww.w3.org%252F2000%252Fsvg%2522%2520viewBox%253D%25220%25200%2520512%2520512%2522%253E%253Crect%2520width%253D%2522512%2522%2520height%253D%2522512%2522%2520rx%253D%252280%2522%2520fill%253D%2522%25231a6b6b%2522%252F%253E%253Ctext%2520x%253D%2522256%2522%2520y%253D%2522340%2522%2520font-size%253D%2522280%2522%2520text-anchor%253D%2522middle%2522%2520fill%253D%2522white%2522%2520font-family%253D%2522serif%2522%253E%25E9%2586%25AB%253C%252Ftext%253E%253C%252Fsvg%253E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D">
 
 <!-- iOS home screen icon (inline SVG → data URI) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20512%20512'%3E%3Crect%20width%3D'512'%20height%3D'512'%20rx%3D'80'%20fill%3D'%231a6b6b'%2F%3E%3Ctext%20x%3D'256'%20y%3D'340'%20font-size%3D'280'%20text-anchor%3D'middle'%20fill%3D'white'%20font-family%3D'serif'%3E%E9%86%AB%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="icon" type="image/png" sizes="32x32" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20512%20512'%3E%3Crect%20width%3D'512'%20height%3D'512'%20rx%3D'80'%20fill%3D'%231a6b6b'%2F%3E%3Ctext%20x%3D'256'%20y%3D'340'%20font-size%3D'280'%20text-anchor%3D'middle'%20fill%3D'white'%20font-family%3D'serif'%3E%E9%86%AB%3C%2Ftext%3E%3C%2Fsvg%3E">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20512%20512'%3E%3Crect%20width%3D'512'%20height%3D'512'%20rx%3D'80'%20fill%3D'%231a6b6b'%2F%3E%3Ctext%20x%3D'256'%20y%3D'340'%20font-size%3D'280'%20text-anchor%3D'middle'%20fill%3D'white'%20font-family%3D'serif'%3E%E9%86%AB%3C%2Ftext%3E%3C%2Fsvg%3E">
 
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+HK:wght@300;400;500;700&family=Josefin+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -802,10 +804,15 @@
     .lesson-rating-row{padding-left:8px;padding-right:8px;box-sizing:border-box}
     .tab-bar{padding-left:8px;padding-right:8px;box-sizing:border-box}
     .audio-setup-bar{padding-left:8px;padding-right:8px;box-sizing:border-box}
+    #setup-content{padding:20px 12px !important;max-width:100% !important}
 
     /* ── Header ── */
-    header{padding:28px 16px 20px}
+    header{padding:28px 16px 20px;position:relative}
     .header-badge{font-size:0.58rem;letter-spacing:0.06em}
+    .header-left{position:absolute;left:0;right:0;display:flex;justify-content:center;pointer-events:none}
+    .mobile-menu-btn{position:absolute;left:10px;z-index:1;pointer-events:all}
+    .header-wordmark{text-align:center}
+    .header-sub{display:none}
 
     /* ── Lang switcher ── */
     .lang-switcher{padding:8px 12px;gap:8px}
@@ -825,9 +832,12 @@
     /* ── Tab bar ── */
     .tab-bar{gap:4px;flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px}
     .tab-btn{padding:8px 12px;font-size:0.6rem;white-space:nowrap;flex-shrink:0}
+    .tab-audio-full{display:none}
+    .tab-audio-mobile{display:inline}
+    .lesson-rating-bar{flex-wrap:wrap;justify-content:flex-end;padding-right:8px}
 
     /* ── Vocab play bar ── */
-    .vocab-play-bar{flex-wrap:wrap;gap:6px;padding:10px 12px}
+    .vocab-play-bar{flex-wrap:wrap;gap:6px;padding:10px 8px;overflow-x:hidden}
     .play-bar-label{width:100%;border-right:none;border-bottom:1px solid rgba(245,240,232,0.12);padding-right:0;padding-bottom:6px;margin-bottom:2px;margin-right:0}
     .vocab-play-bar .play-all-btn{font-size:0.6rem;padding:8px 10px;flex:1 1 auto}
     .stop-btn{padding:8px 12px !important}
@@ -975,6 +985,8 @@
   .mobile-menu-btn { display: none; }
   .mobile-fab { display: none; }
   .drawer-backdrop { display: none; }
+  .tab-audio-mobile { display: none; }
+  .tab-audio-full { display: inline; }
 
 
 
@@ -1100,8 +1112,8 @@
     border-right: 2px solid var(--border);
     background: var(--cream);
     position: sticky;
-    top: 0;
-    height: calc(100vh - 148px);
+    top: 98px;
+    height: calc(100vh - 98px);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -2127,6 +2139,8 @@
   .mobile-menu-btn { display: none; }
   .mobile-fab { display: none; }
   .drawer-backdrop { display: none; }
+  .tab-audio-mobile { display: none; }
+  .tab-audio-full { display: inline; }
 
 
 
@@ -2252,8 +2266,8 @@
     border-right: 2px solid var(--border);
     background: var(--cream);
     position: sticky;
-    top: 0;
-    height: calc(100vh - 148px);
+    top: 98px;
+    height: calc(100vh - 98px);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -7477,7 +7491,7 @@ const LESSONS = [
   id:43, zh:"亞裔健康差異", en:"Asian Health Disparities",
   sections:[
     { title:"Metabolic Risk & BMI Thresholds", zh:"代謝風險及體重指數閾值",
-      note:"East Asian patients develop type 2 diabetes, insulin resistance, and cardiovascular disease at BMIs well below Western thresholds. The WHO and ADA recommend screening from BMI ≥23 and considering intervention from BMI ≥27.5 in Asian adults — compared to the standard Western threshold of 30. The reason is body composition: East Asian patients carry more visceral (abdominal) fat at the same BMI than White patients, and visceral fat is metabolically active. A patient who appears 'normal weight' by Western standards may already have metabolic syndrome. Always apply Asian-specific BMI thresholds when assessing metabolic risk in this population.",
+      note:"East Asian adults develop insulin resistance, type 2 diabetes, and cardiovascular disease at BMIs well below Western thresholds. WHO and ADA recommend screening from BMI ≥23 and intervention from ≥27.5. Visceral fat distribution means metabolic risk is underestimated by standard BMI cutoffs. A patient who appears 'normal weight' by Western standards may already have metabolic syndrome.",
       vocab:[
       {zh:"亞裔體重指數標準較低",jp:"nga3 ji2 tai2 zung6 zi2 sou3 biu1 zeon2 haau3 dai1",en:"Asian BMI thresholds are lower than Western standards"},
       {zh:"BMI超過23已需要篩查糖尿病",jp:"BMI ciu1 gwo3 23 ji5 seoi1 jiu3 sai1 caa4 tong4 niu6 beng6",en:"BMI ≥23 warrants diabetes screening in Asian patients"},
@@ -7491,7 +7505,7 @@ const LESSONS = [
       {zh:"我哋需要用亞裔特定嘅標準幫你評估",jp:"ngo5 dei6 seoi1 jiu3 jung6 nga3 ji2 dak6 ding6 ge3 biu1 zeon2 bong1 nei5 ping4 gu2",en:"We need to use Asian-specific standards to assess your risk"},
     ]},
     { title:"Cardiovascular Disparities", zh:"心血管差異",
-      note:"Haemorrhagic (bleeding) stroke is substantially more common in East Asian populations than in White Western populations — the reverse of the pattern seen in the West where ischaemic stroke dominates. The primary driver is hypertension, specifically hypertensive arteriopathy, which is more prevalent and undertreated in this population. This makes aggressive blood pressure control more important, not less. The ACC/AHA universal target of <130/80 mmHg is guideline-concordant and clinically justified for most Asian patients with hypertension — the Japanese Society of Hypertension uses the same target. For atrial fibrillation, standard CHA₂DS₂-VASc may underestimate stroke risk in Asian patients aged 50–64: consider counting age 50–74 as a risk point rather than 65–74.",
+      note:"Hemorrhagic stroke rates are substantially higher in East Asian populations than in White populations — partly related to hypertension prevalence and partly genetic. Atrial fibrillation stroke risk per CHA₂DS₂-VASc score has different thresholds in Asian populations. Warfarin dosing requirements are typically lower.",
       vocab:[
       {zh:"出血性中風",jp:"ceot1 hyut3 sing3 zung3 fung1",en:"Haemorrhagic stroke"},
       {zh:"缺血性中風",jp:"kyut3 hyut3 sing3 zung3 fung1",en:"Ischaemic stroke"},
@@ -7504,7 +7518,7 @@ const LESSONS = [
       {zh:"血壓係出血性中風最重要嘅危險因素",jp:"hyut3 aat3 hai6 ceot1 hyut3 sing3 zung3 fung1 zeoi3 zung6 jiu3 ge3 ngai4 him2 jan1 sou3",en:"Blood pressure is the most important risk factor for haemorrhagic stroke"},
     ]},
     { title:"Cancer Disparities", zh:"癌症差異",
-      note:"Three cancers are substantially more common in East Asian populations and deserve specific surveillance in primary care. First, hepatocellular carcinoma (liver cancer): HBV carrier prevalence in East Asian immigrants is 10–15% vs <1% in the general US population. HBsAg-positive patients have a 25–100× elevated HCC risk and require 6-monthly ultrasound surveillance — this is frequently missed in community settings. Second, nasopharyngeal carcinoma: rare in most populations but East Asian patients, particularly Cantonese speakers from Guangdong, have among the highest rates in the world. Early symptoms — unilateral hearing loss, nosebleed, neck mass — are subtle and often missed. Third, gastric cancer: significantly higher in East Asian populations due to H. pylori prevalence; test and treat H. pylori more aggressively in this group.",
+      note:"Hepatocellular carcinoma risk is dramatically elevated in HBsAg-positive patients — HBV carrier prevalence in East Asian immigrants is 10–15%, vs &lt;1% in the general US population. Surveillance ultrasound every 6 months is standard of care. Nasopharyngeal carcinoma has among the highest rates in Cantonese-speaking populations from Guangdong. H. pylori-associated gastric cancer screening is more clinically urgent in this group.",
       vocab:[
       {zh:"肝細胞癌",jp:"gon1 sai3 baau1 ngaam4",en:"Hepatocellular carcinoma (HCC / liver cancer)"},
       {zh:"乙型肝炎表面抗原陽性",jp:"jyut6 jing4 gon1 jim4 biu2 min6 kong3 jyun4 joeng4 sing3",en:"HBsAg positive (hepatitis B carrier)"},
@@ -7518,7 +7532,7 @@ const LESSONS = [
       {zh:"你有冇做過肝臟超聲波呀？",jp:"nei5 jau5 mou5 zou6 gwo3 gon1 zong6 ciu1 sing1 bo1 aa3?",en:"Have you had a liver ultrasound before?"},
     ]},
     { title:"Mental Health & Somatisation", zh:"心理健康及軀體化",
-      note:"Depression and anxiety are significantly underdiagnosed in East Asian populations, largely due to somatisation — emotional distress presenting as physical symptoms rather than mood complaints. Patients report fatigue, headaches, chest tightness, palpitations, or GI symptoms rather than saying 'I feel depressed.' This is not evasion; it reflects a different but equally valid way of experiencing and communicating distress. The clinical approach: explore physical symptoms thoroughly, then open a door — 'Sometimes when the body feels this way, there is stress or worry underneath. Has that been the case for you?' Mental health stigma in Chinese communities means patients rarely self-refer. The clinician must create the opening, normalize help-seeking, and offer it as part of overall health care rather than a separate referral.",
+      note:"Depression and anxiety are significantly underdiagnosed in East Asian populations due to somatization — emotional distress presents as physical symptoms (fatigue, headache, chest tightness, GI complaints). Asking directly about mood after exploring physical symptoms opens the conversation without cultural confrontation. Mental health stigma means patients rarely self-refer; the clinician must create the opening.",
       vocab:[
       {zh:"軀體化",jp:"keoi1 tai2 faa3",en:"Somatisation (physical expression of emotional distress)"},
       {zh:"有時候身體嘅不適係心理壓力造成嘅",jp:"jau5 si4 hau6 san1 tai2 ge3 bat1 sik1 hai6 sam1 lei5 aat3 lik6 zou6 sing4 ge3",en:"Sometimes physical discomfort is caused by psychological stress"},
@@ -7542,7 +7556,7 @@ const LESSONS = [
       {zh:"寄生蟲感染",jp:"gei3 sang1 cung4 gam2 jim5",en:"Parasitic infection"},
     ]},
     { title:"Pharmacogenomics", zh:"藥物基因組學",
-      note:"Four pharmacogenomic variants are clinically important and more prevalent in East Asian populations. (1) HLA-B*58:01: Carried by ~6–8% of East Asians (up to 1 in 5 gout patients). Causes life-threatening Stevens-Johnson syndrome, TEN, and DRESS when exposed to allopurinol. The ACR and CPIC recommend testing before starting allopurinol in Han Chinese, Korean, and Thai patients. A negative result (NPV 99%) gives strong reassurance; a positive result means use febuxostat or probenecid instead. (2) CYP2C19 poor/intermediate metabolisers: ~60% of East Asians have reduced enzyme activity, meaning clopidogrel is poorly activated — consider prasugrel or ticagrelor instead. Avoid omeprazole/lansoprazole with clopidogrel; pantoprazole is preferred. (3) G6PD deficiency: Clinically significant in southern Chinese and SE Asian patients. Screen before nitrofurantoin (UTIs) and primaquine. Fava beans (蠶豆) also trigger haemolysis. (4) ALDH2 deficiency: ~35–45% of East Asians. Alcohol flush reaction and significantly elevated oesophageal cancer risk with alcohol use.",
+      note:"Several clinically significant variants are more prevalent in East Asian populations: ALDH2 deficiency (35% of East Asians) increases esophageal cancer risk with alcohol; G6PD deficiency affects medication safety; CYP2C19 poor metabolizers affect clopidogrel efficacy and PPI dosing; Asian patients typically require lower warfarin doses with a narrower therapeutic window.",
       vocab:[
       {zh:"HLA-B*58:01基因",jp:"HLA-B*58:01 gei1 jan1",en:"HLA-B*58:01 gene variant"},
       {zh:"服用痛風藥前需要做基因測試",jp:"fuk6 jung6 tung3 fung1 joek6 cin4 seoi1 jiu3 zou6 gei1 jan1 cak1 si3",en:"Test HLA-B*58:01 before starting allopurinol"},
@@ -12366,7 +12380,7 @@ const LESSONS_MANDARIN = [
   id:43, zh:"亚裔健康差异", en:"Asian Health Disparities",
   sections:[
     { title:"Metabolic Risk & BMI Thresholds", zh:"代谢风险及体重指数阈值",
-      note:"East Asian patients develop type 2 diabetes, insulin resistance, and cardiovascular disease at BMIs well below Western thresholds. The WHO and ADA recommend screening from BMI ≥23 and considering intervention from BMI ≥27.5 in Asian adults — compared to the standard Western threshold of 30. The reason is body composition: East Asian patients carry more visceral (abdominal) fat at the same BMI than White patients, and visceral fat is metabolically active. A patient who appears 'normal weight' by Western standards may already have metabolic syndrome. Always apply Asian-specific BMI thresholds when assessing metabolic risk in this population.",
+      note:"East Asian adults develop insulin resistance, type 2 diabetes, and cardiovascular disease at BMIs well below Western thresholds. WHO and ADA recommend screening from BMI ≥23 and intervention from ≥27.5. Visceral fat distribution means metabolic risk is underestimated by standard BMI cutoffs. A patient who appears 'normal weight' by Western standards may already have metabolic syndrome.",
       vocab:[
       {zh:"亚裔体重指数标准较低",jp:"yà yì tǐ zhòng zhǐ shù biāo zhǔn jiào dī",en:"Asian BMI thresholds are lower than Western standards"},
       {zh:"BMI超过23需要筛查糖尿病",jp:"BMI chāo guò 23 xū yào shāi chá táng niào bìng",en:"BMI ≥23 warrants diabetes screening in Asian patients"},
@@ -12380,7 +12394,7 @@ const LESSONS_MANDARIN = [
       {zh:"我们需要用亚裔特定标准评估您的风险",jp:"wǒ men xū yào yòng yà yì tè dìng biāo zhǔn píng gū nín de fēng xiǎn",en:"We need to use Asian-specific standards to assess your risk"},
     ]},
     { title:"Cardiovascular Disparities", zh:"心血管差异",
-      note:"Haemorrhagic (bleeding) stroke is substantially more common in East Asian populations than in White Western populations — the reverse of the pattern seen in the West where ischaemic stroke dominates. The primary driver is hypertension, specifically hypertensive arteriopathy, which is more prevalent and undertreated in this population. This makes aggressive blood pressure control more important, not less. The ACC/AHA universal target of <130/80 mmHg is guideline-concordant and clinically justified for most Asian patients with hypertension — the Japanese Society of Hypertension uses the same target. For atrial fibrillation, standard CHA₂DS₂-VASc may underestimate stroke risk in Asian patients aged 50–64: consider counting age 50–74 as a risk point rather than 65–74.",
+      note:"Hemorrhagic stroke rates are substantially higher in East Asian populations than in White populations — partly related to hypertension prevalence and partly genetic. Atrial fibrillation stroke risk per CHA₂DS₂-VASc score has different thresholds in Asian populations. Warfarin dosing requirements are typically lower.",
       vocab:[
       {zh:"出血性卒中",jp:"chū xuè xìng zú zhōng",en:"Haemorrhagic stroke"},
       {zh:"缺血性卒中",jp:"quē xuè xìng zú zhōng",en:"Ischaemic stroke"},
@@ -12393,7 +12407,7 @@ const LESSONS_MANDARIN = [
       {zh:"血压是出血性卒中最重要的危险因素",jp:"xuè yā shì chū xuè xìng zú zhōng zuì zhòng yào de wēi xiǎn yīn sù",en:"Blood pressure is the most important risk factor for haemorrhagic stroke"},
     ]},
     { title:"Cancer Disparities", zh:"癌症差异",
-      note:"Three cancers are substantially more common in East Asian populations and deserve specific surveillance in primary care. First, hepatocellular carcinoma (liver cancer): HBV carrier prevalence in East Asian immigrants is 10–15% vs <1% in the general US population. HBsAg-positive patients have a 25–100× elevated HCC risk and require 6-monthly ultrasound surveillance — this is frequently missed in community settings. Second, nasopharyngeal carcinoma: rare in most populations but East Asian patients, particularly Cantonese speakers from Guangdong, have among the highest rates in the world. Early symptoms — unilateral hearing loss, nosebleed, neck mass — are subtle and often missed. Third, gastric cancer: significantly higher in East Asian populations due to H. pylori prevalence; test and treat H. pylori more aggressively in this group.",
+      note:"Hepatocellular carcinoma risk is dramatically elevated in HBsAg-positive patients — HBV carrier prevalence in East Asian immigrants is 10–15%, vs &lt;1% in the general US population. Surveillance ultrasound every 6 months is standard of care. Nasopharyngeal carcinoma has among the highest rates in Cantonese-speaking populations from Guangdong. H. pylori-associated gastric cancer screening is more clinically urgent in this group.",
       vocab:[
       {zh:"肝细胞癌",jp:"gān xì bāo ái",en:"Hepatocellular carcinoma (HCC)"},
       {zh:"乙型肝炎表面抗原阳性",jp:"yǐ xíng gān yán biǎo miàn kàng yuán yáng xìng",en:"HBsAg positive (hepatitis B carrier)"},
@@ -12407,7 +12421,7 @@ const LESSONS_MANDARIN = [
       {zh:"您做过肝脏超声波吗？",jp:"nín zuò guò gān zàng chāo shēng bō ma?",en:"Have you had a liver ultrasound before?"},
     ]},
     { title:"Mental Health & Somatisation", zh:"心理健康及躯体化",
-      note:"Depression and anxiety are significantly underdiagnosed in East Asian populations, largely due to somatisation — emotional distress presenting as physical symptoms rather than mood complaints. Patients report fatigue, headaches, chest tightness, palpitations, or GI symptoms rather than saying 'I feel depressed.' This is not evasion; it reflects a different but equally valid way of experiencing and communicating distress. The clinical approach: explore physical symptoms thoroughly, then open a door — 'Sometimes when the body feels this way, there is stress or worry underneath. Has that been the case for you?' Mental health stigma in Chinese communities means patients rarely self-refer. The clinician must create the opening, normalize help-seeking, and offer it as part of overall health care rather than a separate referral.",
+      note:"Depression and anxiety are significantly underdiagnosed in East Asian populations due to somatization — emotional distress presents as physical symptoms (fatigue, headache, chest tightness, GI complaints). Asking directly about mood after exploring physical symptoms opens the conversation without cultural confrontation. Mental health stigma means patients rarely self-refer; the clinician must create the opening.",
       vocab:[
       {zh:"躯体化",jp:"qū tǐ huà",en:"Somatisation (physical expression of emotional distress)"},
       {zh:"有时候身体不适是心理压力造成的",jp:"yǒu shí hòu shēn tǐ bù shì shì xīn lǐ yā lì zào chéng de",en:"Sometimes physical discomfort is caused by psychological stress"},
@@ -12431,7 +12445,7 @@ const LESSONS_MANDARIN = [
       {zh:"寄生虫感染",jp:"jì shēng chóng gǎn rǎn",en:"Parasitic infection"},
     ]},
     { title:"Pharmacogenomics", zh:"药物基因组学",
-      note:"Four pharmacogenomic variants are clinically important and more prevalent in East Asian populations. (1) HLA-B*58:01: Carried by ~6–8% of East Asians (up to 1 in 5 gout patients). Causes life-threatening Stevens-Johnson syndrome, TEN, and DRESS when exposed to allopurinol. The ACR and CPIC recommend testing before starting allopurinol in Han Chinese, Korean, and Thai patients. A negative result (NPV 99%) gives strong reassurance; a positive result means use febuxostat or probenecid instead. (2) CYP2C19 poor/intermediate metabolisers: ~60% of East Asians have reduced enzyme activity, meaning clopidogrel is poorly activated — consider prasugrel or ticagrelor instead. Avoid omeprazole/lansoprazole with clopidogrel; pantoprazole is preferred. (3) G6PD deficiency: Clinically significant in southern Chinese and SE Asian patients. Screen before nitrofurantoin (UTIs) and primaquine. Fava beans also trigger haemolysis. (4) ALDH2 deficiency: ~35–45% of East Asians. Alcohol flush reaction and significantly elevated oesophageal cancer risk with alcohol use.",
+      note:"Several clinically significant variants are more prevalent in East Asian populations: ALDH2 deficiency (35% of East Asians) increases esophageal cancer risk with alcohol; G6PD deficiency affects medication safety; CYP2C19 poor metabolizers affect clopidogrel efficacy and PPI dosing; Asian patients typically require lower warfarin doses with a narrower therapeutic window.",
       vocab:[
       {zh:"HLA-B*58:01基因",jp:"HLA-B*58:01 jī yīn",en:"HLA-B*58:01 gene variant"},
       {zh:"服用别嘌醇前需要做基因检测",jp:"fú yòng bié piào chún qián xū yào zuò jī yīn jiǎn cè",en:"Test HLA-B*58:01 before starting allopurinol"},
@@ -13656,10 +13670,7 @@ function renderVocab() {
   // Build global vocab bar
   const totalWords = L.sections.reduce((n, s) => n + s.vocab.length, 0);
   let html = `
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted)">
-      🔊 Azure Neural TTS &nbsp;·&nbsp;
-      <button onclick="navSelectSetup()" style="background:none;border:none;cursor:pointer;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--teal);text-decoration:underline;padding:0">Voice settings →</button>
-    </div>
+    
     <div class="vocab-play-bar">
       <span class="play-bar-label">PLAY ALL</span>
       <button class="play-all-btn" id="vocab-play-all-btn" onclick="startVocabPlayAll()">▶ Chinese Only</button>
@@ -14423,7 +14434,7 @@ function renderMain() {
       <button class="tab-btn ${tab==='vocab'?'active':''}" onclick="switchTab('vocab')">VOCABULARY 詞彙</button>
       <button class="tab-btn ${tab==='dialogue'?'active':''}" onclick="switchTab('dialogue')">DIALOGUE 對話</button>
       <button class="tab-btn ${tab==='quiz'?'active':''}" onclick="switchTab('quiz')">QUIZ 測驗</button>
-      <button class="tab-btn ${tab==='audio'?'active':''}" onclick="switchTab('audio')">🔊 AUDIO SETUP</button>
+      <button class="tab-btn ${tab==='audio'?'active':''}" onclick="switchTab('audio')"><span class="tab-audio-full">🔊 AUDIO SETUP</span><span class="tab-audio-mobile">🔊 Setup</span></button>
     </div>
     <div id="tab-content" class="fade-in"></div>`;
   // Priority section banner
