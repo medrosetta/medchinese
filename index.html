@@ -113,6 +113,7 @@
 
   /* MAIN */
   main { padding: 36px 44px; max-width: 100%; box-sizing: border-box; }
+  #anatomy-container, #setup-container, #pathway-container, #favorites-container { padding-top: 100px; }
 
   .lesson-header {
     margin-bottom: 28px;
@@ -15866,6 +15867,7 @@ function navSelectPathway() {
   document.getElementById('nav-anatomy').classList.remove('active');
   document.getElementById('nav-setup').classList.remove('active');
   document.getElementById('nav-favorites').classList.remove('active');
+  document.getElementById('nav-pathway').classList.add('active');
   renderPathwayScreen();
 }
 
@@ -16178,15 +16180,23 @@ function toggleDrawer(forceClose) {
 
 // Close drawer when a lesson is selected on mobile
 function selectLessonMobile(li) {
-  selectLesson(li);
-  // On mobile, close the drawer after selection
+  // On mobile, close the drawer first
   if (window.innerWidth <= 768) {
     toggleDrawer(true);
-    // Scroll main content to top
-    const main = document.getElementById('main-content');
-    if (main) main.scrollTop = 0;
-    window.scrollTo(0, 0);
   }
+  // Ensure lessons tab is active and container visible
+  document.getElementById('lessons-container').style.display = '';
+  document.getElementById('anatomy-container').style.display = 'none';
+  document.getElementById('setup-container').style.display = 'none';
+  document.getElementById('favorites-container').style.display = 'none';
+  document.getElementById('pathway-container').style.display = 'none';
+  document.getElementById('nav-lessons').classList.add('active');
+  document.getElementById('nav-anatomy').classList.remove('active');
+  document.getElementById('nav-setup').classList.remove('active');
+  document.getElementById('nav-favorites').classList.remove('active');
+  if (document.getElementById('nav-pathway')) document.getElementById('nav-pathway').classList.remove('active');
+  selectLesson(li);
+  window.scrollTo(0, 0);
 }
 
 // Hide FAB when user is near top of page
