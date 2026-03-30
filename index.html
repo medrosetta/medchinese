@@ -106,13 +106,9 @@
   .app-container {
     display: block;
     min-height: calc(100vh - 108px);
-    margin-left: 260px;
     padding-top: 108px;
   }
-  /* SIDEBAR */
-
-  /* MAIN */
-  main { padding: 36px 44px; max-width: 100%; box-sizing: border-box; }
+  main { padding: 36px 44px 36px calc(260px + 44px); max-width: 100%; box-sizing: border-box; }
   #anatomy-container, #setup-container, #pathway-container, #favorites-container { padding-top: 100px; }
 
   .lesson-header {
@@ -793,15 +789,15 @@
 
     /* Header adjustments */
     header { padding: 0 10px; height: 46px; }
-    .top-nav { top: 46px; position: fixed; left: 0; right: 0; z-index: 190; }
+    .top-nav { overflow-x: auto; }
     .header-sub { display: none; }
     .header-wordmark { font-size: 0.95rem; }
     .lang-btn-en { display: none; }
     .lang-btn { padding: 4px 10px; min-width: 36px; }
 
     /* ── Layout ── */
-    .app-container{display:block;margin-left:0;padding-top:94px}
-    #anatomy-container, #setup-container, #pathway-container, #favorites-container { padding-top: 94px; }
+    .app-container{display:block;padding-top:0}
+
     aside{position:relative;height:auto;max-height:220px;min-width:0}
     main{padding:20px 0;max-width:100%;width:100%;box-sizing:border-box}
     #favorites-content{padding:20px 8px !important}
@@ -816,6 +812,8 @@
     .tab-bar{padding-left:8px;padding-right:8px;box-sizing:border-box}
     .audio-setup-bar{padding-left:8px;padding-right:8px;box-sizing:border-box}
     #setup-content{padding:20px 12px !important;max-width:100% !important}
+    .feedback-overlay{padding:10px;align-items:flex-end}
+    .feedback-panel{max-width:100%;max-height:80vh;overflow-y:auto;border-radius:8px 8px 0 0}
 
     /* ── Header ── */
     header{padding:0 10px;height:46px;display:flex;align-items:center;justify-content:space-between}
@@ -988,7 +986,7 @@
     .mobile-fab.hidden { opacity: 0; pointer-events: none; }
 
     /* Header centring compensation */
-    /* header position handled globally */
+    header { position: relative; }
   }
 
   /* Hide mobile-only elements on desktop */
@@ -2148,7 +2146,7 @@
     .mobile-fab.hidden { opacity: 0; pointer-events: none; }
 
     /* Header centring compensation */
-    /* header position handled globally */
+    header { position: relative; }
   }
 
   /* Hide mobile-only elements on desktop */
@@ -16180,15 +16178,9 @@ function toggleDrawer(forceClose) {
 
 // Close drawer when a lesson is selected on mobile
 function selectLessonMobile(li) {
-  // Debug overlay
-  let dbg = document.getElementById('_dbg');
-  if (!dbg) { dbg = document.createElement('div'); dbg.id = '_dbg'; dbg.style.cssText = 'position:fixed;top:50%;left:5%;right:5%;transform:translateY(-50%);background:red;color:white;font-size:16px;padding:20px;z-index:999999;font-family:monospace;border:4px solid yellow;border-radius:8px;text-align:center'; document.body.appendChild(dbg); }
-  dbg.innerHTML = 'selectLessonMobile called: li=' + li + '<br>';
-
   // On mobile, close the drawer first
   if (window.innerWidth <= 768) {
     toggleDrawer(true);
-    dbg.innerHTML += 'drawer closed<br>';
   }
   // Ensure lessons tab is active and container visible
   document.getElementById('lessons-container').style.display = '';
@@ -16201,15 +16193,8 @@ function selectLessonMobile(li) {
   document.getElementById('nav-setup').classList.remove('active');
   document.getElementById('nav-favorites').classList.remove('active');
   if (document.getElementById('nav-pathway')) document.getElementById('nav-pathway').classList.remove('active');
-  dbg.innerHTML += 'containers set<br>';
-  try {
-    selectLesson(li);
-    dbg.innerHTML += 'selectLesson done, cur=' + cur + '<br>';
-  } catch(e) {
-    dbg.innerHTML += 'ERROR: ' + e.message + '<br>';
-  }
+  selectLesson(li);
   window.scrollTo(0, 0);
-  dbg.innerHTML += 'main-content innerHTML length=' + (document.getElementById('main-content') ? document.getElementById('main-content').innerHTML.length : 'NULL');
 }
 
 // Hide FAB when user is near top of page
