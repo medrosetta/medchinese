@@ -810,6 +810,9 @@
     .tab-bar{padding-left:8px;padding-right:8px;box-sizing:border-box}
     .audio-setup-bar{padding-left:8px;padding-right:8px;box-sizing:border-box}
     #setup-content{padding:20px 12px !important;max-width:100% !important}
+    .feedback-overlay{padding:10px;align-items:flex-end}
+    .feedback-panel{max-width:100%;max-height:80vh;overflow-y:auto;border-radius:8px 8px 0 0}
+    .feedback-comment{height:50px;max-height:50px}
 
     /* ── Header ── */
     header{padding:0 10px;height:46px;display:flex;align-items:center;justify-content:space-between}
@@ -1977,7 +1980,7 @@
     padding: 0;
     line-height: 1;
   }
-  .survey-star.active { opacity: 1; }
+  .survey-star.active { opacity: 1; color: var(--gold); }
   .survey-options {
     display: flex;
     gap: 6px;
@@ -14563,19 +14566,19 @@ function renderAbout(targetEl) {
       <div style="font-family:'DM Serif Display',serif;font-size:1.3rem;font-style:italic;margin-bottom:20px">Why MedChinese Was Created</div>
 
       <div style="font-family:var(--mono);font-size:0.85rem;line-height:1.9;color:var(--ink);margin-bottom:16px">
-        After 15 years of practicing Family Medicine in the San Francisco Bay Area within a Chinese-speaking clinical setting, one thing became clear: improving medical Chinese takes dedication, and the right tools make all the difference.
+        After 15 years of practicing Family Medicine in the San Francisco Bay Area within a Chinese-speaking clinical setting, one thing became clear. I have seen how language barriers can lead to missed opportunities to improve care, and I have also learned that building strong medical Chinese skills takes dedication, with the right tools making all the difference.
       </div>
 
       <div style="font-family:var(--mono);font-size:0.85rem;line-height:1.9;color:var(--ink);margin-bottom:16px">
-        MedChinese was created to be one of those tools — a learning resource built for the realities of clinical practice. Core access is free, and will always remain so. Please share this app with anyone who wants to make a difference for Chinese-speaking patients.
+        MedChinese was created to be one of those tools, a learning resource built for the realities of clinical practice. Core access is free and will always remain so. Please share this app with anyone who wants to make a difference for Chinese-speaking patients.
       </div>
 
       <div style="font-family:var(--mono);font-size:0.85rem;line-height:1.9;color:var(--ink);margin-bottom:16px">
-        This app is for everyone who wants to help Chinese-speaking patients feel heard and understood — physicians, nurses, pharmacists, medical assistants, students, and anyone working to bridge the language gap in healthcare. When patients feel truly understood, and their care team has the ability to navigate even the most difficult conversations, their care improves.
+        This app is for everyone who wants to help Chinese-speaking patients feel heard and understood, physicians, nurses, pharmacists, medical assistants, students, and anyone working to bridge the language gap in healthcare. When patients feel truly understood, and their care team can navigate even the most difficult conversations, their care improves.
       </div>
 
       <div style="background:var(--teal-light);border:1.5px solid var(--teal);padding:16px 20px;font-family:var(--mono);font-size:0.85rem;line-height:1.9;color:var(--ink)">
-        To everyone who has offered feedback and suggestions — this app is better because of you. And to the patients who make this work meaningful every day — thank you for your trust, your resilience, and your inspiration.
+        To everyone who has offered feedback and suggestions, this app is better because of you. And to the patients who make this work meaningful every day, thank you for your trust, your resilience, and your inspiration.
       </div>
     </div>
   `;
@@ -14626,7 +14629,7 @@ function renderFeedbackSurvey(targetEl) {
         <select class="survey-select" id="survey-setting">
           <option value="">— Select —</option>
           <option>Primary Care / Family Medicine</option>
-          <option>Internal Medicine</option>
+          <option>Large Medical Group</option>
           <option>Hospital / Inpatient</option>
           <option>Emergency Department</option>
           <option>Specialty Clinic</option>
@@ -16219,7 +16222,7 @@ window.addEventListener('resize', () => {
 
 // ── Beta Feedback System ─────────────────────────────────────────────────────
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzc-0FKnu-jrjo2XuFzKTN_Tvfy29NthneSgBDDWH8K6gpYCEoSNtrgH9OhxMPxoDIpgA/exec';
-const FEEDBACK_FALLBACK_EMAIL = 'MedRosettaApp@gmail.com';
+const FEEDBACK_FALLBACK_EMAIL = 'waikiulee@gmail.com';
 
 let _feedbackContext = {};
 let _feedbackType = '';
@@ -16561,6 +16564,10 @@ function submitSurvey() {
 function selectSurveyOpt(btn, cls) {
   document.querySelectorAll('.' + cls).forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
+}
+function setStar(btn, n) {
+  document.getElementById('survey-stars').value = n;
+  setSurveyStars(n);
 }
 function setSurveyStars(n) {
   document.querySelectorAll('.survey-star').forEach((s, i) => {
