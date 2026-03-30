@@ -60,9 +60,11 @@
     background: var(--ink);
     color: var(--paper);
     border-bottom: 2px solid var(--gold);
-    position: sticky;
+    position: fixed;
     top: 0;
-    z-index: 100;
+    left: 0;
+    right: 0;
+    z-index: 200;
     flex-shrink: 0;
   }
   .header-left {
@@ -102,14 +104,15 @@
   
   /* LAYOUT */
   .app-container {
-    display: grid;
-    grid-template-columns: 260px 1fr;
-    min-height: calc(100vh - 148px);
+    display: block;
+    min-height: calc(100vh - 108px);
+    margin-left: 260px;
+    padding-top: 108px;
   }
   /* SIDEBAR */
 
   /* MAIN */
-  main { padding: 36px 44px; max-width: 960px; }
+  main { padding: 36px 44px; max-width: 100%; box-sizing: border-box; }
 
   .lesson-header {
     margin-bottom: 28px;
@@ -597,6 +600,11 @@
     display: flex;
     background: var(--cream);
     border-bottom: 2px solid var(--border);
+    position: fixed;
+    top: 52px;
+    left: 0;
+    right: 0;
+    z-index: 190;
   }
     .top-nav-btn {
     padding: 10px 24px;
@@ -770,7 +778,7 @@
     gap: 1px;
   }
   .lang-btn:hover { color: rgba(245,240,232,0.9); border-color: rgba(245,240,232,0.4); background: rgba(255,255,255,0.06); }
-  .lang-btn.active { color: var(--gold); border-color: var(--gold); background: rgba(184,134,11,0.12); }
+  .lang-btn.active { color: var(--red); border-color: var(--red); background: rgba(192,57,43,0.12); }
   .lang-btn-zh { font-family: 'Noto Serif TC', serif; font-size: 1.15rem; font-weight: 700; }
   .lang-btn-en { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; }
 
@@ -784,13 +792,14 @@
 
     /* Header adjustments */
     header { padding: 0 10px; height: 46px; }
+    .top-nav { top: 46px; }
     .header-sub { display: none; }
     .header-wordmark { font-size: 0.95rem; }
     .lang-btn-en { display: none; }
     .lang-btn { padding: 4px 10px; min-width: 36px; }
 
     /* ── Layout ── */
-    .app-container{grid-template-columns:1fr}
+    .app-container{display:block;margin-left:0;padding-top:94px}
     aside{position:relative;height:auto;max-height:220px;min-width:0}
     main{padding:20px 0;max-width:100%;width:100%;box-sizing:border-box}
     #favorites-content{padding:20px 8px !important}
@@ -1112,12 +1121,15 @@
   aside {
     border-right: 2px solid var(--border);
     background: var(--cream);
-    position: sticky;
-    top: 98px;
-    height: calc(100vh - 98px);
+    position: fixed;
+    top: 108px;
+    left: 0;
+    width: 260px;
+    height: calc(100vh - 108px);
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    z-index: 10;
   }
   aside::-webkit-scrollbar { width: 3px; }
   aside::-webkit-scrollbar-thumb { background: var(--border); }
@@ -1127,6 +1139,7 @@
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
+    padding-top: 4px;
   }
   #lesson-list::-webkit-scrollbar { width: 3px; }
   #lesson-list::-webkit-scrollbar-thumb { background: var(--border); }
@@ -2268,12 +2281,15 @@
   aside {
     border-right: 2px solid var(--border);
     background: var(--cream);
-    position: sticky;
-    top: 98px;
-    height: calc(100vh - 98px);
+    position: fixed;
+    top: 108px;
+    left: 0;
+    width: 260px;
+    height: calc(100vh - 108px);
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    z-index: 10;
   }
   aside::-webkit-scrollbar { width: 3px; }
   aside::-webkit-scrollbar-thumb { background: var(--border); }
@@ -2283,6 +2299,7 @@
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
+    padding-top: 4px;
   }
   #lesson-list::-webkit-scrollbar { width: 3px; }
   #lesson-list::-webkit-scrollbar-thumb { background: var(--border); }
@@ -2954,7 +2971,7 @@
 
 <div class="app-container" id="lessons-container">
   <aside>
-    <div class="sidebar-title">MedChinese</div>
+    <div class="sidebar-title" style="display:none"></div>
     <div id="lesson-list"></div>
   </aside>
   <main id="main-content"></main>
