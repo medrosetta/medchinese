@@ -16180,9 +16180,15 @@ function toggleDrawer(forceClose) {
 
 // Close drawer when a lesson is selected on mobile
 function selectLessonMobile(li) {
+  // Debug overlay
+  let dbg = document.getElementById('_dbg');
+  if (!dbg) { dbg = document.createElement('div'); dbg.id = '_dbg'; dbg.style.cssText = 'position:fixed;bottom:0;left:0;right:0;background:rgba(0,0,0,0.85);color:lime;font-size:12px;padding:8px;z-index:9999;font-family:monospace'; document.body.appendChild(dbg); }
+  dbg.innerHTML = 'selectLessonMobile called: li=' + li + '<br>';
+
   // On mobile, close the drawer first
   if (window.innerWidth <= 768) {
     toggleDrawer(true);
+    dbg.innerHTML += 'drawer closed<br>';
   }
   // Ensure lessons tab is active and container visible
   document.getElementById('lessons-container').style.display = '';
@@ -16195,8 +16201,15 @@ function selectLessonMobile(li) {
   document.getElementById('nav-setup').classList.remove('active');
   document.getElementById('nav-favorites').classList.remove('active');
   if (document.getElementById('nav-pathway')) document.getElementById('nav-pathway').classList.remove('active');
-  selectLesson(li);
+  dbg.innerHTML += 'containers set<br>';
+  try {
+    selectLesson(li);
+    dbg.innerHTML += 'selectLesson done, cur=' + cur + '<br>';
+  } catch(e) {
+    dbg.innerHTML += 'ERROR: ' + e.message + '<br>';
+  }
   window.scrollTo(0, 0);
+  dbg.innerHTML += 'main-content innerHTML length=' + (document.getElementById('main-content') ? document.getElementById('main-content').innerHTML.length : 'NULL');
 }
 
 // Hide FAB when user is near top of page
