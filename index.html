@@ -792,7 +792,7 @@
 
     /* Header adjustments */
     header { padding: 0 10px; height: 46px; }
-    .top-nav { top: 46px; }
+    .top-nav { top: 46px; position: fixed; left: 0; right: 0; z-index: 190; }
     .header-sub { display: none; }
     .header-wordmark { font-size: 0.95rem; }
     .lang-btn-en { display: none; }
@@ -986,7 +986,7 @@
     .mobile-fab.hidden { opacity: 0; pointer-events: none; }
 
     /* Header centring compensation */
-    header { position: relative; }
+    /* header position handled globally */
   }
 
   /* Hide mobile-only elements on desktop */
@@ -2146,7 +2146,7 @@
     .mobile-fab.hidden { opacity: 0; pointer-events: none; }
 
     /* Header centring compensation */
-    header { position: relative; }
+    /* header position handled globally */
   }
 
   /* Hide mobile-only elements on desktop */
