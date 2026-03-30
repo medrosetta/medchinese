@@ -14036,6 +14036,70 @@ function renderAudioSetup(targetEl) {
         <button class="feature-thumb-btn" onclick="rateFeature(this,'Audio Setup','down')">👎</button>
       </div>
     </div>
+
+    <!-- Install on Home Screen -->
+    <div style="margin-top:32px;border-top:2px solid var(--border);padding-top:24px">
+      <div style="font-family:'DM Serif Display',serif;font-size:1.3rem;font-style:italic;margin-bottom:4px">📲 Add to Home Screen</div>
+      <div style="font-family:var(--mono);font-size:0.68rem;color:var(--muted);letter-spacing:0.06em;margin-bottom:20px">ACCESS MEDCHINESE AS AN APP — NO APP STORE REQUIRED</div>
+
+      <!-- iOS -->
+      <div style="background:var(--section-bg);border:1.5px solid var(--border);margin-bottom:16px">
+        <div style="background:var(--ink);color:var(--paper);padding:10px 16px;font-family:var(--mono);font-size:0.65rem;letter-spacing:0.12em;display:flex;align-items:center;gap:8px">
+          <span style="font-size:1rem"></span> IOS — SAFARI
+        </div>
+        <div style="padding:16px">
+          <div style="font-family:var(--mono);font-size:0.72rem;line-height:2;color:var(--ink)">
+            <div style="display:flex;gap:10px;align-items:baseline;margin-bottom:4px">
+              <span style="background:var(--teal);color:white;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:0.6rem;flex-shrink:0">1</span>
+              <span>Open <strong>medchinese.com</strong> in Safari</span>
+            </div>
+            <div style="display:flex;gap:10px;align-items:baseline;margin-bottom:4px">
+              <span style="background:var(--teal);color:white;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:0.6rem;flex-shrink:0">2</span>
+              <span>Tap the <strong>Share</strong> button <span style="font-size:1rem">⬆️</span> at the bottom of the screen</span>
+            </div>
+            <div style="display:flex;gap:10px;align-items:baseline;margin-bottom:4px">
+              <span style="background:var(--teal);color:white;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:0.6rem;flex-shrink:0">3</span>
+              <span>Scroll down and tap <strong>Add to Home Screen</strong></span>
+            </div>
+            <div style="display:flex;gap:10px;align-items:baseline">
+              <span style="background:var(--teal);color:white;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:0.6rem;flex-shrink:0">4</span>
+              <span>Tap <strong>Add</strong> — MedChinese appears on your home screen</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Android -->
+      <div style="background:var(--section-bg);border:1.5px solid var(--border);margin-bottom:24px">
+        <div style="background:var(--ink);color:var(--paper);padding:10px 16px;font-family:var(--mono);font-size:0.65rem;letter-spacing:0.12em;display:flex;align-items:center;gap:8px">
+          <span style="font-size:1rem">🤖</span> ANDROID — CHROME
+        </div>
+        <div style="padding:16px">
+          <div style="font-family:var(--mono);font-size:0.72rem;line-height:2;color:var(--ink)">
+            <div style="display:flex;gap:10px;align-items:baseline;margin-bottom:4px">
+              <span style="background:var(--teal);color:white;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:0.6rem;flex-shrink:0">1</span>
+              <span>Open <strong>medchinese.com</strong> in Chrome</span>
+            </div>
+            <div style="display:flex;gap:10px;align-items:baseline;margin-bottom:4px">
+              <span style="background:var(--teal);color:white;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:0.6rem;flex-shrink:0">2</span>
+              <span>Tap the <strong>⋮ menu</strong> (top right)</span>
+            </div>
+            <div style="display:flex;gap:10px;align-items:baseline;margin-bottom:4px">
+              <span style="background:var(--teal);color:white;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:0.6rem;flex-shrink:0">3</span>
+              <span>Tap <strong>Add to Home screen</strong></span>
+            </div>
+            <div style="display:flex;gap:10px;align-items:baseline">
+              <span style="background:var(--teal);color:white;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:0.6rem;flex-shrink:0">4</span>
+              <span>Tap <strong>Add</strong> — MedChinese appears on your home screen</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--teal-light);border:1.5px solid var(--teal);padding:12px 16px;font-family:var(--mono);font-size:0.68rem;line-height:1.7;color:var(--ink)">
+        💡 <strong>Tip:</strong> Once installed, MedChinese opens full-screen with no browser bars — just like a native app. Audio and all features work the same way.
+      </div>
+    </div>
   `;
 }
 
@@ -14459,8 +14523,39 @@ function renderMain() {
 function renderSetupPage() {
   const target = document.getElementById('setup-content');
   renderAudioSetup(target);
+  // Append About section
+  renderAbout(target);
   // Append feedback survey after audio setup
   renderFeedbackSurvey(target);
+}
+
+function renderAbout(targetEl) {
+  const el = targetEl || document.getElementById('setup-content');
+  if (!el) return;
+  const div = document.createElement('div');
+  div.innerHTML = `
+    <div style="margin-top:36px;padding-top:24px;border-top:2px solid var(--border)">
+      <div class="lesson-label" style="margin-bottom:16px">ABOUT 關於</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:1.3rem;font-style:italic;margin-bottom:20px">Why MedChinese Was Created</div>
+
+      <div style="font-family:var(--mono);font-size:0.75rem;line-height:1.9;color:var(--ink);margin-bottom:16px">
+        After 15 years of practicing Family Medicine in the San Francisco Bay Area within a Chinese-speaking clinical setting, one thing became clear: improving medical Chinese takes dedication, and the right tools make all the difference.
+      </div>
+
+      <div style="font-family:var(--mono);font-size:0.75rem;line-height:1.9;color:var(--ink);margin-bottom:16px">
+        MedChinese was created to be one of those tools — a learning resource built for the realities of clinical practice. Core access is free, and will always remain so. Please share this app with anyone who wants to make a difference for Chinese-speaking patients.
+      </div>
+
+      <div style="font-family:var(--mono);font-size:0.75rem;line-height:1.9;color:var(--ink);margin-bottom:16px">
+        This app is for everyone who wants to help Chinese-speaking patients feel heard and understood — physicians, nurses, pharmacists, medical assistants, students, and anyone working to bridge the language gap in healthcare. When patients feel truly understood, and their care team has the ability to navigate even the most difficult conversations, their care improves.
+      </div>
+
+      <div style="background:var(--teal-light);border:1.5px solid var(--teal);padding:16px 20px;font-family:var(--mono);font-size:0.75rem;line-height:1.9;color:var(--ink)">
+        To everyone who has offered feedback and suggestions — this app is better because of you. And to the patients who make this work meaningful every day — thank you for your trust, your resilience, and your inspiration.
+      </div>
+    </div>
+  `;
+  el.appendChild(div);
 }
 
 function renderFeedbackSurvey(targetEl) {
