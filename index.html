@@ -36,18 +36,12 @@
     --section-bg: #faf7f2;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html {
-    overflow-x: hidden;
-    max-width: 100%;
-  }
   body {
     font-family: 'DM Serif Display', 'Noto Serif TC', serif;
     background: var(--paper);
     color: var(--ink);
     min-height: 100vh;
     overflow-x: hidden;
-    max-width: 100%;
-    position: relative;
   }
   /* HEADER */
   /* ── COMPACT HEADER ── */
@@ -109,6 +103,9 @@
     margin-left: 260px;
     padding-top: 108px;
   }
+  /* SIDEBAR */
+
+  /* MAIN */
   main { padding: 36px 44px; max-width: 100%; box-sizing: border-box; }
   #anatomy-container, #setup-container, #pathway-container, #favorites-container { padding-top: 100px; }
 
@@ -786,11 +783,10 @@
     .top-nav-en { display: none; }
     .top-nav-mobile { display: block; font-size: 0.9rem; font-family: 'DM Mono', monospace; letter-spacing: 0.04em; }
     .top-nav-btn { padding: 10px 0; flex: 1; font-size: 0.7rem; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-    .top-nav { overflow-x: auto; }
+    .top-nav { overflow-x: visible; }
 
     /* Header adjustments */
     header { padding: 0 10px; height: 46px; }
-    .top-nav { overflow-x: auto; }
     .header-sub { display: none; }
     .header-wordmark { font-size: 0.95rem; }
     .lang-btn-en { display: none; }
@@ -798,9 +794,10 @@
 
     /* ── Layout ── */
     .app-container{display:block;margin-left:0;padding-top:94px}
+    #anatomy-container, #setup-container, #pathway-container, #favorites-container { padding-top: 94px; }
 
     aside{position:relative;height:auto;max-height:220px;min-width:0}
-    main{padding:20px 0;max-width:100%;width:100%;box-sizing:border-box}
+    main{padding:20px 14px;max-width:100%}
     #favorites-content{padding:20px 8px !important}
     .lesson-header{padding-left:8px;padding-right:8px;box-sizing:border-box}
     .vocab-play-bar{margin-left:0;margin-right:0;width:100%;box-sizing:border-box}
@@ -813,15 +810,13 @@
     .tab-bar{padding-left:8px;padding-right:8px;box-sizing:border-box}
     .audio-setup-bar{padding-left:8px;padding-right:8px;box-sizing:border-box}
     #setup-content{padding:20px 12px !important;max-width:100% !important}
-    .feedback-overlay{padding:10px;align-items:flex-end}
-    .feedback-panel{max-width:100%;max-height:80vh;overflow-y:auto;border-radius:8px 8px 0 0}
 
     /* ── Header ── */
     header{padding:0 10px;height:46px;display:flex;align-items:center;justify-content:space-between}
-    .header-badge{font-size:0.58rem;letter-spacing:0.06em}
     .header-left{display:flex;align-items:center;gap:8px;flex-shrink:0;padding-left:42px}
     .header-wordmark{font-size:0.95rem}
     .header-sub{display:none}
+    .header-badge{font-size:0.58rem;letter-spacing:0.06em}
 
     /* ── Lang switcher ── */
     .lang-switcher{padding:8px 12px;gap:8px}
@@ -987,7 +982,7 @@
     .mobile-fab.hidden { opacity: 0; pointer-events: none; }
 
     /* Header centring compensation */
-    header { position: relative; }
+    /* header position handled globally */
   }
 
   /* Hide mobile-only elements on desktop */
@@ -1038,6 +1033,7 @@
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
+    padding-top: 4px;
   }
   #lesson-list::-webkit-scrollbar { width: 3px; }
   #lesson-list::-webkit-scrollbar-thumb { background: var(--border); }
@@ -1119,6 +1115,7 @@
   .lesson-btn.active .lesson-title-zh { color: var(--ink); }
 
   /* ── SIDEBAR: module stripe design ── */
+  @media(min-width:769px){
   aside {
     border-right: 2px solid var(--border);
     background: var(--cream);
@@ -1134,6 +1131,7 @@
   }
   aside::-webkit-scrollbar { width: 3px; }
   aside::-webkit-scrollbar-thumb { background: var(--border); }
+  }
   
   /* Scroll container below title */
   #lesson-list {
@@ -2147,7 +2145,7 @@
     .mobile-fab.hidden { opacity: 0; pointer-events: none; }
 
     /* Header centring compensation */
-    header { position: relative; }
+    /* header position handled globally */
   }
 
   /* Hide mobile-only elements on desktop */
@@ -2198,6 +2196,7 @@
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
+    padding-top: 4px;
   }
   #lesson-list::-webkit-scrollbar { width: 3px; }
   #lesson-list::-webkit-scrollbar-thumb { background: var(--border); }
@@ -2279,6 +2278,7 @@
   .lesson-btn.active .lesson-title-zh { color: var(--ink); }
 
   /* ── SIDEBAR: module stripe design ── */
+  @media(min-width:769px){
   aside {
     border-right: 2px solid var(--border);
     background: var(--cream);
@@ -2294,6 +2294,7 @@
   }
   aside::-webkit-scrollbar { width: 3px; }
   aside::-webkit-scrollbar-thumb { background: var(--border); }
+  }
   
   /* Scroll container below title */
   #lesson-list {
@@ -7565,7 +7566,7 @@ const LESSONS = [
       {zh:"我可以轉介你去見輔導員或者心理醫生",jp:"ngo5 ho2 yi5 zyun2 gaai3 nei5 heoi3 gin3 fu6 dou6 jyun4 waak6 ze2 sam1 lei5 ji1 saang1",en:"I can refer you to a counsellor or psychologist"},
     ]},
     { title:"Infectious Disease & Immigration Health", zh:"感染病及移民健康",
-      note:"East Asian immigrants carry a significantly different infectious disease burden than the general US population. <strong>HBV</strong> prevalence is 10–15% in first-generation East Asian immigrants — screen all new patients. <strong>Latent tuberculosis (TB)</strong> is more prevalent in foreign-born patients; follow USPSTF recommendations for testing. <strong>Strongyloidiasis</strong> and other parasitic infections are underrecognized in immigrants from endemic regions and can reactivate catastrophically with immunosuppression (steroids, biologics, transplant). <strong>H. pylori</strong> prevalence is higher and warrants more aggressive test-and-treat. These are not rare conditions in this population — they are common and routinely missed.",
+      note:"East Asian immigrants carry a significantly different infectious disease burden than the general US population. HBV prevalence is 10–15% in first-generation East Asian immigrants — screen all new patients. Latent tuberculosis is more prevalent in foreign-born patients; follow USPSTF recommendations for testing. Strongyloidiasis and other parasitic infections are underrecognized in immigrants from endemic regions and can reactivate catastrophically with immunosuppression (steroids, biologics, transplant). H. pylori prevalence is higher and warrants more aggressive test-and-treat. These are not rare conditions in this population — they are common and routinely missed.",
       vocab:[
       {zh:"乙型肝炎篩查",jp:"jyut6 jing4 gon1 jim4 sai1 caa4",en:"Hepatitis B screening"},
       {zh:"你係咪知道自己係乙型肝炎帶菌者呀？",jp:"nei5 hai6 mai6 zi1 dou3 zi6 gei2 hai6 jyut6 jing4 gon1 jim4 daai3 kwan2 ze2 aa3?",en:"Do you know if you are a hepatitis B carrier?"},
@@ -12454,7 +12455,7 @@ const LESSONS_MANDARIN = [
       {zh:"我可以转介您去看辅导员或心理医生",jp:"wǒ kě yǐ zhuǎn jiè nín qù kàn fǔ dǎo yuán huò xīn lǐ yī shēng",en:"I can refer you to a counsellor or psychologist"},
     ]},
     { title:"Infectious Disease & Immigration Health", zh:"感染病及移民健康",
-      note:"East Asian immigrants carry a significantly different infectious disease burden than the general US population. <strong>HBV</strong> prevalence is 10–15% in first-generation East Asian immigrants — screen all new patients. <strong>Latent tuberculosis (TB)</strong> is more prevalent in foreign-born patients; follow USPSTF recommendations for testing. <strong>Strongyloidiasis</strong> and other parasitic infections are underrecognized in immigrants from endemic regions and can reactivate catastrophically with immunosuppression (steroids, biologics, transplant). <strong>H. pylori</strong> prevalence is higher and warrants more aggressive test-and-treat. These are not rare conditions in this population — they are common and routinely missed.",
+      note:"East Asian immigrants carry a significantly different infectious disease burden than the general US population. HBV prevalence is 10–15% in first-generation East Asian immigrants — screen all new patients. Latent tuberculosis is more prevalent in foreign-born patients; follow USPSTF recommendations for testing. Strongyloidiasis and other parasitic infections are underrecognized in immigrants from endemic regions and can reactivate catastrophically with immunosuppression (steroids, biologics, transplant). H. pylori prevalence is higher and warrants more aggressive test-and-treat. These are not rare conditions in this population — they are common and routinely missed.",
       vocab:[
       {zh:"乙型肝炎筛查",jp:"yǐ xíng gān yán shāi chá",en:"Hepatitis B screening"},
       {zh:"您知道自己是乙型肝炎携带者吗？",jp:"nín zhī dào zì jǐ shì yǐ xíng gān yán xié dài zhě ma?",en:"Do you know if you are a hepatitis B carrier?"},
@@ -16179,23 +16180,15 @@ function toggleDrawer(forceClose) {
 
 // Close drawer when a lesson is selected on mobile
 function selectLessonMobile(li) {
-  // On mobile, close the drawer first
+  selectLesson(li);
+  // On mobile, close the drawer after selection
   if (window.innerWidth <= 768) {
     toggleDrawer(true);
+    // Scroll main content to top
+    const main = document.getElementById('main-content');
+    if (main) main.scrollTop = 0;
+    window.scrollTo(0, 0);
   }
-  // Ensure lessons tab is active and container visible
-  document.getElementById('lessons-container').style.display = '';
-  document.getElementById('anatomy-container').style.display = 'none';
-  document.getElementById('setup-container').style.display = 'none';
-  document.getElementById('favorites-container').style.display = 'none';
-  document.getElementById('pathway-container').style.display = 'none';
-  document.getElementById('nav-lessons').classList.add('active');
-  document.getElementById('nav-anatomy').classList.remove('active');
-  document.getElementById('nav-setup').classList.remove('active');
-  document.getElementById('nav-favorites').classList.remove('active');
-  if (document.getElementById('nav-pathway')) document.getElementById('nav-pathway').classList.remove('active');
-  selectLesson(li);
-  window.scrollTo(0, 0);
 }
 
 // Hide FAB when user is near top of page
@@ -16205,8 +16198,11 @@ function updateFabVisibility() {
   if (!fab) return;
   // Hide FAB if drawer is open
   const aside = document.querySelector('aside');
-  if (aside && aside.classList.contains('drawer-open')) return;
-  fab.classList.toggle('hidden', window.scrollY < 120);
+  if (aside && aside.classList.contains('drawer-open')) {
+    fab.classList.add('hidden');
+    return;
+  }
+  fab.classList.remove('hidden');
 }
 
 window.addEventListener('scroll', updateFabVisibility, { passive: true });
