@@ -813,6 +813,7 @@
 
     /* ── Header ── */
     header{padding:0 10px;height:46px;display:flex;align-items:center;justify-content:space-between}
+    .top-nav{top:46px}
     .header-left{display:flex;align-items:center;gap:8px;flex-shrink:0;padding-left:42px}
     .header-wordmark{font-size:0.95rem}
     .header-sub{display:none}
@@ -13527,6 +13528,7 @@ function navSelectLessons() {
   document.getElementById('nav-setup').classList.remove('active');
   document.getElementById('nav-favorites').classList.remove('active');
   if (document.getElementById('nav-pathway')) document.getElementById('nav-pathway').classList.remove('active');
+  if (document.getElementById('nav-pathway')) document.getElementById('nav-pathway').classList.remove('active');
   anatMode = false;
   renderSidebar();
   renderPathwayBanner();
@@ -13543,6 +13545,7 @@ function navSelectAnatomy() {
   document.getElementById('nav-lessons').classList.remove('active');
   document.getElementById('nav-setup').classList.remove('active');
   document.getElementById('nav-favorites').classList.remove('active');
+  if (document.getElementById('nav-pathway')) document.getElementById('nav-pathway').classList.remove('active');
   openAnatomyMap();
 }
 
@@ -13557,6 +13560,7 @@ function navSelectSetup() {
   document.getElementById('nav-lessons').classList.remove('active');
   document.getElementById('nav-anatomy').classList.remove('active');
   document.getElementById('nav-favorites').classList.remove('active');
+  if (document.getElementById('nav-pathway')) document.getElementById('nav-pathway').classList.remove('active');
   renderSetupPage();
 }
 
@@ -13571,6 +13575,7 @@ function navSelectFavorites() {
   document.getElementById('nav-lessons').classList.remove('active');
   document.getElementById('nav-anatomy').classList.remove('active');
   document.getElementById('nav-setup').classList.remove('active');
+  if (document.getElementById('nav-pathway')) document.getElementById('nav-pathway').classList.remove('active');
   renderFavorites();
 }
 
