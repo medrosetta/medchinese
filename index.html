@@ -256,7 +256,7 @@
   }
   .audio-btn {
     position: absolute;
-    top: 10px; right: 10px;
+    bottom: 8px; right: 8px;
     width: 26px; height: 26px;
     border: 1.5px solid var(--border);
     background: var(--cream);
@@ -809,7 +809,7 @@
     .lesson-rating-row{padding-left:8px;padding-right:8px;box-sizing:border-box}
     .tab-bar{padding-left:8px;padding-right:8px;box-sizing:border-box}
     .audio-setup-bar{padding-left:8px;padding-right:8px;box-sizing:border-box}
-    #setup-content{padding:20px 12px !important;max-width:100% !important}
+    #setup-content{padding:20px 12px !important;max-width:100% !important;overflow-x:hidden !important}
     .feedback-overlay{padding:10px;align-items:flex-end}
     .feedback-panel{max-width:100%;max-height:80vh;overflow-y:auto;border-radius:8px 8px 0 0}
     .feedback-comment{height:50px;max-height:50px}
@@ -853,8 +853,8 @@
     .vocab-play-progress{width:100%;margin-top:2px}
 
     /* ── Vocab cards ── */
-    .vocab-grid{gap:6px}
-    .vocab-card{padding:10px 8px 6px 8px}
+    .vocab-grid{gap:4px;grid-template-columns:repeat(2,1fr)}
+    .vocab-card{padding:8px 6px 6px 6px}
     
     .vocab-zh{font-size:1.4rem}
     .vocab-pinyin{font-size:0.65rem}
@@ -904,16 +904,24 @@
     /* Sidebar becomes a slide-in drawer */
     aside {
       position: fixed !important;
-      top: 0;
+      top: 100px;
       left: 0;
-      height: 100vh !important;
-      max-height: 100vh !important;
+      height: calc(100vh - 100px) !important;
+      max-height: calc(100vh - 100px) !important;
       width: 82vw;
       max-width: 320px;
       z-index: 100;
       transform: translateX(-100%);
       transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
       box-shadow: 4px 0 24px rgba(0,0,0,0.18);
+      overflow: hidden;
+    }
+    aside #lesson-list {
+      overflow-y: scroll !important;
+      -webkit-overflow-scrolling: touch !important;
+      overscroll-behavior: contain;
+      height: 100%;
+      touch-action: pan-y;
     }
     aside.drawer-open {
       transform: translateX(0);
@@ -2064,16 +2072,24 @@
     /* Sidebar becomes a slide-in drawer */
     aside {
       position: fixed !important;
-      top: 0;
+      top: 100px;
       left: 0;
-      height: 100vh !important;
-      max-height: 100vh !important;
+      height: calc(100vh - 100px) !important;
+      max-height: calc(100vh - 100px) !important;
       width: 82vw;
       max-width: 320px;
       z-index: 100;
       transform: translateX(-100%);
       transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
       box-shadow: 4px 0 24px rgba(0,0,0,0.18);
+      overflow: hidden;
+    }
+    aside #lesson-list {
+      overflow-y: scroll !important;
+      -webkit-overflow-scrolling: touch !important;
+      overscroll-behavior: contain;
+      height: 100%;
+      touch-action: pan-y;
     }
     aside.drawer-open {
       transform: translateX(0);
@@ -2918,11 +2934,11 @@
   </div>
   <div class="header-right" id="lang-switcher">
     <button class="lang-btn active" id="lang-btn-yue" onclick="setLang('yue')">
-      <span class="lang-btn-zh">廣東話</span>
+      <span class="lang-btn-zh">粵語</span>
       <span class="lang-btn-en">Cantonese</span>
     </button>
     <button class="lang-btn" id="lang-btn-cmn" onclick="setLang('cmn')">
-      <span class="lang-btn-zh">普通話</span>
+      <span class="lang-btn-zh">國語</span>
       <span class="lang-btn-en">Mandarin</span>
     </button>
   </div>
@@ -13149,15 +13165,30 @@ function pickEnglishVoice(voices) {
   );
 }
 
+function saveAzureEnVoice(voice) {
+  localStorage.setItem('clinlingua_azure_voice_en', voice);
+}
+
+function previewAzureEnVoice() {
+  const voice = localStorage.getItem('clinlingua_azure_voice_en') || 'en-US-JennyNeural';
+  speakAzureVoice('Hello, welcome to MedChinese. This is the English drill voice.', voice, null);
+}
+
 function speakEnglish(text, onEnd) {
-  if (!synth) { if (onEnd) onEnd(); return; }
-  synth.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.rate = speechRate < 0.8 ? 0.72 : 0.88; u.pitch = 1;
-  const v = pickEnglishVoice(synth.getVoices());
-  if (v) { u.voice = v; u.lang = v.lang; } else { u.lang = 'en-US'; }
-  u.onend = onEnd || null;
-  synth.speak(u);
+  const azureVoice = localStorage.getItem('clinlingua_azure_voice_en') || 'en-US-JennyNeural';
+  speakAzureVoice(text, azureVoice, onEnd).then(ok => {
+    if (!ok) {
+      // Fallback to Web Speech API
+      if (!synth) { if (onEnd) onEnd(); return; }
+      synth.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.rate = speechRate < 0.8 ? 0.72 : 0.88; u.pitch = 1;
+      const v = pickEnglishVoice(synth.getVoices());
+      if (v) { u.voice = v; u.lang = v.lang; } else { u.lang = 'en-US'; }
+      u.onend = onEnd || null;
+      synth.speak(u);
+    }
+  });
 }
 
 // ─── SIDEBAR ───
@@ -13737,7 +13768,7 @@ function renderVocab() {
                 <div class="vocab-zh">${v.zh}</div>
                 <div class="vocab-jyutping" title="${currentLang === 'cmn' ? 'Pinyin' : 'Jyutping'}">${v.jp}</div>
                 <div class="vocab-en">${v.en}</div>
-                <div class="thumb-bar" data-zh="${v.zh}" data-en="${v.en}"><button class="thumb-btn" title="Useful in clinical practice" onclick="thumbVocabEl(this,'up')">👍</button><button class="thumb-btn" title="Not useful / low priority" onclick="thumbVocabEl(this,'down')">👎</button><button class="flag-btn" title="Report an error" onclick="event.stopPropagation();openFeedbackEl(this)">🚩</button><button class="fav-btn ${isStarred?'starred':''}" id="fbtn-${cur}-${si}-${vi}" onclick="event.stopPropagation();toggleFavorite(${cur},${si},${vi})" title="${isStarred?'Remove from favorites':'Add to favorites'}">${isStarred?'★':'☆'}</button></div>
+                <div class="thumb-bar" data-zh="${v.zh}" data-en="${v.en}"><button class="thumb-btn" title="Useful in clinical practice" onclick="thumbVocabEl(this,'up')">👍</button><button class="thumb-btn" title="Not useful / low priority" onclick="thumbVocabEl(this,'down')">👎</button><button class="flag-btn" title="Report an error" onclick="event.stopPropagation();openFeedbackEl(this)">💬</button><button class="fav-btn ${isStarred?'starred':''}" id="fbtn-${cur}-${si}-${vi}" onclick="event.stopPropagation();toggleFavorite(${cur},${si},${vi})" title="${isStarred?'Remove from favorites':'Add to favorites'}">${isStarred?'★':'☆'}</button></div>
               </div>`;}).join('')}
           </div>
         </div>
@@ -13955,6 +13986,7 @@ function renderAudioSetup(targetEl) {
   const savedCmnVoice = localStorage.getItem('clinlingua_azure_voice_cmn') || 'zh-CN-XiaoxiaoNeural';
   const savedYuePatientVoice = localStorage.getItem('clinlingua_azure_voice_yue_patient') || 'zh-HK-WanLungNeural';
   const savedCmnPatientVoice = localStorage.getItem('clinlingua_azure_voice_cmn_patient') || 'zh-CN-YunxiNeural';
+  const savedEnVoice = localStorage.getItem('clinlingua_azure_voice_en') || 'en-US-JennyNeural';
 
   el.innerHTML = `
     <div class="lesson-header fade-in">
@@ -13976,7 +14008,7 @@ function renderAudioSetup(targetEl) {
       <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;font-style:italic;margin-bottom:6px">廣東話 Cantonese Voice</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:6px">
         <div>
-          <div style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">DOCTOR 醫生</div>
+          <div style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">NARRATOR / DOCTOR 旁白／醫生</div>
           <div style="display:flex;gap:6px;align-items:center">
             <select id="voice-yue-select" onchange="saveAzureVoice('yue', this.value)"
               style="font-family:var(--mono);font-size:0.72rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
@@ -14013,7 +14045,7 @@ function renderAudioSetup(targetEl) {
       <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;font-style:italic;margin-bottom:6px">普通話 Mandarin Voice</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:6px">
         <div>
-          <div style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">DOCTOR 醫生</div>
+          <div style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">NARRATOR / DOCTOR 旁白／醫生</div>
           <div style="display:flex;gap:6px;align-items:center">
             <select id="voice-cmn-select" onchange="saveAzureVoice('cmn', this.value)"
               style="font-family:var(--mono);font-size:0.72rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
@@ -14044,6 +14076,31 @@ function renderAudioSetup(targetEl) {
             </button>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- English Drill Voice -->
+    <div style="margin-bottom:28px">
+      <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;font-style:italic;margin-bottom:6px">English Drill Voice</div>
+      <div style="font-family:var(--mono);font-size:0.68rem;color:var(--muted);margin-bottom:12px">Used for EN → 中 and 中 → EN drills. Azure Neural TTS.</div>
+      <div style="display:flex;gap:6px;align-items:center">
+        <select id="voice-en-select" onchange="saveAzureEnVoice(this.value)"
+          style="font-family:var(--mono);font-size:0.72rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
+          <option value="en-US-JennyNeural"   ${savedEnVoice === 'en-US-JennyNeural'   ? 'selected' : ''}>Jenny — Female, US ★</option>
+          <option value="en-US-AriaNeural"    ${savedEnVoice === 'en-US-AriaNeural'    ? 'selected' : ''}>Aria — Female, US</option>
+          <option value="en-US-GuyNeural"     ${savedEnVoice === 'en-US-GuyNeural'     ? 'selected' : ''}>Guy — Male, US</option>
+          <option value="en-US-DavisNeural"   ${savedEnVoice === 'en-US-DavisNeural'   ? 'selected' : ''}>Davis — Male, US</option>
+          <option value="en-GB-SoniaNeural"   ${savedEnVoice === 'en-GB-SoniaNeural'   ? 'selected' : ''}>Sonia — Female, UK</option>
+          <option value="en-GB-RyanNeural"    ${savedEnVoice === 'en-GB-RyanNeural'    ? 'selected' : ''}>Ryan — Male, UK</option>
+          <option value="en-AU-NatashaNeural" ${savedEnVoice === 'en-AU-NatashaNeural' ? 'selected' : ''}>Natasha — Female, AU</option>
+          <option value="en-AU-WilliamNeural" ${savedEnVoice === 'en-AU-WilliamNeural' ? 'selected' : ''}>William — Male, AU</option>
+          <option value="en-CA-ClaraNeural"   ${savedEnVoice === 'en-CA-ClaraNeural'   ? 'selected' : ''}>Clara — Female, CA</option>
+          <option value="en-CA-LiamNeural"    ${savedEnVoice === 'en-CA-LiamNeural'    ? 'selected' : ''}>Liam — Male, CA</option>
+        </select>
+        <button onclick="previewAzureEnVoice()"
+          style="font-family:var(--mono);font-size:0.58rem;letter-spacing:0.06em;text-transform:uppercase;background:var(--ink);color:var(--paper);border:none;padding:7px 12px;cursor:pointer;white-space:nowrap">
+          ▶
+        </button>
       </div>
     </div>
 
@@ -14249,7 +14306,7 @@ function renderDialogue() {
               </button>
               <button class="thumb-btn" style="font-size:0.7rem;padding:2px 6px" title="Line appropriate / helpful" onclick="(function(b){var l=b.closest('[id^=dline-]');rateDialogueLine(b,l.querySelector('.line-zh').textContent,l.querySelector('.line-en').textContent.substring(0,60),'up')})(this)">👍</button>
               <button class="thumb-btn" style="font-size:0.7rem;padding:2px 6px" title="Line not appropriate" onclick="(function(b){var l=b.closest('[id^=dline-]');rateDialogueLine(b,l.querySelector('.line-zh').textContent,l.querySelector('.line-en').textContent.substring(0,60),'down')})(this)">👎</button>
-              <button class="dialogue-flag-btn" title="Report an issue" onclick="(function(b){var line=b.closest('[id^=dline-]');openFeedback(line.querySelector('.line-zh').textContent,line.querySelector('.line-en').textContent.substring(0,60),getLessonName(cur),b)})(this)">🚩</button>
+              <button class="dialogue-flag-btn" title="Report an issue" onclick="(function(b){var line=b.closest('[id^=dline-]');openFeedback(line.querySelector('.line-zh').textContent,line.querySelector('.line-en').textContent.substring(0,60),getLessonName(cur),b)})(this)">💬</button>
             </div>
           </div>
         </div>`;
@@ -15545,7 +15602,7 @@ function renderAnatomyMap() {
         <div style="display:flex;gap:8px;align-items:center">
           <button class="feature-thumb-btn" onclick="rateFeature(this,'Anatomy Map','up')" title="Feature useful">👍</button>
           <button class="feature-thumb-btn" onclick="rateFeature(this,'Anatomy Map','down')" title="Not useful">👎</button>
-          <button class="flag-btn" style="opacity:0.5" title="Report issue with Body Map" onclick="openFeedback('Anatomy Map','Interactive Body Map','Anatomy Map',this)">🚩</button>
+          <button class="flag-btn" style="opacity:0.5" title="Report issue with Body Map" onclick="openFeedback('Anatomy Map','Interactive Body Map','Anatomy Map',this)">💬</button>
         </div>
       </div>
     </div>
@@ -16180,10 +16237,14 @@ function toggleDrawer(forceClose) {
     aside.classList.remove('drawer-open');
     backdrop.classList.remove('open');
     if (fab) fab.classList.remove('hidden');
+    document.body.style.overflow = '';
   } else {
+    // Switch to Lessons tab when opening drawer
+    navSelectLessons();
     aside.classList.add('drawer-open');
     backdrop.classList.add('open');
     if (fab) fab.classList.add('hidden');
+    document.body.style.overflow = 'hidden';
   }
 }
 
@@ -16370,7 +16431,7 @@ function openFeedback(zh, en, lessonName, sourceBtn) {
   _feedbackSourceBtn = sourceBtn || null;
   _feedbackContext = { item: (zh || '') + (en ? ' — ' + en : ''), lesson: lessonName || '' };
   _feedbackType = '';
-  document.getElementById('feedback-overlay-title').textContent = '🚩 Report an Issue';
+  document.getElementById('feedback-overlay-title').textContent = '💬 Report an Issue';
   document.getElementById('feedback-context-label').textContent =
     _feedbackContext.item + (lessonName ? ' · ' + lessonName : '') +
     ' · ' + (currentLang === 'cmn' ? 'Mandarin' : 'Cantonese');
@@ -16595,7 +16656,7 @@ function setSurveyStars(n) {
   <!-- Beta Feedback Overlay -->
   <div class="feedback-overlay" id="feedback-overlay">
     <div class="feedback-panel">
-      <h3 id="feedback-overlay-title">🚩 Report an Issue</h3>
+      <h3 id="feedback-overlay-title">💬 Report an Issue</h3>
       <div class="feedback-context" id="feedback-context-label"></div>
 
       <div id="feedback-error-section">
