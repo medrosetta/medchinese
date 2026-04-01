@@ -904,10 +904,10 @@
     /* Sidebar becomes a slide-in drawer */
     aside {
       position: fixed !important;
-      top: 100px;
+      top: 0;
       left: 0;
-      height: calc(100vh - 100px) !important;
-      max-height: calc(100vh - 100px) !important;
+      height: 100vh !important;
+      max-height: 100vh !important;
       width: 82vw;
       max-width: 320px;
       z-index: 100;
@@ -2072,10 +2072,10 @@
     /* Sidebar becomes a slide-in drawer */
     aside {
       position: fixed !important;
-      top: 100px;
+      top: 0;
       left: 0;
-      height: calc(100vh - 100px) !important;
-      max-height: calc(100vh - 100px) !important;
+      height: 100vh !important;
+      max-height: 100vh !important;
       width: 82vw;
       max-width: 320px;
       z-index: 100;
@@ -13555,6 +13555,7 @@ function navSelectLessons() {
   trackEvent('tab_view', { tab_name: 'Lessons' });
   document.getElementById('lessons-container').style.display = '';
   document.getElementById('anatomy-container').style.display = 'none';
+  document.body.style.overflow = '';
   document.getElementById('setup-container').style.display = 'none';
   document.getElementById('favorites-container').style.display = 'none';
   document.getElementById('pathway-container').style.display = 'none';
@@ -13581,6 +13582,7 @@ function navSelectAnatomy() {
   document.getElementById('nav-setup').classList.remove('active');
   document.getElementById('nav-favorites').classList.remove('active');
   if (document.getElementById('nav-pathway')) document.getElementById('nav-pathway').classList.remove('active');
+  document.body.style.overflow = '';
   openAnatomyMap();
 }
 
@@ -13596,6 +13598,7 @@ function navSelectSetup() {
   document.getElementById('nav-anatomy').classList.remove('active');
   document.getElementById('nav-favorites').classList.remove('active');
   if (document.getElementById('nav-pathway')) document.getElementById('nav-pathway').classList.remove('active');
+  document.body.style.overflow = '';
   renderSetupPage();
 }
 
@@ -13611,6 +13614,7 @@ function navSelectFavorites() {
   document.getElementById('nav-anatomy').classList.remove('active');
   document.getElementById('nav-setup').classList.remove('active');
   if (document.getElementById('nav-pathway')) document.getElementById('nav-pathway').classList.remove('active');
+  document.body.style.overflow = '';
   renderFavorites();
 }
 
@@ -14012,9 +14016,9 @@ function renderAudioSetup(targetEl) {
           <div style="display:flex;gap:6px;align-items:center">
             <select id="voice-yue-select" onchange="saveAzureVoice('yue', this.value)"
               style="font-family:var(--mono);font-size:0.72rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
-              <option value="zh-HK-HiuGaaiNeural" ${savedYueVoice === 'zh-HK-HiuGaaiNeural' ? 'selected' : ''}>HiuGaai — Female ★</option>
-              <option value="zh-HK-HiuMaanNeural" ${savedYueVoice === 'zh-HK-HiuMaanNeural' ? 'selected' : ''}>HiuMaan — Female</option>
-              <option value="zh-HK-WanLungNeural" ${savedYueVoice === 'zh-HK-WanLungNeural' ? 'selected' : ''}>WanLung — Male</option>
+              <option value="zh-HK-HiuGaaiNeural" ${savedYueVoice === 'zh-HK-HiuGaaiNeural' ? 'selected' : ''}>HiuGaai (F) ★</option>
+              <option value="zh-HK-HiuMaanNeural" ${savedYueVoice === 'zh-HK-HiuMaanNeural' ? 'selected' : ''}>HiuMaan (F)</option>
+              <option value="zh-HK-WanLungNeural" ${savedYueVoice === 'zh-HK-WanLungNeural' ? 'selected' : ''}>WanLung (M)</option>
             </select>
             <button onclick="previewAzureVoice('yue')"
               style="font-family:var(--mono);font-size:0.58rem;letter-spacing:0.06em;text-transform:uppercase;background:var(--ink);color:var(--paper);border:none;padding:7px 12px;cursor:pointer;white-space:nowrap">
@@ -14027,9 +14031,9 @@ function renderAudioSetup(targetEl) {
           <div style="display:flex;gap:6px;align-items:center">
             <select id="voice-yue-patient-select" onchange="saveAzureVoice('yue_patient', this.value)"
               style="font-family:var(--mono);font-size:0.72rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
-              <option value="zh-HK-WanLungNeural" ${savedYuePatientVoice === 'zh-HK-WanLungNeural' ? 'selected' : ''}>WanLung — Male ★</option>
-              <option value="zh-HK-HiuGaaiNeural" ${savedYuePatientVoice === 'zh-HK-HiuGaaiNeural' ? 'selected' : ''}>HiuGaai — Female</option>
-              <option value="zh-HK-HiuMaanNeural" ${savedYuePatientVoice === 'zh-HK-HiuMaanNeural' ? 'selected' : ''}>HiuMaan — Female</option>
+              <option value="zh-HK-WanLungNeural" ${savedYuePatientVoice === 'zh-HK-WanLungNeural' ? 'selected' : ''}>WanLung (M) ★</option>
+              <option value="zh-HK-HiuGaaiNeural" ${savedYuePatientVoice === 'zh-HK-HiuGaaiNeural' ? 'selected' : ''}>HiuGaai (F)</option>
+              <option value="zh-HK-HiuMaanNeural" ${savedYuePatientVoice === 'zh-HK-HiuMaanNeural' ? 'selected' : ''}>HiuMaan (F)</option>
             </select>
             <button onclick="previewAzureVoice('yue_patient')"
               style="font-family:var(--mono);font-size:0.58rem;letter-spacing:0.06em;text-transform:uppercase;background:var(--ink);color:var(--paper);border:none;padding:7px 12px;cursor:pointer;white-space:nowrap">
@@ -14049,10 +14053,10 @@ function renderAudioSetup(targetEl) {
           <div style="display:flex;gap:6px;align-items:center">
             <select id="voice-cmn-select" onchange="saveAzureVoice('cmn', this.value)"
               style="font-family:var(--mono);font-size:0.72rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
-              <option value="zh-CN-XiaoxiaoNeural" ${savedCmnVoice === 'zh-CN-XiaoxiaoNeural' ? 'selected' : ''}>Xiaoxiao — Female ★</option>
-              <option value="zh-CN-XiaoyiNeural"   ${savedCmnVoice === 'zh-CN-XiaoyiNeural'   ? 'selected' : ''}>Xiaoyi — Female</option>
-              <option value="zh-CN-YunxiNeural"    ${savedCmnVoice === 'zh-CN-YunxiNeural'    ? 'selected' : ''}>Yunxi — Male</option>
-              <option value="zh-CN-YunjianNeural"  ${savedCmnVoice === 'zh-CN-YunjianNeural'  ? 'selected' : ''}>Yunjian — Male</option>
+              <option value="zh-CN-XiaoxiaoNeural" ${savedCmnVoice === 'zh-CN-XiaoxiaoNeural' ? 'selected' : ''}>Xiaoxiao (F) ★</option>
+              <option value="zh-CN-XiaoyiNeural"   ${savedCmnVoice === 'zh-CN-XiaoyiNeural'   ? 'selected' : ''}>Xiaoyi (F)</option>
+              <option value="zh-CN-YunxiNeural"    ${savedCmnVoice === 'zh-CN-YunxiNeural'    ? 'selected' : ''}>Yunxi (M)</option>
+              <option value="zh-CN-YunjianNeural"  ${savedCmnVoice === 'zh-CN-YunjianNeural'  ? 'selected' : ''}>Yunjian (M)</option>
             </select>
             <button onclick="previewAzureVoice('cmn')"
               style="font-family:var(--mono);font-size:0.58rem;letter-spacing:0.06em;text-transform:uppercase;background:var(--ink);color:var(--paper);border:none;padding:7px 12px;cursor:pointer;white-space:nowrap">
@@ -14065,10 +14069,10 @@ function renderAudioSetup(targetEl) {
           <div style="display:flex;gap:6px;align-items:center">
             <select id="voice-cmn-patient-select" onchange="saveAzureVoice('cmn_patient', this.value)"
               style="font-family:var(--mono);font-size:0.72rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
-              <option value="zh-CN-YunxiNeural"    ${savedCmnPatientVoice === 'zh-CN-YunxiNeural'    ? 'selected' : ''}>Yunxi — Male ★</option>
-              <option value="zh-CN-XiaoxiaoNeural" ${savedCmnPatientVoice === 'zh-CN-XiaoxiaoNeural' ? 'selected' : ''}>Xiaoxiao — Female</option>
-              <option value="zh-CN-XiaoyiNeural"   ${savedCmnPatientVoice === 'zh-CN-XiaoyiNeural'   ? 'selected' : ''}>Xiaoyi — Female</option>
-              <option value="zh-CN-YunjianNeural"  ${savedCmnPatientVoice === 'zh-CN-YunjianNeural'  ? 'selected' : ''}>Yunjian — Male</option>
+              <option value="zh-CN-YunxiNeural"    ${savedCmnPatientVoice === 'zh-CN-YunxiNeural'    ? 'selected' : ''}>Yunxi (M) ★</option>
+              <option value="zh-CN-XiaoxiaoNeural" ${savedCmnPatientVoice === 'zh-CN-XiaoxiaoNeural' ? 'selected' : ''}>Xiaoxiao (F)</option>
+              <option value="zh-CN-XiaoyiNeural"   ${savedCmnPatientVoice === 'zh-CN-XiaoyiNeural'   ? 'selected' : ''}>Xiaoyi (F)</option>
+              <option value="zh-CN-YunjianNeural"  ${savedCmnPatientVoice === 'zh-CN-YunjianNeural'  ? 'selected' : ''}>Yunjian (M)</option>
             </select>
             <button onclick="previewAzureVoice('cmn_patient')"
               style="font-family:var(--mono);font-size:0.58rem;letter-spacing:0.06em;text-transform:uppercase;background:var(--ink);color:var(--paper);border:none;padding:7px 12px;cursor:pointer;white-space:nowrap">
@@ -14086,16 +14090,16 @@ function renderAudioSetup(targetEl) {
       <div style="display:flex;gap:6px;align-items:center">
         <select id="voice-en-select" onchange="saveAzureEnVoice(this.value)"
           style="font-family:var(--mono);font-size:0.72rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
-          <option value="en-US-JennyNeural"   ${savedEnVoice === 'en-US-JennyNeural'   ? 'selected' : ''}>Jenny — Female, US ★</option>
-          <option value="en-US-AriaNeural"    ${savedEnVoice === 'en-US-AriaNeural'    ? 'selected' : ''}>Aria — Female, US</option>
-          <option value="en-US-GuyNeural"     ${savedEnVoice === 'en-US-GuyNeural'     ? 'selected' : ''}>Guy — Male, US</option>
-          <option value="en-US-DavisNeural"   ${savedEnVoice === 'en-US-DavisNeural'   ? 'selected' : ''}>Davis — Male, US</option>
-          <option value="en-GB-SoniaNeural"   ${savedEnVoice === 'en-GB-SoniaNeural'   ? 'selected' : ''}>Sonia — Female, UK</option>
-          <option value="en-GB-RyanNeural"    ${savedEnVoice === 'en-GB-RyanNeural'    ? 'selected' : ''}>Ryan — Male, UK</option>
-          <option value="en-AU-NatashaNeural" ${savedEnVoice === 'en-AU-NatashaNeural' ? 'selected' : ''}>Natasha — Female, AU</option>
-          <option value="en-AU-WilliamNeural" ${savedEnVoice === 'en-AU-WilliamNeural' ? 'selected' : ''}>William — Male, AU</option>
-          <option value="en-CA-ClaraNeural"   ${savedEnVoice === 'en-CA-ClaraNeural'   ? 'selected' : ''}>Clara — Female, CA</option>
-          <option value="en-CA-LiamNeural"    ${savedEnVoice === 'en-CA-LiamNeural'    ? 'selected' : ''}>Liam — Male, CA</option>
+          <option value="en-US-JennyNeural"   ${savedEnVoice === 'en-US-JennyNeural'   ? 'selected' : ''}>Jenny (F), US ★</option>
+          <option value="en-US-AriaNeural"    ${savedEnVoice === 'en-US-AriaNeural'    ? 'selected' : ''}>Aria (F), US</option>
+          <option value="en-US-GuyNeural"     ${savedEnVoice === 'en-US-GuyNeural'     ? 'selected' : ''}>Guy (M), US</option>
+          <option value="en-US-DavisNeural"   ${savedEnVoice === 'en-US-DavisNeural'   ? 'selected' : ''}>Davis (M), US</option>
+          <option value="en-GB-SoniaNeural"   ${savedEnVoice === 'en-GB-SoniaNeural'   ? 'selected' : ''}>Sonia (F), UK</option>
+          <option value="en-GB-RyanNeural"    ${savedEnVoice === 'en-GB-RyanNeural'    ? 'selected' : ''}>Ryan (M), UK</option>
+          <option value="en-AU-NatashaNeural" ${savedEnVoice === 'en-AU-NatashaNeural' ? 'selected' : ''}>Natasha (F), AU</option>
+          <option value="en-AU-WilliamNeural" ${savedEnVoice === 'en-AU-WilliamNeural' ? 'selected' : ''}>William (M), AU</option>
+          <option value="en-CA-ClaraNeural"   ${savedEnVoice === 'en-CA-ClaraNeural'   ? 'selected' : ''}>Clara (F), CA</option>
+          <option value="en-CA-LiamNeural"    ${savedEnVoice === 'en-CA-LiamNeural'    ? 'selected' : ''}>Liam (M), CA</option>
         </select>
         <button onclick="previewAzureEnVoice()"
           style="font-family:var(--mono);font-size:0.58rem;letter-spacing:0.06em;text-transform:uppercase;background:var(--ink);color:var(--paper);border:none;padding:7px 12px;cursor:pointer;white-space:nowrap">
@@ -15934,6 +15938,7 @@ function navSelectPathway() {
   document.getElementById('nav-setup').classList.remove('active');
   document.getElementById('nav-favorites').classList.remove('active');
   document.getElementById('nav-pathway').classList.add('active');
+  document.body.style.overflow = '';
   renderPathwayScreen();
 }
 
@@ -16241,6 +16246,13 @@ function toggleDrawer(forceClose) {
   } else {
     // Switch to Lessons tab when opening drawer
     navSelectLessons();
+    // Position drawer below fixed header+nav
+    const header = document.getElementById('main-header');
+    const nav = document.getElementById('top-nav');
+    const offset = (header ? header.getBoundingClientRect().bottom : 0) +
+                   (nav ? nav.getBoundingClientRect().height : 0);
+    aside.style.top = offset + 'px';
+    aside.style.height = (window.innerHeight - offset) + 'px';
     aside.classList.add('drawer-open');
     backdrop.classList.add('open');
     if (fab) fab.classList.add('hidden');
