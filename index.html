@@ -1013,7 +1013,7 @@
   /* ── FLOATING DRILL PLAYER ── */
   #drill-player {
     position: fixed;
-    bottom: 24px;
+    bottom: 80px;
     left: 50%;
     transform: translateX(-50%);
     background: var(--ink);
@@ -13905,6 +13905,17 @@ function buildVocabQueue(sectionsFilter) {
   return queue;
 }
 
+function updateDrillPlayerFav(v, sectionTitle, pos, total) {
+  const player = document.getElementById('drill-player');
+  if (!player) return;
+  const modeLabel = drillMode === 'en-zh' ? 'EN → 中 DRILL' : drillMode === 'zh-en' ? '中 → EN DRILL' : 'CHINESE ONLY';
+  document.getElementById('drill-player-mode').textContent = modeLabel;
+  document.getElementById('drill-player-word').textContent = v.zh;
+  document.getElementById('drill-player-en').textContent = v.en;
+  document.getElementById('drill-player-progress').textContent = `${pos + 1} / ${total}  ·  ${sectionTitle}`;
+  player.style.display = 'flex';
+}
+
 function updateDrillPlayer(v, si, pos, total) {
   const player = document.getElementById('drill-player');
   if (!player) return;
@@ -13927,7 +13938,8 @@ function drillRepeat() {
   if (window._currentAzureAudio) { window._currentAzureAudio.pause(); window._currentAzureAudio = null; }
   clearTimeout(vocabPlayTimer);
   if (vocabPlayPos > 0) vocabPlayPos--;
-  playNextVocab();
+  const isFav = vocabPlayQueue[vocabPlayPos] && vocabPlayQueue[vocabPlayPos].isFav;
+  isFav ? playNextFavVocab() : playNextVocab();
 }
 
 function drillSkip() {
@@ -13936,7 +13948,8 @@ function drillSkip() {
   clearTimeout(vocabPlayTimer);
   vocabPlayPos++;
   if (vocabPlayPos < vocabPlayQueue.length) {
-    playNextVocab();
+    const isFav = vocabPlayQueue[vocabPlayPos] && vocabPlayQueue[vocabPlayPos].isFav;
+    isFav ? playNextFavVocab() : playNextVocab();
   } else {
     stopVocabPlayAll();
   }
@@ -14924,6 +14937,9 @@ function playNextFavVocab() {
     const modeLabel = drillMode === 'en-zh' ? ' 🇬🇧→🀄' : drillMode === 'zh-en' ? ' 🀄→🇬🇧' : '';
     progressEl.innerHTML = `<span>${vocabPlayPos+1}/${vocabPlayQueue.length}</span>${modeLabel} · ${v.zh}`;
   }
+  // Update floating drill player for favorites
+  const L2 = getLessons()[li];
+  updateDrillPlayerFav(v, L2.sections[si].title, vocabPlayPos, vocabPlayQueue.length);
 
   function afterItem() {
     if (card) card.classList.remove('playing-card');
