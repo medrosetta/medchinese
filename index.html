@@ -238,6 +238,7 @@
   .vocab-zh {
     font-family: 'Noto Serif TC', serif;
     font-size: 1.6rem;
+    padding-right: 36px;
     font-weight: 600;
     line-height: 1;
     margin-bottom: 5px;
@@ -256,7 +257,7 @@
   }
   .audio-btn {
     position: absolute;
-    bottom: 8px; right: 8px;
+    top: 10px; right: 10px;
     width: 26px; height: 26px;
     border: 1.5px solid var(--border);
     background: var(--cream);
@@ -721,9 +722,9 @@
   .anat-layer-btn.active { background:var(--teal); color:var(--paper); border-color:var(--teal); }
   .anat-fig-btn.active  { background:var(--ink);  color:var(--paper); border-color:var(--ink); }
 
-  .anat-main { display:grid; grid-template-columns:320px 1fr; gap:32px; align-items:start; margin-bottom:32px; }
-  .anat-svg-panel { background:var(--section-bg); border:1px solid var(--border); padding:20px; display:flex; justify-content:center; align-items:flex-start; min-height:340px; }
-  .anat-svg { width:280px; height:auto; display:block; overflow:visible; }
+  .anat-main { display:grid; grid-template-columns:440px 1fr; gap:32px; align-items:start; margin-bottom:32px; }
+  .anat-svg-panel { background:var(--section-bg); border:1px solid var(--border); padding:20px; display:flex; justify-content:center; align-items:flex-start; min-height:480px; }
+  .anat-svg { width:400px; height:auto; display:block; overflow:visible; }
 
   .anat-info-panel { position:sticky; top:20px; }
   .anat-info-placeholder { padding:40px 20px; text-align:center; border:1px dashed var(--border); background:var(--section-bg); }
@@ -843,7 +844,9 @@
     .tab-btn{padding:8px 12px;font-size:0.6rem;white-space:nowrap;flex-shrink:0}
     .tab-audio-full{display:none}
     .tab-audio-mobile{display:inline}
-    .lesson-rating-bar{flex-wrap:wrap;justify-content:flex-end;padding-right:8px}
+    .lesson-rating-bar{flex-wrap:nowrap;justify-content:flex-end;padding-right:8px;gap:4px}
+    .rating-label-full{display:none}
+    .rating-label-short{display:inline}
 
     /* ── Vocab play bar ── */
     .vocab-play-bar{flex-wrap:wrap;gap:6px;padding:10px 8px;overflow-x:hidden}
@@ -998,6 +1001,7 @@
     /* header position handled globally */
   }
 
+  .rating-label-short { display: none; }
   /* Hide mobile-only elements on desktop */
   .mobile-menu-btn { display: none; }
   .mobile-fab { display: none; }
@@ -1242,7 +1246,7 @@
   }
   .pathway-hero-sub {
     font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
+    font-size: 0.875rem;
     letter-spacing: 0.12em;
     color: var(--muted);
     margin-bottom: 32px;
@@ -1968,7 +1972,7 @@
   }
   .survey-q-label {
     font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
+    font-size: 0.75rem;
     letter-spacing: 0.07em;
     text-transform: uppercase;
     color: var(--ink);
@@ -1997,7 +2001,7 @@
   }
   .survey-option {
     font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
+    font-size: 0.75rem;
     letter-spacing: 0.06em;
     padding: 6px 12px;
     border: 1px solid var(--border);
@@ -2007,10 +2011,23 @@
     border-radius: 2px;
   }
   .survey-option:hover { background: var(--cream); }
+  .survey-opt {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    background: white;
+    cursor: pointer;
+    transition: all 0.12s;
+    border-radius: 2px;
+  }
+  .survey-opt:hover { background: var(--cream); }
+  .survey-opt.selected { background: var(--ink); color: var(--paper); border-color: var(--ink); }
   .survey-option.selected { background: var(--ink); color: var(--paper); border-color: var(--ink); }
   .survey-select {
     font-family: 'DM Mono', monospace;
-    font-size: 0.62rem;
+    font-size: 0.875rem;
     padding: 7px 10px;
     border: 1px solid var(--border);
     background: white;
@@ -2169,6 +2186,7 @@
     /* header position handled globally */
   }
 
+  .rating-label-short { display: none; }
   /* Hide mobile-only elements on desktop */
   .mobile-menu-btn { display: none; }
   .mobile-fab { display: none; }
@@ -2413,7 +2431,7 @@
   }
   .pathway-hero-sub {
     font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
+    font-size: 0.875rem;
     letter-spacing: 0.12em;
     color: var(--muted);
     margin-bottom: 32px;
@@ -13321,7 +13339,8 @@ function startAnatQuiz() {
 
     // Generate 4 options
     const allTerms = Object.values(ANATOMY_HOTSPOTS).flat();
-    const wrong = allTerms.filter(t => t.id !== anatQuizCurrent.id)
+    const quizPool = getQuizTerms();
+    const wrong = quizPool.filter(t => t.id !== anatQuizCurrent.id)
       .sort(() => Math.random() - 0.5).slice(0, 3);
     anatQuizOptions = [anatQuizCurrent, ...wrong].sort(() => Math.random() - 0.5);
 
@@ -14128,8 +14147,8 @@ function renderAudioSetup(targetEl) {
 
     <!-- Install on Home Screen -->
     <div style="margin-top:32px;border-top:2px solid var(--border);padding-top:24px">
-      <div style="font-family:'DM Serif Display',serif;font-size:1.3rem;font-style:italic;margin-bottom:4px">📲 Add to Home Screen</div>
-      <div style="font-family:var(--mono);font-size:0.68rem;color:var(--muted);letter-spacing:0.06em;margin-bottom:20px">ACCESS MEDCHINESE AS AN APP — NO APP STORE REQUIRED</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:1.3rem;font-style:italic;margin-bottom:4px">📲 Add App to Your Mobile Device</div>
+      <div style="font-family:var(--mono);font-size:0.68rem;color:var(--muted);letter-spacing:0.06em;margin-bottom:20px">INSTALL MEDCHINESE ON YOUR HOME SCREEN — NO APP STORE REQUIRED</div>
 
       <!-- iOS -->
       <div style="background:var(--section-bg);border:1.5px solid var(--border);margin-bottom:16px">
@@ -14584,7 +14603,7 @@ function renderMain() {
       <div class="lesson-main-title">${L.en}</div>
       <div class="lesson-main-zh">${L.zh}<button class="main-speak-btn" onclick="speakLessonTitle('${zhSafe}')">▶ PLAY</button></div>
     </div>
-    <div class="lesson-rating-bar">Was this lesson relevant to your practice?&nbsp;<button class="lesson-thumb-btn" onclick="rateLesson(this,'up')" title="Relevant">👍</button>&nbsp;<button class="lesson-thumb-btn" onclick="rateLesson(this,'down')" title="Not relevant">👎</button></div>
+    <div class="lesson-rating-bar"><span class="rating-label-full">Was this lesson relevant to your practice?</span><span class="rating-label-short">Relevant?</span>&nbsp;<button class="lesson-thumb-btn" onclick="rateLesson(this,'up')" title="Relevant">👍</button>&nbsp;<button class="lesson-thumb-btn" onclick="rateLesson(this,'down')" title="Not relevant">👎</button></div>
     <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
     <div class="tabs">
       <button class="tab-btn ${tab==='vocab'?'active':''}" onclick="switchTab('vocab')">VOCABULARY 詞彙</button>
@@ -14627,20 +14646,24 @@ function renderAbout(targetEl) {
       <div class="lesson-label" style="margin-bottom:16px">ABOUT 關於</div>
       <div style="font-family:'DM Serif Display',serif;font-size:1.3rem;font-style:italic;margin-bottom:20px">Why MedChinese Was Created</div>
 
-      <div style="font-family:var(--mono);font-size:0.85rem;line-height:1.9;color:var(--ink);margin-bottom:16px">
-        After 15 years of practicing Family Medicine in the San Francisco Bay Area within a Chinese-speaking clinical setting, one thing became clear. I have seen how language barriers can lead to missed opportunities to improve care, and I have also learned that building strong medical Chinese skills takes dedication, with the right tools making all the difference.
+      <div style="font-family:var(--mono);font-size:0.875rem;line-height:1.9;color:var(--ink);margin-bottom:16px">
+        After 15 years of practicing Family Medicine in the San Francisco Bay Area within a Chinese-speaking clinical setting, one thing became clear. Language barriers can lead to missed opportunities to improve care. Building strong medical Chinese skills takes time, practice, support from colleagues, and the right tools.
       </div>
 
-      <div style="font-family:var(--mono);font-size:0.85rem;line-height:1.9;color:var(--ink);margin-bottom:16px">
-        MedChinese was created to be one of those tools, a learning resource built for the realities of clinical practice. Core access is free and will always remain so. Please share this app with anyone who wants to make a difference for Chinese-speaking patients.
+      <div style="font-family:var(--mono);font-size:0.875rem;line-height:1.9;color:var(--ink);margin-bottom:16px">
+        MedChinese was created as a practical learning resource shaped by clinical practice. It is free to use, with a commitment to keeping its content accessible to everyone. If you find it helpful, please share it with others who are working to better support Chinese-speaking patients.
       </div>
 
-      <div style="font-family:var(--mono);font-size:0.85rem;line-height:1.9;color:var(--ink);margin-bottom:16px">
-        This app is for everyone who wants to help Chinese-speaking patients feel heard and understood, physicians, nurses, pharmacists, medical assistants, students, and anyone working to bridge the language gap in healthcare. When patients feel truly understood, and their care team can navigate even the most difficult conversations, their care improves.
+      <div style="font-family:var(--mono);font-size:0.875rem;line-height:1.9;color:var(--ink);margin-bottom:16px">
+        This resource is for anyone who wants to help Chinese-speaking patients feel heard and understood, physicians, nurses, pharmacists, medical assistants, students, and anyone working to bridge the language gap in healthcare. When patients feel understood, and their care team can navigate even difficult conversations, care improves.
       </div>
 
-      <div style="background:var(--teal-light);border:1.5px solid var(--teal);padding:16px 20px;font-family:var(--mono);font-size:0.85rem;line-height:1.9;color:var(--ink)">
-        To everyone who has offered feedback and suggestions, this app is better because of you. And to the patients who make this work meaningful every day, thank you for your trust, your resilience, and your inspiration.
+      <div style="font-family:var(--mono);font-size:0.875rem;line-height:1.9;color:var(--ink);margin-bottom:16px">
+        Thank you for the work you do every day to care for patients who face barriers to care.
+      </div>
+
+      <div style="background:var(--teal-light);border:1.5px solid var(--teal);padding:16px 20px;font-family:var(--mono);font-size:0.875rem;line-height:1.9;color:var(--ink)">
+        To everyone who has offered feedback and suggestions, thank you. This work is better because of you. And to the patients who make this work meaningful every day, thank you for your trust, your resilience, and your inspiration.
       </div>
     </div>
   `;
@@ -14655,7 +14678,7 @@ function renderFeedbackSurvey(targetEl) {
     <div style="margin-top:36px;padding-top:24px;border-top:2px solid var(--border)">
       <div class="lesson-label" style="margin-bottom:16px">FEEDBACK & SUGGESTIONS</div>
 
-      <div style="font-family:var(--mono);font-size:0.68rem;color:var(--muted);margin-bottom:20px">
+      <div style="font-family:var(--mono);font-size:0.875rem;color:var(--muted);margin-bottom:20px">
         Found an error? Have a suggestion? We'd love to hear from you.
       </div>
 
@@ -16639,6 +16662,19 @@ function selectSurveyOpt(btn, cls) {
   document.querySelectorAll('.' + cls).forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
 }
+function toggleSurveyOpt(btn) {
+  const cls = Array.from(btn.classList).find(c => c.startsWith('survey-opt-'));
+  if (!cls) return;
+  // For recommend - single select
+  if (cls === 'survey-opt-recommend') {
+    document.querySelectorAll('.survey-opt-recommend').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  } else {
+    // Multi-select for modules etc
+    btn.classList.toggle('selected');
+  }
+}
+
 function setStar(btn, n) {
   document.getElementById('survey-stars').value = n;
   setSurveyStars(n);
