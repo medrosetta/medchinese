@@ -925,6 +925,7 @@
       overscroll-behavior: contain;
       height: 100%;
       touch-action: pan-y;
+      padding-bottom: 120px;
     }
     aside.drawer-open {
       transform: translateX(0);
@@ -2172,6 +2173,7 @@
       overscroll-behavior: contain;
       height: 100%;
       touch-action: pan-y;
+      padding-bottom: 120px;
     }
     aside.drawer-open {
       transform: translateX(0);
@@ -13636,6 +13638,7 @@ function searchJumpTo(li) {
 }
 
 function navSelectLessons() {
+  if (window.innerWidth <= 768) toggleDrawer(true);
   trackEvent('tab_view', { tab_name: 'Lessons' });
   document.getElementById('lessons-container').style.display = '';
   document.getElementById('anatomy-container').style.display = 'none';
@@ -13655,6 +13658,7 @@ function navSelectLessons() {
 }
 
 function navSelectAnatomy() {
+  if (window.innerWidth <= 768) toggleDrawer(true);
   trackEvent('tab_view', { tab_name: 'Anatomy' });
   document.getElementById('lessons-container').style.display = 'none';
   document.getElementById('anatomy-container').style.display = '';
@@ -13671,6 +13675,7 @@ function navSelectAnatomy() {
 }
 
 function navSelectSetup() {
+  if (window.innerWidth <= 768) toggleDrawer(true);
   trackEvent('tab_view', { tab_name: 'Setup' });
   document.getElementById('lessons-container').style.display = 'none';
   document.getElementById('anatomy-container').style.display = 'none';
@@ -13687,11 +13692,13 @@ function navSelectSetup() {
 }
 
 function navSelectFavorites() {
+  if (window.innerWidth <= 768) toggleDrawer(true);
   trackEvent('tab_view', { tab_name: 'Favorites' });
   stopVocabPlayAll();
   document.getElementById('lessons-container').style.display = 'none';
   document.getElementById('anatomy-container').style.display = 'none';
   document.getElementById('setup-container').style.display = 'none';
+  document.getElementById('pathway-container').style.display = 'none';
   document.getElementById('favorites-container').style.display = '';
   document.getElementById('nav-favorites').classList.add('active');
   document.getElementById('nav-lessons').classList.remove('active');
@@ -16072,6 +16079,7 @@ let assessmentStep = 0;
 let assessmentAnswers = {};
 
 function navSelectPathway() {
+  if (window.innerWidth <= 768) toggleDrawer(true);
   document.getElementById('lessons-container').style.display = 'none';
   document.getElementById('anatomy-container').style.display = 'none';
   document.getElementById('setup-container').style.display = 'none';
