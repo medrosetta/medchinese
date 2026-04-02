@@ -110,9 +110,8 @@
   #anatomy-container, #setup-container, #pathway-container, #favorites-container { padding-top: 100px; }
 
   .lesson-header {
-    margin-bottom: 28px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+    padding-bottom: 16px;
   }
   .lesson-label {
     font-family: 'DM Mono', monospace;
@@ -844,9 +843,7 @@
     .tab-btn{padding:8px 12px;font-size:0.6rem;white-space:nowrap;flex-shrink:0}
     .tab-audio-full{display:none}
     .tab-audio-mobile{display:inline}
-    .lesson-rating-bar{flex-wrap:nowrap;justify-content:flex-end;padding-right:8px;gap:4px}
-    .rating-label-full{display:none}
-    .rating-label-short{display:inline}
+    .lesson-rating-bar{flex-wrap:nowrap;justify-content:space-between;padding:8px 12px;gap:8px}
 
     /* ── Vocab play bar ── */
     .vocab-play-bar{flex-wrap:wrap;gap:6px;padding:10px 8px;overflow-x:hidden}
@@ -1002,7 +999,6 @@
     /* header position handled globally */
   }
 
-  .rating-label-short { display: none; }
   /* Hide mobile-only elements on desktop */
   .mobile-menu-btn { display: none; }
   .mobile-fab { display: none; }
@@ -1845,15 +1841,18 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-top: 10px;
-    padding-top: 10px;
+    margin-top: 0;
+    padding: 10px 16px;
     border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
     font-family: 'DM Mono', monospace;
-    font-size: 0.58rem;
+    font-size: 0.65rem;
     letter-spacing: 0.06em;
-    color: var(--muted);
+    color: var(--ink);
     text-transform: uppercase;
+    background: var(--section-bg);
   }
+  .rating-label { flex: 1; }
   .lesson-thumb-btn {
     background: none;
     border: 1px solid var(--border);
@@ -2253,7 +2252,6 @@
     /* header position handled globally */
   }
 
-  .rating-label-short { display: none; }
   /* Hide mobile-only elements on desktop */
   .mobile-menu-btn { display: none; }
   .mobile-fab { display: none; }
@@ -13934,7 +13932,7 @@ function renderVocab() {
   L.sections.forEach((sec, si) => {
     const isOpen = openSections[si] !== false;
     html += `
-      <div class="section-block">
+      <div class="section-block" style="position:relative">
         <div class="section-header ${isOpen?'open':''}" onclick="toggleSection(${si})">
           <div>
             <span class="section-title-en">${sec.title}</span>
@@ -13943,7 +13941,7 @@ function renderVocab() {
           <div style="display:flex;align-items:center;gap:6px" onclick="event.stopPropagation()">
             <button class="section-play-btn" id="secbtn-${si}" onclick="startVocabPlaySection(${si})">▶ Play Section</button><button class="stop-btn" onclick="stopVocabPlayAll()" style="padding:4px 10px;font-size:0.6rem;border-color:rgba(245,240,232,0.2);color:rgba(245,240,232,0.45)">■ Stop</button>
             <button class="section-thumb-btn" data-sec="${sec.title}" onclick="rateSectionEl(this,'up')" title="Section useful">👍</button><button class="section-thumb-btn" data-sec="${sec.title}" onclick="rateSectionEl(this,'down')" title="Section not useful">👎</button>
-            <span class="section-chevron" onclick="toggleSection(${si})" style="cursor:pointer;padding:4px">▼</span>
+            <span class="section-chevron" onclick="toggleSection(${si})" style="cursor:pointer;padding:4px;position:absolute;top:8px;right:8px">▼</span>
           </div>
         </div>
         <div class="section-body ${isOpen?'open':''}">
@@ -14731,21 +14729,32 @@ function playNextLine() {
   if (btn) { btn.classList.add('playing'); btn.textContent = '⏸ 中文'; }
   const idx = playAllIdx;
   const line = lines[idx];
+
   // Prefetch 1 dialogue line ahead
   prefetchDialogueAhead(1);
-  // Play buffered
+
+  function afterLine() {
+    document.getElementById(`dline-${idx}`)?.classList.remove('highlighted');
+    const b = document.getElementById(`dbtn-${idx}`);
+    if (b) { b.classList.remove('playing'); b.textContent = '▶ 中文'; }
+    if (playAllIdx === -1) return; // stopAll() was called
+    playAllIdx++;
+    playAllTimer = setTimeout(playNextLine, 800);
+  }
+
   const lang = currentLang;
   const voice = line.sp === 'doctor'
     ? (lang === 'cmn' ? VOICE_MAP.cmn : VOICE_MAP.yue)
     : (lang === 'cmn' ? VOICE_MAP.cmn_patient : VOICE_MAP.yue_patient);
-  playBuffered(line.zh, voice, () => {
-    document.getElementById(`dline-${idx}`)?.classList.remove('highlighted');
-    const b = document.getElementById(`dbtn-${idx}`);
-    if (b) { b.classList.remove('playing'); b.textContent = '▶ 中文'; }
-    if (playAllIdx === -1) return;
-    playAllIdx++;
-    playAllTimer = setTimeout(playNextLine, 800);
-  });
+
+  const key = `${voice}::${line.zh}`;
+  if (_audioBuffer.has(key)) {
+    // Use buffer if available
+    playBuffered(line.zh, voice, afterLine);
+  } else {
+    // Fall back to speakAs (reliable, has Web Speech fallback)
+    speakAs(line.zh, line.sp, afterLine);
+  }
 }
 
 function stopAll() {
@@ -14952,7 +14961,7 @@ function renderMain() {
       <div class="lesson-main-title">${L.en}</div>
       <div class="lesson-main-zh">${L.zh}<button class="main-speak-btn" onclick="speakLessonTitle('${zhSafe}')">▶ PLAY</button></div>
     </div>
-    <div class="lesson-rating-bar"><span class="rating-label-full">Was this lesson relevant to your practice?</span><span class="rating-label-short">Relevant?</span>&nbsp;<button class="lesson-thumb-btn" onclick="rateLesson(this,'up')" title="Relevant">👍</button>&nbsp;<button class="lesson-thumb-btn" onclick="rateLesson(this,'down')" title="Not relevant">👎</button></div>
+    <div class="lesson-rating-bar"><span class="rating-label">Relevant to your practice?</span><button class="lesson-thumb-btn" onclick="rateLesson(this,'up')" title="Relevant">👍</button><button class="lesson-thumb-btn" onclick="rateLesson(this,'down')" title="Not relevant">👎</button></div>
     <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
     <div class="tabs">
       <button class="tab-btn ${tab==='vocab'?'active':''}" onclick="switchTab('vocab')">VOCABULARY 詞彙</button>
