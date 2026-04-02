@@ -3330,7 +3330,7 @@ const LESSONS = [
   }
   },
   {
-  id:3, zh:"體格檢查及痛症評估", en:"Physical Exam & Pain Assessment",
+  id:3, zh:"體格檢查及評估", en:"Physical Exam & Assessment",
   sections:[
     { title:"Physical Exam Commands", zh:"體格檢查指令", vocab:[
       {zh:"請入嚟，請坐低",jp:"cing2 jap6 lei4, cing2 co5 dai1",en:"Please come in, please have a seat"},
@@ -3459,6 +3459,42 @@ const LESSONS = [
       {zh:"鼻用類固醇噴劑",jp:"bei6 jung6 leoi6 gu2 jeun4 pan3 zai1",en:"Steroid nasal spray"},
       {zh:"生理鹽水噴鼻劑",jp:"sang1 lei5 jim4 seoi2 pan3 bei6 zai1",en:"Saline nasal spray"},
       {zh:"呢個藥係唔使處方嘅",jp:"ni1 go3 joek6 hai6 m4 sai2 cyu3 fong1 ge3",en:"This medication does not require a prescription"},
+    ]},
+    { title:"Common Laboratory Tests", vocab:[
+      {zh:"血液檢查",jp:"hyut3 jik6 gim2 caa4",en:"Blood test"},
+      {zh:"全血細胞計數",jp:"cyun4 hyut3 sai3 bao1 gei3 sou3",en:"Complete blood count (CBC)"},
+      {zh:"代謝功能檢查",jp:"doi6 sai3 gung1 nang4 gim2 caa4",en:"Metabolic panel (BMP/CMP)"},
+      {zh:"血脂檢查",jp:"hyut3 zi3 gim2 caa4",en:"Lipid panel"},
+      {zh:"低密度脂蛋白",jp:"dai1 mat6 dou6 zi3 daan6 baak6",en:"LDL cholesterol"},
+      {zh:"高密度脂蛋白",jp:"gou1 mat6 dou6 zi3 daan6 baak6",en:"HDL cholesterol"},
+      {zh:"三酸甘油脂",jp:"saam1 syun1 gam1 jau4 zi3",en:"Triglycerides"},
+      {zh:"鈉",jp:"naa4",en:"Sodium"},
+      {zh:"鉀",jp:"gaap3",en:"Potassium"},
+      {zh:"肌酐",jp:"gei1 hon1",en:"Creatinine"},
+      {zh:"白蛋白",jp:"baak6 daan6 baak6",en:"Albumin"},
+      {zh:"丙氨酸轉氨酶",jp:"bing2 on1 syun1 zyun2 on1 mui4",en:"ALT (liver enzyme)"},
+      {zh:"糖化血紅蛋白",jp:"tong4 faa3 hyut3 hung4 daan6 baak6",en:"HbA1c"},
+      {zh:"甲狀腺刺激素",jp:"gaap3 zong6 sin1 ci3 gik1 sou3",en:"TSH (thyroid stimulating hormone)"},
+      {zh:"遊離甲狀腺素",jp:"jau4 lei4 gaap3 zong6 sin1 sou3",en:"Free T4"},
+      {zh:"鐵蛋白",jp:"tit3 daan6 baak6",en:"Ferritin"},
+      {zh:"高敏感度C反應蛋白",jp:"gou1 man5 gam2 dou6 C faan2 jing3 daan6 baak6",en:"hs-CRP (high-sensitivity C-reactive protein)"},
+      {zh:"脂蛋白(a)",jp:"zi3 daan6 baak6 a",en:"Lipoprotein(a) / Lp(a)"},
+      {zh:"睪酮",jp:"gou3 tung4",en:"Testosterone"},
+      {zh:"前列腺特異性抗原",jp:"cin4 lit6 sin1 dak6 ji6 sing3 kong3 jyun4",en:"PSA (prostate-specific antigen)"},
+      {zh:"尿白蛋白肌酐比值",jp:"niu6 baak6 daan6 baak6 gei1 hon1 bei2 zik1",en:"Albumin-creatinine ratio (ACR)"},
+      {zh:"腎小球濾過率",jp:"san6 siu2 kau4 leoi6 gwo3 leot2",en:"eGFR (estimated glomerular filtration rate)"},
+      {zh:"唔需要空腹嘅化驗",jp:"m4 seoi1 jiu3 hung1 fuk6 ge3 faa3 jim6",en:"Non-fasting labs"},
+      {zh:"你嘅化驗結果穩定",jp:"nei5 ge3 faa3 jim6 git3 gwo2 wan2 ding6",en:"Your labs are stable"},
+      {zh:"你嘅化驗顯示你係糖尿病前期",jp:"nei5 ge3 faa3 jim6 him2 si6 nei5 hai6 tong4 niu6 beng6 cin4 kei4",en:"Your labs show prediabetes"},
+      {zh:"你嘅化驗顯示你係糖尿病",jp:"nei5 ge3 faa3 jim6 him2 si6 nei5 hai6 tong4 niu6 beng6",en:"Your labs show diabetes"},
+      {zh:"你有甲狀腺功能減退症",jp:"nei5 jau5 gaap3 zong6 sin1 gung1 nang4 gaam2 teoi3 zing3",en:"You have hypothyroidism"},
+      {zh:"你有輕微甲狀腺功能減退，我哋會繼續觀察",jp:"nei5 jau5 heng1 mei4 gaap3 zong6 sin1 gung1 nang4 gaam2 teoi3, ngo5 dei6 wui5 gai3 zuk6 gun1 caat3",en:"You have subclinical hypothyroidism — we'll monitor"},
+      {zh:"你有輕微甲狀腺功能亢進，我哋會繼續觀察",jp:"nei5 jau5 heng1 mei4 gaap3 zong6 sin1 gung1 nang4 kong3 zeon3, ngo5 dei6 wui5 gai3 zuk6 gun1 caat3",en:"You have subclinical hyperthyroidism — we'll monitor"},
+      {zh:"你嘅腎功能有所下降",jp:"nei5 ge3 san6 gung1 nang4 jau5 so2 haa6 gong3",en:"Your kidney function has declined"},
+      {zh:"你嘅膽固醇偏高",jp:"nei5 ge3 daam2 gu2 ceot3 pin1 gou1",en:"Your cholesterol is elevated"},
+      {zh:"你嘅鐵質儲備偏低",jp:"nei5 ge3 tit3 zat1 cyu5 bei6 pin1 dai1",en:"Your iron stores are low"},
+      {zh:"你嘅前列腺指數偏高，我哋需要傾下",jp:"nei5 ge3 cin4 lit6 sin1 zi2 sou3 pin1 gou1, ngo5 dei6 seoi1 jiu3 king1 haa5",en:"Your PSA is elevated — we should discuss this"},
+      {zh:"你嘅發炎指標偏高",jp:"nei5 ge3 faat3 jim4 zi2 biu1 pin1 gou1",en:"Your inflammation marker is elevated"},
     ]},
   ],
 
@@ -3761,7 +3797,7 @@ const LESSONS = [
       {zh:"你記唔記得啱啱我講嘅三個字？",jp:"nei5 gei3 m4 gei3 dak1 ngaam1 ngaam1 ngo5 gong2 ge3 saam1 go3 zi6?",en:"Can you recall the three words I just said?"},
       {zh:"請你由一百開始，每次減七。",jp:"cing2 nei5 jau4 jat1 baak3 hoi1 ci2, mui5 ci3 gaam2 cat1.",en:"Please start at 100 and count back by 7s."},
       {zh:"請你畫一個時鐘，標示十一點十分。",jp:"cing2 nei5 waak6 jat1 go3 si4 zung1, biu1 si6 sap6 jat1 dim2 sap6 fan1.",en:"Please draw a clock showing 11:10."},
-      {zh:"你可以重複我講嘅句子呀？",jp:"nei5 ho2 yi5 cung4 fuk6 ngo5 gong2 ge3 geoi3 zi2 aa3?",en:"Can you repeat the sentence I say?"},
+      {zh:"請你重複我講嘅句子",jp:"cing2 nei5 cung4 fuk6 ngo5 gong2 ge3 geoi3 zi2",en:"Can you repeat the sentence I say?"},
       {zh:"30分滿分，26分或以上屬於正常。",jp:"saam1 sap6 fan1 mun5 fan1, ji6 sap6 luk6 fan1 waak6 ji5 soeng6 suk6 jyu1 zing3 soeng4.",en:"Out of 30 points, 26 or above is considered normal."},
     ]},
     { title:"Neurological Medications", zh:"神經科藥物", vocab:[
@@ -5002,7 +5038,7 @@ const LESSONS = [
     ]},
   },
   {
-  id:49, zh:"足科", en:"Podiatry",
+  id:16, zh:"足科", en:"Podiatry",
   sections:[
     { title:"Foot Anatomy", zh:"足部解剖", vocab:[
       {zh:"足部",jp:"zuk1 bou6",en:"Foot"},
@@ -5056,7 +5092,7 @@ const LESSONS = [
       {zh:"踝臂指數",jp:"waa6 bei3 zi2 sou3",en:"Ankle-brachial index (ABI)"},
       {zh:"足背動脈搏動",jp:"zuk1 bui3 dung6 mak6 bok6 dung6",en:"Dorsalis pedis pulse"},
       {zh:"我現在用呢條細線測試你腳底嘅感覺",jp:"ngo5 jin6 zoi6 jung6 ni1 tiu4 sai3 sin3 cak1 si3 nei5 goek3 dai2 ge3 gam2 gok3",en:"I'm going to test the sensation on the bottom of your foot with this filament"},
-      {zh:"你能夠感覺到呀？",jp:"nei5 nang4 gau3 gam2 gok3 dou3 aa3?",en:"Can you feel that?"},
+      {zh:"有冇感覺？",jp:"jau5 mou5 gam2 gok3?",en:"Can you feel that?"},
       {zh:"高風險足部",jp:"gou1 fung1 him2 zuk1 bou6",en:"High-risk foot"},
       {zh:"需要轉介足科醫生",jp:"seoi1 jiu3 zyun2 gaai3 zuk1 fo1 ji1 sang1",en:"Referring to podiatrist"},
       {zh:"需要轉介血管外科",jp:"seoi1 jiu3 zyun2 gaai3 hyut3 gun2 ngoi6 fo1",en:"Referring to vascular surgery"},
@@ -5102,7 +5138,7 @@ const LESSONS = [
   }
   },
   {
-  id:16, zh:"皮膚科", en:"Dermatology",
+  id:17, zh:"皮膚科", en:"Dermatology",
   sections:[
     { title:"Skin Anatomy", zh:"皮膚解剖", vocab:[
       {zh:"皮膚",jp:"pei4 fu1",en:"Skin"},
@@ -5249,7 +5285,7 @@ const LESSONS = [
   }
   },
   {
-  id:17, zh:"腫瘤科", en:"Oncology",
+  id:18, zh:"腫瘤科", en:"Oncology",
   sections:[
     {  title:"Cancer Conditions & Infections", zh:"癌症疾病及感染", vocab:[
       {zh:"癌症",jp:"ngaam4 zing3",en:"Cancer"},
@@ -5335,7 +5371,7 @@ const LESSONS = [
       {zh:"我有一個重要嘅消息需要告訴你",jp:"ngo5 jau5 jat1 go3 zung6 jiu3 ge3 siu1 sik1 seoi1 jiu3 gou3 sou3 nei5",en:"I have some important news to share with you"},
       {zh:"活檢結果顯示係癌症",jp:"wut6 gim2 git3 gwo2 hin2 si6 hai6 ngaam4 zing3",en:"The biopsy results show cancer"},
       {zh:"我哋需要討論治療選擇",jp:"ngo5 dei6 seoi1 jiu3 tou2 leon6 zi6 liu4 syun2 zaak3",en:"We need to discuss treatment options"},
-      {zh:"你想知道更多詳情呀？",jp:"nei5 soeng2 zi1 dou3 gang3 do1 coeng4 cing4 aa3",en:"Would you like to know more details?"},
+      {zh:"你想唔想知道更多詳情？",jp:"nei5 soeng2 m4 soeng2 zi1 dou3 gang3 do1 coeng4 cing4?",en:"Would you like to know more details?"},
       {zh:"我哋會一齊面對",jp:"ngo5 dei6 wui5 jat1 cai4 min6 deoi3",en:"We will face this together"},
       {zh:"有冇家人可以陪你？",jp:"jau5 mou5 gaa1 jan4 ho2 ji5 pui4 nei5",en:"Is there family who can be with you?"},
       {zh:"你今日聽到嘅嘢唔需要一次過消化",jp:"nei5 gam1 jat6 teng1 dou3 ge3 je5 m4 seoi1 jiu3 jat1 ci3 gwo3 siu1 faa3",en:"You don't need to process everything at once today"},
@@ -5375,7 +5411,7 @@ const LESSONS = [
   }
   },
   {
-  id:18, zh:"急診科", en:"Emergency Medicine",
+  id:19, zh:"急診科", en:"Emergency Medicine",
   sections:[
     { title:"Triage & Acuity", zh:"分診及緊急程度", vocab:[
       {zh:"分診",jp:"fan1 can2",en:"Triage"},
@@ -5538,7 +5574,7 @@ const LESSONS = [
   }
   },
   {
-  id:19, zh:"婦產科", en:"Obstetrics & Gynecology",
+  id:20, zh:"婦產科", en:"Obstetrics & Gynecology",
   sections:[
     { title:"Reproductive Anatomy", zh:"生殖系統解剖", vocab:[
       {zh:"子宮",jp:"zi2 gung1",en:"Uterus / womb"},
@@ -5676,7 +5712,7 @@ const LESSONS = [
   }
   },
   {
-  id:20, zh:"兒科", en:"Pediatrics",
+  id:21, zh:"兒科", en:"Pediatrics",
   sections:[
     { title:"Pediatric Vocabulary", zh:"兒科詞彙", vocab:[
       {zh:"兒科",jp:"ji4 fo1",en:"Pediatrics"},
@@ -5810,7 +5846,7 @@ const LESSONS = [
   }
   },
   {
-  id:21, zh:"精神科", en:"Psychiatry",
+  id:22, zh:"精神科", en:"Psychiatry",
   sections:[,
     { title:"Mood Disorders", zh:"情緒障礙", vocab:[
       {zh:"抑鬱症",jp:"jat1 jyut6 zing3",en:"Depression"},
@@ -5835,7 +5871,7 @@ const LESSONS = [
       {zh:"強迫思維",jp:"koeng4 bik1 si1 wai4",en:"Obsessive thoughts"},
       {zh:"強迫行為",jp:"koeng4 bik1 hang4 wai4",en:"Compulsive behavior"},
       {zh:"你係咪有唔能夠控制嘅擔心呀？",jp:"nei5 hai6 mai6 jau5 m4 nang4 gau3 hung3 zai3 ge3 daam1 sam1 aa3?",en:"Do you have worries you can't control?"},
-      {zh:"焦慮令你嘅日常生活受影響呀？",jp:"ziu1 leoi6 ling6 nei5 ge3 jat6 soeng4 sang1 wut6 sau6 jing2 hoeng2 aa3?",en:"Does anxiety affect your daily life?"},
+      {zh:"焦慮有冇影響你嘅日常生活？",jp:"ziu1 leoi6 jau5 mou5 jing2 hoeng2 nei5 ge3 jat6 soeng4 sang1 wut6?",en:"Does anxiety affect your daily life?"},
     ]},
     { title:"Psychotic Disorders", zh:"精神病性障礙", vocab:[
       {zh:"精神分裂症",jp:"zing1 san4 fan1 lit6 zing3",en:"Schizophrenia"},
@@ -5966,7 +6002,7 @@ const LESSONS = [
   }
   },
   {
-  id:46, zh:"物質使用及成癮", en:"Substance Use & Addiction",
+  id:23, zh:"物質使用及成癮", en:"Substance Use & Addiction",
   sections:[
     { title:"Addiction & Dependence", zh:"成癮及依賴", vocab:[
       {zh:"成癮",jp:"sing4 jam3",en:"Addiction"},
@@ -6057,7 +6093,7 @@ const LESSONS = [
     ]},
     { title:"Substance Use Clinical Phrases", zh:"物質使用科臨床用語", vocab:[
       {zh:"我唔係評判你嘅選擇",jp:"ngo5 m4 hai6 ping4 pun3 nei5 ge3 syun2 zaak6",en:"I'm not judging your choices"},
-      {zh:"你願意講講你嘅飲酒或用藥習慣呀？",jp:"nei5 jyun6 ji3 gong2 gong2 nei5 ge3 jam2 zau2 waak6 jung6 joek6 zaap6 gwaan3 aa3?",en:"Would you be willing to talk about your drinking or drug use?"},
+      {zh:"可唔可以講講你嘅飲酒或用藥習慣？",jp:"ho2 m4 ho2 ji5 gong2 gong2 nei5 ge3 jam2 zau2 waak6 jung6 joek6 zaap6 gwaan3?",en:"Would you be willing to talk about your drinking or drug use?"},
       {zh:"我係度幫你，唔係審判你",jp:"ngo5 hai6 dou6 bong1 nei5, m4 hai6 sam2 pun3 nei5",en:"I'm here to help you, not to judge you"},
       {zh:"有好多人都係需要幫助先可以戒到",jp:"jau5 hou2 do1 jan4 dou1 hai6 seoi1 jiu3 bong1 zo6 sin1 ho2 ji5 gaai3 dou3",en:"Many people need support to quit — you are not alone"},
       {zh:"需要轉介成癮科",jp:"seoi1 jiu3 zyun2 gaai3 sing4 jam3 fo1",en:"Referring to addiction medicine"},
@@ -6078,7 +6114,7 @@ const LESSONS = [
   }
   },
   {
-  id:22, zh:"行為健康", en:"Behavioral Health",
+  id:24, zh:"行為健康", en:"Behavioral Health",
   sections:[
     { title:"ADHD in Adults", zh:"成人注意力缺陷過動症", vocab:[
       {zh:"你小時候係咪有學習困難或者坐唔定？",jp:"nei5 siu2 si4 hau6 hai6 mai6 jau5 hok6 zaap6 kwan3 naan4 waak6 zo6 m4 ding6?",en:"Did you have learning difficulties or trouble sitting still as a child?"},
@@ -6157,7 +6193,7 @@ const LESSONS = [
   }
   },
   {
-  id:23, zh:"牙科", en:"Dentistry",
+  id:25, zh:"牙科", en:"Dentistry",
   sections:[
     { title:"Dental Anatomy", zh:"牙齒解剖", vocab:[
       {zh:"牙齒",jp:"ngaa4 ci2",en:"Tooth / Teeth"},
@@ -6263,7 +6299,7 @@ const LESSONS = [
   }
   },
   {
-  id:25, zh:"營養評估及治療膳食", en:"Nutrition Assessment & Therapeutic Diets",
+  id:26, zh:"營養評估及治療膳食", en:"Nutrition Assessment & Therapeutic Diets",
   sections:[
     { title:"Macronutrients & Micronutrients", zh:"宏量及微量營養素", vocab:[
       {zh:"營養",jp:"jing4 joeng5",en:"Nutrition"},
@@ -6358,7 +6394,7 @@ const LESSONS = [
   }
   },
   {
-  id:26, zh:"中醫", en:"Traditional Chinese Medicine",
+  id:27, zh:"中醫", en:"Traditional Chinese Medicine",
   sections:[
     { title:"Foundational Concepts", zh:"基本概念", vocab:[
       {zh:"中醫",jp:"zung1 ji1",en:"Traditional Chinese Medicine (TCM)"},
@@ -6440,7 +6476,7 @@ const LESSONS = [
   }
   },
   {
-  id:27, zh:"健康篩查", en:"Health Screenings",
+  id:28, zh:"健康篩查", en:"Health Screenings",
   sections:[
     { title:"Cancer Screenings", zh:"癌症篩查", vocab:[
       {zh:"乳房X光篩查",jp:"jyu5 fong4 X gwong1 sai1 caa4",en:"Mammogram screening"},
@@ -6903,21 +6939,21 @@ const LESSONS = [
   sections:[
     { title:"ADLs — Activities of Daily Living", zh:"日常生活活動", vocab:[
       {zh:"日常生活活動",jp:"jat6 soeng4 sang1 wut6 wut6 dung6",en:"Activities of daily living (ADLs)"},
-      {zh:"你能夠自己洗澡呀？",jp:"nei5 nang4 gau3 zi6 gei2 sai2 zou2 aa3?",en:"Are you able to bathe yourself?"},
-      {zh:"你能夠自己穿衣服呀？",jp:"nei5 nang4 gau3 zi6 gei2 cyun1 ji1 fuk6 aa3?",en:"Are you able to dress yourself?"},
-      {zh:"你能夠自己上廁所呀？",jp:"nei5 nang4 gau3 zi6 gei2 soeng5 ci3 so2 aa3?",en:"Are you able to use the toilet independently?"},
-      {zh:"你能夠自己由床移到椅子呀？",jp:"nei5 nang4 gau3 zi6 gei2 jau4 cong4 ji4 dou3 ji2 zi2 aa3?",en:"Are you able to transfer from bed to chair?"},
-      {zh:"你能夠自己進食呀？",jp:"nei5 nang4 gau3 zi6 gei2 zeon3 sik6 aa3?",en:"Are you able to feed yourself?"},
+      {zh:"你自己洗得澡嗎？",jp:"nei5 zi6 gei2 sai2 dak1 zou2 maa3?",en:"Are you able to bathe yourself?"},
+      {zh:"你自己著得衫嗎？",jp:"nei5 zi6 gei2 zoek3 dak1 saam1 maa3?",en:"Are you able to dress yourself?"},
+      {zh:"你自己去得廁所嗎？",jp:"nei5 zi6 gei2 heoi3 dak1 ci3 so2 maa3?",en:"Are you able to use the toilet independently?"},
+      {zh:"你自己移得到由床到椅嗎？",jp:"nei5 zi6 gei2 ji4 dak1 dou3 jau4 cong4 dou3 ji2 maa3?",en:"Are you able to transfer from bed to chair?"},
+      {zh:"你自己食得嗎？",jp:"nei5 zi6 gei2 sik6 dak1 maa3?",en:"Are you able to feed yourself?"},
       {zh:"大小便失禁",jp:"daai6 siu2 bin6 sat1 gam3",en:"Bowel and bladder incontinence"},
     ]},
     { title:"IADLs — Instrumental Activities of Daily Living", zh:"工具性日常生活活動", vocab:[
       {zh:"工具性日常生活活動",jp:"gung1 geoi6 sing3 jat6 soeng4 sang1 wut6 wut6 dung6",en:"Instrumental activities of daily living (IADLs)"},
-      {zh:"你能夠自己煮飯呀？",jp:"nei5 nang4 gau3 zi6 gei2 zyu2 faan6 aa3?",en:"Are you able to prepare meals yourself?"},
-      {zh:"你能夠自己管理藥物呀？",jp:"nei5 nang4 gau3 zi6 gei2 gun2 lei5 joek6 mat6 aa3?",en:"Are you able to manage your own medications?"},
-      {zh:"你能夠自己去購物呀？",jp:"nei5 nang4 gau3 zi6 gei2 heoi3 kau3 mat6 aa3?",en:"Are you able to go shopping independently?"},
-      {zh:"你能夠自己管理財務呀？",jp:"nei5 nang4 gau3 zi6 gei2 gun2 lei5 coi4 mou6 aa3?",en:"Are you able to manage your finances?"},
-      {zh:"你能夠自己使用電話呀？",jp:"nei5 nang4 gau3 zi6 gei2 si2 jung6 din6 waa2 aa3?",en:"Are you able to use the telephone?"},
-      {zh:"你能夠自己搭車出行呀？",jp:"nei5 nang4 gau3 zi6 gei2 daap3 ce1 ceot1 hang4 aa3?",en:"Are you able to use transportation independently?"},
+      {zh:"你自己煮得飯嗎？",jp:"nei5 zi6 gei2 zyu2 dak1 faan6 maa3?",en:"Are you able to prepare meals yourself?"},
+      {zh:"你自己管得到自己嘅藥嗎？",jp:"nei5 zi6 gei2 gun2 dak1 dou3 zi6 gei2 ge3 joek6 maa3?",en:"Are you able to manage your own medications?"},
+      {zh:"你自己去得街買嘢嗎？",jp:"nei5 zi6 gei2 heoi3 dak1 gaai1 maai5 je5 maa3?",en:"Are you able to go shopping independently?"},
+      {zh:"你自己管得到財務嗎？",jp:"nei5 zi6 gei2 gun2 dak1 dou3 coi4 mou6 maa3?",en:"Are you able to manage your finances?"},
+      {zh:"你自己打得電話嗎？",jp:"nei5 zi6 gei2 daa2 dak1 din6 waa2 maa3?",en:"Are you able to use the telephone?"},
+      {zh:"你自己搭得車出門嗎？",jp:"nei5 zi6 gei2 daap3 dak1 ce1 ceot1 mun4 maa3?",en:"Are you able to use transportation independently?"},
     ]},
     { title:"Mobility & Fall Risk", zh:"活動能力及跌倒風險", vocab:[
       {zh:"行動能力",jp:"hang4 dung6 nang4 lik6",en:"Mobility"},
@@ -6973,7 +7009,7 @@ const LESSONS = [
   }
   },
   {
-  id:47, zh:"紓緩治療", en:"Palliative Care",
+  id:33, zh:"紓緩治療", en:"Palliative Care",
   sections:[
     { title:"Palliative Care Principles", zh:"紓緩治療原則", vocab:[
       {zh:"紓緩治療",jp:"syu1 waan6 zi6 liu4",en:"Palliative care"},
@@ -7032,7 +7068,7 @@ const LESSONS = [
   }
   },
   {
-  id:48, zh:"預設醫療指示及POLST", en:"Advance Directives & POLST",
+  id:34, zh:"預設醫療指示及POLST", en:"Advance Directives & POLST",
   sections:[
     { title:"Advance Directives", zh:"預設醫療指示", vocab:[
       {zh:"預設醫療指示",jp:"jyu6 cit3 ji1 liu4 zi2 si6",en:"Advance directive"},
@@ -7081,7 +7117,7 @@ const LESSONS = [
   }
   },
   {
-  id:34, zh:"急症中心及緊急護理", en:"Urgent Care",
+  id:35, zh:"急症中心及緊急護理", en:"Urgent Care",
   sections:[
     { title:"Triage Decision Language", zh:"分流決策用語", vocab:[
       {zh:"急症室",jp:"gip6 zing1 sat1",en:"Emergency room (ER)"},
@@ -7205,7 +7241,7 @@ const LESSONS = [
   }
   },
   {
-  id:37, zh:"社會服務、殘障申請及社區支援", en:"Social Work, Disability & Community Support",
+  id:36, zh:"社會服務、殘障申請及社區支援", en:"Social Work, Disability & Community Support",
   sections:[
     { title:"Social Work & Referrals", zh:"社工及轉介", vocab:[
       {zh:"社工",jp:"se5 gung1",en:"Social worker"},
@@ -7266,7 +7302,7 @@ const LESSONS = [
   }
   },
   {
-  id:38, zh:"照顧者支援及臨終關懷", en:"Caregiver Support & End-of-Life Care",
+  id:37, zh:"照顧者支援及臨終關懷", en:"Caregiver Support & End-of-Life Care",
   sections:[
     { title:"Caregiver Support", zh:"照顧者支援", vocab:[
       {zh:"照顧者",jp:"ziu3 gu3 ze2",en:"Caregiver"},
@@ -7318,7 +7354,7 @@ const LESSONS = [
   }
   },
   {
-  id:39, zh:"生活方式醫學", en:"Lifestyle Medicine",
+  id:38, zh:"生活方式醫學", en:"Lifestyle Medicine",
   sections:[
     { title:"Physical Activity", zh:"體能活動", vocab:[
       {zh:"體能活動",jp:"tai2 nang4 wut6 dung6",en:"Physical activity"},
@@ -7401,7 +7437,7 @@ const LESSONS = [
   }
   },
   {
-  id:41, zh:"慢性病預防", en:"Chronic Disease Prevention",
+  id:39, zh:"慢性病預防", en:"Chronic Disease Prevention",
   sections:[
     { title:"Pre-diabetes & Blood Sugar", zh:"前期糖尿病及血糖", vocab:[
       {zh:"前期糖尿病",jp:"cin4 kei4 tong4 niu6 beng6",en:"Pre-diabetes"},
@@ -7465,7 +7501,7 @@ const LESSONS = [
   }
   },
   {
-  id:42, zh:"外科", en:"Surgery",
+  id:40, zh:"外科", en:"Surgery",
   sections:[
     { title:"Perioperative Vocabulary", zh:"圍手術期詞彙", vocab:[
       {zh:"手術室",jp:"sau2 seot6 sat1",en:"Operating room (OR)"},
@@ -7616,7 +7652,7 @@ const LESSONS = [
   }
   },
   {
-  id:43, zh:"亞裔健康差異", en:"Asian Health Disparities",
+  id:41, zh:"亞裔健康差異", en:"Asian Health Disparities",
   sections:[
     { title:"Metabolic Risk & BMI Thresholds", zh:"代謝風險及體重指數閾值",
       note:"East Asian adults develop insulin resistance, type 2 diabetes, and cardiovascular disease at BMIs well below Western thresholds. WHO and ADA recommend screening from <strong>BMI ≥23</strong> and intervention from <strong>≥27.5</strong>. <strong>Visceral fat</strong> distribution means metabolic risk is underestimated by standard BMI cutoffs. A patient who appears 'normal weight' by Western standards may already have <strong>metabolic syndrome</strong>.",
@@ -7725,7 +7761,7 @@ const LESSONS = [
   }
   },
   {
-  id:44, zh:"LGBTQ+及跨性別護理", en:"LGBTQ+ & Transgender Care",
+  id:42, zh:"LGBTQ+及跨性別護理", en:"LGBTQ+ & Transgender Care",
   sections:[
     { title:"Gender Identity & Terminology", zh:"性別認同及詞彙", vocab:[
       {zh:"性別認同",jp:"sing3 bit6 jing6 tung4",en:"Gender identity"},
@@ -7746,7 +7782,7 @@ const LESSONS = [
       {zh:"唔好意思，我用錯咗你嘅名字",jp:"m4 hou2 ji3 si1, ngo5 jung6 co3 zo2 nei5 ge3 meng2 zi6",en:"I'm sorry, I used the wrong name"},
       {zh:"我哋嘅診所係一個安全嘅空間",jp:"ngo5 dei6 ge3 can2 so2 hai6 jat1 go3 on1 cyun4 ge3 hung1 gaan1",en:"Our clinic is a safe space"},
       {zh:"我係度係為你服務，唔係評判你",jp:"ngo5 hai6 dou6 hai6 wai6 nei5 fuk6 mou6, m4 hai6 ping4 pun3 nei5",en:"I'm here to support your health, not to judge you"},
-      {zh:"你願意同我分享你嘅性別認同呀？",jp:"nei5 jyun6 ji3 tung4 ngo5 fan1 hoeng2 nei5 ge3 sing3 bit6 jing6 tung4 aa3?",en:"Are you comfortable sharing your gender identity with me?"},
+      {zh:"你方唔方便同我講你嘅性別認同？",jp:"nei5 fong1 m4 fong1 bin6 tung4 ngo5 gong2 nei5 ge3 sing3 bit6 jing6 tung4?",en:"Are you comfortable sharing your gender identity with me?"},
     ]},
     { title:"Gender-Affirming Hormones", zh:"性別確認激素治療", vocab:[
       {zh:"激素治療",jp:"gik1 sou3 zi6 liu4",en:"Hormone therapy"},
@@ -7807,7 +7843,7 @@ const LESSONS = [
   }
   },
   {
-  id:45, zh:"移民及難民健康", en:"Immigrant & Refugee Health",
+  id:43, zh:"移民及難民健康", en:"Immigrant & Refugee Health",
   sections:[
     { title:"Migration & Social History", zh:"移民及社會史",
       vocab:[
@@ -8121,7 +8157,7 @@ const LESSONS_MANDARIN = [
   }
   },
   {
-  id:3, zh:"体格检查及痛症评估", en:"Physical Exam & Pain Assessment",
+  id:3, zh:"体格检查及评估", en:"Physical Exam & Assessment",
   sections:[
     { title:"Physical Exam Commands", zh:"体格检查指令", vocab:[
       {zh:"请进来，请坐下",jp:"qǐng jìn lái, qǐng zuò xià",en:"Please come in, please have a seat"},
@@ -8250,6 +8286,42 @@ const LESSONS_MANDARIN = [
       {zh:"鼻用类固醇喷剂",jp:"bí yòng lèi gù chún pēn jì",en:"Steroid nasal spray"},
       {zh:"生理盐水喷鼻剂",jp:"shēng lǐ yán shuǐ pēn bí jì",en:"Saline nasal spray"},
       {zh:"这种药不需要处方",jp:"zhè zhǒng yào bù xū yào chǔ fāng",en:"This medication does not require a prescription"},
+    ]},
+    { title:"Common Laboratory Tests", vocab:[
+      {zh:"血液检查",jp:"xuè yè jiǎn chá",en:"Blood test"},
+      {zh:"全血细胞计数",jp:"quán xuè xì bāo jì shù",en:"Complete blood count (CBC)"},
+      {zh:"代谢功能检查",jp:"dài xiè gōng néng jiǎn chá",en:"Metabolic panel (BMP/CMP)"},
+      {zh:"血脂检查",jp:"xuè zhī jiǎn chá",en:"Lipid panel"},
+      {zh:"低密度脂蛋白",jp:"dī mì dù zhī dàn bái",en:"LDL cholesterol"},
+      {zh:"高密度脂蛋白",jp:"gāo mì dù zhī dàn bái",en:"HDL cholesterol"},
+      {zh:"甘油三酯",jp:"gān yóu sān zhǐ",en:"Triglycerides"},
+      {zh:"钠",jp:"nà",en:"Sodium"},
+      {zh:"钾",jp:"jiǎ",en:"Potassium"},
+      {zh:"肌酐",jp:"jī gān",en:"Creatinine"},
+      {zh:"白蛋白",jp:"bái dàn bái",en:"Albumin"},
+      {zh:"丙氨酸转氨酶",jp:"bǐng ān suān zhuǎn ān méi",en:"ALT (liver enzyme)"},
+      {zh:"糖化血红蛋白",jp:"táng huà xuè hóng dàn bái",en:"HbA1c"},
+      {zh:"促甲状腺激素",jp:"cù jiǎ zhuàng xiàn jī sù",en:"TSH (thyroid stimulating hormone)"},
+      {zh:"游离甲状腺素",jp:"yóu lí jiǎ zhuàng xiàn sù",en:"Free T4"},
+      {zh:"铁蛋白",jp:"tiě dàn bái",en:"Ferritin"},
+      {zh:"高敏C反应蛋白",jp:"gāo mǐn C fǎn yìng dàn bái",en:"hs-CRP (high-sensitivity C-reactive protein)"},
+      {zh:"脂蛋白(a)",jp:"zhī dàn bái a",en:"Lipoprotein(a) / Lp(a)"},
+      {zh:"睾酮",jp:"gāo tóng",en:"Testosterone"},
+      {zh:"前列腺特异性抗原",jp:"qián liè xiàn tè yì xìng kàng yuán",en:"PSA (prostate-specific antigen)"},
+      {zh:"尿白蛋白肌酐比值",jp:"niào bái dàn bái jī gān bǐ zhí",en:"Albumin-creatinine ratio (ACR)"},
+      {zh:"肾小球滤过率",jp:"shèn xiǎo qiú lǜ guò lǜ",en:"eGFR (estimated glomerular filtration rate)"},
+      {zh:"不需要空腹的化验",jp:"bù xū yào kōng fù de huà yàn",en:"Non-fasting labs"},
+      {zh:"您的化验结果稳定",jp:"nín de huà yàn jiē guǒ wěn dìng",en:"Your labs are stable"},
+      {zh:"您的化验显示您有糖尿病前期",jp:"nín de huà yàn xiǎn shì nín yǒu táng niào bìng qián qī",en:"Your labs show prediabetes"},
+      {zh:"您的化验显示您有糖尿病",jp:"nín de huà yàn xiǎn shì nín yǒu táng niào bìng",en:"Your labs show diabetes"},
+      {zh:"您有甲状腺功能减退症",jp:"nín yǒu jiǎ zhuàng xiàn gōng néng jiǎn tuì zhèng",en:"You have hypothyroidism"},
+      {zh:"您有轻度甲状腺功能减退，我们会继续观察",jp:"nín yǒu qīng dù jiǎ zhuàng xiàn gōng néng jiǎn tuì, wǒ men huì jì xù guān chá",en:"You have subclinical hypothyroidism — we'll monitor"},
+      {zh:"您有轻度甲状腺功能亢进，我们会继续观察",jp:"nín yǒu qīng dù jiǎ zhuàng xiàn gōng néng kàng jìn, wǒ men huì jì xù guān chá",en:"You have subclinical hyperthyroidism — we'll monitor"},
+      {zh:"您的肾功能有所下降",jp:"nín de shèn gōng néng yǒu suǒ xià jiàng",en:"Your kidney function has declined"},
+      {zh:"您的胆固醇偏高",jp:"nín de dǎn gù chún piān gāo",en:"Your cholesterol is elevated"},
+      {zh:"您的铁储备偏低",jp:"nín de tiě chǔ bèi piān dī",en:"Your iron stores are low"},
+      {zh:"您的前列腺指数偏高，我们需要谈谈",jp:"nín de qián liè xiàn zhǐ shù piān gāo, wǒ men xū yào tán tán",en:"Your PSA is elevated — we should discuss this"},
+      {zh:"您的炎症指标偏高",jp:"nín de yán zhèng zhǐ biāo piān gāo",en:"Your inflammation marker is elevated"},
     ]},
   ],
 
@@ -9873,7 +9945,7 @@ const LESSONS_MANDARIN = [
   }
   },
   {
-  id:49, zh:"足科", en:"Podiatry",
+  id:16, zh:"足科", en:"Podiatry",
   sections:[
     { title:"Foot Anatomy", zh:"足部解剖", vocab:[
       {zh:"足部",jp:"zú bù",en:"Foot"},
@@ -9973,7 +10045,7 @@ const LESSONS_MANDARIN = [
   }
   },
   {
-  id:16, zh:"皮肤科", en:"Dermatology",
+  id:17, zh:"皮肤科", en:"Dermatology",
   sections:[
     { title:"Skin Anatomy", zh:"皮肤解剖", vocab:[
       {zh:"皮肤",jp:"pí fū",en:"Skin"},
@@ -10125,7 +10197,7 @@ const LESSONS_MANDARIN = [
   }
   },
   {
-  id:17, zh:"肿瘤科", en:"Oncology",
+  id:18, zh:"肿瘤科", en:"Oncology",
   sections:[
     {  title:"Cancer Conditions & Infections", zh:"癌症疾病及感染", vocab:[
       {zh:"癌症",jp:"ái zhèng",en:"Cancer"},
@@ -10250,7 +10322,7 @@ const LESSONS_MANDARIN = [
   }
   },
   {
-  id:18, zh:"急诊科", en:"Emergency Medicine",
+  id:19, zh:"急诊科", en:"Emergency Medicine",
   sections:[
     { title:"Triage & Acuity", zh:"分诊及病情严重程度", vocab:[
       {zh:"急诊室",jp:"jí zhěn shì",en:"Emergency room"},
@@ -10415,7 +10487,7 @@ const LESSONS_MANDARIN = [
   }
   },
   {
-  id:19, zh:"妇产科", en:"Obstetrics & Gynecology",
+  id:20, zh:"妇产科", en:"Obstetrics & Gynecology",
   sections:[
     { title:"Reproductive Anatomy", zh:"生殖系统解剖", vocab:[
       {zh:"子宫",jp:"zǐ gōng",en:"Uterus / womb"},
@@ -10561,7 +10633,7 @@ const LESSONS_MANDARIN = [
   }
   },
   {
-  id:20, zh:"儿科", en:"Pediatrics",
+  id:21, zh:"儿科", en:"Pediatrics",
   sections:[
     { title:"Child Development & Growth", zh:"儿童发育及生长", vocab:[
       {zh:"出生体重",jp:"chū shēng tǐ zhòng",en:"Birth weight"},
@@ -10694,7 +10766,7 @@ const LESSONS_MANDARIN = [
   }
   },
   {
-  id:21, zh:"精神科", en:"Psychiatry",
+  id:22, zh:"精神科", en:"Psychiatry",
   sections:[
     { title:"Psychiatric Anatomy & Neurotransmitters", zh:"精神科解剖及神经递质", vocab:[
       {zh:"前额叶皮质",jp:"qián é yè pí zhì",en:"Prefrontal cortex"},
@@ -10856,7 +10928,7 @@ const LESSONS_MANDARIN = [
   }
   },
   {
-  id:46, zh:"物质使用及成瘾", en:"Substance Use & Addiction",
+  id:23, zh:"物质使用及成瘾", en:"Substance Use & Addiction",
   sections:[
     { title:"Addiction & Dependence", zh:"成瘾及依赖", vocab:[
       {zh:"成瘾",jp:"chéng yǐn",en:"Addiction"},
@@ -10968,7 +11040,7 @@ const LESSONS_MANDARIN = [
   }
   },
   {
-  id:22, zh:"行为健康", en:"Behavioral Health",
+  id:24, zh:"行为健康", en:"Behavioral Health",
   sections:[
     { title:"ADHD in Adults", zh:"成人注意力缺陷多动症", vocab:[
       {zh:"您小时候有没有学习困难或坐不住？",jp:"nín xiǎo shí hòu yǒu méi yǒu xué xí kùn nán huò zuò bú zhù?",en:"Did you have learning difficulties or trouble sitting still as a child?"},
@@ -11047,7 +11119,7 @@ const LESSONS_MANDARIN = [
   }
   },
   {
-  id:23, zh:"牙科", en:"Dentistry",
+  id:25, zh:"牙科", en:"Dentistry",
   sections:[
     { title:"Dental Anatomy", zh:"口腔解剖", vocab:[
       {zh:"牙齿",jp:"yá chǐ",en:"Tooth / teeth"},
@@ -11153,7 +11225,7 @@ const LESSONS_MANDARIN = [
   }
   },
   {
-  id:25, zh:"营养评估及治疗膳食", en:"Nutrition Assessment & Therapeutic Diets",
+  id:26, zh:"营养评估及治疗膳食", en:"Nutrition Assessment & Therapeutic Diets",
   sections:[
     { title:"Macronutrients & Micronutrients", zh:"宏量及微量营养素", vocab:[
       {zh:"营养",jp:"yíng yǎng",en:"Nutrition"},
@@ -11247,7 +11319,7 @@ const LESSONS_MANDARIN = [
   }
   },
   {
-  id:26, zh:"中医", en:"Traditional Chinese Medicine",
+  id:27, zh:"中医", en:"Traditional Chinese Medicine",
   sections:[
     { title:"Foundational Concepts", zh:"基本概念", vocab:[
       {zh:"中医",jp:"zhōng yī",en:"Traditional Chinese Medicine (TCM)"},
@@ -11332,7 +11404,7 @@ const LESSONS_MANDARIN = [
   }
   },
   {
-  id:27, zh:"健康筛查", en:"Health Screenings",
+  id:28, zh:"健康筛查", en:"Health Screenings",
   sections:[
     { title:"Cancer Screenings", zh:"癌症筛查", vocab:[
       {zh:"结肠镜检查",jp:"jié cháng jìng jiǎn chá",en:"Colonoscopy"},
@@ -11863,7 +11935,7 @@ const LESSONS_MANDARIN = [
   }
   },
   {
-  id:47, zh:"舒缓治疗", en:"Palliative Care",
+  id:33, zh:"舒缓治疗", en:"Palliative Care",
   sections:[
     { title:"Palliative Care Principles", zh:"舒缓治疗原则", vocab:[
       {zh:"舒缓治疗",jp:"shū huǎn zhì liáo",en:"Palliative care"},
@@ -11922,7 +11994,7 @@ const LESSONS_MANDARIN = [
   }
   },
   {
-  id:48, zh:"预设医疗指示及POLST", en:"Advance Directives & POLST",
+  id:34, zh:"预设医疗指示及POLST", en:"Advance Directives & POLST",
   sections:[
     { title:"Advance Directives", zh:"预设医疗指示", vocab:[
       {zh:"预设医疗指示",jp:"yù shè yī liáo zhǐ shì",en:"Advance directive"},
@@ -11970,7 +12042,7 @@ const LESSONS_MANDARIN = [
   }
   },
   {
-  id:34, zh:"急诊中心及紧急护理", en:"Urgent Care",
+  id:35, zh:"急诊中心及紧急护理", en:"Urgent Care",
   sections:[
     { title:"Triage Decision Language", zh:"分诊决策用语", vocab:[
       {zh:"急诊室",jp:"jí zhěn shì",en:"Emergency room (ER)"},
@@ -12094,7 +12166,7 @@ const LESSONS_MANDARIN = [
   }
   },
   {
-  id:37, zh:"社会服务、残障申请及社区支援", en:"Social Work, Disability & Community Support",
+  id:36, zh:"社会服务、残障申请及社区支援", en:"Social Work, Disability & Community Support",
   sections:[
     { title:"Social Work & Referrals", zh:"社工及转介", vocab:[
       {zh:"社工",jp:"shè gōng",en:"Social worker"},
@@ -12155,7 +12227,7 @@ const LESSONS_MANDARIN = [
   }
   },
   {
-  id:38, zh:"照顾者支持及临终关怀", en:"Caregiver Support & End-of-Life Care",
+  id:37, zh:"照顾者支持及临终关怀", en:"Caregiver Support & End-of-Life Care",
   sections:[
     { title:"Caregiver Support", zh:"照顾者支持", vocab:[
       {zh:"照顾者",jp:"zhào gù zhě",en:"Caregiver"},
@@ -12207,7 +12279,7 @@ const LESSONS_MANDARIN = [
   }
   },
   {
-  id:39, zh:"生活方式医学", en:"Lifestyle Medicine",
+  id:38, zh:"生活方式医学", en:"Lifestyle Medicine",
   sections:[
     { title:"Physical Activity", zh:"体能活动", vocab:[
       {zh:"体能活动",jp:"tǐ néng huó dòng",en:"Physical activity"},
@@ -12290,7 +12362,7 @@ const LESSONS_MANDARIN = [
   }
   },
   {
-  id:41, zh:"慢性病预防", en:"Chronic Disease Prevention",
+  id:39, zh:"慢性病预防", en:"Chronic Disease Prevention",
   sections:[
     { title:"Pre-diabetes & Blood Sugar", zh:"前期糖尿病及血糖", vocab:[
       {zh:"前期糖尿病",jp:"qián qī táng niào bìng",en:"Pre-diabetes"},
@@ -12354,7 +12426,7 @@ const LESSONS_MANDARIN = [
   }
   },
   {
-  id:42, zh:"外科", en:"Surgery",
+  id:40, zh:"外科", en:"Surgery",
   sections:[
     { title:"Perioperative Vocabulary", zh:"围手术期词汇", vocab:[
       {zh:"手术室",jp:"shǒu shù shì",en:"Operating room (OR)"},
@@ -12505,7 +12577,7 @@ const LESSONS_MANDARIN = [
   }
   },
   {
-  id:43, zh:"亚裔健康差异", en:"Asian Health Disparities",
+  id:41, zh:"亚裔健康差异", en:"Asian Health Disparities",
   sections:[
     { title:"Metabolic Risk & BMI Thresholds", zh:"代谢风险及体重指数阈值",
       note:"East Asian adults develop insulin resistance, type 2 diabetes, and cardiovascular disease at BMIs well below Western thresholds. WHO and ADA recommend screening from <strong>BMI ≥23</strong> and intervention from <strong>≥27.5</strong>. <strong>Visceral fat</strong> distribution means metabolic risk is underestimated by standard BMI cutoffs. A patient who appears 'normal weight' by Western standards may already have <strong>metabolic syndrome</strong>.",
@@ -12614,7 +12686,7 @@ const LESSONS_MANDARIN = [
   }
   },
   {
-  id:44, zh:"LGBTQ+及跨性别护理", en:"LGBTQ+ & Transgender Care",
+  id:42, zh:"LGBTQ+及跨性别护理", en:"LGBTQ+ & Transgender Care",
   sections:[
     { title:"Gender Identity & Terminology", zh:"性别认同及词汇", vocab:[
       {zh:"性别认同",jp:"xìng bié rèn tóng",en:"Gender identity"},
@@ -12691,7 +12763,7 @@ const LESSONS_MANDARIN = [
   }
   },
   {
-  id:45, zh:"移民及难民健康", en:"Immigrant & Refugee Health",
+  id:43, zh:"移民及难民健康", en:"Immigrant & Refugee Health",
   sections:[
     { title:"Migration & Social History", zh:"移民及社会史",
       vocab:[
@@ -13141,17 +13213,39 @@ async function speakAzureVoice(text, voice, onEnd) {
       window._currentAzureAudio.pause();
       window._currentAzureAudio = null;
     }
+    // Timeout: 8s for short text, 15s for long text
+    const timeoutMs = text.length > 40 ? 15000 : 8000;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
     const response = await fetch(AZURE_WORKER_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text, voice, rate: '0%', pitch: '0%' })
+      body: JSON.stringify({ text, voice, rate: '0%', pitch: '0%' }),
+      signal: controller.signal
     });
+    clearTimeout(timeoutId);
     if (!response.ok) return false;
     const audioBlob = await response.blob();
     const audioUrl = URL.createObjectURL(audioBlob);
     const audio = new Audio(audioUrl);
     window._currentAzureAudio = audio;
+    // Safety timeout: if audio doesn't end within 30s, force onEnd
+    const safetyTimer = setTimeout(() => {
+      if (window._currentAzureAudio === audio) {
+        audio.pause();
+        URL.revokeObjectURL(audioUrl);
+        window._currentAzureAudio = null;
+        if (onEnd) onEnd();
+      }
+    }, 30000);
     audio.onended = () => {
+      clearTimeout(safetyTimer);
+      URL.revokeObjectURL(audioUrl);
+      window._currentAzureAudio = null;
+      if (onEnd) onEnd();
+    };
+    audio.onerror = () => {
+      clearTimeout(safetyTimer);
       URL.revokeObjectURL(audioUrl);
       window._currentAzureAudio = null;
       if (onEnd) onEnd();
@@ -13160,6 +13254,7 @@ async function speakAzureVoice(text, voice, onEnd) {
     return true;
   } catch (err) {
     console.warn('Azure TTS voice failed:', err);
+    if (onEnd) onEnd(); // Always advance drill even on error
     return false;
   }
 }
@@ -13962,6 +14057,120 @@ function drillSkip() {
   }
 }
 
+// ── LOOKAHEAD AUDIO BUFFER ────────────────────────────────────────────────────
+// Pre-fetches audio for upcoming phrases so playback is seamless
+const _audioBuffer = new Map(); // key → Promise<{url, audio}>
+
+async function prefetchAudio(text, voice) {
+  const key = `${voice}::${text}`;
+  if (_audioBuffer.has(key)) return; // already fetching or fetched
+  if (!AZURE_WORKER_URL) return;
+  _audioBuffer.set(key, (async () => {
+    try {
+      const timeoutMs = text.length > 40 ? 15000 : 8000;
+      const controller = new AbortController();
+      const tid = setTimeout(() => controller.abort(), timeoutMs);
+      const response = await fetch(AZURE_WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text, voice, rate: '0%', pitch: '0%' }),
+        signal: controller.signal
+      });
+      clearTimeout(tid);
+      if (!response.ok) return null;
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      return { url, audio: new Audio(url) };
+    } catch(e) { return null; }
+  })());
+}
+
+async function playBuffered(text, voice, onEnd) {
+  const key = `${voice}::${text}`;
+  let result = null;
+  if (_audioBuffer.has(key)) {
+    // Show loading indicator briefly if still fetching
+    const player = document.getElementById('drill-player-mode');
+    const origText = player ? player.textContent : '';
+    let loadingTimer = null;
+    const pending = _audioBuffer.get(key);
+    const timeoutPromise = new Promise(res => loadingTimer = setTimeout(() => {
+      if (player) player.textContent = 'LOADING...';
+      res(null);
+    }, 300));
+    result = await Promise.race([pending, timeoutPromise]);
+    if (!result) result = await pending; // wait for real result after showing loading
+    clearTimeout(loadingTimer);
+    if (player && player.textContent === 'LOADING...') player.textContent = origText;
+    _audioBuffer.delete(key);
+  }
+  if (!result || !result.url) {
+    // Buffer miss — fall back to normal speakAzureVoice
+    return speakAzureVoice(text, voice, onEnd);
+  }
+  // Play buffered audio
+  if (window._currentAzureAudio) { window._currentAzureAudio.pause(); window._currentAzureAudio = null; }
+  const { url, audio } = result;
+  window._currentAzureAudio = audio;
+  const safetyTimer = setTimeout(() => {
+    if (window._currentAzureAudio === audio) {
+      audio.pause(); URL.revokeObjectURL(url); window._currentAzureAudio = null;
+      if (onEnd) onEnd();
+    }
+  }, 30000);
+  audio.onended = () => { clearTimeout(safetyTimer); URL.revokeObjectURL(url); window._currentAzureAudio = null; if (onEnd) onEnd(); };
+  audio.onerror = () => { clearTimeout(safetyTimer); URL.revokeObjectURL(url); window._currentAzureAudio = null; if (onEnd) onEnd(); };
+  try { await audio.play(); return true; } catch(e) { URL.revokeObjectURL(url); if (onEnd) onEnd(); return false; }
+}
+
+function clearAudioBuffer() {
+  _audioBuffer.forEach(async (promise) => {
+    const r = await promise.catch(() => null);
+    if (r && r.url) URL.revokeObjectURL(r.url);
+  });
+  _audioBuffer.clear();
+}
+
+// Prefetch next N vocab items ahead
+function prefetchVocabAhead(count) {
+  const L = getLessons()[cur];
+  if (!L) return;
+  for (let i = 1; i <= count; i++) {
+    const pos = vocabPlayPos + i;
+    if (pos >= vocabPlayQueue.length) break;
+    const {si, vi, li} = vocabPlayQueue[pos];
+    const lessonData = li !== undefined ? getLessons()[li] : L;
+    const v = lessonData.sections[si].vocab[vi];
+    if (!v) continue;
+    const voice = VOICE_MAP[currentLang] || VOICE_MAP.yue;
+    if (drillMode === 'en-zh' || drillMode === 'zh-en') {
+      // Buffer both Chinese and English
+      prefetchAudio(v.zh, voice);
+      const enVoice = localStorage.getItem('clinlingua_azure_voice_en') || 'en-US-JennyNeural';
+      prefetchAudio(v.en, enVoice);
+    } else {
+      prefetchAudio(v.zh, voice);
+    }
+  }
+}
+
+// Prefetch next N dialogue lines ahead
+function prefetchDialogueAhead(count) {
+  const lines = getLessons()[cur]?.dialogue?.lines;
+  if (!lines) return;
+  for (let i = 1; i <= count; i++) {
+    const idx = playAllIdx + i;
+    if (idx >= lines.length) break;
+    const line = lines[idx];
+    const lang = currentLang;
+    const voice = line.sp === 'doctor'
+      ? (lang === 'cmn' ? VOICE_MAP.cmn : VOICE_MAP.yue)
+      : (lang === 'cmn' ? VOICE_MAP.cmn_patient : VOICE_MAP.yue_patient);
+    prefetchAudio(line.zh, voice);
+  }
+}
+// ── END LOOKAHEAD BUFFER ──────────────────────────────────────────────────────
+
 function startVocabPlayAll() {
   drillMode = null;
   _startPlay(null);
@@ -13980,6 +14189,7 @@ function startDrillZhEn() {
 function _startPlay(sectionsFilter) {
   synth && synth.cancel();
   clearTimeout(vocabPlayTimer);
+  clearAudioBuffer();
   vocabPlayPos = -1;
   vocabPlayQueue = [];
   document.querySelectorAll('.audio-btn').forEach(b => b.classList.remove('playing'));
@@ -13988,6 +14198,7 @@ function _startPlay(sectionsFilter) {
   vocabPlayQueue = buildVocabQueue(sectionsFilter);
   vocabPlayPos = 0;
   updateVocabPlayUI(true, sectionsFilter ? sectionsFilter[0] : null);
+  prefetchVocabAhead(3); // prime buffer before first item plays
   playNextVocab();
 }
 
@@ -14020,6 +14231,8 @@ function playNextVocab() {
   }
   // Update floating drill player
   updateDrillPlayer(v, si, vocabPlayPos, vocabPlayQueue.length);
+  // Prefetch next 3 vocab items
+  prefetchVocabAhead(3);
 
   function afterItem() {
     if (btn) btn.classList.remove('playing');
@@ -14034,20 +14247,22 @@ function playNextVocab() {
 
   if (drillMode === 'en-zh') {
     // English first, pause 800ms, then Chinese
-    speakEnglish(v.en, () => {
+    const enVoice = localStorage.getItem('clinlingua_azure_voice_en') || 'en-US-JennyNeural';
+    playBuffered(v.en, enVoice, () => {
       vocabPlayTimer = setTimeout(() => {
-        speak(v.zh, afterItem);
+        playBuffered(v.zh, VOICE_MAP[currentLang] || VOICE_MAP.yue, afterItem);
       }, 800);
     });
   } else if (drillMode === 'zh-en') {
     // Chinese first, pause 800ms, then English
-    speak(v.zh, () => {
+    const enVoice = localStorage.getItem('clinlingua_azure_voice_en') || 'en-US-JennyNeural';
+    playBuffered(v.zh, VOICE_MAP[currentLang] || VOICE_MAP.yue, () => {
       vocabPlayTimer = setTimeout(() => {
-        speakEnglish(v.en, afterItem);
+        playBuffered(v.en, enVoice, afterItem);
       }, 800);
     });
   } else {
-    speak(v.zh, afterItem);
+    playBuffered(v.zh, VOICE_MAP[currentLang] || VOICE_MAP.yue, afterItem);
   }
 }
 
@@ -14057,6 +14272,7 @@ function stopVocabPlayAll() {
   vocabPlayPos = -1;
   vocabPlayQueue = [];
   drillMode = null;
+  clearAudioBuffer();
   document.querySelectorAll('.audio-btn').forEach(b => b.classList.remove('playing'));
   document.querySelectorAll('.vocab-card').forEach(c => c.classList.remove('playing-card'));
   document.querySelectorAll('.section-play-btn').forEach(b => b.classList.remove('playing'));
@@ -14515,18 +14731,26 @@ function playNextLine() {
   if (btn) { btn.classList.add('playing'); btn.textContent = '⏸ 中文'; }
   const idx = playAllIdx;
   const line = lines[idx];
-  speakAs(line.zh, line.sp, () => {
+  // Prefetch 1 dialogue line ahead
+  prefetchDialogueAhead(1);
+  // Play buffered
+  const lang = currentLang;
+  const voice = line.sp === 'doctor'
+    ? (lang === 'cmn' ? VOICE_MAP.cmn : VOICE_MAP.yue)
+    : (lang === 'cmn' ? VOICE_MAP.cmn_patient : VOICE_MAP.yue_patient);
+  playBuffered(line.zh, voice, () => {
     document.getElementById(`dline-${idx}`)?.classList.remove('highlighted');
     const b = document.getElementById(`dbtn-${idx}`);
     if (b) { b.classList.remove('playing'); b.textContent = '▶ 中文'; }
-    if (playAllIdx === -1) return; // stopAll() was called
+    if (playAllIdx === -1) return;
     playAllIdx++;
-    playAllTimer = setTimeout(playNextLine, 800); // slightly longer gap for iOS
+    playAllTimer = setTimeout(playNextLine, 800);
   });
 }
 
 function stopAll() {
   synth && synth.cancel(); clearTimeout(playAllTimer); playAllIdx = -1;
+  clearAudioBuffer();
   document.querySelectorAll('.dialogue-line').forEach(l => l.classList.remove('highlighted'));
   document.querySelectorAll('.dline-play-btn').forEach(b => { b.classList.remove('playing'); b.textContent = '▶ 中文'; });
   const btn = document.getElementById('play-all-btn');
