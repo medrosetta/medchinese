@@ -2051,7 +2051,7 @@
   .survey-star {
     font-size: 1.4rem;
     cursor: pointer;
-    opacity: 0.3;
+    opacity: 0.5;
     transition: opacity 0.1s;
     background: none;
     border: none;
@@ -15009,11 +15009,11 @@ function renderAbout(targetEl) {
       </div>
 
       <div style="font-family:var(--mono);font-size:0.875rem;line-height:1.9;color:var(--ink);margin-bottom:16px">
-        MedChinese was created as a practical learning resource shaped by clinical practice. It is free to use, with a commitment to keeping its content accessible to everyone. If you find it helpful, please share it with others who are working to better support Chinese-speaking patients.
+        MedChinese was created as a practical learning resource shaped by clinical experience. It's free to use, with a commitment to keeping the core content accessible to everyone. If you find it helpful, please share it with others working to better support Chinese-speaking patients.
       </div>
 
       <div style="font-family:var(--mono);font-size:0.875rem;line-height:1.9;color:var(--ink);margin-bottom:16px">
-        This resource is for anyone who wants to help Chinese-speaking patients feel heard and understood, physicians, nurses, pharmacists, medical assistants, students, and anyone working to bridge the language gap in healthcare. When patients feel understood, and their care team can navigate even difficult conversations, care improves.
+        This tool is for anyone who wants to help Chinese-speaking patients feel heard and understood — physicians, nurses, pharmacists, medical assistants, students, and others working to bridge the language gap in healthcare. When patients feel understood and care teams can navigate even difficult conversations, care improves in meaningful ways.
       </div>
 
       <div style="font-family:var(--mono);font-size:0.875rem;line-height:1.9;color:var(--ink);margin-bottom:16px">
@@ -15021,7 +15021,7 @@ function renderAbout(targetEl) {
       </div>
 
       <div style="background:var(--teal-light);border:1.5px solid var(--teal);padding:16px 20px;font-family:var(--mono);font-size:0.875rem;line-height:1.9;color:var(--ink)">
-        To everyone who has offered feedback and suggestions, thank you. This work is better because of you. And to the patients who make this work meaningful every day, thank you for your trust, your resilience, and your inspiration.
+        To everyone who has offered feedback and suggestions, thank you. This work is better because of you. And to the patients who make this work meaningful, thank you for your trust, your resilience, and your inspiration.
       </div>
     </div>
   `;
@@ -15044,7 +15044,7 @@ function renderFeedbackSurvey(targetEl) {
       <div class="survey-q">
         <div class="survey-q-label">Overall rating</div>
         <div style="display:flex;gap:8px;margin-top:6px">
-          ${[1,2,3,4,5].map(n => `<button class="survey-star" onclick="setStar(this,${n})" data-val="${n}">★</button>`).join('')}
+          ${[1,2,3,4,5].map(n => `<button class="survey-star" onclick="setStar(this,${n})" data-val="${n}">☆</button>`).join('')}
         </div>
         <input type="hidden" id="survey-stars" value="">
       </div>
@@ -16563,7 +16563,7 @@ renderPathwayBanner();
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
   const swCode = `
-    const CACHE = 'medical-chinese-v2';
+    const CACHE = 'medical-chinese-v3';
     self.addEventListener('install', e => {
       e.waitUntil(
         caches.open(CACHE).then(c => c.addAll(['${location.href}']))
@@ -17043,7 +17043,9 @@ function setStar(btn, n) {
 }
 function setSurveyStars(n) {
   document.querySelectorAll('.survey-star').forEach((s, i) => {
-    s.classList.toggle('active', i < n);
+    const active = i < n;
+    s.classList.toggle('active', active);
+    s.textContent = active ? '★' : '☆';
   });
 }
 
