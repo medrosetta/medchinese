@@ -13379,9 +13379,14 @@ function previewAzureEnVoice() {
   speakAzureVoice('Hello, welcome to MedChinese. This is the English drill voice.', voice, null);
 }
 
-// Strip parenthetical text for cleaner TTS in drills
+// Strip parenthetical text and slash alternatives for cleaner TTS in drills
 function stripParens(text) {
-  return text.replace(/\s+\([^)]*\)/g, '').replace(/\s+\[[^\]]*\]/g, '').trim();
+  // Strip space-preceded parentheticals e.g. "Potassium (K⁺)" → "Potassium"
+  let t = text.replace(/\s+\([^)]*\)/g, '').replace(/\s+\[[^\]]*\]/g, '');
+  // Strip slash alternatives e.g. "Excuse me / Thank you" → "Excuse me"
+  // but preserve e.g. "Lp(a)" which has no space before slash
+  t = t.replace(/\s+\/.*$/, '');
+  return t.trim();
 }
 
 function speakEnglish(text, onEnd) {
@@ -16614,7 +16619,7 @@ renderPathwayBanner();
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
   const swCode = `
-    const CACHE = 'medical-chinese-v3';
+    const CACHE = 'medical-chinese-v4';
     self.addEventListener('install', e => {
       e.waitUntil(
         caches.open(CACHE).then(c => c.addAll(['${location.href}']))
