@@ -1007,7 +1007,37 @@
     .tab-audio-mobile { display: none; }
     .tab-audio-full { display: inline; }
   }
-  /* ── FLOATING DRILL PLAYER ── */
+  /* ── UPDATE BANNER ── */
+  #update-banner {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--teal);
+    color: var(--paper);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    padding: 10px 16px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 600;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    white-space: nowrap;
+  }
+  #update-banner button:first-of-type {
+    background: var(--paper);
+    color: var(--teal);
+    border: none;
+    padding: 5px 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 4px;
+    letter-spacing: 0.06em;
+  }
   #drill-player {
     position: fixed;
     bottom: 80px;
@@ -2037,11 +2067,10 @@
   }
   .survey-q-label {
     font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     letter-spacing: 0.07em;
     text-transform: uppercase;
     color: var(--ink);
-    opacity: 0.75;
     margin-bottom: 7px;
   }
   .survey-stars {
@@ -2066,7 +2095,7 @@
   }
   .survey-option {
     font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     letter-spacing: 0.06em;
     padding: 6px 12px;
     border: 1px solid var(--border);
@@ -2078,7 +2107,7 @@
   .survey-option:hover { background: var(--cream); }
   .survey-opt {
     font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     letter-spacing: 0.04em;
     padding: 6px 14px;
     border: 1px solid var(--border);
@@ -13023,6 +13052,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
+const APP_VERSION = (()=>{ const c='medical-chinese-v5'; const n=c.split('-v')[1]; return '1.0'+n+' · April 2, 2026'; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: 'zh-HK-HiuGaaiNeural',
@@ -13279,7 +13309,7 @@ async function speakAzureVoice(text, voice, onEnd) {
     return true;
   } catch (err) {
     console.warn('Azure TTS voice failed:', err);
-    if (onEnd) onEnd(); // Always advance drill even on error
+    // Do NOT call onEnd on error - let caller handle fallback
     return false;
   }
 }
@@ -14120,7 +14150,7 @@ async function prefetchAudio(text, voice) {
   })());
 }
 
-async function playBuffered(text, voice, onEnd) {
+async function playBuffered(text, voice, onEnd, lang) {
   const key = `${voice}::${text}`;
   let result = null;
   if (_audioBuffer.has(key)) {
@@ -14140,8 +14170,17 @@ async function playBuffered(text, voice, onEnd) {
     _audioBuffer.delete(key);
   }
   if (!result || !result.url) {
-    // Buffer miss — fall back to normal speakAzureVoice
-    return speakAzureVoice(text, voice, onEnd);
+    // Buffer miss — use speakAzureVoice (Azure first, now safe), then fallback
+    if (lang === 'en') {
+      speakAzureVoice(text, voice, onEnd).then(ok => {
+        if (!ok) speakEnglish(text, onEnd);
+      });
+    } else {
+      speakAzureVoice(text, voice, onEnd).then(ok => {
+        if (!ok) speak(text, onEnd);
+      });
+    }
+    return false;
   }
   // Play buffered audio
   if (window._currentAzureAudio) { window._currentAzureAudio.pause(); window._currentAzureAudio = null; }
@@ -14233,7 +14272,7 @@ function _startPlay(sectionsFilter) {
   vocabPlayQueue = buildVocabQueue(sectionsFilter);
   vocabPlayPos = 0;
   updateVocabPlayUI(true, sectionsFilter ? sectionsFilter[0] : null);
-  prefetchVocabAhead(3); // prime buffer before first item plays
+  prefetchVocabAhead(6); // prime buffer before first item plays
   playNextVocab();
 }
 
@@ -14266,15 +14305,27 @@ function playNextVocab() {
   }
   // Update floating drill player
   updateDrillPlayer(v, si, vocabPlayPos, vocabPlayQueue.length);
-  // Prefetch next 3 vocab items
-  prefetchVocabAhead(3);
+  // Prefetch next 6 vocab items
+  prefetchVocabAhead(6);
 
   function afterItem() {
     if (btn) btn.classList.remove('playing');
     if (card) card.classList.remove('playing-card');
     vocabPlayPos++;
     if (vocabPlayPos < vocabPlayQueue.length) {
-      vocabPlayTimer = setTimeout(playNextVocab, 500);
+      // Smart pause: check if next card is buffered
+      const next = vocabPlayQueue[vocabPlayPos];
+      if (next) {
+        const L2 = getLessons()[next.li !== undefined ? next.li : cur];
+        const nextV = L2.sections[next.si].vocab[next.vi];
+        const nextVoice = VOICE_MAP[currentLang] || VOICE_MAP.yue;
+        const nextKey = `${nextVoice}::${nextV.zh}`;
+        const isBuffered = _audioBuffer.has(nextKey);
+        // If buffered: 800ms pause. If not: 1200ms to allow more fetch time
+        vocabPlayTimer = setTimeout(playNextVocab, isBuffered ? 800 : 1200);
+      } else {
+        vocabPlayTimer = setTimeout(playNextVocab, 800);
+      }
     } else {
       stopVocabPlayAll();
     }
@@ -14285,19 +14336,19 @@ function playNextVocab() {
     const enVoice = localStorage.getItem('clinlingua_azure_voice_en') || 'en-US-JennyNeural';
     playBuffered(stripParens(v.en), enVoice, () => {
       vocabPlayTimer = setTimeout(() => {
-        playBuffered(v.zh, VOICE_MAP[currentLang] || VOICE_MAP.yue, afterItem);
+        playBuffered(v.zh, VOICE_MAP[currentLang] || VOICE_MAP.yue, afterItem, 'zh');
       }, 800);
-    });
+    }, 'en');
   } else if (drillMode === 'zh-en') {
     // Chinese first, pause 800ms, then English
     const enVoice = localStorage.getItem('clinlingua_azure_voice_en') || 'en-US-JennyNeural';
     playBuffered(v.zh, VOICE_MAP[currentLang] || VOICE_MAP.yue, () => {
       vocabPlayTimer = setTimeout(() => {
-        playBuffered(stripParens(v.en), enVoice, afterItem);
+        playBuffered(stripParens(v.en), enVoice, afterItem, 'en');
       }, 800);
-    });
+    }, 'zh');
   } else {
-    playBuffered(v.zh, VOICE_MAP[currentLang] || VOICE_MAP.yue, afterItem);
+    playBuffered(v.zh, VOICE_MAP[currentLang] || VOICE_MAP.yue, afterItem, 'zh');
   }
 }
 
@@ -14392,11 +14443,14 @@ function renderAudioSetup(targetEl) {
       <div class="lesson-label">SETUP & AUDIO 設定及語音</div>
       <div class="lesson-main-title" style="font-style:italic">Audio & Voice Settings</div>
     </div>
+    <div style="font-family:var(--mono);font-size:0.875rem;color:var(--muted);font-style:italic;margin-bottom:20px;line-height:1.9">
+      For educational use only. Not a medical device. Clinical decisions should reflect professional judgment.
+    </div>
 
     <!-- Azure TTS Status -->
     <div style="background:var(--gold-light);border:2px solid var(--gold);padding:16px 20px;margin-bottom:28px">
       <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;margin-bottom:6px">🔊 Neural Voice Audio</div>
-      <div style="font-family:var(--mono);font-size:0.78rem;line-height:1.8;color:var(--ink)">
+      <div style="font-family:var(--mono);font-size:0.875rem;line-height:1.9;color:var(--ink)">
         MedChinese uses <strong>Azure Neural TTS</strong> — high-quality AI voices that work automatically in all browsers.
         No setup required. Select your preferred voices below.
       </div>
@@ -14407,10 +14461,10 @@ function renderAudioSetup(targetEl) {
       <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;font-style:italic;margin-bottom:6px">粵語 Cantonese Voice</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:6px">
         <div>
-          <div style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">NARRATOR / DOCTOR 旁白／醫生</div>
+          <div style="font-family:var(--mono);font-size:0.75rem;letter-spacing:0.06em;color:var(--muted);margin-bottom:4px">NARRATOR / DOCTOR 旁白／醫生</div>
           <div style="display:flex;gap:6px;align-items:center">
             <select id="voice-yue-select" onchange="saveAzureVoice('yue', this.value)"
-              style="font-family:var(--mono);font-size:0.72rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
+              style="font-family:var(--mono);font-size:0.875rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
               <option value="zh-HK-HiuGaaiNeural" ${savedYueVoice === 'zh-HK-HiuGaaiNeural' ? 'selected' : ''}>HiuGaai (F) ★</option>
               <option value="zh-HK-HiuMaanNeural" ${savedYueVoice === 'zh-HK-HiuMaanNeural' ? 'selected' : ''}>HiuMaan (F)</option>
               <option value="zh-HK-WanLungNeural" ${savedYueVoice === 'zh-HK-WanLungNeural' ? 'selected' : ''}>WanLung (M)</option>
@@ -14422,10 +14476,10 @@ function renderAudioSetup(targetEl) {
           </div>
         </div>
         <div>
-          <div style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">PATIENT 病人</div>
+          <div style="font-family:var(--mono);font-size:0.75rem;letter-spacing:0.06em;color:var(--muted);margin-bottom:4px">PATIENT 病人</div>
           <div style="display:flex;gap:6px;align-items:center">
             <select id="voice-yue-patient-select" onchange="saveAzureVoice('yue_patient', this.value)"
-              style="font-family:var(--mono);font-size:0.72rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
+              style="font-family:var(--mono);font-size:0.875rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
               <option value="zh-HK-WanLungNeural" ${savedYuePatientVoice === 'zh-HK-WanLungNeural' ? 'selected' : ''}>WanLung (M) ★</option>
               <option value="zh-HK-HiuGaaiNeural" ${savedYuePatientVoice === 'zh-HK-HiuGaaiNeural' ? 'selected' : ''}>HiuGaai (F)</option>
               <option value="zh-HK-HiuMaanNeural" ${savedYuePatientVoice === 'zh-HK-HiuMaanNeural' ? 'selected' : ''}>HiuMaan (F)</option>
@@ -14444,10 +14498,10 @@ function renderAudioSetup(targetEl) {
       <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;font-style:italic;margin-bottom:6px">國語 Mandarin Voice</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:6px">
         <div>
-          <div style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">NARRATOR / DOCTOR 旁白／醫生</div>
+          <div style="font-family:var(--mono);font-size:0.75rem;letter-spacing:0.06em;color:var(--muted);margin-bottom:4px">NARRATOR / DOCTOR 旁白／醫生</div>
           <div style="display:flex;gap:6px;align-items:center">
             <select id="voice-cmn-select" onchange="saveAzureVoice('cmn', this.value)"
-              style="font-family:var(--mono);font-size:0.72rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
+              style="font-family:var(--mono);font-size:0.875rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
               <option value="zh-CN-XiaoxiaoNeural" ${savedCmnVoice === 'zh-CN-XiaoxiaoNeural' ? 'selected' : ''}>Xiaoxiao (F) ★</option>
               <option value="zh-CN-XiaoyiNeural"   ${savedCmnVoice === 'zh-CN-XiaoyiNeural'   ? 'selected' : ''}>Xiaoyi (F)</option>
               <option value="zh-CN-YunxiNeural"    ${savedCmnVoice === 'zh-CN-YunxiNeural'    ? 'selected' : ''}>Yunxi (M)</option>
@@ -14460,10 +14514,10 @@ function renderAudioSetup(targetEl) {
           </div>
         </div>
         <div>
-          <div style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;color:var(--muted);margin-bottom:4px">PATIENT 病人</div>
+          <div style="font-family:var(--mono);font-size:0.75rem;letter-spacing:0.06em;color:var(--muted);margin-bottom:4px">PATIENT 病人</div>
           <div style="display:flex;gap:6px;align-items:center">
             <select id="voice-cmn-patient-select" onchange="saveAzureVoice('cmn_patient', this.value)"
-              style="font-family:var(--mono);font-size:0.72rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
+              style="font-family:var(--mono);font-size:0.875rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
               <option value="zh-CN-YunxiNeural"    ${savedCmnPatientVoice === 'zh-CN-YunxiNeural'    ? 'selected' : ''}>Yunxi (M) ★</option>
               <option value="zh-CN-XiaoxiaoNeural" ${savedCmnPatientVoice === 'zh-CN-XiaoxiaoNeural' ? 'selected' : ''}>Xiaoxiao (F)</option>
               <option value="zh-CN-XiaoyiNeural"   ${savedCmnPatientVoice === 'zh-CN-XiaoyiNeural'   ? 'selected' : ''}>Xiaoyi (F)</option>
@@ -14481,10 +14535,10 @@ function renderAudioSetup(targetEl) {
     <!-- English Drill Voice -->
     <div style="margin-bottom:28px">
       <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;font-style:italic;margin-bottom:6px">English Drill Voice</div>
-      <div style="font-family:var(--mono);font-size:0.68rem;color:var(--muted);margin-bottom:12px">Used for EN → 中 and 中 → EN drills. Azure Neural TTS.</div>
+      <div style="font-family:var(--mono);font-size:0.8rem;color:var(--muted);margin-bottom:12px">Used for EN → 中 and 中 → EN drills. Azure Neural TTS.</div>
       <div style="display:flex;gap:6px;align-items:center">
         <select id="voice-en-select" onchange="saveAzureEnVoice(this.value)"
-          style="font-family:var(--mono);font-size:0.72rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
+          style="font-family:var(--mono);font-size:0.875rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
           <option value="en-US-JennyNeural"   ${savedEnVoice === 'en-US-JennyNeural'   ? 'selected' : ''}>Jenny (F), US ★</option>
           <option value="en-US-AriaNeural"    ${savedEnVoice === 'en-US-AriaNeural'    ? 'selected' : ''}>Aria (F), US</option>
           <option value="en-US-GuyNeural"     ${savedEnVoice === 'en-US-GuyNeural'     ? 'selected' : ''}>Guy (M), US</option>
@@ -14504,13 +14558,13 @@ function renderAudioSetup(targetEl) {
     </div>
 
     <!-- Browser compatibility note -->
-    <div style="border:1px solid var(--border);padding:14px 18px;margin-bottom:28px;font-family:var(--mono);font-size:0.75rem;line-height:1.9">
+    <div style="border:1px solid var(--border);padding:16px 20px;margin-bottom:28px;font-family:var(--mono);font-size:0.875rem;line-height:1.9">
       <div style="font-weight:700;margin-bottom:6px;font-size:0.78rem">Browser Compatibility</div>
       <div>✅ <strong>Edge</strong> — Full neural voice support</div>
       <div>✅ <strong>Chrome</strong> — Full neural voice support</div>
       <div>✅ <strong>Safari (iOS/macOS)</strong> — Full neural voice support</div>
       <div>✅ <strong>Firefox</strong> — Full neural voice support</div>
-      <div style="margin-top:8px;color:var(--muted);font-size:0.72rem">If audio does not play, check that your browser tab is not muted and your device volume is on.</div>
+      <div style="margin-top:8px;color:var(--muted);font-size:0.875rem">If audio does not play, check that your browser tab is not muted and your device volume is on.</div>
     </div>
 
     <!-- Feature ratings -->
@@ -15079,6 +15133,16 @@ function renderAbout(targetEl) {
       <div style="background:var(--teal-light);border:1.5px solid var(--teal);padding:16px 20px;font-family:var(--mono);font-size:0.875rem;line-height:1.9;color:var(--ink)">
         To everyone who has offered feedback and suggestions, thank you. This work is better because of you. And to the patients who make this work meaningful, thank you for your trust, your resilience, and your inspiration.
       </div>
+
+
+      <div style="margin-top:20px;padding:16px 20px;border:1px solid var(--border);font-family:var(--mono);font-size:0.875rem;line-height:1.9;color:var(--muted);font-style:italic">
+        MedChinese is a language learning tool for healthcare professionals. It is not a medical device and does not provide medical advice or clinical translation services. All phrases should be verified before clinical use, and all clinical decisions should reflect professional judgment and current standards of care.
+      </div>
+
+      <!-- Version -->
+      <div style="margin-top:20px;font-family:var(--mono);font-size:0.75rem;color:var(--muted)">
+        Current Version ${APP_VERSION}
+      </div>
     </div>
   `;
   el.appendChild(div);
@@ -15160,24 +15224,24 @@ function renderFeedbackSurvey(targetEl) {
 
       <!-- Missing topics -->
       <div class="survey-q">
-        <div class="survey-q-label">Missing topics or terms <span style="opacity:0.5;font-size:0.5rem">(optional)</span></div>
+        <div class="survey-q-label">Missing topics or terms <span style="opacity:0.5;font-size:0.7rem">(optional)</span></div>
         <textarea class="feedback-comment" id="survey-missing" placeholder="e.g. cardiology phrases, specific medications..."></textarea>
       </div>
 
       <!-- Suggested changes -->
       <div class="survey-q">
-        <div class="survey-q-label">Suggested changes <span style="opacity:0.5;font-size:0.5rem">(optional)</span></div>
+        <div class="survey-q-label">Suggested changes <span style="opacity:0.5;font-size:0.7rem">(optional)</span></div>
         <textarea class="feedback-comment" id="survey-changes" placeholder="Any changes or improvements..."></textarea>
       </div>
 
       <!-- Other -->
       <div class="survey-q">
-        <div class="survey-q-label">Anything else <span style="opacity:0.5;font-size:0.5rem">(optional)</span></div>
+        <div class="survey-q-label">Anything else <span style="opacity:0.5;font-size:0.7rem">(optional)</span></div>
         <textarea class="feedback-comment" id="survey-other" placeholder="Your feedback or suggestion..."></textarea>
       </div>
 
       <button class="feedback-submit" style="margin-top:8px" onclick="submitSurvey()">📨 SEND FEEDBACK</button>
-      <div id="survey-success" style="display:none;font-family:var(--mono);font-size:0.68rem;color:var(--teal);margin-top:12px">
+      <div id="survey-success" style="display:none;font-family:var(--mono);font-size:1rem;color:var(--teal);margin-top:12px">
         ✓ Thank you! Your feedback has been received.
       </div>
     </div>
@@ -16619,7 +16683,7 @@ renderPathwayBanner();
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
   const swCode = `
-    const CACHE = 'medical-chinese-v4';
+    const CACHE = 'medical-chinese-v5';
     self.addEventListener('install', e => {
       e.waitUntil(
         caches.open(CACHE).then(c => c.addAll(['${location.href}']))
@@ -16640,7 +16704,35 @@ if ('serviceWorker' in navigator) {
   `;
   const blob = new Blob([swCode], {type: 'application/javascript'});
   const swUrl = URL.createObjectURL(blob);
-  navigator.serviceWorker.register(swUrl, {scope: './'}).catch(() => {});
+  navigator.serviceWorker.register(swUrl, {scope: './'}).then(reg => {
+    // Detect when a new service worker takes over — show update banner
+    reg.addEventListener('updatefound', () => {
+      const newWorker = reg.installing;
+      if (!newWorker) return;
+      newWorker.addEventListener('statechange', () => {
+        if (newWorker.state === 'activated' && navigator.serviceWorker.controller) {
+          showUpdateBanner();
+        }
+      });
+    });
+  }).catch(() => {});
+
+  // Also detect controller change (new SW claimed clients)
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    showUpdateBanner();
+  });
+}
+
+function showUpdateBanner() {
+  if (document.getElementById('update-banner')) return; // already shown
+  const banner = document.createElement('div');
+  banner.id = 'update-banner';
+  banner.innerHTML = `
+    <span>🔄 MedChinese has been updated</span>
+    <button onclick="window.location.reload()">Reload</button>
+    <button onclick="this.parentElement.remove()" style="background:none;border:none;color:rgba(245,240,232,0.6);cursor:pointer;font-size:1rem;padding:0 4px">✕</button>
+  `;
+  document.body.appendChild(banner);
 }
 
 
@@ -17138,7 +17230,7 @@ function setSurveyStars(n) {
         </div>
       </div>
 
-      <div class="feedback-section-label">Comments <span style="opacity:0.5;font-size:0.5rem">(optional)</span></div>
+      <div class="feedback-section-label">Comments <span style="opacity:0.5;font-size:0.7rem">(optional)</span></div>
       <textarea class="feedback-comment" id="feedback-comment" placeholder="e.g. sounds too formal · wrong tone on 心臟 · patients say it differently"></textarea>
 
       <div class="feedback-actions">
