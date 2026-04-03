@@ -13053,7 +13053,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v9'; return '1.0'+c.split('-v')[1]+' · April 3, 2026'; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v10'; return '1.0'+c.split('-v')[1]+' · April 3, 2026'; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('clinlingua_azure_voice_yue') || 'zh-HK-HiuGaaiNeural',
@@ -13123,7 +13123,7 @@ async function speakAzure(text, lang, onEnd) {
       clearTimeout(safetyTimer);
       URL.revokeObjectURL(audioUrl);
       window._currentAzureAudio = null;
-      if (onEnd) onEnd();
+      // Do NOT call onEnd — let speak() fallback to Web Speech
     };
     await audio.play().catch(e => {
       clearTimeout(safetyTimer);
@@ -13271,8 +13271,8 @@ async function speakAzureVoice(text, voice, onEnd) {
       window._currentAzureAudio.pause();
       window._currentAzureAudio = null;
     }
-    // Timeout: 8s for short text, 15s for long text
-    const timeoutMs = text.length > 40 ? 15000 : 8000;
+    // Generous timeout: longer for longer text
+    const timeoutMs = text.length > 60 ? 20000 : text.length > 30 ? 15000 : 10000;
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
     const response = await fetch(AZURE_WORKER_URL, {
@@ -13287,7 +13287,8 @@ async function speakAzureVoice(text, voice, onEnd) {
     const audioUrl = URL.createObjectURL(audioBlob);
     const audio = new Audio(audioUrl);
     window._currentAzureAudio = audio;
-    // Safety timeout: if audio doesn't end within 30s, force onEnd
+    // Safety timeout based on estimated audio duration
+    const estPlayMs = Math.max(8000, text.length * 300);
     const safetyTimer = setTimeout(() => {
       if (window._currentAzureAudio === audio) {
         audio.pause();
@@ -13295,7 +13296,7 @@ async function speakAzureVoice(text, voice, onEnd) {
         window._currentAzureAudio = null;
         if (onEnd) onEnd();
       }
-    }, 30000);
+    }, estPlayMs);
     audio.onended = () => {
       clearTimeout(safetyTimer);
       URL.revokeObjectURL(audioUrl);
@@ -13306,13 +13307,12 @@ async function speakAzureVoice(text, voice, onEnd) {
       clearTimeout(safetyTimer);
       URL.revokeObjectURL(audioUrl);
       window._currentAzureAudio = null;
-      if (onEnd) onEnd();
+      // Do NOT call onEnd — let speakAs fallback to Web Speech
     };
     await audio.play().catch(e => { URL.revokeObjectURL(audioUrl); throw e; });
     return true;
   } catch (err) {
     console.warn('Azure TTS voice failed:', err);
-    // Do NOT call onEnd on error - let caller handle fallback
     return false;
   }
 }
@@ -16699,7 +16699,7 @@ renderPathwayBanner();
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
   const swCode = `
-    const CACHE = 'medical-chinese-v9';
+    const CACHE = 'medical-chinese-v10';
     self.addEventListener('install', e => {
       e.waitUntil(
         caches.open(CACHE).then(c => c.addAll(['${location.href}']))
