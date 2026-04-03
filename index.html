@@ -13053,7 +13053,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v8'; return '1.0'+c.split('-v')[1]+' · April 3, 2026'; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v9'; return '1.0'+c.split('-v')[1]+' · April 3, 2026'; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('clinlingua_azure_voice_yue') || 'zh-HK-HiuGaaiNeural',
@@ -14118,7 +14118,7 @@ function drillPausePlay() {
   const btn = document.getElementById('drill-pause-btn');
   if (_drillPaused) {
     _drillPaused = false;
-    if (btn) btn.textContent = '⏸ Pause';
+    if (btn) btn.textContent = '⏸';
     playNextVocab();
   } else {
     _drillPaused = true;
@@ -14126,7 +14126,7 @@ function drillPausePlay() {
     if (window._currentAzureAudio) { window._currentAzureAudio.pause(); }
     clearTimeout(vocabPlayTimer);
     clearTimeout(vocabIntraTimer);
-    if (btn) btn.textContent = '▶ Play';
+    if (btn) btn.textContent = '▶';
   }
 }
 
@@ -14397,7 +14397,7 @@ function stopVocabPlayAll() {
   vocabPlayTimer = null;
   vocabIntraTimer = null;
   _drillPaused = false;
-  const pb = document.getElementById('drill-pause-btn'); if (pb) pb.textContent = '⏸ Pause';
+  const pb = document.getElementById('drill-pause-btn'); if (pb) pb.textContent = '⏸';
   vocabPlayPos = -1;
   vocabPlayQueue = [];
   drillMode = null;
@@ -14441,11 +14441,12 @@ function updateVocabPlayUI(isPlaying, activeSi) {
   if (progressEl && !isPlaying) {
     progressEl.innerHTML = L ? `${totalWords} words across ${L.sections.length} section${L.sections.length>1?'s':''}` : '';
   }
-  // Section play buttons
-  document.querySelectorAll('.section-play-btn').forEach((b, si) => {
+  // Section play buttons — only update the main secbtn, not drill buttons
+  document.querySelectorAll('[id^="secbtn-"]').forEach(b => {
+    const si = parseInt(b.id.replace('secbtn-', ''));
     const active = isPlaying && activeSi === si;
     b.classList.toggle('playing', active);
-    b.textContent = active ? '⏸ Playing...' : '▶ Play Section';
+    b.textContent = active ? '⏸ Playing...' : '▶ 中文';
   });
 }
 
@@ -16698,7 +16699,7 @@ renderPathwayBanner();
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
   const swCode = `
-    const CACHE = 'medical-chinese-v8';
+    const CACHE = 'medical-chinese-v9';
     self.addEventListener('install', e => {
       e.waitUntil(
         caches.open(CACHE).then(c => c.addAll(['${location.href}']))
