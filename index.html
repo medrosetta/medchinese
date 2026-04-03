@@ -1047,7 +1047,7 @@
     color: var(--paper);
     border: 2px solid var(--gold);
     border-radius: 12px;
-    padding: 12px 20px;
+    padding: 28px 20px 12px 20px;
     z-index: 500;
     min-width: 280px;
     max-width: 480px;
@@ -13053,7 +13053,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v6'; return '1.0'+c.split('-v')[1]+' · April 3, 2026'; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v7'; return '1.0'+c.split('-v')[1]+' · April 3, 2026'; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('clinlingua_azure_voice_yue') || 'zh-HK-HiuGaaiNeural',
@@ -13333,7 +13333,15 @@ function speakAs(text, speaker, onEnd) {
     const voices = synth.getVoices();
     const v = speaker === 'doctor' ? pickDoctorZhVoice(voices) : pickPatientZhVoice(voices);
     if (v) { u.voice = v; u.lang = v.lang; }
-    u.onend = onEnd || null;
+    let wsSafetyTimer = null;
+    if (onEnd) {
+      u.onend = () => { clearTimeout(wsSafetyTimer); onEnd(); };
+      // Web Speech safety timer: max 30s per line
+      const estDuration = Math.max(5000, text.length * 200);
+      wsSafetyTimer = setTimeout(() => { synth.cancel(); onEnd(); }, estDuration + 10000);
+    } else {
+      u.onend = null;
+    }
     synth.speak(u);
   });
 }
@@ -14009,7 +14017,7 @@ function renderVocab() {
             <span class="section-title-zh">${sec.zh ? "　" + sec.zh : ""}</span>
           </div>
           <div style="display:flex;align-items:center;gap:6px" onclick="event.stopPropagation()">
-            <button class="section-play-btn" id="secbtn-${si}" onclick="startVocabPlaySection(${si})">▶ Play Section</button><button class="stop-btn" onclick="stopVocabPlayAll()" style="padding:4px 10px;font-size:0.6rem;border-color:rgba(245,240,232,0.2);color:rgba(245,240,232,0.45)">■ Stop</button>
+            <button class="section-play-btn" id="secbtn-${si}" onclick="startVocabPlaySection(${si})">▶ 中文</button><button class="section-play-btn" onclick="startSectionDrill(${si},'zh-en')">中→EN</button><button class="section-play-btn" onclick="startSectionDrill(${si},'en-zh')">EN→中</button>
             <button class="section-thumb-btn" data-sec="${sec.title}" onclick="rateSectionEl(this,'up')" title="Section useful">👍</button><button class="section-thumb-btn" data-sec="${sec.title}" onclick="rateSectionEl(this,'down')" title="Section not useful">👎</button>
             <span class="section-chevron" onclick="toggleSection(${si})" style="cursor:pointer;padding:4px;position:absolute;top:8px;right:8px">▼</span>
           </div>
@@ -14101,6 +14109,30 @@ function updateDrillPlayer(v, si, pos, total) {
 function hideDrillPlayer() {
   const player = document.getElementById('drill-player');
   if (player) player.style.display = 'none';
+}
+
+let _drillPaused = false;
+
+function drillPausePlay() {
+  const btn = document.getElementById('drill-pause-btn');
+  if (_drillPaused) {
+    _drillPaused = false;
+    if (btn) btn.textContent = '⏸ Pause';
+    playNextVocab();
+  } else {
+    _drillPaused = true;
+    synth && synth.cancel();
+    if (window._currentAzureAudio) { window._currentAzureAudio.pause(); }
+    clearTimeout(vocabPlayTimer);
+    clearTimeout(vocabIntraTimer);
+    if (btn) btn.textContent = '▶ Play';
+  }
+}
+
+function startSectionDrill(si, mode) {
+  drillMode = mode;
+  if (openSections[si] === false) toggleSection(si);
+  _startPlay([si]);
 }
 
 function drillRepeat() {
@@ -14363,6 +14395,8 @@ function stopVocabPlayAll() {
   clearTimeout(vocabIntraTimer);
   vocabPlayTimer = null;
   vocabIntraTimer = null;
+  _drillPaused = false;
+  const pb = document.getElementById('drill-pause-btn'); if (pb) pb.textContent = '⏸ Pause';
   vocabPlayPos = -1;
   vocabPlayQueue = [];
   drillMode = null;
@@ -16663,7 +16697,7 @@ renderPathwayBanner();
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
   const swCode = `
-    const CACHE = 'medical-chinese-v6';
+    const CACHE = 'medical-chinese-v7';
     self.addEventListener('install', e => {
       e.waitUntil(
         caches.open(CACHE).then(c => c.addAll(['${location.href}']))
@@ -17232,14 +17266,15 @@ function setSurveyStars(n) {
 
   <!-- Floating Drill Player -->
   <div id="drill-player" style="display:none">
+    <button onclick="hideDrillPlayer();stopVocabPlayAll()" title="Close" style="position:absolute;top:8px;right:10px;background:none;border:none;color:rgba(245,240,232,0.5);font-size:1rem;cursor:pointer;padding:2px 6px;line-height:1">✕</button>
     <div id="drill-player-mode"></div>
     <div id="drill-player-word"></div>
     <div id="drill-player-en"></div>
     <div id="drill-player-progress"></div>
     <div id="drill-player-controls">
-      <button onclick="drillRepeat()" title="Repeat">⟳</button>
-      <button onclick="drillSkip()" title="Skip">⏭</button>
-      <button onclick="stopVocabPlayAll()" title="Stop">⏹</button>
+      <button onclick="drillRepeat()" title="Replay">↺ Replay</button>
+      <button id="drill-pause-btn" onclick="drillPausePlay()" title="Pause">⏸ Pause</button>
+      <button onclick="drillSkip()" title="Skip">⏩ Skip</button>
     </div>
   </div>
 </body>
