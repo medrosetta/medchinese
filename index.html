@@ -1091,8 +1091,8 @@
     background: rgba(245,240,232,0.1);
     border: 1px solid rgba(245,240,232,0.2);
     color: var(--paper);
-    font-size: 1.1rem;
-    padding: 8px;
+    font-size: 1.5rem;
+    padding: 10px;
     cursor: pointer;
     border-radius: 6px;
     transition: background 0.15s;
@@ -13053,7 +13053,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v7'; return '1.0'+c.split('-v')[1]+' · April 3, 2026'; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v8'; return '1.0'+c.split('-v')[1]+' · April 3, 2026'; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('clinlingua_azure_voice_yue') || 'zh-HK-HiuGaaiNeural',
@@ -13319,9 +13319,11 @@ async function speakAzureVoice(text, voice, onEnd) {
 // ── END DIALOGUE VOICE SELECTION ─────────────────────────────────────────────
 function speakAs(text, speaker, onEnd) {
   const lang = currentLang;
-  // Azure TTS — pass onEnd so dialogue chain works correctly
-  speakAzure(text, lang, onEnd).then(azureSuccess => {
-    if (azureSuccess) return; // onEnd already handled inside speakAzure
+  // Get correct voice for speaker (doctor or patient)
+  const voice = getDialogueVoice(speaker, lang);
+  // Azure TTS with correct voice
+  speakAzureVoice(text, voice, onEnd).then(azureSuccess => {
+    if (azureSuccess) return;
     // Web Speech fallback
     if (!synth) { if (onEnd) onEnd(); return; }
     synth.cancel();
@@ -13336,7 +13338,6 @@ function speakAs(text, speaker, onEnd) {
     let wsSafetyTimer = null;
     if (onEnd) {
       u.onend = () => { clearTimeout(wsSafetyTimer); onEnd(); };
-      // Web Speech safety timer: max 30s per line
       const estDuration = Math.max(5000, text.length * 200);
       wsSafetyTimer = setTimeout(() => { synth.cancel(); onEnd(); }, estDuration + 10000);
     } else {
@@ -14501,9 +14502,9 @@ function renderAudioSetup(targetEl) {
     <!-- Cantonese Voice -->
     <div style="margin-bottom:28px">
       <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;font-style:italic;margin-bottom:6px">粵語 Cantonese Voice</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:6px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px;overflow:hidden">
         <div>
-          <div style="font-family:var(--mono);font-size:0.75rem;letter-spacing:0.06em;color:var(--muted);margin-bottom:4px">NARRATOR / DOCTOR 旁白／醫生</div>
+          <div style="font-family:var(--mono);font-size:0.75rem;letter-spacing:0.04em;color:var(--muted);margin-bottom:4px;white-space:nowrap">NARRATOR / DOCTOR 旁白／醫生</div>
           <div style="display:flex;gap:6px;align-items:center">
             <select id="voice-yue-select" onchange="saveAzureVoice('yue', this.value)"
               style="font-family:var(--mono);font-size:0.875rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
@@ -14538,9 +14539,9 @@ function renderAudioSetup(targetEl) {
     <!-- Mandarin Voice -->
     <div style="margin-bottom:28px">
       <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;font-style:italic;margin-bottom:6px">國語 Mandarin Voice</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:6px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px;overflow:hidden">
         <div>
-          <div style="font-family:var(--mono);font-size:0.75rem;letter-spacing:0.06em;color:var(--muted);margin-bottom:4px">NARRATOR / DOCTOR 旁白／醫生</div>
+          <div style="font-family:var(--mono);font-size:0.75rem;letter-spacing:0.04em;color:var(--muted);margin-bottom:4px;white-space:nowrap">NARRATOR / DOCTOR 旁白／醫生</div>
           <div style="display:flex;gap:6px;align-items:center">
             <select id="voice-cmn-select" onchange="saveAzureVoice('cmn', this.value)"
               style="font-family:var(--mono);font-size:0.875rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
@@ -16697,7 +16698,7 @@ renderPathwayBanner();
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
   const swCode = `
-    const CACHE = 'medical-chinese-v7';
+    const CACHE = 'medical-chinese-v8';
     self.addEventListener('install', e => {
       e.waitUntil(
         caches.open(CACHE).then(c => c.addAll(['${location.href}']))
@@ -17266,15 +17267,15 @@ function setSurveyStars(n) {
 
   <!-- Floating Drill Player -->
   <div id="drill-player" style="display:none">
-    <button onclick="hideDrillPlayer();stopVocabPlayAll()" title="Close" style="position:absolute;top:8px;right:10px;background:none;border:none;color:rgba(245,240,232,0.5);font-size:1rem;cursor:pointer;padding:2px 6px;line-height:1">✕</button>
+    <button onclick="hideDrillPlayer();stopVocabPlayAll()" title="Close" style="position:absolute;top:6px;right:10px;background:none;border:none;color:rgba(245,240,232,0.7);font-size:1.4rem;cursor:pointer;padding:2px 6px;line-height:1">✕</button>
     <div id="drill-player-mode"></div>
     <div id="drill-player-word"></div>
     <div id="drill-player-en"></div>
     <div id="drill-player-progress"></div>
     <div id="drill-player-controls">
-      <button onclick="drillRepeat()" title="Replay">↺ Replay</button>
-      <button id="drill-pause-btn" onclick="drillPausePlay()" title="Pause">⏸ Pause</button>
-      <button onclick="drillSkip()" title="Skip">⏩ Skip</button>
+      <button onclick="drillRepeat()" title="Replay">↺</button>
+      <button id="drill-pause-btn" onclick="drillPausePlay()" title="Pause">⏸</button>
+      <button onclick="drillSkip()" title="Skip">⏩</button>
     </div>
   </div>
 </body>
