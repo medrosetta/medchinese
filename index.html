@@ -12899,6 +12899,7 @@ let playAllTimer = null;
 let vocabPlayPos = -1;
 let vocabPlayQueue = [];
 let vocabPlayTimer = null;
+let vocabIntraTimer = null; // separate timer for intra-card pause (EN↔中 gap)
 let drillMode = null;
 let anatActive = null;
 let userSpeedMult = 1.0;     // speed multiplier from slider (0.5–1.5)
@@ -14104,6 +14105,7 @@ function drillRepeat() {
   synth && synth.cancel();
   if (window._currentAzureAudio) { window._currentAzureAudio.pause(); window._currentAzureAudio = null; }
   clearTimeout(vocabPlayTimer);
+  clearTimeout(vocabIntraTimer);
   if (vocabPlayPos > 0) vocabPlayPos--;
   const isFav = vocabPlayQueue[vocabPlayPos] && vocabPlayQueue[vocabPlayPos].isFav;
   isFav ? playNextFavVocab() : playNextVocab();
@@ -14113,6 +14115,7 @@ function drillSkip() {
   synth && synth.cancel();
   if (window._currentAzureAudio) { window._currentAzureAudio.pause(); window._currentAzureAudio = null; }
   clearTimeout(vocabPlayTimer);
+  clearTimeout(vocabIntraTimer);
   vocabPlayPos++;
   if (vocabPlayPos < vocabPlayQueue.length) {
     const isFav = vocabPlayQueue[vocabPlayPos] && vocabPlayQueue[vocabPlayPos].isFav;
@@ -14335,17 +14338,17 @@ function playNextVocab() {
     // English first, pause 800ms, then Chinese
     const enVoice = localStorage.getItem('clinlingua_azure_voice_en') || 'en-US-JennyNeural';
     playBuffered(stripParens(v.en), enVoice, () => {
-      vocabPlayTimer = setTimeout(() => {
+      vocabIntraTimer = setTimeout(() => {
         playBuffered(v.zh, VOICE_MAP[currentLang] || VOICE_MAP.yue, afterItem, 'zh');
-      }, 800);
+      }, 650);
     }, 'en');
   } else if (drillMode === 'zh-en') {
     // Chinese first, pause 800ms, then English
     const enVoice = localStorage.getItem('clinlingua_azure_voice_en') || 'en-US-JennyNeural';
     playBuffered(v.zh, VOICE_MAP[currentLang] || VOICE_MAP.yue, () => {
-      vocabPlayTimer = setTimeout(() => {
+      vocabIntraTimer = setTimeout(() => {
         playBuffered(stripParens(v.en), enVoice, afterItem, 'en');
-      }, 800);
+      }, 650);
     }, 'zh');
   } else {
     playBuffered(v.zh, VOICE_MAP[currentLang] || VOICE_MAP.yue, afterItem, 'zh');
@@ -14355,6 +14358,9 @@ function playNextVocab() {
 function stopVocabPlayAll() {
   synth && synth.cancel();
   clearTimeout(vocabPlayTimer);
+  clearTimeout(vocabIntraTimer);
+  vocabPlayTimer = null;
+  vocabIntraTimer = null;
   vocabPlayPos = -1;
   vocabPlayQueue = [];
   drillMode = null;
