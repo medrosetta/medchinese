@@ -13111,18 +13111,18 @@ async function speakAzure(text, lang, onEnd) {
       }
     }, 45000);
 
-    audio.onended = () => {
+    audio.addEventListener('ended', () => {
       clearTimeout(safetyTimer);
       URL.revokeObjectURL(audioUrl);
       window._currentAzureAudio = null;
       if (onEnd) onEnd();
-    };
-    audio.onerror = () => {
+    });
+    audio.addEventListener('error', () => {
       clearTimeout(safetyTimer);
       URL.revokeObjectURL(audioUrl);
       window._currentAzureAudio = null;
-      // Don't call onEnd on error — let Web Speech fallback handle it
-    };
+      if (onEnd) onEnd(); // Must call onEnd — speakAzure already returned true, no fallback available
+    });
     await audio.play().catch(e => {
       clearTimeout(safetyTimer);
       console.warn('Audio play failed:', e);
@@ -13294,18 +13294,18 @@ async function speakAzureVoice(text, voice, onEnd) {
         if (onEnd) onEnd();
       }
     }, 30000);
-    audio.onended = () => {
+    audio.addEventListener('ended', () => {
       clearTimeout(safetyTimer);
       URL.revokeObjectURL(audioUrl);
       window._currentAzureAudio = null;
       if (onEnd) onEnd();
-    };
-    audio.onerror = () => {
+    });
+    audio.addEventListener('error', () => {
       clearTimeout(safetyTimer);
       URL.revokeObjectURL(audioUrl);
       window._currentAzureAudio = null;
       if (onEnd) onEnd();
-    };
+    });
     await audio.play().catch(e => { URL.revokeObjectURL(audioUrl); throw e; });
     return true;
   } catch (err) {
@@ -14195,8 +14195,8 @@ async function playBuffered(text, voice, onEnd, lang) {
       if (onEnd) onEnd();
     }
   }, 30000);
-  audio.onended = () => { clearTimeout(safetyTimer); URL.revokeObjectURL(url); window._currentAzureAudio = null; if (onEnd) onEnd(); };
-  audio.onerror = () => { clearTimeout(safetyTimer); URL.revokeObjectURL(url); window._currentAzureAudio = null; if (onEnd) onEnd(); };
+  audio.addEventListener('ended', () => { clearTimeout(safetyTimer); URL.revokeObjectURL(url); window._currentAzureAudio = null; if (onEnd) onEnd(); });
+  audio.addEventListener('error', () => { clearTimeout(safetyTimer); URL.revokeObjectURL(url); window._currentAzureAudio = null; if (onEnd) onEnd(); });
   try { await audio.play(); return true; } catch(e) { URL.revokeObjectURL(url); if (onEnd) onEnd(); return false; }
 }
 
@@ -14863,8 +14863,8 @@ function playNextLine() {
           afterLine();
         }
       }, 45000);
-      audio.onended = () => { clearTimeout(safetyTimer); URL.revokeObjectURL(url); window._currentAzureAudio = null; afterLine(); };
-      audio.onerror = () => { clearTimeout(safetyTimer); URL.revokeObjectURL(url); window._currentAzureAudio = null; speakAs(line.zh, line.sp, afterLine); };
+      audio.addEventListener('ended', () => { clearTimeout(safetyTimer); URL.revokeObjectURL(url); window._currentAzureAudio = null; afterLine(); });
+      audio.addEventListener('error', () => { clearTimeout(safetyTimer); URL.revokeObjectURL(url); window._currentAzureAudio = null; speakAs(line.zh, line.sp, afterLine); });
       audio.play().catch(() => { clearTimeout(safetyTimer); URL.revokeObjectURL(url); speakAs(line.zh, line.sp, afterLine); });
     });
   } else {
