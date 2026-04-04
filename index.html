@@ -1088,18 +1088,22 @@
   }
   #drill-player-controls button {
     flex: 1;
-    background: #2563eb;
+    background: none;
     border: none;
     color: white;
-    font-size: 1.5rem;
-    padding: 12px 8px;
+    font-size: 3rem;
+    padding: 0;
     cursor: pointer;
     border-radius: 8px;
-    transition: background 0.15s;
+    transition: opacity 0.15s;
     line-height: 1;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  #drill-player-controls button:hover { background: #1d4ed8; }
-  #drill-player-controls button.active { background: #1e40af; }
+  #drill-player-controls button:hover { opacity: 0.8; }
+  #drill-player-controls button.active { opacity: 0.6; }
 
 
 
@@ -14163,7 +14167,7 @@ function drillPausePlay() {
     if (window._currentAzureAudio) { window._currentAzureAudio.pause(); }
     clearTimeout(vocabPlayTimer);
     clearTimeout(vocabIntraTimer);
-    if (btn) btn.textContent = '▶';
+    if (btn) btn.textContent = '▶️';
   }
 }
 
@@ -14448,8 +14452,8 @@ function stopVocabPlayAll() {
   vocabPlayTimer = null;
   vocabIntraTimer = null;
   _drillPaused = false;
-  const pb = document.getElementById('drill-pause-btn'); if (pb) pb.textContent = '⏸';
-  // Keep shuffle/repeat state across stops
+  const pb = document.getElementById('drill-pause-btn');
+  if (pb) pb.textContent = '⏸';
   vocabPlayPos = -1;
   vocabPlayQueue = [];
   drillMode = null;
@@ -17340,11 +17344,16 @@ function setSurveyStars(n) {
     <div id="drill-player-en"></div>
     <div id="drill-player-progress"></div>
     <div id="drill-player-controls">
-      <button id="drill-shuffle-btn" onclick="drillToggleShuffle()" title="Shuffle"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg></button>
+      <!-- Shuffle -->
+      <button id="drill-shuffle-btn" onclick="drillToggleShuffle()" title="Shuffle">🔀</button>
+      <!-- Skip back -->
       <button onclick="drillSkipBack()" title="Previous">⏮</button>
+      <!-- Pause/Play -->
       <button id="drill-pause-btn" onclick="drillPausePlay()" title="Pause/Play">⏸</button>
+      <!-- Skip forward -->
       <button onclick="drillSkip()" title="Skip">⏭</button>
-      <button id="drill-repeat-btn" onclick="drillToggleRepeat()" title="Repeat">↻</button>
+      <!-- Repeat -->
+      <button id="drill-repeat-btn" onclick="drillToggleRepeat()" title="Repeat">🔁</button>
     </div>
   </div>
 </body>
