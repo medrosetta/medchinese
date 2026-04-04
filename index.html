@@ -1088,18 +1088,18 @@
   }
   #drill-player-controls button {
     flex: 1;
-    background: rgba(245,240,232,0.1);
-    border: 1px solid rgba(245,240,232,0.2);
-    color: var(--paper);
+    background: #2563eb;
+    border: none;
+    color: white;
     font-size: 1.5rem;
-    padding: 10px;
+    padding: 12px 8px;
     cursor: pointer;
-    border-radius: 6px;
+    border-radius: 8px;
     transition: background 0.15s;
+    line-height: 1;
   }
-  #drill-player-controls button:hover {
-    background: rgba(245,240,232,0.2);
-  }
+  #drill-player-controls button:hover { background: #1d4ed8; }
+  #drill-player-controls button.active { background: #1e40af; }
 
 
 
@@ -13053,7 +13053,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v10'; return '1.0'+c.split('-v')[1]+' · April 3, 2026'; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v11'; return '1.0'+c.split('-v')[1]+' · April 3, 2026'; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('clinlingua_azure_voice_yue') || 'zh-HK-HiuGaaiNeural',
@@ -13297,11 +13297,25 @@ async function speakAzureVoice(text, voice, onEnd) {
         if (onEnd) onEnd();
       }
     }, estPlayMs);
-    audio.onended = () => {
+    let _onEndCalled = false;
+    const safeOnEnd = () => {
+      if (_onEndCalled) return;
+      _onEndCalled = true;
       clearTimeout(safetyTimer);
       URL.revokeObjectURL(audioUrl);
       window._currentAzureAudio = null;
       if (onEnd) onEnd();
+    };
+    audio.onended = () => {
+      // Guard against iOS early fire: check if audio actually finished
+      const remaining = audio.duration && audio.currentTime
+        ? (audio.duration - audio.currentTime) * 1000
+        : 0;
+      if (remaining > 300) {
+        setTimeout(safeOnEnd, remaining);
+      } else {
+        safeOnEnd();
+      }
     };
     audio.onerror = () => {
       clearTimeout(safetyTimer);
@@ -14113,6 +14127,29 @@ function hideDrillPlayer() {
 }
 
 let _drillPaused = false;
+let _drillShuffle = false;
+let _drillRepeat = false;
+
+function drillToggleShuffle() {
+  _drillShuffle = !_drillShuffle;
+  const btn = document.getElementById('drill-shuffle-btn');
+  if (btn) btn.classList.toggle('active', _drillShuffle);
+  if (_drillShuffle && vocabPlayQueue.length > 1) {
+    // Fisher-Yates shuffle from current position
+    const remaining = vocabPlayQueue.slice(vocabPlayPos);
+    for (let i = remaining.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [remaining[i], remaining[j]] = [remaining[j], remaining[i]];
+    }
+    vocabPlayQueue = vocabPlayQueue.slice(0, vocabPlayPos).concat(remaining);
+  }
+}
+
+function drillToggleRepeat() {
+  _drillRepeat = !_drillRepeat;
+  const btn = document.getElementById('drill-repeat-btn');
+  if (btn) btn.classList.toggle('active', _drillRepeat);
+}
 
 function drillPausePlay() {
   const btn = document.getElementById('drill-pause-btn');
@@ -14142,6 +14179,16 @@ function drillRepeat() {
   clearTimeout(vocabPlayTimer);
   clearTimeout(vocabIntraTimer);
   if (vocabPlayPos > 0) vocabPlayPos--;
+  const isFav = vocabPlayQueue[vocabPlayPos] && vocabPlayQueue[vocabPlayPos].isFav;
+  isFav ? playNextFavVocab() : playNextVocab();
+}
+
+function drillSkipBack() {
+  synth && synth.cancel();
+  if (window._currentAzureAudio) { window._currentAzureAudio.pause(); window._currentAzureAudio = null; }
+  clearTimeout(vocabPlayTimer);
+  clearTimeout(vocabIntraTimer);
+  vocabPlayPos = Math.max(0, vocabPlayPos - 2); // -2 because playNextVocab increments
   const isFav = vocabPlayQueue[vocabPlayPos] && vocabPlayQueue[vocabPlayPos].isFav;
   isFav ? playNextFavVocab() : playNextVocab();
 }
@@ -14350,6 +14397,10 @@ function playNextVocab() {
     if (btn) btn.classList.remove('playing');
     if (card) card.classList.remove('playing-card');
     vocabPlayPos++;
+    if (_drillRepeat && vocabPlayPos >= vocabPlayQueue.length) {
+      // Loop back to start
+      vocabPlayPos = 0;
+    }
     if (vocabPlayPos < vocabPlayQueue.length) {
       // Smart pause: check if next card is buffered
       const next = vocabPlayQueue[vocabPlayPos];
@@ -14398,6 +14449,7 @@ function stopVocabPlayAll() {
   vocabIntraTimer = null;
   _drillPaused = false;
   const pb = document.getElementById('drill-pause-btn'); if (pb) pb.textContent = '⏸';
+  // Keep shuffle/repeat state across stops
   vocabPlayPos = -1;
   vocabPlayQueue = [];
   drillMode = null;
@@ -14850,7 +14902,21 @@ function playAll() {
   playAllIdx = 0;
   const btn = document.getElementById('play-all-btn');
   if (btn) { btn.textContent = '⏸ Playing...'; btn.classList.add('playing'); }
-  playNextLine();
+  // Warm up both voices before playing to prime Azure cache
+  const lines = getLessons()[cur].dialogue.lines;
+  const lang = currentLang;
+  const voices = new Set(lines.map(l => getDialogueVoice(l.sp, lang)));
+  voices.forEach(voice => {
+    if (AZURE_WORKER_URL) {
+      fetch(AZURE_WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: '你好', voice, rate: '0%', pitch: '0%' })
+      }).catch(() => {});
+    }
+  });
+  // Small delay to let warmup start before first line fetch
+  setTimeout(playNextLine, 200);
 }
 
 function playNextLine() {
@@ -14874,7 +14940,7 @@ function playNextLine() {
     if (window._audioCtx && window._audioCtx.state === 'suspended') {
       window._audioCtx.resume();
     }
-    playAllTimer = setTimeout(playNextLine, 600);
+    playAllTimer = setTimeout(playNextLine, 900);
   });
 }
 
@@ -16699,7 +16765,7 @@ renderPathwayBanner();
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
   const swCode = `
-    const CACHE = 'medical-chinese-v10';
+    const CACHE = 'medical-chinese-v11';
     self.addEventListener('install', e => {
       e.waitUntil(
         caches.open(CACHE).then(c => c.addAll(['${location.href}']))
@@ -17268,15 +17334,17 @@ function setSurveyStars(n) {
 
   <!-- Floating Drill Player -->
   <div id="drill-player" style="display:none">
-    <button onclick="hideDrillPlayer();stopVocabPlayAll()" title="Close" style="position:absolute;top:6px;right:10px;background:none;border:none;color:rgba(245,240,232,0.7);font-size:1.4rem;cursor:pointer;padding:2px 6px;line-height:1">✕</button>
+    <button onclick="hideDrillPlayer();stopVocabPlayAll()" title="Close" style="position:absolute;top:6px;right:10px;background:none;border:none;color:rgba(245,240,232,0.7);font-size:1.6rem;font-weight:bold;cursor:pointer;padding:2px 6px;line-height:1">✕</button>
     <div id="drill-player-mode"></div>
     <div id="drill-player-word"></div>
     <div id="drill-player-en"></div>
     <div id="drill-player-progress"></div>
     <div id="drill-player-controls">
-      <button onclick="drillRepeat()" title="Replay">↺</button>
-      <button id="drill-pause-btn" onclick="drillPausePlay()" title="Pause">⏸</button>
-      <button onclick="drillSkip()" title="Skip">⏩</button>
+      <button id="drill-shuffle-btn" onclick="drillToggleShuffle()" title="Shuffle"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg></button>
+      <button onclick="drillSkipBack()" title="Previous">⏮</button>
+      <button id="drill-pause-btn" onclick="drillPausePlay()" title="Pause/Play">⏸</button>
+      <button onclick="drillSkip()" title="Skip">⏭</button>
+      <button id="drill-repeat-btn" onclick="drillToggleRepeat()" title="Repeat">↻</button>
     </div>
   </div>
 </body>
