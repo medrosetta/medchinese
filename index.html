@@ -13053,7 +13053,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v21'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v22'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('clinlingua_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -14537,7 +14537,7 @@ function renderAudioSetup(targetEl) {
       <div class="lesson-main-title" style="font-style:italic">Audio & Voice Settings</div>
     </div>
     <div style="font-family:var(--mono);font-size:0.875rem;color:var(--muted);font-style:italic;margin-bottom:20px;line-height:1.9">
-      This is for educational purposes and is not intended to provide medical advice. Clinical decisions should reflect professional judgment.
+      MedChinese is for educational purposes and is not intended to provide medical advice. Clinical decisions should reflect professional judgment.
     </div>
 
     <!-- Azure TTS Status -->
@@ -16832,7 +16832,7 @@ renderPathwayBanner();
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
   const swCode = `
-    const CACHE = 'medical-chinese-v21';
+    const CACHE = 'medical-chinese-v22';
     self.addEventListener('install', e => {
       e.waitUntil(
         caches.open(CACHE).then(c => c.addAll(['${location.href}']))
