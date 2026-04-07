@@ -13057,7 +13057,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v13'; return '1.0'+c.split('-v')[1]+' · April 4, 2026'; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v14'; return '1.0'+c.split('-v')[1]+' · April 4, 2026'; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('clinlingua_azure_voice_yue') || 'zh-HK-HiuGaaiNeural',
@@ -14875,88 +14875,158 @@ function speakEnglishLine(i) {
 }
 
 function playLine(i) {
-  if (window._currentAzureAudio) {
-    window._currentAzureAudio.pause();
-    window._currentAzureAudio.src = '';
-    window._currentAzureAudio = null;
-  }
+  _diagStopped = true; // stop any play-all in progress
+  if (_diagSource) { try { _diagSource.stop(); } catch(e) {} _diagSource = null; }
   synth && synth.cancel();
   clearTimeout(playAllTimer);
+  _diagStopped = false;
   document.querySelectorAll('.dline-play-btn').forEach(b => { b.classList.remove('playing'); b.textContent = '▶ 中文'; });
   document.querySelectorAll('.dialogue-line').forEach(l => l.classList.remove('highlighted'));
   const btn = document.getElementById(`dbtn-${i}`), lineEl = document.getElementById(`dline-${i}`);
   if (btn) { btn.classList.add('playing'); btn.textContent = '⏸ 中文'; }
   if (lineEl) { lineEl.classList.add('highlighted'); lineEl.scrollIntoView({behavior:'smooth',block:'nearest'}); }
   const lineData = getLessons()[cur].dialogue.lines[i];
-  speakAs(lineData.zh, lineData.sp, () => {
-    setTimeout(() => {
-      speakEnglish(lineData.en, () => {
-        if (btn) { btn.classList.remove('playing'); btn.textContent = '▶ 中文'; }
-        if (lineEl) lineEl.classList.remove('highlighted');
-      });
-    }, 300);
+  const voice = getDialogueVoice(lineData.sp, currentLang);
+  // Unlock AudioContext on user gesture
+  const ctx = _getDialogCtx();
+  if (ctx.state === 'suspended') ctx.resume();
+  _fetchAndDecode(lineData.zh, voice).then(buf => {
+    const cleanup = () => {
+      if (btn) { btn.classList.remove('playing'); btn.textContent = '▶ 中文'; }
+      if (lineEl) lineEl.classList.remove('highlighted');
+    };
+    if (buf) {
+      _playBuffer(buf, cleanup);
+    } else {
+      speakAs(lineData.zh, lineData.sp, cleanup);
+    }
   });
+}
+
+// ─── DIALOGUE WEB AUDIO ENGINE ───────────────────────────────────────────────
+// Uses Web Audio API for reliable iOS playback (no blob URLs, no <audio> elem)
+let _diagCtx = null;         // shared AudioContext for entire dialogue session
+let _diagSource = null;      // currently playing BufferSource
+let _diagStopped = false;    // set true when stopAll() called
+
+function _getDialogCtx() {
+  if (!_diagCtx || _diagCtx.state === 'closed') {
+    _diagCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  return _diagCtx;
+}
+
+async function _fetchAndDecode(text, voice) {
+  if (!AZURE_WORKER_URL) return null;
+  try {
+    const controller = new AbortController();
+    const timeoutMs = text.length > 50 ? 18000 : text.length > 25 ? 12000 : 8000;
+    const tid = setTimeout(() => controller.abort(), timeoutMs);
+    const res = await fetch(AZURE_WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text, voice, rate: '0%', pitch: '0%' }),
+      signal: controller.signal
+    });
+    clearTimeout(tid);
+    if (!res.ok) return null;
+    const arrayBuf = await res.arrayBuffer();
+    const ctx = _getDialogCtx();
+    if (ctx.state === 'suspended') await ctx.resume();
+    return await ctx.decodeAudioData(arrayBuf);
+  } catch(e) {
+    console.warn('dialogue fetch/decode failed:', e);
+    return null;
+  }
+}
+
+function _playBuffer(audioBuffer, onEnded) {
+  const ctx = _getDialogCtx();
+  if (_diagSource) { try { _diagSource.stop(); } catch(e) {} }
+  const src = ctx.createBufferSource();
+  src.buffer = audioBuffer;
+  src.connect(ctx.destination);
+  _diagSource = src;
+  src.onended = () => {
+    if (_diagSource === src) _diagSource = null;
+    onEnded();
+  };
+  src.start(0);
 }
 
 function playAll() {
-  synth && synth.cancel(); clearTimeout(playAllTimer);
+  synth && synth.cancel();
+  clearTimeout(playAllTimer);
+  _diagStopped = false;
   playAllIdx = 0;
   const btn = document.getElementById('play-all-btn');
   if (btn) { btn.textContent = '⏸ Playing...'; btn.classList.add('playing'); }
-  // Warm up both voices before playing to prime Azure cache
+
+  // Unlock AudioContext immediately on user gesture
+  const ctx = _getDialogCtx();
+  if (ctx.state === 'suspended') ctx.resume();
+
   const lines = getLessons()[cur].dialogue.lines;
   const lang = currentLang;
-  const voices = new Set(lines.map(l => getDialogueVoice(l.sp, lang)));
-  voices.forEach(voice => {
-    if (AZURE_WORKER_URL) {
-      fetch(AZURE_WORKER_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: '你好', voice, rate: '0%', pitch: '0%' })
-      }).catch(() => {});
-    }
-  });
-  // Small delay to let warmup start before first line fetch
-  setTimeout(playNextLine, 200);
-}
 
-function playNextLine() {
-  const lines = getLessons()[cur].dialogue.lines;
-  if (playAllIdx >= lines.length || tab !== 'dialogue') { stopAll(); return; }
-  document.querySelectorAll('.dialogue-line').forEach(l => l.classList.remove('highlighted'));
-  document.querySelectorAll('.dline-play-btn').forEach(b => { b.classList.remove('playing'); b.textContent = '▶ 中文'; });
-  const lineEl = document.getElementById(`dline-${playAllIdx}`);
-  const btn = document.getElementById(`dbtn-${playAllIdx}`);
-  if (lineEl) { lineEl.classList.add('highlighted'); lineEl.scrollIntoView({behavior:'smooth',block:'nearest'}); }
-  if (btn) { btn.classList.add('playing'); btn.textContent = '⏸ 中文'; }
-  const idx = playAllIdx;
-  const line = lines[idx];
-  speakAs(line.zh, line.sp, () => {
-    document.getElementById(`dline-${idx}`)?.classList.remove('highlighted');
-    const b = document.getElementById(`dbtn-${idx}`);
-    if (b) { b.classList.remove('playing'); b.textContent = '▶ 中文'; }
-    if (playAllIdx === -1) return;
-    playAllIdx++;
-    // Keep AudioContext alive between lines to prevent iOS suspension
-    if (window._audioCtx && window._audioCtx.state === 'suspended') {
-      window._audioCtx.resume();
-    }
-    playAllTimer = setTimeout(playNextLine, 500);
+  // Pre-fetch all lines in parallel while first line loads
+  const bufferPromises = lines.map(line => {
+    const voice = getDialogueVoice(line.sp, lang);
+    return _fetchAndDecode(line.zh, voice);
   });
-}
 
-function stopAll() {
-  synth && synth.cancel(); clearTimeout(playAllTimer); playAllIdx = -1;
-  clearAudioBuffer();
-  // Clean up any pre-loaded dialogue URLs
-  if (window._dialogueUrls) {
-    window._dialogueUrls.forEach(url => { if (url) URL.revokeObjectURL(url); });
-    window._dialogueUrls = [];
+  // Play lines sequentially — each waits for its buffer then chains to next
+  function playLine(idx) {
+    if (_diagStopped || idx >= lines.length || tab !== 'dialogue') {
+      _diagCleanup(); return;
+    }
+    // Highlight UI
+    document.querySelectorAll('.dialogue-line').forEach(l => l.classList.remove('highlighted'));
+    document.querySelectorAll('.dline-play-btn').forEach(b => { b.classList.remove('playing'); b.textContent = '▶ 中文'; });
+    const lineEl = document.getElementById(`dline-${idx}`);
+    const lineBtn = document.getElementById(`dbtn-${idx}`);
+    if (lineEl) { lineEl.classList.add('highlighted'); lineEl.scrollIntoView({behavior:'smooth',block:'nearest'}); }
+    if (lineBtn) { lineBtn.classList.add('playing'); lineBtn.textContent = '⏸ 中文'; }
+    playAllIdx = idx;
+
+    bufferPromises[idx].then(buf => {
+      if (_diagStopped || tab !== 'dialogue') { _diagCleanup(); return; }
+      // Unhighlight current line after play
+      function afterLine() {
+        if (lineEl) lineEl.classList.remove('highlighted');
+        if (lineBtn) { lineBtn.classList.remove('playing'); lineBtn.textContent = '▶ 中文'; }
+        if (_diagStopped) { _diagCleanup(); return; }
+        // Small gap then next line
+        playAllTimer = setTimeout(() => playLine(idx + 1), 500);
+      }
+      if (buf) {
+        _playBuffer(buf, afterLine);
+      } else {
+        // Buffer failed — fall back to speakAs for this line
+        const line = lines[idx];
+        speakAs(line.zh, line.sp, afterLine);
+      }
+    });
   }
+
+  playLine(0);
+}
+
+function _diagCleanup() {
+  if (_diagSource) { try { _diagSource.stop(); } catch(e) {} _diagSource = null; }
   document.querySelectorAll('.dialogue-line').forEach(l => l.classList.remove('highlighted'));
   document.querySelectorAll('.dline-play-btn').forEach(b => { b.classList.remove('playing'); b.textContent = '▶ 中文'; });
   const btn = document.getElementById('play-all-btn');
   if (btn) { btn.textContent = '▶ Play All 全部播放'; btn.classList.remove('playing'); }
+}
+
+function stopAll() {
+  _diagStopped = true;
+  synth && synth.cancel();
+  clearTimeout(playAllTimer);
+  playAllIdx = -1;
+  clearAudioBuffer();
+  _diagCleanup();
 }
 
 // ─── QUIZ TAB ───
@@ -16766,7 +16836,7 @@ renderPathwayBanner();
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
   const swCode = `
-    const CACHE = 'medical-chinese-v13';
+    const CACHE = 'medical-chinese-v14';
     self.addEventListener('install', e => {
       e.waitUntil(
         caches.open(CACHE).then(c => c.addAll(['${location.href}']))
