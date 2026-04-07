@@ -271,6 +271,8 @@
   .audio-btn:hover { background: var(--teal); border-color: var(--teal); color: white; }
   .audio-btn.playing { background: var(--red); border-color: var(--red); color: white; animation: pulse 0.7s infinite; }
   @keyframes pulse { 0%,100%{transform:scale(1)}50%{transform:scale(1.12)} }
+  /* Hide circular play button inside dialogue lines — inline buttons used instead */
+  .dialogue-line .audio-btn { display: none; }
 
   /* DIALOGUE */
   .dialogue-controls {
@@ -860,6 +862,7 @@
     .vocab-pinyin{font-size:0.65rem}
     .vocab-en{font-size:0.72rem}
     .audio-btn{min-width:36px;min-height:36px;padding:6px}
+    .dialogue-line .audio-btn{display:none}
 
     /* ── Dialogue ── */
     .dialogue-line{grid-template-columns:52px 1fr;gap:8px;padding:12px 10px}
@@ -1141,6 +1144,76 @@
     max-height: 90%;
     padding: 2px 0;
   }
+
+  /* ── DIALOGUE POPUP PLAYER ── */
+  #dial-player {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ink);
+    color: var(--paper);
+    border: 2px solid var(--teal);
+    border-radius: 12px;
+    padding: 14px 20px 12px 20px;
+    z-index: 500;
+    min-width: 280px;
+    max-width: 480px;
+    width: calc(100% - 48px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+  }
+  #dial-player-speaker {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    opacity: 0.9;
+  }
+  #dial-player-zh {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.1rem;
+    line-height: 1.3;
+    color: var(--paper);
+  }
+  #dial-player-en {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: rgba(245,240,232,0.6);
+    line-height: 1.3;
+  }
+  #dial-player-progress {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    color: rgba(245,240,232,0.4);
+  }
+  #dial-player-controls {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+    justify-content: center;
+  }
+  #dial-player-controls button {
+    flex: 1;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.6rem;
+    padding: 4px 0;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: opacity 0.15s;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #dial-player-controls button:hover { opacity: 0.75; }
+  #dial-player-controls button.active { color: var(--teal); }
+
   /* 6 alternating module colors */  /* Lesson list */
   #lesson-list {
     flex: 1;
@@ -2328,6 +2401,76 @@
     max-height: 90%;
     padding: 2px 0;
   }
+
+  /* ── DIALOGUE POPUP PLAYER ── */
+  #dial-player {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ink);
+    color: var(--paper);
+    border: 2px solid var(--teal);
+    border-radius: 12px;
+    padding: 14px 20px 12px 20px;
+    z-index: 500;
+    min-width: 280px;
+    max-width: 480px;
+    width: calc(100% - 48px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+  }
+  #dial-player-speaker {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    opacity: 0.9;
+  }
+  #dial-player-zh {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.1rem;
+    line-height: 1.3;
+    color: var(--paper);
+  }
+  #dial-player-en {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: rgba(245,240,232,0.6);
+    line-height: 1.3;
+  }
+  #dial-player-progress {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    color: rgba(245,240,232,0.4);
+  }
+  #dial-player-controls {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+    justify-content: center;
+  }
+  #dial-player-controls button {
+    flex: 1;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.6rem;
+    padding: 4px 0;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: opacity 0.15s;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #dial-player-controls button:hover { opacity: 0.75; }
+  #dial-player-controls button.active { color: var(--teal); }
+
   /* 6 alternating module colors */  /* Lesson list */
   #lesson-list {
     flex: 1;
@@ -12978,13 +13121,13 @@ const MODULES = [
     lessons:[34,18] },
   { id:3, short:"Systems & Diseases",    en:"Organ Systems and Diseases",        zh:"器官系統及疾病",      zhCmn:"器官系统及疾病",
     lessons:[9,6,7,5,10,11,13,16,8,17,3,14,15,39,19,12,4,24,20,30] },
-  { id:17, short:"Mental Health",         en:"Mental Health",                     zh:"心理健康",           zhCmn:"心理健康",
+  { id:4, short:"Mental Health",         en:"Mental Health",                     zh:"心理健康",           zhCmn:"心理健康",
     lessons:[21,22,23] },
-  { id:23, short:"Equity & Inclusion",    en:"Equity & Inclusive Care",           zh:"公平及包容護理",      zhCmn:"公平及包容护理",
+  { id:5, short:"Equity & Inclusion",    en:"Equity & Inclusive Care",           zh:"公平及包容護理",      zhCmn:"公平及包容护理",
     lessons:[40,41,42] },
-  { id:10, short:"Preventive Care",       en:"Preventive Care & Wellness",        zh:"預防保健",           zhCmn:"预防保健",
+  { id:6, short:"Preventive Care",       en:"Preventive Care & Wellness",        zh:"預防保健",           zhCmn:"预防保健",
     lessons:[27,38,25,37,29,26] },
-  { id:8, short:"Goals of Care",         en:"Goals of Care & Transitions",       zh:"護理目標",           zhCmn:"护理目标",
+  { id:7, short:"Goals of Care",         en:"Goals of Care & Transitions",       zh:"護理目標",           zhCmn:"护理目标",
     lessons:[31,32,33,35,36] },
 ];
 
@@ -13053,7 +13196,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v22'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v23'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('clinlingua_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -14811,6 +14954,132 @@ async function loadVoicePrefs() {
   } catch(e) {}
 }
 // ─── DIALOGUE TAB ───
+
+// ─── DIALOGUE POPUP PLAYER ───────────────────────────────────────────────
+let _dialRepeat = false;
+let _dialPaused = false;
+
+function dialPlayerShow() {
+  const p = document.getElementById('dial-player');
+  if (p) p.style.display = 'flex';
+}
+
+function dialPlayerHide() {
+  const p = document.getElementById('dial-player');
+  if (p) p.style.display = 'none';
+  _dialPaused = false;
+  _dialRepeat = false;
+  const rb = document.getElementById('dial-repeat-btn');
+  if (rb) rb.classList.remove('active');
+}
+
+function dialPlayerUpdate(idx, lines) {
+  if (!lines) lines = getLessons()[cur].dialogue.lines;
+  const line = lines[idx];
+  if (!line) return;
+  const isDoc = line.sp === 'doctor';
+  document.getElementById('dial-player-speaker').textContent = isDoc ? '醫生 · Doctor' : '病人 · Patient';
+  document.getElementById('dial-player-zh').textContent = line.zh;
+  document.getElementById('dial-player-en').textContent = line.en;
+  document.getElementById('dial-player-progress').textContent = `Line ${idx + 1} of ${lines.length}`;
+  const pb = document.getElementById('dial-pause-btn');
+  if (pb) pb.textContent = '⏸';
+  _dialPaused = false;
+}
+
+function dialPlayerPausePlay() {
+  const pb = document.getElementById('dial-pause-btn');
+  if (_diagStopped) return;
+  if (_dialPaused) {
+    // Resume
+    _dialPaused = false;
+    if (pb) pb.textContent = '⏸';
+    const ctx = _getDialogCtx();
+    if (ctx.state === 'suspended') ctx.resume();
+  } else {
+    // Pause
+    _dialPaused = true;
+    if (pb) pb.textContent = '▶';
+    const ctx = _getDialogCtx();
+    if (ctx.state === 'running') ctx.suspend();
+  }
+}
+
+function dialPlayerSkip() {
+  const lines = getLessons()[cur].dialogue.lines;
+  const next = playAllIdx + 1;
+  if (next >= lines.length) { dialPlayerStop(); return; }
+  _diagStopped = true;
+  if (_diagSource) { try { _diagSource.stop(); } catch(e) {} _diagSource = null; }
+  clearTimeout(playAllTimer);
+  setTimeout(() => { _diagStopped = false; playAllFrom(next); }, 80);
+}
+
+function dialPlayerSkipBack() {
+  const prev = Math.max(0, playAllIdx - 1);
+  _diagStopped = true;
+  if (_diagSource) { try { _diagSource.stop(); } catch(e) {} _diagSource = null; }
+  clearTimeout(playAllTimer);
+  setTimeout(() => { _diagStopped = false; playAllFrom(prev); }, 80);
+}
+
+function dialPlayerStop() {
+  stopAll();
+  dialPlayerHide();
+}
+
+function dialPlayerToggleRepeat() {
+  _dialRepeat = !_dialRepeat;
+  const rb = document.getElementById('dial-repeat-btn');
+  if (rb) rb.classList.toggle('active', _dialRepeat);
+}
+
+function playAllFrom(idx) {
+  synth && synth.cancel();
+  clearTimeout(playAllTimer);
+  _diagStopped = false;
+  playAllIdx = idx;
+  const lines = getLessons()[cur].dialogue.lines;
+  const lang = currentLang;
+  const bufferPromises = lines.map(line => {
+    const voice = getDialogueVoice(line.sp, lang);
+    return _fetchAndDecode(line.zh, voice);
+  });
+  const ctx = _getDialogCtx();
+  if (ctx.state === 'suspended') ctx.resume();
+
+  function playLineFrom(i) {
+    if (_diagStopped || i >= lines.length || tab !== 'dialogue') { _diagCleanup(); return; }
+    if (_dialRepeat && i >= lines.length) { playLineFrom(0); return; }
+    document.querySelectorAll('.dialogue-line').forEach(l => l.classList.remove('highlighted'));
+    document.querySelectorAll('.dline-play-btn').forEach(b => { b.classList.remove('playing'); b.textContent = '▶ 中文'; });
+    const lineEl = document.getElementById(`dline-${i}`);
+    const lineBtn = document.getElementById(`dbtn-${i}`);
+    if (lineEl) { lineEl.classList.add('highlighted'); lineEl.scrollIntoView({behavior:'smooth',block:'nearest'}); }
+    if (lineBtn) { lineBtn.classList.add('playing'); lineBtn.textContent = '⏸ 中文'; }
+    playAllIdx = i;
+    dialPlayerUpdate(i, lines);
+    bufferPromises[i].then(buf => {
+      if (_diagStopped || tab !== 'dialogue') { _diagCleanup(); return; }
+      function afterLine() {
+        if (lineEl) lineEl.classList.remove('highlighted');
+        if (lineBtn) { lineBtn.classList.remove('playing'); lineBtn.textContent = '▶ 中文'; }
+        if (_diagStopped) { _diagCleanup(); return; }
+        const nextIdx = i + 1;
+        if (nextIdx >= lines.length && _dialRepeat) {
+          playAllTimer = setTimeout(() => playLineFrom(0), 500);
+        } else {
+          playAllTimer = setTimeout(() => playLineFrom(nextIdx), 500);
+        }
+      }
+      if (buf) { _playBuffer(buf, afterLine); }
+      else { speakAs(lines[i].zh, lines[i].sp, afterLine); }
+    });
+  }
+  dialPlayerShow();
+  playLineFrom(idx);
+}
+
 function renderDialogue() {
   const d = getLessons()[cur].dialogue;
   document.getElementById('tab-content').innerHTML = `
@@ -14957,6 +15226,7 @@ function playAll() {
   playAllIdx = 0;
   const btn = document.getElementById('play-all-btn');
   if (btn) { btn.textContent = '⏸ Playing...'; btn.classList.add('playing'); }
+  dialPlayerShow();
 
   // Unlock AudioContext immediately on user gesture
   const ctx = _getDialogCtx();
@@ -14984,6 +15254,7 @@ function playAll() {
     if (lineEl) { lineEl.classList.add('highlighted'); lineEl.scrollIntoView({behavior:'smooth',block:'nearest'}); }
     if (lineBtn) { lineBtn.classList.add('playing'); lineBtn.textContent = '⏸ 中文'; }
     playAllIdx = idx;
+    dialPlayerUpdate(idx, lines);
 
     bufferPromises[idx].then(buf => {
       if (_diagStopped || tab !== 'dialogue') { _diagCleanup(); return; }
@@ -15014,6 +15285,7 @@ function _diagCleanup() {
   document.querySelectorAll('.dline-play-btn').forEach(b => { b.classList.remove('playing'); b.textContent = '▶ 中文'; });
   const btn = document.getElementById('play-all-btn');
   if (btn) { btn.textContent = '▶ Play All 全部播放'; btn.classList.remove('playing'); }
+  dialPlayerHide();
 }
 
 function stopAll() {
@@ -15223,7 +15495,7 @@ function renderMain() {
     <div class="lesson-rating-bar"><span class="rating-label">Relevant to your practice?</span><button class="lesson-thumb-btn" onclick="rateLesson(this,'up')" title="Relevant">👍</button><button class="lesson-thumb-btn" onclick="rateLesson(this,'down')" title="Not relevant">👎</button></div>
     <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
     <div class="tabs">
-      <button class="tab-btn ${tab==='vocab'?'active':''}" onclick="switchTab('vocab')">VOCABULARY 詞彙</button>
+      <button class="tab-btn ${tab==='vocab'?'active':''}" onclick="switchTab('vocab')">VOCAB 詞彙</button>
       <button class="tab-btn ${tab==='dialogue'?'active':''}" onclick="switchTab('dialogue')">DIALOGUE 對話</button>
       <button class="tab-btn ${tab==='quiz'?'active':''}" onclick="switchTab('quiz')">QUIZ 測驗</button>
       <button class="tab-btn ${tab==='audio'?'active':''}" onclick="switchTab('audio')"><span class="tab-audio-full">🔊 AUDIO SETUP</span><span class="tab-audio-mobile">🔊 Setup</span></button>
@@ -16832,7 +17104,7 @@ renderPathwayBanner();
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
   const swCode = `
-    const CACHE = 'medical-chinese-v22';
+    const CACHE = 'medical-chinese-v23';
     self.addEventListener('install', e => {
       e.waitUntil(
         caches.open(CACHE).then(c => c.addAll(['${location.href}']))
@@ -17398,6 +17670,21 @@ function setSurveyStars(n) {
     </svg>
     Lessons
   </button>
+
+  <!-- Floating Dialogue Player -->
+  <div id="dial-player">
+    <button onclick="dialPlayerStop()" title="Close" style="position:absolute;top:6px;right:10px;background:none;border:none;color:rgba(245,240,232,0.7);font-size:1.6rem;font-weight:bold;cursor:pointer;padding:2px 6px;line-height:1">✕</button>
+    <div id="dial-player-speaker"></div>
+    <div id="dial-player-zh"></div>
+    <div id="dial-player-en"></div>
+    <div id="dial-player-progress"></div>
+    <div id="dial-player-controls">
+      <button id="dial-pause-btn" onclick="dialPlayerPausePlay()" title="Pause/Play">⏸</button>
+      <button onclick="dialPlayerSkipBack()" title="Previous">⏮</button>
+      <button onclick="dialPlayerSkip()" title="Skip">⏭</button>
+      <button id="dial-repeat-btn" onclick="dialPlayerToggleRepeat()" title="Repeat">🔁</button>
+    </div>
+  </div>
 
   <!-- Floating Drill Player -->
   <div id="drill-player" style="display:none">
