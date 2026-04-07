@@ -14552,12 +14552,12 @@ function renderAudioSetup(targetEl) {
     <!-- Cantonese Voice -->
     <div style="margin-bottom:28px">
       <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;font-style:italic;margin-bottom:6px">粵語 Cantonese Voice</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px;overflow:hidden">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px">
         <div>
-          <div style="font-family:var(--mono);font-size:0.75rem;letter-spacing:0.04em;color:var(--muted);margin-bottom:4px;white-space:nowrap">NARRATOR / DOCTOR 旁白／醫生</div>
+          <div style="font-family:var(--mono);font-size:0.62rem;letter-spacing:0.03em;color:var(--muted);margin-bottom:4px">NARRATOR / DOCTOR 旁白／醫生</div>
           <div style="display:flex;gap:6px;align-items:center">
             <select id="voice-yue-select" onchange="saveAzureVoice('yue', this.value)"
-              style="font-family:var(--mono);font-size:0.875rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
+              style="font-family:var(--mono);font-size:0.72rem;padding:5px 6px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1;min-width:0">
               <option value="zh-HK-HiuGaaiNeural" ${savedYueVoice === 'zh-HK-HiuGaaiNeural' ? 'selected' : ''}>HiuGaai (F) ★</option>
               <option value="zh-HK-HiuMaanNeural" ${savedYueVoice === 'zh-HK-HiuMaanNeural' ? 'selected' : ''}>HiuMaan (F)</option>
               <option value="zh-HK-WanLungNeural" ${savedYueVoice === 'zh-HK-WanLungNeural' ? 'selected' : ''}>WanLung (M)</option>
@@ -14569,10 +14569,10 @@ function renderAudioSetup(targetEl) {
           </div>
         </div>
         <div>
-          <div style="font-family:var(--mono);font-size:0.75rem;letter-spacing:0.06em;color:var(--muted);margin-bottom:4px">PATIENT 病人</div>
+          <div style="font-family:var(--mono);font-size:0.62rem;letter-spacing:0.03em;color:var(--muted);margin-bottom:4px">PATIENT 病人</div>
           <div style="display:flex;gap:6px;align-items:center">
             <select id="voice-yue-patient-select" onchange="saveAzureVoice('yue_patient', this.value)"
-              style="font-family:var(--mono);font-size:0.875rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
+              style="font-family:var(--mono);font-size:0.72rem;padding:5px 6px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1;min-width:0">
               <option value="zh-HK-WanLungNeural" ${savedYuePatientVoice === 'zh-HK-WanLungNeural' ? 'selected' : ''}>WanLung (M) ★</option>
               <option value="zh-HK-HiuGaaiNeural" ${savedYuePatientVoice === 'zh-HK-HiuGaaiNeural' ? 'selected' : ''}>HiuGaai (F)</option>
               <option value="zh-HK-HiuMaanNeural" ${savedYuePatientVoice === 'zh-HK-HiuMaanNeural' ? 'selected' : ''}>HiuMaan (F)</option>
@@ -14589,12 +14589,12 @@ function renderAudioSetup(targetEl) {
     <!-- Mandarin Voice -->
     <div style="margin-bottom:28px">
       <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;font-style:italic;margin-bottom:6px">國語 Mandarin Voice</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px;overflow:hidden">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px">
         <div>
-          <div style="font-family:var(--mono);font-size:0.75rem;letter-spacing:0.04em;color:var(--muted);margin-bottom:4px;white-space:nowrap">NARRATOR / DOCTOR 旁白／醫生</div>
+          <div style="font-family:var(--mono);font-size:0.62rem;letter-spacing:0.03em;color:var(--muted);margin-bottom:4px">NARRATOR / DOCTOR 旁白／醫生</div>
           <div style="display:flex;gap:6px;align-items:center">
             <select id="voice-cmn-select" onchange="saveAzureVoice('cmn', this.value)"
-              style="font-family:var(--mono);font-size:0.875rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
+              style="font-family:var(--mono);font-size:0.72rem;padding:5px 6px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1;min-width:0">
               <option value="zh-CN-XiaoxiaoNeural" ${savedCmnVoice === 'zh-CN-XiaoxiaoNeural' ? 'selected' : ''}>Xiaoxiao (F) ★</option>
               <option value="zh-CN-XiaoyiNeural"   ${savedCmnVoice === 'zh-CN-XiaoyiNeural'   ? 'selected' : ''}>Xiaoyi (F)</option>
               <option value="zh-CN-YunxiNeural"    ${savedCmnVoice === 'zh-CN-YunxiNeural'    ? 'selected' : ''}>Yunxi (M)</option>
@@ -14607,10 +14607,10 @@ function renderAudioSetup(targetEl) {
           </div>
         </div>
         <div>
-          <div style="font-family:var(--mono);font-size:0.75rem;letter-spacing:0.06em;color:var(--muted);margin-bottom:4px">PATIENT 病人</div>
+          <div style="font-family:var(--mono);font-size:0.62rem;letter-spacing:0.03em;color:var(--muted);margin-bottom:4px">PATIENT 病人</div>
           <div style="display:flex;gap:6px;align-items:center">
             <select id="voice-cmn-patient-select" onchange="saveAzureVoice('cmn_patient', this.value)"
-              style="font-family:var(--mono);font-size:0.875rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
+              style="font-family:var(--mono);font-size:0.72rem;padding:5px 6px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1;min-width:0">
               <option value="zh-CN-YunxiNeural"    ${savedCmnPatientVoice === 'zh-CN-YunxiNeural'    ? 'selected' : ''}>Yunxi (M) ★</option>
               <option value="zh-CN-XiaoxiaoNeural" ${savedCmnPatientVoice === 'zh-CN-XiaoxiaoNeural' ? 'selected' : ''}>Xiaoxiao (F)</option>
               <option value="zh-CN-XiaoyiNeural"   ${savedCmnPatientVoice === 'zh-CN-XiaoyiNeural'   ? 'selected' : ''}>Xiaoyi (F)</option>
@@ -14631,7 +14631,7 @@ function renderAudioSetup(targetEl) {
       <div style="font-family:var(--mono);font-size:0.8rem;color:var(--muted);margin-bottom:12px">Used for EN → 中 and 中 → EN drills. Azure Neural TTS.</div>
       <div style="display:flex;gap:6px;align-items:center">
         <select id="voice-en-select" onchange="saveAzureEnVoice(this.value)"
-          style="font-family:var(--mono);font-size:0.875rem;padding:7px 10px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1">
+          style="font-family:var(--mono);font-size:0.72rem;padding:5px 6px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1;min-width:0">
           <option value="en-US-JennyNeural"   ${savedEnVoice === 'en-US-JennyNeural'   ? 'selected' : ''}>Jenny (F), US ★</option>
           <option value="en-US-AriaNeural"    ${savedEnVoice === 'en-US-AriaNeural'    ? 'selected' : ''}>Aria (F), US</option>
           <option value="en-US-GuyNeural"     ${savedEnVoice === 'en-US-GuyNeural'     ? 'selected' : ''}>Guy (M), US</option>
