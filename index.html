@@ -13057,7 +13057,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v11'; return '1.0'+c.split('-v')[1]+' · April 3, 2026'; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v12'; return '1.0'+c.split('-v')[1]+' · April 4, 2026'; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('clinlingua_azure_voice_yue') || 'zh-HK-HiuGaaiNeural',
@@ -13310,8 +13310,10 @@ async function speakAzureVoice(text, voice, onEnd) {
       window._currentAzureAudio = null;
       if (onEnd) onEnd();
     };
+    // Estimate play duration for safety timer
+    const estPlayMs = Math.max(6000, text.length * 250);
+    const safetyTimer = setTimeout(safeOnEnd, estPlayMs);
     audio.onended = () => {
-      // Guard against iOS early fire: check if audio actually finished
       const remaining = audio.duration && audio.currentTime
         ? (audio.duration - audio.currentTime) * 1000
         : 0;
@@ -13328,7 +13330,12 @@ async function speakAzureVoice(text, voice, onEnd) {
       // Do NOT call onEnd — let speakAs fallback to Web Speech
     };
     await audio.play().catch(e => { URL.revokeObjectURL(audioUrl); throw e; });
-    return true;
+    // iOS check: if audio is already paused/ended right after play(), force onEnd
+    setTimeout(() => {
+      if (audio.paused && !_onEndCalled) {
+        safeOnEnd();
+      }
+    }, 500);
   } catch (err) {
     console.warn('Azure TTS voice failed:', err);
     return false;
@@ -14944,7 +14951,7 @@ function playNextLine() {
     if (window._audioCtx && window._audioCtx.state === 'suspended') {
       window._audioCtx.resume();
     }
-    playAllTimer = setTimeout(playNextLine, 900);
+    playAllTimer = setTimeout(playNextLine, 500);
   });
 }
 
@@ -16769,7 +16776,7 @@ renderPathwayBanner();
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
   const swCode = `
-    const CACHE = 'medical-chinese-v11';
+    const CACHE = 'medical-chinese-v12';
     self.addEventListener('install', e => {
       e.waitUntil(
         caches.open(CACHE).then(c => c.addAll(['${location.href}']))
