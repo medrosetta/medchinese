@@ -13212,7 +13212,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v25'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v26'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-HiuGaaiNeural',
@@ -14337,7 +14337,7 @@ function drillPausePlay() {
   const btn = document.getElementById('drill-pause-btn');
   if (_drillPaused) {
     _drillPaused = false;
-    if (btn) btn.textContent = '⏸';
+    if (btn) btn.textContent = '⏸️';
     playNextVocab();
   } else {
     _drillPaused = true;
@@ -14631,7 +14631,7 @@ function stopVocabPlayAll() {
   vocabIntraTimer = null;
   _drillPaused = false;
   const pb = document.getElementById('drill-pause-btn');
-  if (pb) pb.textContent = '⏸';
+  if (pb) pb.textContent = '⏸️';
   vocabPlayPos = -1;
   vocabPlayQueue = [];
   drillMode = null;
@@ -14655,17 +14655,17 @@ function updateVocabPlayUI(isPlaying, activeSi) {
 
   if (mainBtn) {
     const active = isPlaying && activeSi === null && drillMode === null;
-    mainBtn.textContent = active ? '⏸ Playing...' : '▶ Chinese Only';
+    mainBtn.textContent = active ? '⏸️ Playing...' : '▶ Chinese Only';
     mainBtn.classList.toggle('playing', active);
   }
   if (drillEnZhBtn) {
     const active = isPlaying && activeSi === null && drillMode === 'en-zh';
-    drillEnZhBtn.textContent = active ? '⏸ Drilling...' : '▶ EN → 中 Drill';
+    drillEnZhBtn.textContent = active ? '⏸️ Drilling...' : '▶ EN → 中 Drill';
     drillEnZhBtn.classList.toggle('playing', active);
   }
   if (drillZhEnBtn) {
     const active = isPlaying && activeSi === null && drillMode === 'zh-en';
-    drillZhEnBtn.textContent = active ? '⏸ Drilling...' : '▶ 中 → EN Drill';
+    drillZhEnBtn.textContent = active ? '⏸️ Drilling...' : '▶ 中 → EN Drill';
     drillZhEnBtn.classList.toggle('playing', active);
   }
   if (stopBtn) {
@@ -14680,7 +14680,7 @@ function updateVocabPlayUI(isPlaying, activeSi) {
     const si = parseInt(b.id.replace('secbtn-', ''));
     const active = isPlaying && activeSi === si;
     b.classList.toggle('playing', active);
-    b.textContent = active ? '⏸ Playing...' : '▶ 中文';
+    b.textContent = active ? '⏸️ Playing...' : '▶ 中文';
   });
 }
 
@@ -14933,7 +14933,7 @@ function testVoice(btn, type) {
   );
   u.voice = v; u.lang = v.lang; u.rate = 0.88; u.pitch = 1;
   const orig = btn.innerHTML;
-  btn.innerHTML = orig.replace('▶','⏸');
+  btn.innerHTML = orig.replace('▶','⏸️');
   u.onend = () => { btn.innerHTML = orig; };
   synth.speak(u);
 }
@@ -15023,7 +15023,7 @@ function dialPlayerUpdate(idx, lines) {
   document.getElementById('dial-player-en').textContent = line.en;
   document.getElementById('dial-player-progress').textContent = 'Line ' + (idx + 1) + ' of ' + lines.length;
   const pb = document.getElementById('dial-pause-btn');
-  if (pb) pb.textContent = '⏸';
+  if (pb) pb.textContent = '⏸️';
   _dialPaused = false;
 }
 function dialPlayerPausePlay() {
@@ -15031,12 +15031,12 @@ function dialPlayerPausePlay() {
   if (_diagStopped) return;
   if (_dialPaused) {
     _dialPaused = false;
-    if (pb) pb.textContent = '⏸';
+    if (pb) pb.textContent = '⏸️';
     const ctx = _getDialogCtx();
     if (ctx.state === 'suspended') ctx.resume();
   } else {
     _dialPaused = true;
-    if (pb) pb.textContent = '▶';
+    if (pb) pb.textContent = '▶️';
     const ctx = _getDialogCtx();
     if (ctx.state === 'running') ctx.suspend();
   }
@@ -15073,7 +15073,7 @@ function playAllFrom(startIdx) {
   _diagStopped = false;
   playAllIdx = startIdx;
   const btn = document.getElementById('play-all-btn');
-  if (btn) { btn.textContent = '⏸ Playing...'; btn.classList.add('playing'); }
+  if (btn) { btn.textContent = '⏸️ Playing...'; btn.classList.add('playing'); }
   const ctx = _getDialogCtx();
   if (ctx.state === 'suspended') ctx.resume();
   const lines = getLessons()[cur].dialogue.lines;
@@ -15090,7 +15090,7 @@ function playAllFrom(startIdx) {
     const lineEl = document.getElementById('dline-' + idx);
     const lineBtn = document.getElementById('dbtn-' + idx);
     if (lineEl) { lineEl.classList.add('highlighted'); lineEl.scrollIntoView({behavior:'smooth',block:'nearest'}); }
-    if (lineBtn) { lineBtn.classList.add('playing'); lineBtn.textContent = '⏸ 中文'; }
+    if (lineBtn) { lineBtn.classList.add('playing'); lineBtn.textContent = '⏸️ 中文'; }
     playAllIdx = idx;
     dialPlayerUpdate(idx, lines);
     bufferPromises[idx].then(buf => {
@@ -15162,7 +15162,7 @@ function renderDialogue() {
 function speakEnglishLine(i) {
   synth && synth.cancel();
   const btn = document.getElementById(`dbtn-en-${i}`);
-  if (btn) { btn.textContent = '⏸ EN'; btn.style.borderColor = 'var(--gold)'; btn.style.color = 'var(--gold)'; }
+  if (btn) { btn.textContent = '⏸️ EN'; btn.style.borderColor = 'var(--gold)'; btn.style.color = 'var(--gold)'; }
   speakEnglish(getLessons()[cur].dialogue.lines[i].en, () => {
     if (btn) { btn.textContent = '▶ EN'; btn.style.borderColor = 'rgba(26,107,107,0.35)'; btn.style.color = 'var(--muted)'; }
   });
@@ -15177,7 +15177,7 @@ function playLine(i) {
   document.querySelectorAll('.dline-play-btn').forEach(b => { b.classList.remove('playing'); b.textContent = '▶ 中文'; });
   document.querySelectorAll('.dialogue-line').forEach(l => l.classList.remove('highlighted'));
   const btn = document.getElementById(`dbtn-${i}`), lineEl = document.getElementById(`dline-${i}`);
-  if (btn) { btn.classList.add('playing'); btn.textContent = '⏸ 中文'; }
+  if (btn) { btn.classList.add('playing'); btn.textContent = '⏸️ 中文'; }
   if (lineEl) { lineEl.classList.add('highlighted'); lineEl.scrollIntoView({behavior:'smooth',block:'nearest'}); }
   const lineData = getLessons()[cur].dialogue.lines[i];
   const voice = getDialogueVoice(lineData.sp, currentLang);
@@ -15254,7 +15254,7 @@ function playAll() {
   _diagStopped = false;
   playAllIdx = 0;
   const btn = document.getElementById('play-all-btn');
-  if (btn) { btn.textContent = '⏸ Playing...'; btn.classList.add('playing'); }
+  if (btn) { btn.textContent = '⏸️ Playing...'; btn.classList.add('playing'); }
   dialPlayerShow();
 
   // Unlock AudioContext immediately on user gesture
@@ -15281,7 +15281,7 @@ function playAll() {
     const lineEl = document.getElementById(`dline-${idx}`);
     const lineBtn = document.getElementById(`dbtn-${idx}`);
     if (lineEl) { lineEl.classList.add('highlighted'); lineEl.scrollIntoView({behavior:'smooth',block:'nearest'}); }
-    if (lineBtn) { lineBtn.classList.add('playing'); lineBtn.textContent = '⏸ 中文'; }
+    if (lineBtn) { lineBtn.classList.add('playing'); lineBtn.textContent = '⏸️ 中文'; }
     playAllIdx = idx;
     dialPlayerUpdate(idx, lines);
 
@@ -17133,7 +17133,7 @@ renderPathwayBanner();
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
   const swCode = `
-    const CACHE = 'medical-chinese-v25';
+    const CACHE = 'medical-chinese-v26';
     self.addEventListener('install', e => {
       e.waitUntil(
         caches.open(CACHE).then(c => c.addAll(['${location.href}']))
@@ -17709,9 +17709,9 @@ function setSurveyStars(n) {
     <div id="dial-player-progress"></div>
     <div id="dial-player-controls">
       <div class="dial-player-spacer"></div>
-      <button onclick="dialPlayerSkipBack()" title="Previous">⏮</button>
-      <button id="dial-pause-btn" onclick="dialPlayerPausePlay()" title="Pause/Play">⏸</button>
-      <button onclick="dialPlayerSkip()" title="Skip">⏭</button>
+      <button onclick="dialPlayerSkipBack()" title="Previous">⏪</button>
+      <button id="dial-pause-btn" onclick="dialPlayerPausePlay()" title="Pause/Play">⏸️</button>
+      <button onclick="dialPlayerSkip()" title="Skip">⏩</button>
       <button id="dial-repeat-btn" onclick="dialPlayerToggleRepeat()" title="Repeat">🔁</button>
     </div>
   </div>
@@ -17727,11 +17727,11 @@ function setSurveyStars(n) {
       <!-- Shuffle -->
       <button id="drill-shuffle-btn" onclick="drillToggleShuffle()" title="Shuffle">🔀</button>
       <!-- Skip back -->
-      <button onclick="drillSkipBack()" title="Previous">⏮</button>
+      <button onclick="drillSkipBack()" title="Previous">⏪</button>
       <!-- Pause/Play -->
-      <button id="drill-pause-btn" onclick="drillPausePlay()" title="Pause/Play">⏸</button>
+      <button id="drill-pause-btn" onclick="drillPausePlay()" title="Pause/Play">⏸️</button>
       <!-- Skip forward -->
-      <button onclick="drillSkip()" title="Skip">⏭</button>
+      <button onclick="drillSkip()" title="Skip">⏩</button>
       <!-- Repeat -->
       <button id="drill-repeat-btn" onclick="drillToggleRepeat()" title="Repeat">🔁</button>
     </div>
