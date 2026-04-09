@@ -206,13 +206,17 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
     font-weight: 500;
+    white-space: nowrap;
   }
   .section-title-zh {
     font-family: 'Noto Serif TC', serif;
     font-size: 1rem;
     font-weight: 600;
-    margin-left: 10px;
+    margin-left: 8px;
     opacity: 0.8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .section-chevron {
     font-size: 0.7rem;
@@ -812,9 +816,9 @@
     .lesson-header{padding-left:8px;padding-right:8px;box-sizing:border-box}
     .vocab-play-bar{margin-left:0;margin-right:0;width:100%;box-sizing:border-box}
     .section-block{margin-left:0;margin-right:0;border-left:none;border-right:none}
-    .section-header{padding-left:8px;padding-right:8px;box-sizing:border-box;flex-wrap:wrap;gap:6px}
-    .section-header > div:first-child{width:100%}
-    .section-header > div:last-child{width:100%;justify-content:flex-start}
+    .section-header{padding-left:8px;padding-right:8px;box-sizing:border-box;flex-wrap:nowrap;gap:4px;align-items:center}
+    .section-header > div:first-child{min-width:0;overflow:hidden}
+    .section-header > div:last-child{flex-shrink:0}
     .section-body{padding:14px 6px}
     .lesson-rating-row{padding-left:8px;padding-right:8px;box-sizing:border-box}
     .tab-bar{padding-left:8px;padding-right:8px;box-sizing:border-box}
@@ -840,7 +844,7 @@
     /* ── Top nav ── */
     .top-nav{gap:2px;padding:0 8px}
     .top-nav-btn{padding:10px 10px;font-size:0.58rem}
-    #search-bar-container{padding:10px 12px}
+    #search-bar-container{padding:10px 12px;top:88px}
     #search-input{font-size:0.78rem}
 
     /* ── Lesson sidebar ── */
@@ -3254,7 +3258,7 @@
   </button>
 </nav>
 
-<div id="search-bar-container" style="display:none;background:var(--ink);border-bottom:2px solid var(--gold);padding:12px 20px;position:sticky;top:0;z-index:100">
+<div id="search-bar-container" style="display:none;background:var(--ink);border-bottom:2px solid var(--gold);padding:12px 20px;position:fixed;top:94px;left:0;right:0;z-index:195;max-height:60vh;overflow-y:auto">
   <div style="display:flex;align-items:center;gap:10px;max-width:900px;margin:0 auto">
     <span style="font-size:1rem;color:var(--muted)">🔍</span>
     <input id="search-input" type="text" placeholder="Search English, 中文, or romanization…"
@@ -13213,7 +13217,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v33'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v34'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -14121,10 +14125,10 @@ function renderFavorites() {
       <button id="clear-all-fav-btn" onclick="clearAllFavorites()" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;background:none;border:1px solid rgba(245,240,232,0.2);color:var(--muted);cursor:pointer;padding:4px 12px;transition:all 0.15s;margin-left:4px" onmouseover="if(this.dataset.confirming!=='true'){this.style.borderColor='var(--red)';this.style.color='var(--red)'}" onmouseout="if(this.dataset.confirming!=='true'){this.style.borderColor='rgba(245,240,232,0.2)';this.style.color='var(--muted)'}">✕ Clear all favorites</button>
     </div>
     <div class="vocab-play-bar" style="margin-bottom:28px">
-      <span class="play-bar-label">PLAY ALL</span>
-      <button class="play-all-btn" id="fav-play-all-btn" onclick="startFavPlay(null)">▶ Chinese Only</button>
-      <button class="play-all-btn drill-btn" id="fav-drill-en-zh-btn" onclick="startFavDrill('en-zh')">▶ EN → 中 Drill</button>
+      <span class="play-bar-label">PLAY ALL OPTIONS:</span>
+      <button class="play-all-btn" id="fav-play-all-btn" onclick="startFavPlay(null)">▶ 中文</button>
       <button class="play-all-btn drill-btn" id="fav-drill-zh-en-btn" onclick="startFavDrill('zh-en')">▶ 中 → EN Drill</button>
+      <button class="play-all-btn drill-btn" id="fav-drill-en-zh-btn" onclick="startFavDrill('en-zh')">▶ EN → 中 Drill</button>
       <button class="stop-btn" id="fav-stop-btn" onclick="stopVocabPlayAll()" style="border-color:rgba(245,240,232,0.2);color:rgba(245,240,232,0.45);">■ Stop</button>
       
       <div class="vocab-play-progress" id="vocab-play-progress">${totalFavs} saved word${totalFavs!==1?'s':''}</div>
@@ -14198,10 +14202,10 @@ function renderVocab() {
   let html = `
     
     <div class="vocab-play-bar">
-      <span class="play-bar-label">PLAY ALL</span>
-      <button class="play-all-btn" id="vocab-play-all-btn" onclick="startVocabPlayAll()">▶ Chinese Only</button>
-      <button class="play-all-btn drill-btn" id="vocab-drill-en-zh-btn" onclick="startDrillEnZh()">▶ EN → 中 Drill</button>
+      <span class="play-bar-label">PLAY ALL OPTIONS:</span>
+      <button class="play-all-btn" id="vocab-play-all-btn" onclick="startVocabPlayAll()">▶ 中文</button>
       <button class="play-all-btn drill-btn" id="vocab-drill-zh-en-btn" onclick="startDrillZhEn()">▶ 中 → EN Drill</button>
+      <button class="play-all-btn drill-btn" id="vocab-drill-en-zh-btn" onclick="startDrillEnZh()">▶ EN → 中 Drill</button>
       <button class="stop-btn" id="vocab-stop-btn" onclick="stopVocabPlayAll()" style="border-color:rgba(245,240,232,0.2);color:rgba(245,240,232,0.45);">■ Stop</button>
       <div class="vocab-play-progress" id="vocab-play-progress">${totalWords} words across ${L.sections.length} section${L.sections.length>1?'s':''}</div>
     </div>`;
@@ -14568,7 +14572,7 @@ function playNextVocab() {
   const L = getLessons()[cur];
   const v = L.sections[si].vocab[vi];
   if (progressEl) {
-    const modeLabel = drillMode === 'en-zh' ? ' 🇬🇧→🀄' : drillMode === 'zh-en' ? ' 🀄→🇬🇧' : '';
+    const modeLabel = drillMode === 'en-zh' ? ' EN→中' : drillMode === 'zh-en' ? ' 中→EN' : '';
     progressEl.innerHTML = `<span>${vocabPlayPos+1}/${vocabPlayQueue.length}</span>${modeLabel} — ${L.sections[si].title}: ${v.zh}`;
   }
   // Update floating drill player
@@ -14656,7 +14660,7 @@ function updateVocabPlayUI(isPlaying, activeSi) {
 
   if (mainBtn) {
     const active = isPlaying && activeSi === null && drillMode === null;
-    mainBtn.textContent = active ? '⏸️ Playing...' : '▶ Chinese Only';
+    mainBtn.textContent = active ? '⏸️ Playing...' : '▶ 中文';
     mainBtn.classList.toggle('playing', active);
   }
   if (drillEnZhBtn) {
@@ -15745,7 +15749,7 @@ function playNextFavVocab() {
 
   const progressEl = document.getElementById('vocab-play-progress');
   if (progressEl) {
-    const modeLabel = drillMode === 'en-zh' ? ' 🇬🇧→🀄' : drillMode === 'zh-en' ? ' 🀄→🇬🇧' : '';
+    const modeLabel = drillMode === 'en-zh' ? ' EN→中' : drillMode === 'zh-en' ? ' 中→EN' : '';
     progressEl.innerHTML = `<span>${vocabPlayPos+1}/${vocabPlayQueue.length}</span>${modeLabel} · ${v.zh}`;
   }
   // Update floating drill player for favorites
@@ -17134,7 +17138,7 @@ renderPathwayBanner();
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
   const swCode = `
-    const CACHE = 'medical-chinese-v33';
+    const CACHE = 'medical-chinese-v34';
     self.addEventListener('install', e => {
       e.waitUntil(
         caches.open(CACHE).then(c => c.addAll(['${location.href}']))
