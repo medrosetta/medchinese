@@ -60,6 +60,7 @@
     right: 0;
     z-index: 200;
     flex-shrink: 0;
+    overflow: hidden;
   }
   header::after {
     content: '';
@@ -795,7 +796,7 @@
     .top-nav { overflow-x: visible; }
 
     /* Header adjustments */
-    header { padding: 0 10px; height: 46px; }
+    header { padding: 0 10px; height: 46px; overflow: hidden; }
     .header-sub { display: none; }
     .header-wordmark { font-size: 0.95rem; }
     .lang-btn-en { display: none; }
@@ -13212,7 +13213,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v31'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v33'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -14743,9 +14744,9 @@ function renderAudioSetup(targetEl) {
           <div style="display:flex;gap:6px;align-items:center">
             <select id="voice-yue-select" onchange="saveAzureVoice('yue', this.value)"
               style="font-family:var(--mono);font-size:0.72rem;padding:5px 6px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1;min-width:0">
-              <option value="zh-HK-HiuGaaiNeural" ${savedYueVoice === 'zh-HK-HiuGaaiNeural' ? 'selected' : ''}>HiuGaai (F) ★</option>
+              <option value="zh-HK-WanLungNeural" ${savedYueVoice === 'zh-HK-WanLungNeural' ? 'selected' : ''}>WanLung (M) ★</option>
+              <option value="zh-HK-HiuGaaiNeural" ${savedYueVoice === 'zh-HK-HiuGaaiNeural' ? 'selected' : ''}>HiuGaai (F)</option>
               <option value="zh-HK-HiuMaanNeural" ${savedYueVoice === 'zh-HK-HiuMaanNeural' ? 'selected' : ''}>HiuMaan (F)</option>
-              <option value="zh-HK-WanLungNeural" ${savedYueVoice === 'zh-HK-WanLungNeural' ? 'selected' : ''}>WanLung (M)</option>
             </select>
             <button onclick="previewAzureVoice('yue')"
               style="font-family:var(--mono);font-size:0.58rem;letter-spacing:0.06em;text-transform:uppercase;background:var(--ink);color:var(--paper);border:none;padding:7px 12px;cursor:pointer;white-space:nowrap">
@@ -14758,8 +14759,8 @@ function renderAudioSetup(targetEl) {
           <div style="display:flex;gap:6px;align-items:center">
             <select id="voice-yue-patient-select" onchange="saveAzureVoice('yue_patient', this.value)"
               style="font-family:var(--mono);font-size:0.72rem;padding:5px 6px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink);outline:none;cursor:pointer;flex:1;min-width:0">
-              <option value="zh-HK-WanLungNeural" ${savedYuePatientVoice === 'zh-HK-WanLungNeural' ? 'selected' : ''}>WanLung (M) ★</option>
-              <option value="zh-HK-HiuGaaiNeural" ${savedYuePatientVoice === 'zh-HK-HiuGaaiNeural' ? 'selected' : ''}>HiuGaai (F)</option>
+              <option value="zh-HK-HiuGaaiNeural" ${savedYuePatientVoice === 'zh-HK-HiuGaaiNeural' ? 'selected' : ''}>HiuGaai (F) ★</option>
+              <option value="zh-HK-WanLungNeural" ${savedYuePatientVoice === 'zh-HK-WanLungNeural' ? 'selected' : ''}>WanLung (M)</option>
               <option value="zh-HK-HiuMaanNeural" ${savedYuePatientVoice === 'zh-HK-HiuMaanNeural' ? 'selected' : ''}>HiuMaan (F)</option>
             </select>
             <button onclick="previewAzureVoice('yue_patient')"
@@ -17133,7 +17134,7 @@ renderPathwayBanner();
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
   const swCode = `
-    const CACHE = 'medical-chinese-v31';
+    const CACHE = 'medical-chinese-v33';
     self.addEventListener('install', e => {
       e.waitUntil(
         caches.open(CACHE).then(c => c.addAll(['${location.href}']))
