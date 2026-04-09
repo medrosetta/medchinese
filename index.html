@@ -13212,12 +13212,12 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v30'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v31'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
-  yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-HiuGaaiNeural',
+  yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
   cmn: localStorage.getItem('medchinese_azure_voice_cmn') || 'zh-CN-XiaoxiaoNeural',
-  yue_patient: localStorage.getItem('medchinese_azure_voice_yue_patient') || 'zh-HK-WanLungNeural',
+  yue_patient: localStorage.getItem('medchinese_azure_voice_yue_patient') || 'zh-HK-HiuGaaiNeural',
   cmn_patient: localStorage.getItem('medchinese_azure_voice_cmn_patient') || 'zh-CN-YunxiNeural',
 };
 
@@ -14710,9 +14710,9 @@ function renderAudioSetup(targetEl) {
   if (!el) return;
 
   // Load saved Azure voice preferences
-  const savedYueVoice = localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-HiuGaaiNeural';
+  const savedYueVoice = localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural';
   const savedCmnVoice = localStorage.getItem('medchinese_azure_voice_cmn') || 'zh-CN-XiaoxiaoNeural';
-  const savedYuePatientVoice = localStorage.getItem('medchinese_azure_voice_yue_patient') || 'zh-HK-WanLungNeural';
+  const savedYuePatientVoice = localStorage.getItem('medchinese_azure_voice_yue_patient') || 'zh-HK-HiuGaaiNeural';
   const savedCmnPatientVoice = localStorage.getItem('medchinese_azure_voice_cmn_patient') || 'zh-CN-YunxiNeural';
   const savedEnVoice = localStorage.getItem('medchinese_azure_voice_en') || 'en-US-JennyNeural';
 
@@ -17133,7 +17133,7 @@ renderPathwayBanner();
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
   const swCode = `
-    const CACHE = 'medical-chinese-v30';
+    const CACHE = 'medical-chinese-v31';
     self.addEventListener('install', e => {
       e.waitUntil(
         caches.open(CACHE).then(c => c.addAll(['${location.href}']))
