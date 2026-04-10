@@ -191,12 +191,13 @@
   }
   .section-header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 20px;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px 16px;
     cursor: pointer;
     user-select: none;
     transition: background 0.15s;
+    gap: 4px;
   }
   .section-header:hover { background: var(--gold-light); }
   .section-header.open { background: var(--ink); color: var(--paper); }
@@ -206,21 +207,34 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
     font-weight: 500;
-    white-space: nowrap;
+  }
+  .section-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .section-controls-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: nowrap;
+    width: 100%;
+    margin-top: 2px;
+  }
+  .section-controls-spacer {
+    flex: 1;
   }
   .section-title-zh {
     font-family: 'Noto Serif TC', serif;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 600;
-    margin-left: 8px;
     opacity: 0.8;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    display: block;
   }
   .section-chevron {
     font-size: 0.7rem;
     transition: transform 0.2s;
+    flex-shrink: 0;
   }
   .section-header.open .section-chevron { transform: rotate(180deg); }
   .section-body {
@@ -267,6 +281,8 @@
     font-family: 'Noto Sans HK', sans-serif;
     font-size: 0.75rem;
     color: var(--muted);
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
   .audio-btn {
     position: absolute;
@@ -546,6 +562,14 @@
     white-space: nowrap;
     border-right: 1px solid rgba(245,240,232,0.15);
     padding-right: 12px;
+    flex-shrink: 0;
+  }
+  .vocab-play-bar-btns {
+    display: flex;
+    gap: 8px;
+    flex-wrap: nowrap;
+    align-items: center;
+    flex: 1;
   }
   .vocab-play-bar .play-all-btn {
     flex: 0 0 auto;
@@ -560,11 +584,14 @@
   .drill-btn:hover { background: var(--gold) !important; color: var(--ink) !important; }
   .drill-btn.playing { background: var(--gold) !important; color: var(--ink) !important; }
   .vocab-play-progress {
-    flex: 1;
+    flex: 0 0 100%;
     font-family: 'DM Mono', monospace;
     font-size: 0.65rem;
     color: rgba(245,240,232,0.55);
     letter-spacing: 0.08em;
+    padding-top: 6px;
+    border-top: 1px solid rgba(245,240,232,0.08);
+    margin-top: 2px;
   }
   .vocab-play-progress span {
     color: var(--gold);
@@ -816,9 +843,8 @@
     .lesson-header{padding-left:8px;padding-right:8px;box-sizing:border-box}
     .vocab-play-bar{margin-left:0;margin-right:0;width:100%;box-sizing:border-box}
     .section-block{margin-left:0;margin-right:0;border-left:none;border-right:none}
-    .section-header{padding-left:8px;padding-right:8px;box-sizing:border-box;flex-wrap:nowrap;gap:4px;align-items:center}
-    .section-header > div:first-child{min-width:0;overflow:hidden}
-    .section-header > div:last-child{flex-shrink:0}
+    .section-header{padding:10px 10px;box-sizing:border-box}
+
     .section-body{padding:14px 6px}
     .lesson-rating-row{padding-left:8px;padding-right:8px;box-sizing:border-box}
     .tab-bar{padding-left:8px;padding-right:8px;box-sizing:border-box}
@@ -860,11 +886,12 @@
     .lesson-rating-bar{flex-wrap:nowrap;justify-content:space-between;padding:8px 12px;gap:8px}
 
     /* ── Vocab play bar ── */
-    .vocab-play-bar{flex-wrap:wrap;gap:6px;padding:10px 8px;overflow-x:hidden}
-    .play-bar-label{width:100%;border-right:none;border-bottom:1px solid rgba(245,240,232,0.12);padding-right:0;padding-bottom:6px;margin-bottom:2px;margin-right:0}
-    .vocab-play-bar .play-all-btn{font-size:0.6rem;padding:8px 10px;flex:1 1 auto}
-    .stop-btn{padding:8px 12px !important}
-    .vocab-play-progress{width:100%;margin-top:2px}
+    .vocab-play-bar{flex-wrap:wrap;gap:0;padding:10px 8px;overflow-x:hidden}
+    .play-bar-label{width:100%;border-right:none;border-bottom:1px solid rgba(245,240,232,0.12);padding-right:0;padding-bottom:6px;margin-bottom:6px;margin-right:0;font-size:0.6rem}
+    .vocab-play-bar-btns{display:flex;width:100%;gap:5px;flex-wrap:nowrap;margin-bottom:6px}
+    .vocab-play-bar .play-all-btn{font-size:0.56rem;padding:7px 2px;flex:1 1 0;min-width:0;text-align:center;letter-spacing:0.01em}
+    .stop-btn{padding:6px 4px !important;flex:1 1 0;min-width:0;font-size:0.58rem}
+    .vocab-play-progress{width:100%;margin-top:0;padding-top:4px;border-top:1px solid rgba(245,240,232,0.08)}
 
     /* ── Vocab cards ── */
     .vocab-grid{gap:4px;grid-template-columns:repeat(2,1fr)}
@@ -899,7 +926,7 @@
     main{padding:16px 10px}
     .vocab-zh{font-size:1.25rem}
     .tab-btn{padding:7px 9px;font-size:0.56rem}
-    .vocab-play-bar .play-all-btn{font-size:0.56rem;padding:7px 8px}
+    .vocab-play-bar .play-all-btn{font-size:0.56rem;padding:6px 4px}
   }
 
   /* ── MOBILE DRAWER ── */
@@ -3702,7 +3729,7 @@ const LESSONS = [
       {sp:"doctor",zh:"好，請屏住呼吸。",jp:"hou2, cing2 ping3 zyu6 fu1 hap3.",en:"Good — please hold your breath."},
       {sp:"doctor",zh:"請呼氣。好，檢查完喇。",jp:"cing2 fu1 hei3. hou2, gim2 caa4 jyun4 laa3.",en:"Please breathe out. Good — all done."},
       {sp:"patient",zh:"結果點呀？",jp:"git3 gwo2 dim2 aa3?",en:"How does it look?"},
-      {sp:"doctor",zh:"你嘅心跳唔規則，我需要幫你做多個心電圖。唔使擔心，呢個係好普通嘅檢查。",jp:"nei5 ge3 sam1 tiu3 m4 kwai1 zak1, ngo5 seoi1 jiu3 bong1 nei5 zou6 do1 go3 sam1 din6 tou4. m4 sai2 daam1 sam1, ni1 go3 hai6 hou2 pou2 tung1 ge3 gim2 caa4.",en:"Your heart is beating irregularly — I need to do an ECG. Don't worry, it's a routine test."},
+      {sp:"doctor",zh:"你嘅心跳唔規則，我需要幫你做多個心電圖。唔使擔心，呢個係好普通嘅檢查。",jp:"nei5 ge3 sam1 tiu3 m4 kwai1 zak1, ngo5 seoi1 jiu3 bong1 nei5 zou6 do1 go3 sam1 din6 tou4. m4 sai2 daam1 sam1, ni1 go3 hai6 hou2 pou2 tung1 ge3 gim2 caa4.",en:"Your heart is beating irregularly — I need to do an EKG. Don't worry, it's a routine test."},
     ]
   }
   },
@@ -3920,7 +3947,6 @@ const LESSONS = [
       {zh:"視力模糊",jp:"si6 lik6 mou4 fu1",en:"Blurred vision"},
       {zh:"記憶力衰退",jp:"gei3 jik6 lik6 seoi1 teoi3",en:"Memory decline"},
       {zh:"意識混亂",jp:"ji3 sik1 wan4 lyun4",en:"Confusion"},
-      {zh:"抽搐",jp:"cau1 zuk1",en:"Seizure / convulsion"},
       {zh:"步態不穩",jp:"bou6 taai3 bat1 wan2",en:"Unsteady gait"},
     ]},
 
@@ -3929,6 +3955,7 @@ const LESSONS = [
       {zh:"腦出血",jp:"nou5 ceot1 hyut3",en:"Brain hemorrhage"},
       {zh:"腦栓塞",jp:"nou5 sin1 sak1",en:"Ischemic stroke"},
       {zh:"癲癇",jp:"din1 haan4",en:"Epilepsy / Seizure"},
+      {zh:"抽搐",jp:"cau1 zuk1",en:"Seizure / convulsion"},
       {zh:"偏頭痛",jp:"pin1 tau4 tung3",en:"Migraine"},
       {zh:"帕金森病",jp:"paat3 gam1 san1 beng6",en:"Parkinson's disease"},
       {zh:"認知障礙症",jp:"jing6 zi1 zoeng3 ngoi6 zing3",en:"Dementia — official HK clinical term"},
@@ -4006,6 +4033,18 @@ const LESSONS = [
       {zh:"呢啲藥需要定時食，唔可以漏服",jp:"ni1 di1 joek6 seoi1 jiu3 ding6 si4 sik6, m4 ho2 yi5 lau6 fuk6",en:"These medications must be taken on time — do not miss doses"},
     ]},
 
+{ title:"Investigations", zh:"神經科檢查", vocab:[
+      {zh:"全血計數",jp:"cyun4 hyut3 gai3 sou3",en:"Complete blood count (CBC)"},
+      {zh:"基本代謝組合",jp:"gei1 bun2 doi6 si5 zou2 hap6",en:"Basic metabolic panel"},
+      {zh:"葡萄糖",jp:"pou4 tou4 tong4",en:"Blood glucose"},
+      {zh:"甲狀腺功能",jp:"gaap3 zong6 sin1 gung1 nang4",en:"Thyroid function tests"},
+      {zh:"維他命B12",jp:"wai4 taa1 ming4 B sap6 ji6",en:"Vitamin B12"},
+      {zh:"腦部電腦掃描",jp:"nou5 bou6 din6 nou5 sou3 miu4",en:"Brain CT scan"},
+      {zh:"腦部磁力共振",jp:"nou5 bou6 ci4 lik6 gung6 zan3",en:"Brain MRI"},
+      {zh:"腦電圖",jp:"nou5 din6 tou4",en:"EEG (electroencephalogram)"},
+      {zh:"神經傳導研究",jp:"san4 ging1 cyun4 dou6 jin4 gau3",en:"Nerve conduction study"},
+      {zh:"腰椎穿刺",jp:"jiu1 zeoi1 cyun1 ci3",en:"Lumbar puncture"},
+    ]},
     { title:"Neurology Clinical Phrases", zh:"神經科臨床用語", vocab:[
       {zh:"我要做神經系統檢查",jp:"ngo5 jiu3 zou6 san4 ging1 hai6 tung2 gim2 caa4",en:"Neurological examination"},
       {zh:"請伸出你嘅雙手",jp:"cing2 san1 ceot1 nei5 ge3 soeng1 sau2",en:"Stretch out both hands"},
@@ -4016,13 +4055,6 @@ const LESSONS = [
       {zh:"需要轉介神經科",jp:"seoi1 jiu3 zyun2 gaai3 san4 ging1 fo1",en:"Referring to neurology"},
     ]},
 
-    { title:"Investigations", zh:"神經科檢查", vocab:[
-      {zh:"腦部電腦掃描",jp:"nou5 bou6 din6 nou5 sou3 miu4",en:"Brain CT scan"},
-      {zh:"腦部磁力共振",jp:"nou5 bou6 ci4 lik6 gung6 zan3",en:"Brain MRI"},
-      {zh:"腦電圖",jp:"nou5 din6 tou4",en:"EEG (electroencephalogram)"},
-      {zh:"神經傳導研究",jp:"san4 ging1 cyun4 dou6 jin4 gau3",en:"Nerve conduction study"},
-      {zh:"腰椎穿刺",jp:"jiu1 zeoi1 cyun1 ci3",en:"Lumbar puncture"},
-    ]},
   ],
 
   dialogue:{
@@ -4077,6 +4109,7 @@ const LESSONS = [
       {zh:"他汀類藥物",jp:"taa1 ding1 leoi6 joek6 mat6",en:"Statin medication"},
     ]},
     { title:"CHF Symptoms & Assessment", zh:"心臟衰竭症狀及評估", vocab:[
+      {zh:"心臟衰竭",jp:"sam1 zong6 seoi1 kit3",en:"Congestive heart failure (CHF)"},
       {zh:"血壓",jp:"hyut3 aat3",en:"Blood pressure"},
       {zh:"心跳",jp:"sam1 tiu3",en:"Heart rate / pulse"},
       {zh:"心跳加速",jp:"sam1 tiu3 gaa1 cuk1",en:"Palpitations"},
@@ -4090,10 +4123,11 @@ const LESSONS = [
       {zh:"暈低",jp:"wan4 dai1",en:"Fainting / Pass out (colloquial)"}, 
     ]},
     { title:"Tests & Treatment", zh:"檢查及治療", vocab:[
-      {zh:"心電圖",jp:"sam1 din6 tou4",en:"ECG / EKG"},
+      {zh:"心電圖",jp:"sam1 din6 tou4",en:"EKG (electrocardiogram)"},
       {zh:"心臟超聲波",jp:"sam1 zong6 ciu1 sing1 bo1",en:"Echocardiogram"},
       {zh:"搭橋手術",jp:"daap3 kiu4 sau2 seot6",en:"Bypass surgery"},
       {zh:"血管成形術",jp:"hyut3 gun2 sing4 jing4 seot6",en:"Angioplasty"},
+      {zh:"冠狀動脈支架",jp:"gun1 zong6 dung6 mak6 zi1 gaa3",en:"Coronary stent"},
       {zh:"血壓藥",jp:"hyut3 aat3 joek6",en:"Blood pressure medication"},
       {zh:"利尿劑",jp:"lei6 niu6 zai1",en:"Diuretic"},
       {zh:"你有冇定時食血壓藥呀？",jp:"nei5 jau5 mou5 ding6 si4 sik6 hyut3 aat3 joek6 aa3?",en:"Do you take your blood pressure medication daily?"},
@@ -4101,7 +4135,6 @@ const LESSONS = [
       {zh:"運動平板測試",jp:"wan6 dung6 ping4 baan2 cak1 si3",en:"Treadmill stress test"},
       {zh:"心肌灌注掃描",jp:"sam1 gei1 gun3 zyu3 sou3 miu4",en:"Myocardial perfusion scan"},
       {zh:"心臟起搏器",jp:"sam1 zong6 hei2 bou6 hei3",en:"Pacemaker"},
-      {zh:"冠狀動脈支架",jp:"gun1 zong6 dung6 mak6 zi1 gaa3",en:"Coronary stent"},
       {zh:"我哋會安排你做跑步機測試",jp:"ngo5 dei6 wui5 on1 paai4 nei5 zou6 paau2 bou6 gei1 cak1 si3",en:"We will arrange a treadmill stress test for you"},
       {zh:"心臟起搏器可以幫助調節你嘅心跳",jp:"sam1 zong6 hei2 bou6 hei3 ho2 ji5 bong1 zo6 tiu4 zit3 nei5 ge3 sam1 tiu3",en:"A pacemaker can help regulate your heartbeat"},
       {zh:"冠狀動脈造影",jp:"gun1 zong6 dung6 mak6 zou6 jing2",en:"Coronary angiography"},
@@ -4135,8 +4168,8 @@ const LESSONS = [
       {zh:"降膽固醇藥",jp:"gong3 daam2 gu2 sing4 joek6",en:"Statin / cholesterol-lowering medication"},
       {zh:"乙型阻滯劑",jp:"jik1 jing4 zou2 zai3 zai1",en:"Beta-blocker"},
       {zh:"心臟衰竭藥物",jp:"sam1 zong6 seoi1 zit3 joek6 mat6",en:"Heart failure medication"},
-      {zh:"硝酸甘油",jp:"siu1 syun1 gam1 jau4",en:"Nitroglycerin (GTN spray)"},
-      {zh:"如有胸痛即刻噴硝酸甘油",jp:"jyu4 jau5 hung1 tung3 zik1 hak1 pan3 siu1 syun1 gam1 jau4",en:"Use nitroglycerin spray immediately if you have chest pain"},
+      {zh:"硝酸甘油",jp:"siu1 syun1 gam1 jau4",en:"Nitroglycerin (sublingual tablet)"},
+      {zh:"如有胸痛即刻含服硝酸甘油",jp:"jyu4 jau5 hung1 tung3 zik1 hak1 pan3 siu1 syun1 gam1 jau4",en:"Place nitroglycerin tablet under your tongue immediately if you have chest pain"},
       {zh:"做手術前需要停薄血藥",jp:"zou6 sau2 seot6 cin4 seoi1 jiu3 ting4 bok6 hyut3 joek6",en:"You need to stop blood thinners before surgery"},
       {zh:"唔好忘記食藥",jp:"m4 hou2 mong4 gei3 sik6 joek6",en:"Do not forget to take your medication"},
     ]},
@@ -4146,7 +4179,7 @@ const LESSONS = [
       {zh:"你有冇胸口痛呀？",jp:"nei5 jau5 mou5 hung1 hau2 tung3 aa3?",en:"Any chest pain?"},
       {zh:"痛有冇擴散到手臂或下巴？",jp:"tung3 jau5 mou5 kwong3 saan3 dou3 sau2 bei3 waak6 haa6 baa1?",en:"Pain spread to arm or jaw?"},
       {zh:"你嘅心跳唔規則",jp:"nei5 ge3 sam1 tiu3 m4 kwai1 zak1",en:"Heart is beating irregularly"},
-      {zh:"需要做心電圖",jp:"seoi1 jiu3 zou6 sam1 din6 tou4",en:"ECG needed"},
+      {zh:"需要做心電圖",jp:"seoi1 jiu3 zou6 sam1 din6 tou4",en:"EKG needed"},
       {zh:"你係咪有呼吸困難或腳腫呀？",jp:"nei5 hai6 mai6 jau5 fu1 hap3 kwan3 naan4 waak6 goek3 zung2 aa3?",en:"Breathlessness or leg swelling?"},
       {zh:"需要轉介心臟科",jp:"seoi1 jiu3 zyun2 gaai3 sam1 zong6 fo1",en:"Referring to cardiology"},
       {zh:"胸口痛係咪係運動時候發生？",jp:"hung1 hau2 tung3 hai6 mai6 hai2 wan6 dung6 si4 hau6 faat3 sang1?",en:"Does chest pain occur with exertion?"},]},,
@@ -4159,7 +4192,7 @@ const LESSONS = [
       {sp:"patient",zh:"係，特別係瞓低嘅時候，要坐起身先夠氣。",jp:"hai6, dak6 bit6 hai6 fan3 dai1 ge3 si4 hau6, jiu3 co5 hei2 san1 sin1 gau3 hei3.",en:"Yes, especially when lying down — I have to sit up to breathe."},
       {sp:"doctor",zh:"你對腳有冇腫脹？我按落去會唔會留低一個凹？",jp:"nei5 deoi3 goek3 jau5 mou5 zung2 zoeng3? ngo5 on3 lok6 heoi3 wui5 m4 wui5 lau4 dai1 jat1 go3 aau3?",en:"Is there swelling in your legs? Does pressing leave a dent?"},
       {sp:"patient",zh:"有，下午嗰陣腳踝腫得好厲害。",jp:"jau5, haa6 ng3 go2 zan6 goek3 waai4 zung2 dak1 hou2 lei6 hoi3.",en:"Yes, by afternoon my ankles are very swollen."},
-      {sp:"doctor",zh:"腳腫加上瞓低唔夠氣，我估係心臟衰竭。我幫你做心電圖同超聲波，仲開利尿劑俾你。",jp:"goek3 zung2 gaa1 soeng6 fan3 dai1 m4 gau3 hei3, ngo5 gu2 hai6 sam1 zong6 seoi1 kit3. ngo5 bong1 nei5 zou6 sam1 din6 tou4 tung4 ciu1 sing1 bo1, zung6 hoi1 lei6 niu6 zai1 bei2 nei5.",en:"Leg swelling plus breathlessness lying down — I suspect heart failure. I'll do an ECG and echo, and prescribe a diuretic."},
+      {sp:"doctor",zh:"腳腫加上瞓低唔夠氣，我估係心臟衰竭。我幫你做心電圖同超聲波，仲開利尿劑俾你。",jp:"goek3 zung2 gaa1 soeng6 fan3 dai1 m4 gau3 hei3, ngo5 gu2 hai6 sam1 zong6 seoi1 kit3. ngo5 bong1 nei5 zou6 sam1 din6 tou4 tung4 ciu1 sing1 bo1, zung6 hoi1 lei6 niu6 zai1 bei2 nei5.",en:"Leg swelling plus breathlessness lying down — I suspect heart failure. I'll do an EKG and echo, and prescribe a diuretic."},
       {sp:"patient",zh:"你有冇定時食血壓藥呀？",jp:"nei5 jau5 mou5 ding6 si4 sik6 hyut3 aat3 joek6 aa3?",en:"Have you been taking your blood pressure medication regularly?"},
       {sp:"doctor",zh:"係，每日都有食。",jp:"hai6, mui5 jat6 dou1 jau5 sik6.",en:"Yes, every day."},
     ]
@@ -4233,7 +4266,7 @@ const LESSONS = [
       {zh:"慢慢深吸一口",jp:"maan6 maan2 sam1 kap1 jat1 hau2",en:"Breathe in slowly and deeply"},
       {zh:"屏住呼吸十秒",jp:"ping3 zyu6 fu1 hap3 sap6 miu5",en:"Hold your breath for 10 seconds"},
       {zh:"口服類固醇療程",jp:"hau2 fuk6 leoi6 gu2 jeun4 liu4 cing4",en:"Oral steroid course (steroid burst)"},
-      {zh:"每日最多用___次急救噴劑",jp:"mui5 jat6 zeoi3 do1 jung6 ___ ci3 gap1 gau3 pan3 zai1",en:"Use rescue inhaler no more than ___ times per day"},
+      {zh:"如果你每週用多過兩次舒喘靈，請話俾我知",jp:"jyu4 gwo2 nei5 mui5 zau1 jung6 do1 gwo3 loeng5 ci3 syu1 ceon3 ling4, cing2 waa6 bei2 ngo5 zi1",en:"Let me know if you're using Albuterol more than two times a week"},
       {zh:"如果急救噴劑唔夠用，要立即求醫",jp:"jyu4 gwo2 gap1 gau3 pan3 zai1 m4 gau3 jung6, jiu3 lap6 zik1 kau4 ji1",en:"If your rescue inhaler is not enough, seek medical attention immediately"},
     ]},
 
@@ -4308,7 +4341,7 @@ const LESSONS = [
       {zh:"瘧疾",jp:"joek6 zat6",en:"Malaria"},
       {zh:"敗血症",jp:"baai6 hyut3 zing3",en:"Septicemia"},
       {zh:"你嘅血液培養顯示有細菌",jp:"nei5 ge3 hyut3 jik6 pui4 joeng5 jin2 si6 jau5 sai3 kwan2",en:"Your blood culture shows bacteria"},
-      {zh:"需要靜脈抗生素",jp:"seoi1 jiu3 zing6 mak6 kong3 sang1 sou3",en:"You need IV antibiotics"},
+      {zh:"需要靜脈抗生素",jp:"seoi1 jiu3 zing6 mak6 kong3 sang1 sou3",en:"You need intravenous antibiotics"},
       {zh:"你係咪最近去過熱帶地區呀？",jp:"nei5 hai6 mai6 zeoi3 gan6 heoi3 gwo3 jit6 daai3 dei6 keoi1 aa3?",en:"Have you recently traveled to a tropical region?"},
       {zh:"需要隔離措施",jp:"seoi1 jiu3 gaak3 lei4 cou3 si1",en:"Isolation precautions are required"},
     ]},
@@ -4415,7 +4448,7 @@ const LESSONS = [
       {zh:"敗血症",jp:"baai6 hyut3 zing3",en:"Sepsis"},
       {zh:"敗血性休克",jp:"baai6 hyut3 sing3 jau1 hak1",en:"Septic shock"},
       {zh:"你幾時開始發燒？",jp:"nei5 gei2 si4 hoi1 ci2 faat3 siu1?",en:"When did the fever start?"},
-      {zh:"你有冇寒冷發抖呀？",jp:"nei5 jau5 mou5 hon4 laang5 faat3 dau2 aa3?",en:"Do you have chills or shaking?"},
+
       {zh:"你有冇感冒或流感症狀呀？",jp:"nei5 jau5 mou5 gam2 mou6 waak6 lau4 gam2 zing3 zong6 aa3?",en:"Do you have cold or flu symptoms?"},
       {zh:"需要血液培養",jp:"seoi1 jiu3 hyut3 jik6 pui4 joeng5",en:"Blood cultures needed"},
       {zh:"廣譜抗生素",jp:"gwong2 pou2 kong3 sang1 sou3",en:"Broad-spectrum antibiotics"},
@@ -4498,19 +4531,19 @@ const LESSONS = [
     { title:"Antibodies", zh:"抗體", vocab:[
       {zh:"免疫球蛋白G",jp:"min5 jik6 kau4 daan6 baak6 G",en:"Immunoglobulin G (IgG)"},
       {zh:"免疫球蛋白M",jp:"min5 jik6 kau4 daan6 baak6 M",en:"Immunoglobulin M (IgM)"},
-      {zh:"免疫球蛋白A",jp:"min5 jik6 kau4 daan6 baak6 A",en:"Immunoglobulin A (IgA)"},
+
       {zh:"免疫球蛋白E",jp:"min5 jik6 kau4 daan6 baak6 E",en:"Immunoglobulin E (IgE) — allergy"},
       {zh:"血清學測試",jp:"hyut3 cing1 hok6 cak1 si3",en:"Serology test"},
-      {zh:"急性期",jp:"gap1 sing3 kei4",en:"Acute phase (IgM positive)"},
-      {zh:"恢復期",jp:"wui4 fuk6 kei4",en:"Convalescent phase (IgG positive)"},
-      {zh:"中和抗體",jp:"zung1 wo4 kong3 tai2",en:"Neutralizing antibody"},
-      {zh:"自身抗體",jp:"zi6 san1 kong3 tai2",en:"Autoantibody"},
-      {zh:"抗體效價",jp:"kong3 tai2 haau6 gaa3",en:"Antibody titre"},
-      {zh:"免疫熒光法",jp:"min5 jik6 jing4 gwong1 faat3",en:"Immunofluorescence assay"},
-      {zh:"酶聯免疫吸附試驗",jp:"mooi4 lyun4 min5 jik6 kap1 fu6 si3 jim6",en:"ELISA test"},
+
+
+
+
+
+
+
       {zh:"快速抗原測試",jp:"faai3 cuk1 kong3 jyun4 cak1 si3",en:"Rapid antigen test"},
       {zh:"聚合酶鏈鎖反應",jp:"zeoi6 hap6 mooi4 lin4 so3 faan2 jing3",en:"PCR test"},
-      {zh:"我哋會抽血化驗",jp:"ngo5 dei6 wui5 cau1 hyut3 faa3 jim6",en:"We will take blood for testing"},
+
     ]},
     { title:"Public Health", zh:"公共衛生", vocab:[
       {zh:"通報疾病",jp:"tung1 bou3 zat6 beng6",en:"Notifiable disease"},
@@ -4581,12 +4614,21 @@ const LESSONS = [
       {zh:"膽囊",jp:"daam2 long4",en:"Gallbladder"},
       {zh:"胰臟",jp:"ji4 zong6",en:"Pancreas"},
       {zh:"闌尾",jp:"laan4 mei5",en:"Appendix"},
+      {zh:"盲腸",jp:"maang4 coeng4",en:"Appendix (colloquial: 盲腸)"},
       {zh:"直腸",jp:"zik6 coeng4",en:"Rectum"},
+      {zh:"升結腸",jp:"sing1 git3 coeng4",en:"Ascending colon"},
+      {zh:"橫結腸",jp:"waang4 git3 coeng4",en:"Transverse colon"},
+      {zh:"降結腸",jp:"gong3 git3 coeng4",en:"Descending colon"},
+      {zh:"乙狀結腸",jp:"jyut6 zong6 git3 coeng4",en:"Sigmoid colon"},
     ]},
     {  title:"GI Conditions & Infections", zh:"消化科疾病及感染", vocab:[
       {zh:"胃潰瘍",jp:"wai6 kui2 joeng4",en:"Stomach ulcer"},
       {zh:"胃酸倒流",jp:"wai6 syun1 dou3 lau4",en:"Acid reflux / GERD"},
       {zh:"腸易激綜合症",jp:"coeng4 ji6 gik1 zung3 hap6 zing3",en:"Irritable bowel syndrome (IBS)"},
+      {zh:"乳糜瀉",jp:"jyu5 nei4 se3",en:"Celiac disease"},
+      {zh:"麩質不耐受",jp:"fu1 zat1 bat1 noi6 sau6",en:"Gluten intolerance"},
+      {zh:"炎症性腸病",jp:"jim4 zing3 sing3 coeng4 beng6",en:"Inflammatory bowel disease (IBD)"},
+      {zh:"潰瘍性結腸炎",jp:"kui2 joeng4 sing3 git3 coeng4 jim4",en:"Ulcerative colitis (UC)"},
       {zh:"克隆氏病",jp:"hak1 lung4 si6 beng6",en:"Crohn's disease"},
       {zh:"大腸癌",jp:"daai6 coeng4 ngaam4",en:"Colorectal cancer"},
       {zh:"闌尾炎",jp:"laan4 mei5 jim4",en:"Appendicitis"},
@@ -4594,7 +4636,7 @@ const LESSONS = [
       {zh:"痔瘡",jp:"zi6 cong1",en:"Hemorrhoids"},
 
       {zh:"腸胃炎",jp:"coeng4 wai6 jim4",en:"Gastroenteritis"},
-      {zh:"幽門螺旋桿菌",jp:"jau1 mun4 lo4 syun4 gon3 kwan2",en:"H. pylori"},
+      {zh:"幽門螺旋桿菌",jp:"jau1 mun4 lo4 syun4 gon3 kwan2",en:"H. pylori (幽門螺旋菌)"},
       {zh:"艱難梭菌",jp:"gan1 naan4 so1 kwan2",en:"C. difficile (C. diff)"},
       {zh:"甲型肝炎",jp:"gaap3 jing4 gon1 jim4",en:"Hepatitis A"},
       {zh:"乙型肝炎",jp:"jyut6 jing4 gon1 jim4",en:"Hepatitis B"},
@@ -4608,10 +4650,7 @@ const LESSONS = [
       {zh:"嵌頓性疝",jp:"haam3 deon3 sing3 sin6",en:"Incarcerated / strangulated hernia"},
       {zh:"你係咪發現有突出嘅腫塊呀？",jp:"nei5 hai6 mai6 faat3 jin6 jau5 dat6 ceot1 ge3 zung2 faai3 aa3?",en:"Have you noticed a bulge?"},
       {zh:"躺低嘅時候係咪可以縮返入去？",jp:"tong2 dai1 ge3 si4 hau6 hai6 mai6 ho2 yi5 suk1 faan1 jap6 heoi3?",en:"Does it go back in when you lie down?"},
-      {zh:"需要手術修補",jp:"seoi1 jiu3 sau2 seot6 sau1 bou2",en:"Requires surgical repair"},
-      {zh:"炎症性腸病",jp:"jim4 zing3 sing3 coeng4 beng6",en:"Inflammatory bowel disease (IBD)"},
-      {zh:"克羅恩病",jp:"hak1 lou4 jan4 beng6",en:"Crohn's disease"},
-      {zh:"潰瘍性結腸炎",jp:"kui2 joeng4 sing3 git3 coeng4 jim4",en:"Ulcerative colitis (UC)"},]},
+      {zh:"需要手術修補",jp:"seoi1 jiu3 sau2 seot6 sau1 bou2",en:"Requires surgical repair"},,]},
     { title:"Liver & Hepatitis", zh:"肝臟及肝炎", vocab:[
       {zh:"肝炎",jp:"gon1 jim4",en:"Hepatitis"},
       {zh:"甲型肝炎",jp:"gaap3 jing4 gon1 jim4",en:"Hepatitis A"},
@@ -4634,15 +4673,20 @@ const LESSONS = [
       {zh:"大腸鏡",jp:"daai6 coeng4 geng3",en:"Colonoscopy"},
       {zh:"大便隱血測試",jp:"daai6 bin6 jan2 hyut3 cak1 si3",en:"Fecal occult blood test (FOBT)"},
       {zh:"大便隱血測試陽性",jp:"daai6 bin6 jan2 hyut3 cak1 si3 joeng4 sing3",en:"Positive fecal occult blood test"},
-      {zh:"幽門螺旋桿菌",jp:"jau1 mun4 lo4 syun4 gon3 kwan2",en:"H. pylori"},
+      {zh:"幽門螺旋桿菌",jp:"jau1 mun4 lo4 syun4 gon3 kwan2",en:"H. pylori (幽門螺旋菌)"},
       {zh:"肝功能測試",jp:"gon1 gung1 nang4 cak1 si3",en:"Liver function test"},
-      {zh:"升結腸",jp:"sing1 git3 coeng4",en:"Ascending colon"},
-      {zh:"橫結腸",jp:"waang4 git3 coeng4",en:"Transverse colon"},
-      {zh:"降結腸",jp:"gong3 git3 coeng4",en:"Descending colon"},
-      {zh:"乙狀結腸",jp:"jyut6 zong6 git3 coeng4",en:"Sigmoid colon"},
       {zh:"乙狀結腸鏡",jp:"jyut6 zong6 git3 coeng4 geng3",en:"Sigmoidoscopy"},
       {zh:"大便免疫化學測試",jp:"daai6 bin6 min5 jik6 faa3 hok6 cak1 si3",en:"Fecal immunochemical test (FIT)"},
       {zh:"你有冇體重下降呀？",jp:"nei5 jau5 mou5 tai2 zung6 haa6 gong3 aa3?",en:"Have you lost weight?"},]},
+    { title:"GI Investigations", zh:"消化科檢查", vocab:[
+      {zh:"幽門螺旋桿菌糞便測試",jp:"jau1 mun4 lo4 syun4 gon3 kwan2 fan3 bin6 cak1 si3",en:"H. pylori stool antigen test"},
+      {zh:"幽門螺旋桿菌呼氣測試",jp:"jau1 mun4 lo4 syun4 gon3 kwan2 fu1 hei3 cak1 si3",en:"H. pylori urea breath test"},
+      {zh:"腹部超聲波",jp:"fuk1 bou6 ciu1 sing1 bo1",en:"Abdominal ultrasound"},
+      {zh:"腹部電腦掃描",jp:"fuk1 bou6 din6 nou5 sou3 miu4",en:"Abdominal CT scan"},
+      {zh:"放射性核素掃描",jp:"fong3 se6 sing3 hak6 sou3 sou3 miu4",en:"Radionuclide (tagged RBC) scan"},
+      {zh:"肝功能測試",jp:"gon1 gung1 nang4 cak1 si3",en:"Liver function tests (LFTs)"},
+      {zh:"胰酶",jp:"ji4 mooi4",en:"Lipase / amylase"},
+    ]},
     { title:"GI Medications", zh:"腸胃科藥物", vocab:[
       {zh:"抗酸劑",jp:"kong3 syun1 zai1",en:"Antacid"},
       {zh:"質子泵抑制劑",jp:"zat1 zi2 bam1 jik1 zai3 zai1",en:"Proton pump inhibitor (PPI)"},
@@ -4686,6 +4730,12 @@ const LESSONS = [
       {zh:"副甲狀腺",jp:"fu3 gaap3 zong6 sin3",en:"Parathyroid gland"},
       {zh:"腎上腺",jp:"san2 soeng6 sin3",en:"Adrenal gland"},
       {zh:"腦下垂體",jp:"nou5 haa6 ceoi4 tai2",en:"Pituitary gland"},
+      {zh:"前葉腦下垂體",jp:"cin4 jip6 nou5 haa6 ceoi4 tai2",en:"Anterior pituitary"},
+      {zh:"睪丸",jp:"gou3 jyun4",en:"Testes"},
+      {zh:"睪酮",jp:"gou3 tung4",en:"Testosterone"},
+      {zh:"卵巢",jp:"leon5 caau4",en:"Ovaries"},
+      {zh:"雌激素",jp:"ci4 gik1 sou3",en:"Estrogen"},
+      {zh:"黃體素",jp:"wong4 tai2 sou3",en:"Progesterone"},
       {zh:"胰島素",jp:"ji4 dou2 sou3",en:"Insulin"},
       {zh:"升糖素",jp:"sing1 tong4 sou3",en:"Glucagon"},
       {zh:"甲狀腺素",jp:"gaap3 zong6 sin3 sou3",en:"Thyroid hormone"},
@@ -4709,7 +4759,6 @@ const LESSONS = [
       {zh:"第二型糖尿病",jp:"dai6 ji6 jing4 tong4 niu6 beng6",en:"Type 2 diabetes"},
       {zh:"妊娠糖尿病",jp:"jam6 san1 tong4 niu6 beng6",en:"Gestational diabetes"},
       {zh:"糖尿病前期",jp:"tong4 niu6 beng6 cin4 kei4",en:"Prediabetes"},
-      {zh:"你嘅空腹血糖係___，糖化血色素係___%",jp:"nei5 ge3 hung1 fuk6 hyut3 tong4 hai6 ___, tong4 faa3 hyut3 sik1 sou3 hai6 ___%",en:"Your fasting glucose is ___ and HbA1c is ___%"},
       {zh:"根據你嘅結果，你係糖尿病前期",jp:"gan1 geoi3 nei5 ge3 git3 gwo2, nei5 hai6 tong4 niu6 beng6 cin4 kei4",en:"Based on your results, you have prediabetes"},
       {zh:"及早控制可以預防糖尿病",jp:"kap6 zou2 hung3 zai3 ho2 ji5 jyu6 fong4 tong4 niu6 beng6",en:"Early control can prevent diabetes from developing"},
 
@@ -4729,8 +4778,6 @@ const LESSONS = [
       {zh:"低血糖",jp:"dai1 hyut3 tong4",en:"Hypoglycemia (low blood sugar)"},
       {zh:"高血糖",jp:"gou1 hyut3 tong4",en:"Hyperglycemia (high blood sugar)"},
       {zh:"低血糖症狀：震顫、出汗、頭暈、飢餓感",jp:"dai1 hyut3 tong4 zing3 zong6: zan3 can4, ceot1 hon6, tau4 wan4, gei1 ngo6 gam2",en:"Hypoglycemia symptoms: shakiness, sweating, dizziness, hunger"},
-      {zh:"15-15法則：食15克碳水化合物，等15分鐘",jp:"sap6 ng5 sap6 ng5 faat3 zak1: sik6 sap6 ng5 hak1 taan3 seoi2 faa3 hap6 mat6, dang2 sap6 ng5 fan1 zung1",en:"15-15 rule: take 15g carbohydrates, wait 15 minutes"},
-      {zh:"糖尿病酮症酸中毒（DKA）警告症狀",jp:"tong4 niu6 beng6 tung4 zing3 syun1 zung1 duk6 ging2 gou3 zing3 zong6",en:"DKA warning signs"},
       {zh:"每日量血糖",jp:"mui5 jat6 loeng4 hyut3 tong4",en:"Check blood sugar daily"},
     ]},
     { title:"Diabetes — CGM", zh:"持續血糖監測器", vocab:[
@@ -4808,8 +4855,6 @@ const LESSONS = [
     ]},
 
     { title:"Endocrinology Clinical Phrases", zh:"內分泌科臨床用語", vocab:[
-      {zh:"你嘅血糖今日係___",jp:"nei5 ge3 hyut3 tong4 gam1 jat6 hai6 ___",en:"Your blood sugar today is ___"},
-      {zh:"你嘅糖化血紅蛋白係___",jp:"nei5 ge3 tong4 faa3 hyut3 hung4 daan6 baak6 hai6 ___",en:"Your HbA1c is ___"},
       {zh:"血糖控制唔夠理想",jp:"hyut3 tong4 hung3 zai3 m4 gau3 lei5 soeng2",en:"Blood sugar control not ideal"},
       {zh:"需要調整藥物劑量",jp:"seoi1 jiu3 tiu4 zing2 joek6 mat6 zai3 loeng6",en:"Adjusting your medication"},
       {zh:"你嘅甲狀腺功能偏低",jp:"nei5 ge3 gaap3 zong6 sin3 gung1 nang4 pin1 dai1",en:"Thyroid function is low"},
@@ -4999,11 +5044,12 @@ const LESSONS = [
       {zh:"腎盂腎炎",jp:"san2 jyu4 san2 jim4",en:"Pyelonephritis"},
       {zh:"尿路感染惡化",jp:"niu6 lou6 gam2 jim5 ok3 faa3",en:"UTI progression to kidneys"},
       {zh:"你嘅腎臟有感染",jp:"nei5 ge3 san2 zong6 jau5 gam2 jim5",en:"Your kidney has an infection"},
-      {zh:"需要靜脈抗生素",jp:"seoi1 jiu3 zing6 mak6 kong3 sang1 sou3",en:"You need IV antibiotics"},
+      {zh:"需要靜脈抗生素",jp:"seoi1 jiu3 zing6 mak6 kong3 sang1 sou3",en:"You need intravenous antibiotics"},
       {zh:"需要住院監察",jp:"seoi1 jiu3 zyu6 jyun2 gaam1 caa4",en:"You need hospital monitoring"},
     ]},
 
     { title:"Renal Tests & Monitoring", zh:"腎臟檢查及監察", vocab:[
+      {zh:"鈉",jp:"naa4",en:"Sodium"},
       {zh:"肌酐",jp:"gei1 hon1",en:"Creatinine"},
       {zh:"腎小球濾過率",jp:"san2 siu2 kau4 leoi6 gwo3 leot2",en:"eGFR (estimated glomerular filtration rate)"},
       {zh:"血尿素氮",jp:"hyut3 niu6 sou3 daan3",en:"Blood urea nitrogen (BUN)"},
@@ -5161,7 +5207,7 @@ const LESSONS = [
       {zh:"你嘅關節有感染",jp:"nei5 ge3 gwaan1 zit3 jau5 gam2 jim5",en:"Your joint has an infection"},
       {zh:"需要緊急引流",jp:"seoi1 jiu3 gan2 gap1 jan5 lau4",en:"Urgent drainage is required"},
       {zh:"可能需要手術",jp:"ho2 nang4 seoi1 jiu3 sau2 seot6",en:"Surgery may be required"},
-      {zh:"需要長期靜脈抗生素",jp:"seoi1 jiu3 coeng4 kei4 zing6 mak6 kong3 sang1 sou3",en:"Long-term IV antibiotics are needed"},
+      {zh:"需要長期靜脈抗生素",jp:"seoi1 jiu3 coeng4 kei4 zing6 mak6 kong3 sang1 sou3",en:"Long-term intravenous antibiotics are needed"},
       {zh:"感染可能係從血液擴散嚟",jp:"gam2 jim5 ho2 nang4 hai6 cung4 hyut3 jik6 kwong3 saan3 lei4",en:"The infection may have spread through the bloodstream"},
     ]},
     { title:"Physical Exam Commands", zh:"體格檢查指示", vocab:[
@@ -5704,15 +5750,14 @@ const LESSONS = [
       {zh:"心跳唔規則",jp:"sam1 tiu3 m4 kwai1 zak1",en:"Irregular heartbeat"},
       {zh:"有心臟病史呀？",jp:"jau5 sam1 zong6 beng6 si2 aa3?",en:"Any history of heart disease?"},
       {zh:"有冇食阿士匹靈？",jp:"jau5 mou5 sik6 aa3 si6 bei1 leng4?",en:"Have you taken aspirin?"},
-      {zh:"心電圖",jp:"sam1 din6 tou4",en:"ECG / electrocardiogram"},
+      {zh:"心電圖",jp:"sam1 din6 tou4",en:"EKG (electrocardiogram)"},
     ]},,
     { title:"Acute MI Recognition", zh:"急性心肌梗死識別", vocab:[
       {zh:"急性心肌梗死",jp:"gap1 sing3 sam1 gei1 gang2 sei2",en:"Acute myocardial infarction (heart attack)"},
-      {zh:"STEMI",jp:"STEMI",en:"STEMI (ST-elevation MI)"},
-      {zh:"NSTEMI",jp:"NSTEMI",en:"NSTEMI (non-ST-elevation MI)"},
+
       {zh:"肌鈣蛋白",jp:"gei1 goi3 daan6 baak6",en:"Troponin"},
       {zh:"冠狀動脈",jp:"gun1 zong6 dung6 mak6",en:"Coronary artery"},
-      {zh:"即刻做心電圖",jp:"zik1 hak1 zou6 sam1 din6 tou4",en:"Do an ECG immediately"},
+      {zh:"即刻做心電圖",jp:"zik1 hak1 zou6 sam1 din6 tou4",en:"Do an EKG immediately"},
       {zh:"心導管手術",jp:"sam1 dou6 gun2 sau2 seot6",en:"Cardiac catheterization"},
       {zh:"溶栓治療",jp:"jung4 saan3 zi6 liu4",en:"Thrombolysis"},
       {zh:"立即轉介急症室",jp:"lap6 zik1 zyun2 gaai3 gap6 zing1 sat1",en:"Immediate transfer to ER"},
@@ -5724,7 +5769,7 @@ const LESSONS = [
       {zh:"突然劇烈頭痛",jp:"dat6 jin4 kek6 lit6 tau4 tung3",en:"Sudden severe headache"},
       {zh:"症狀係幾時開始？",jp:"zing3 zong6 hai6 gei2 si4 hoi1 ci2?",en:"When exactly did symptoms start?"},
       {zh:"最後見到正常係幾時？",jp:"zeoi3 hau6 gin3 dou3 zing3 soeng4 hai6 gei2 si4?",en:"Last known well time"},
-      {zh:"FAST評估",jp:"FAST ping4 gu2",en:"FAST stroke assessment"},
+
       {zh:"面部下垂",jp:"min6 bou6 haa6 seoi4",en:"Face drooping"},
       {zh:"手臂無力",jp:"sau2 bei3 mou5 lik6",en:"Arm weakness"},
       {zh:"tPA溶栓治療",jp:"tPA jung4 saan3 zi6 liu4",en:"tPA thrombolysis"},
@@ -5751,7 +5796,7 @@ const LESSONS = [
       {zh:"有冇服藥過量？",jp:"jau5 mou5 fuk6 joek6 gwo3 loeng6?",en:"Any medication overdose?"},
       {zh:"血糖係幾多？",jp:"hyut3 tong4 hai6 gei2 do1?",en:"What is the blood glucose?"},
       {zh:"有冇尿路感染？",jp:"jau5 mou5 niu6 lou6 gam2 jim5?",en:"Any urinary tract infection?"},
-      {zh:"老人家突然神志不清要搵原因",jp:"lou5 jan4 gaa1 dat6 jin4 san4 zi3 bat1 cing1 jiu3 wan2 jyun4 jan1",en:"Sudden confusion in elderly requires investigation"},
+
     ]},,
   ],
   dialogue:{
@@ -6780,6 +6825,7 @@ const LESSONS = [
       {zh:"腸胃科醫生",jp:"coeng4 wai6 fo1 yi1 saang1",en:"Gastroenterologist"},
       {zh:"皮膚科醫生",jp:"pei4 fu1 fo1 yi1 saang1",en:"Dermatologist"},
       {zh:"眼科醫生",jp:"ngaan5 fo1 yi1 saang1",en:"Ophthalmologist"},
+      {zh:"視光師",jp:"si6 gwong1 si1",en:"Optometrist"},
       {zh:"耳鼻喉科醫生",jp:"ji5 bei6 hau4 fo1 yi1 saang1",en:"ENT specialist"},
       {zh:"婦科醫生",jp:"fu5 fo1 yi1 saang1",en:"Gynecologist"},
       {zh:"產科醫生",jp:"caan2 fo1 yi1 saang1",en:"Obstetrician"},
@@ -7008,6 +7054,7 @@ const LESSONS = [
       {zh:"尿路感染",jp:"niu6 lou6 gam2 jim5",en:"Urinary tract infection"},
       {zh:"帶狀疱疹",jp:"daai3 zong6 paau1 zan2",en:"Shingles (herpes zoster)"},
       {zh:"流感",jp:"lau4 gam2",en:"Influenza"},
+      {zh:"普通感冒",jp:"pou2 tung1 gam2 mou6",en:"Common cold"},
       {zh:"長者較容易感染",jp:"zoeng2 ze2 haau3 jung4 ji6 gam2 jim5",en:"Older adults are more vulnerable to infections"},
       {zh:"接種疫苗非常重要",jp:"zip3 zung3 jik6 miu4 fei1 soeng4 zung6 jiu3",en:"Vaccination is very important for older adults"},
       {zh:"感染症狀可能唔典型",jp:"gam2 jim5 zing3 zong6 ho2 nang4 m4 din2 jing4",en:"Infection symptoms may be atypical in elderly"},
@@ -7377,7 +7424,7 @@ const LESSONS = [
       {zh:"有冇吃過退燒藥？",jp:"jau5 mou5 hek3 gwo3 teoi3 siu1 joek6?",en:"Have you taken any fever medication?"},
       {zh:"有冇其他症狀？",jp:"jau5 mou5 kei4 taa1 zing3 zong6?",en:"Any other symptoms?"},
       {zh:"最近有冇去過外地？",jp:"zeoi3 gan6 jau5 mou5 heoi3 gwo3 ngoi6 dei6?",en:"Have you travelled recently?"},
-      {zh:"有冇接觸過病人？",jp:"jau5 mou5 zip3 cuk1 gwo3 beng6 jan4?",en:"Have you been in contact with sick people?"},
+
       {zh:"有冇打疫苗？",jp:"jau5 mou5 daa2 jik6 miu4?",en:"Are you up to date with vaccinations?"},
       {zh:"免疫力低下呀？",jp:"min5 jik6 lik6 dai1 haa6 aa3?",en:"Are you immunocompromised?"},
     ]},
@@ -8527,7 +8574,7 @@ const LESSONS_MANDARIN = [
       {sp:"doctor",zh:"好，请屏住呼吸。",jp:"hǎo, qǐng bǐng zhù hū xī.",en:"Good — please hold your breath."},
       {sp:"doctor",zh:"请呼气。好，检查完了。",jp:"qǐng hū qì. hǎo, jiǎn chá wán le.",en:"Please breathe out. Good — all done."},
       {sp:"patient",zh:"结果怎么样？",jp:"jié guǒ zěn me yàng?",en:"How does it look?"},
-      {sp:"doctor",zh:"您的心跳不规律，我需要给您做一个心电图。不用担心，这是很常规的检查。",jp:"nín de xīn tiào bù guī lǜ, wǒ xū yào gěi nín zuò yī gè xīn diàn tú. bú yòng dān xīn, zhè shì hěn cháng guī de jiǎn chá.",en:"Your heart is beating irregularly — I need to do an ECG. Don't worry, it's a routine test."},
+      {sp:"doctor",zh:"您的心跳不规律，我需要给您做一个心电图。不用担心，这是很常规的检查。",jp:"nín de xīn tiào bù guī lǜ, wǒ xū yào gěi nín zuò yī gè xīn diàn tú. bú yòng dān xīn, zhè shì hěn cháng guī de jiǎn chá.",en:"Your heart is beating irregularly — I need to do an EKG. Don't worry, it's a routine test."},
     ]
   }
   },
@@ -8728,18 +8775,6 @@ const LESSONS_MANDARIN = [
   {
   id:10, zh:"神经科", en:"Neurology",
   sections:[
-    { title:"Neurological Symptoms", zh:"神经科症状", vocab:[
-      {zh:"头痛",jp:"tóu tòng",en:"Headache"},
-      {zh:"偏头痛",jp:"piān tóu tòng",en:"Migraine"},
-      {zh:"头晕",jp:"tóu yūn",en:"Dizziness / vertigo"},
-      {zh:"肢体麻木",jp:"zhī tǐ má mù",en:"Limb numbness"},
-      {zh:"肢体无力",jp:"zhī tǐ wú lì",en:"Limb weakness"},
-      {zh:"言语不清",jp:"yán yǔ bù qīng",en:"Slurred speech"},
-      {zh:"吞咽困难",jp:"tūn yàn kùn nán",en:"Swallowing difficulty"},
-      {zh:"癫痫发作",jp:"diān xián fā zuò",en:"Seizure"},
-      {zh:"意识丧失",jp:"yì shí sàng shī",en:"Loss of consciousness"},
-      {zh:"震颤",jp:"zhèn chàn",en:"Tremor"},
-    ]},
     { title:"Neurological Anatomy", zh:"神经系统解剖", vocab:[
       {zh:"大脑",jp:"dà nǎo",en:"Brain"},
       {zh:"脑干",jp:"nǎo gàn",en:"Brainstem"},
@@ -8835,13 +8870,6 @@ const LESSONS_MANDARIN = [
       {zh:"您能重复我说的句子吗？",jp:"nín néng chóng fù wǒ shuō de jù zi ma?",en:"Can you repeat the sentence I say?"},
       {zh:"满分30分，26分及以上属于正常。",jp:"mǎn fēn 30 fēn, 26 fēn jí yǐ shàng shǔ yú zhèng cháng.",en:"Out of 30 points, 26 or above is considered normal."},
     ]},
-    { title:"Investigations", zh:"神经科检查", vocab:[
-      {zh:"脑部CT扫描",jp:"nǎo bù CT sǎo miáo",en:"Brain CT scan"},
-      {zh:"脑部磁共振",jp:"nǎo bù cí gòng zhèn",en:"Brain MRI"},
-      {zh:"脑电图",jp:"nǎo diàn tú",en:"EEG (electroencephalogram)"},
-      {zh:"神经传导速度",jp:"shén jīng chuán dǎo sù dù",en:"Nerve conduction study"},
-      {zh:"腰椎穿刺",jp:"yāo zhuī chuān cì",en:"Lumbar puncture"},
-    ]},
     { title:"Neurological Medications", zh:"神经科药物", vocab:[
       {zh:"抗癫痫药",jp:"kàng diān xián yào",en:"Anti-epileptic medication"},
       {zh:"不要自行停止抗癫痫药",jp:"bù yào zì xíng tíng zhǐ kàng diān xián yào",en:"Do not stop anti-epileptic medication on your own"},
@@ -8852,45 +8880,7 @@ const LESSONS_MANDARIN = [
       {zh:"胆碱酯酶抑制剂",jp:"dǎn jiǎn zhǐ méi yì zhì jì",en:"Cholinesterase inhibitor (dementia medication)"},
       {zh:"帕金森病药物",jp:"pà jīn sēn bìng yào wù",en:"Parkinson's disease medication"},
       {zh:"这些药需要定时服用，不可以漏服",jp:"zhè xiē yào xū yào dìng shí fú yòng, bù kě yǐ lòu fú",en:"These medications must be taken on time — do not miss doses"},
-    ]},
-
-    { title:"Neurology Clinical Phrases", zh:"神经科临床用语", vocab:[
-      {zh:"我要做神经系统检查",jp:"wǒ yào zuò shén jīng xì tǒng jiǎn chá",en:"Neurological exam"},
-      {zh:"请伸出双手",jp:"qǐng shēn chū shuāng shǒu",en:"Stretch out both hands"},
-      {zh:"请跟着我的手指移动视线",jp:"qǐng gēn zhe wǒ de shǒu zhǐ yí dòng shì xiàn",en:"Follow my finger"},
-      {zh:"有头晕或意识不清吗？",jp:"yǒu tóu yūn huò yì shí bù qīng ma?",en:"Dizziness or confusion?"},
-      {zh:"您有过抽搐发作吗？",jp:"nín yǒu guò chōu chù fā zuò ma?",en:"Ever had a seizure?"},
-      {zh:"需要紧急脑部扫描",jp:"xū yào jǐn jí nǎo bù sǎo miáo",en:"Urgent brain scan"},
-      {zh:"需要转介神经科",jp:"xū yào zhuǎn jiè shén jīng kē",en:"Referring to neurology"},
-    ]},,
-  ],
-
-  dialogue:{
-    title:"Dialogue: Neurology — Stroke Assessment",
-    lines:[
-      {sp:"doctor",zh:"您好，欢迎来到仁德诊所。您的家人说您突然语言困难，右侧肢体无力——是这样吗？",jp:"nín hǎo, nín de jiā rén shuō nín tū rán yǔ yán kùn nán, yòu cè zhī tǐ wú lì — shì zhè yàng ma?",en:"Hello, your family said you suddenly had difficulty speaking and weakness in your right side — is that right?"},
-      {sp:"patient",zh:"是的，大约半小时前开始的。",jp:"shì de, dà yuē bàn xiǎo shí qián kāi shǐ de.",en:"Yes, it started about half an hour ago."},
-      {sp:"doctor",zh:"有没有面部歪斜？请举起双臂。右臂明显比左臂无力。",jp:"yǒu méi yǒu miàn bù wāi xié? qǐng jǔ qǐ shuāng bì. yòu bì míng xiǎn bǐ zuǒ bì wú lì.",en:"Any facial drooping? Please raise both arms. The right arm is clearly weaker than the left."},
-      {sp:"doctor",zh:"这是中风的迹象——我们需要立刻做电脑断层扫描。时间非常关键。",jp:"zhè shì zhòng fēng de jì xiàng — wǒ men xū yào lì kè zuò diàn nǎo duàn céng sǎo miáo. shí jiān fēi cháng guān jiàn.",en:"These are signs of a stroke — we need a CT scan immediately. Time is critical."},
-      {sp:"patient",zh:"很严重吗？",jp:"hěn yán zhòng ma?",en:"Is it very dangerous?"},
-      {sp:"doctor",zh:"是的，但治疗越快效果越好。如果是血栓，我们可能会考虑溶栓治疗。",jp:"shì de, dàn zhì liáo yuè kuài xiào guǒ yuè hǎo. rú guǒ shì xuè shuān, wǒ men kě néng huì kǎo lǜ róng shuān zhì liáo.",en:"Yes, but the faster we treat it the better. If it's a clot, we may consider thrombolysis."},
-    ]
-  }
-  },
-  {
-  id:8, zh:"心脏科", en:"Cardiology",
-  sections:[
-    { title:"Heart Anatomy", zh:"心脏解剖", vocab:[
-      {zh:"心脏",jp:"xīn zàng",en:"Heart"},
-      {zh:"心室",jp:"xīn shì",en:"Ventricle"},
-      {zh:"心房",jp:"xīn fáng",en:"Atrium"},
-      {zh:"二尖瓣",jp:"èr jiān bàn",en:"Mitral valve"},
-      {zh:"主动脉瓣",jp:"zhǔ dòng mài bàn",en:"Aortic valve"},
-      {zh:"冠状动脉",jp:"guān zhuàng dòng mài",en:"Coronary artery"},
-      {zh:"主动脉",jp:"zhǔ dòng mài",en:"Aorta"},
-      {zh:"心房",jp:"xīn fáng",en:"Atrium"},
-      {zh:"心室",jp:"xīn shì",en:"Ventricle"},]},
-    {  title:"Cardiac Conditions & Infections", zh:"心脏疾病及感染", vocab:[
+    ]},    {  title:"Cardiac Conditions & Infections", zh:"心脏疾病及感染", vocab:[
       {zh:"冠心病",jp:"guān xīn bìng",en:"Coronary artery disease"},
       {zh:"心肌梗死",jp:"xīn jī gěng sǐ",en:"Heart attack / myocardial infarction"},
       {zh:"心力衰竭",jp:"xīn lì shuāi jié",en:"Heart failure"},
@@ -8921,8 +8911,31 @@ const LESSONS_MANDARIN = [
       {zh:"吸烟史",jp:"xī yān shǐ",en:"Smoking history"},
       {zh:"家族性心脏病史",jp:"jiā zú xìng xīn zàng bìng shǐ",en:"Family history of heart disease"},
     ]},
+
+    { title:"Investigations", zh:"神经科检查", vocab:[
+      {zh:"全血细胞计数",jp:"quán xuè xì bāo jì shù",en:"Complete blood count (CBC)"},
+      {zh:"基础代谢组合",jp:"jī chǔ dài xiè zǔ hé",en:"Basic metabolic panel"},
+      {zh:"血糖",jp:"xuè táng",en:"Blood glucose"},
+      {zh:"甲状腺功能",jp:"jiǎ zhuàng xiàn gōng néng",en:"Thyroid function tests"},
+      {zh:"维他命B12",jp:"wéi tā mìng B shí èr",en:"Vitamin B12"},
+      {zh:"脑部CT扫描",jp:"nǎo bù CT sǎo miáo",en:"Brain CT scan"},
+      {zh:"脑部磁共振",jp:"nǎo bù cí gòng zhèn",en:"Brain MRI"},
+      {zh:"脑电图",jp:"nǎo diàn tú",en:"EEG (electroencephalogram)"},
+      {zh:"神经传导速度",jp:"shén jīng chuán dǎo sù dù",en:"Nerve conduction study"},
+      {zh:"腰椎穿刺",jp:"yāo zhuī chuān cì",en:"Lumbar puncture"},
+    ]},
+    { title:"Neurology Clinical Phrases", zh:"神经科临床用语", vocab:[
+      {zh:"我要做神经系统检查",jp:"wǒ yào zuò shén jīng xì tǒng jiǎn chá",en:"Neurological examination"},
+      {zh:"请伸出你的双手",jp:"qǐng shēn chū nǐ de shuāng shǒu",en:"Stretch out both hands"},
+      {zh:"请跟着我的手指移动视线",jp:"qǐng gēn zhe wǒ de shǒu zhǐ yí dòng shì xiàn",en:"Follow my finger with your eyes"},
+      {zh:"你有没有头晕或意识不清？",jp:"nǐ yǒu méi yǒu tóu yūn huò yì shí bù qīng?",en:"Any dizziness or loss of consciousness?"},
+      {zh:"你是否曾经有过抽搐？",jp:"nǐ shì fǒu céng jīng yǒu guò chōu chù?",en:"Ever had a seizure?"},
+      {zh:"需要紧急脑部扫描",jp:"xū yào jǐn jí nǎo bù sǎo miáo",en:"Urgent brain scan needed"},
+      {zh:"需要转介神经科",jp:"xū yào zhuǎn jiè shén jīng kē",en:"Referring to neurology"},
+    ]},
+
     { title:"Tests & Treatment", zh:"检查及治疗", vocab:[
-      {zh:"心电图",jp:"xīn diàn tú",en:"ECG / electrocardiogram"},
+      {zh:"心电图",jp:"xīn diàn tú",en:"EKG (electrocardiogram)"},
       {zh:"超声心动图",jp:"chāo shēng xīn dòng tú",en:"Echocardiogram"},
       {zh:"心脏压力测试",jp:"xīn zàng yā lì cè shì",en:"Cardiac stress test"},
       {zh:"冠状动脉造影",jp:"guān zhuàng dòng mài zào yǐng",en:"Coronary angiography"},
@@ -8940,6 +8953,7 @@ const LESSONS_MANDARIN = [
       {zh:"冠状动脉造影",jp:"guān zhuàng dòng mài zào yǐng",en:"Coronary angiography"},
       {zh:"冠状动脉钙化扫描",jp:"guān zhuàng dòng mài gài huà sǎo miáo",en:"Coronary artery calcium (CAC) scan"},]},
     { title:"CHF Symptoms & Assessment", zh:"心衰症状及评估", vocab:[
+      {zh:"心脏衰竭",jp:"xīn zàng shuāi jié",en:"Congestive heart failure (CHF)"},
       {zh:"血压",jp:"xuè yā",en:"Blood pressure"},
       {zh:"心率/脉搏",jp:"xīn lǜ / mài bó",en:"Heart rate / pulse"},
       {zh:"心悸",jp:"xīn jì",en:"Palpitations"},
@@ -8981,8 +8995,8 @@ const LESSONS_MANDARIN = [
       {zh:"他汀类药物",jp:"tā tīng lèi yào wù",en:"Statin / cholesterol-lowering medication"},
       {zh:"β受体阻滞剂",jp:"beta shòu tǐ zǔ zhì jì",en:"Beta-blocker"},
       {zh:"心力衰竭药物",jp:"xīn lì shuāi jié yào wù",en:"Heart failure medication"},
-      {zh:"硝酸甘油",jp:"xiāo suān gān yóu",en:"Nitroglycerin (GTN spray)"},
-      {zh:"如有胸痛立即使用硝酸甘油",jp:"rú yǒu xiōng tòng lì jí shǐ yòng xiāo suān gān yóu",en:"Use nitroglycerin spray immediately if you have chest pain"},
+      {zh:"硝酸甘油",jp:"xiāo suān gān yóu",en:"Nitroglycerin (sublingual tablet)"},
+      {zh:"如有胸痛立即使用硝酸甘油",jp:"rú yǒu xiōng tòng lì jí shǐ yòng xiāo suān gān yóu",en:"Place nitroglycerin tablet under your tongue immediately if you have chest pain"},
       {zh:"手术前需要停抗凝药",jp:"shǒu shù qián xū yào tíng kàng níng yào",en:"You need to stop blood thinners before surgery"},
       {zh:"不要忘记服药",jp:"bù yào wàng jì fú yào",en:"Do not forget to take your medication"},
     ]},
@@ -8992,7 +9006,7 @@ const LESSONS_MANDARIN = [
       {zh:"您有胸痛吗？",jp:"nín yǒu xiōng tòng ma?",en:"Chest pain?"},
       {zh:"疼痛会扩散到手臂或下巴吗？",jp:"téng tòng huì kuò sàn dào shǒu bì huò xià bā ma?",en:"Pain spread to arm or jaw?"},
       {zh:"您的心跳不规律",jp:"nín de xīn tiào bù guī lǜ",en:"Heart beating irregularly"},
-      {zh:"需要做心电图",jp:"xū yào zuò xīn diàn tú",en:"ECG needed"},
+      {zh:"需要做心电图",jp:"xū yào zuò xīn diàn tú",en:"EKG needed"},
       {zh:"有呼吸困难或腿肿吗？",jp:"yǒu hū xī kùn nán huò tuǐ zhǒng ma?",en:"Breathlessness or leg swelling?"},
       {zh:"需要转介心脏科",jp:"xū yào zhuǎn jiè xīn zàng kē",en:"Referring to cardiology"},
       {zh:"胸痛是否在运动时发生？",jp:"xiōng tòng shì fǒu zài yùn dòng shí fā shēng?",en:"Does chest pain occur with exertion?"},]},,
@@ -9081,7 +9095,7 @@ const LESSONS_MANDARIN = [
       {zh:"缓慢深吸一口",jp:"huǎn màn shēn xī yī kǒu",en:"Breathe in slowly and deeply"},
       {zh:"屏住呼吸十秒",jp:"bǐng zhù hū xī shí miǎo",en:"Hold your breath for 10 seconds"},
       {zh:"口服类固醇疗程",jp:"kǒu fú lèi gù chún liáo chéng",en:"Oral steroid course (steroid burst)"},
-      {zh:"每日最多使用___次急救喷剂",jp:"měi rì zuì duō shǐ yòng ___ cì jí jiù pēn jì",en:"Use rescue inhaler no more than ___ times per day"},
+      {zh:"如果您每周使用沙丁胺醇超过两次，请告诉我",jp:"rú guǒ nín měi zhōu shǐ yòng shā dīng àn chún chāo guò liǎng cì, qǐng gào sù wǒ",en:"Let me know if you're using Albuterol more than two times a week"},
       {zh:"如果急救喷剂不够用，需立即就医",jp:"rú guǒ jí jiù pēn jì bù gòu yòng, xū lì jí jiù yī",en:"If your rescue inhaler is not enough, seek medical attention immediately"},
     ]},
 
@@ -9165,7 +9179,7 @@ const LESSONS_MANDARIN = [
       {zh:"疟疾",jp:"nüè jí",en:"Malaria"},
       {zh:"败血症",jp:"bài xuè zhèng",en:"Septicemia"},
       {zh:"您的血液培养显示有细菌",jp:"nín de xuè yè péi yǎng xiǎn shì yǒu xì jūn",en:"Your blood culture shows bacteria"},
-      {zh:"需要静脉抗生素",jp:"xū yào jìng mài kàng shēng sù",en:"You need IV antibiotics"},
+      {zh:"需要静脉抗生素",jp:"xū yào jìng mài kàng shēng sù",en:"You need intravenous antibiotics"},
       {zh:"您最近去过热带地区吗？",jp:"nín zuì jìn qù guò rè dài dì qū ma?",en:"Have you recently traveled to a tropical region?"},
       {zh:"需要隔离措施",jp:"xū yào gé lí cuò shī",en:"Isolation precautions are required"},
     ]},
@@ -9371,7 +9385,7 @@ const LESSONS_MANDARIN = [
       {zh:"IgM抗体",jp:"IgM kàng tǐ",en:"IgM antibody (early response)"},
       {zh:"IgE抗体",jp:"IgE kàng tǐ",en:"IgE antibody (allergy / parasites)"},
       {zh:"IgA抗体",jp:"IgA kàng tǐ",en:"IgA antibody (mucosal immunity)"},
-      {zh:"中和抗体",jp:"zhōng hé kàng tǐ",en:"Neutralising antibody"},
+      
       {zh:"抗体检测",jp:"kàng tǐ jiǎn cè",en:"Antibody test (serology)"},
       {zh:"血清学检查",jp:"xuè qīng xué jiǎn chá",en:"Serological test"},
       {zh:"抗体阳性",jp:"kàng tǐ yáng xìng",en:"Antibody positive (seropositive)"},
@@ -9435,10 +9449,15 @@ const LESSONS_MANDARIN = [
       {zh:"小肠",jp:"xiǎo cháng",en:"Small intestine"},
       {zh:"大肠",jp:"dà cháng",en:"Large intestine / colon"},
       {zh:"直肠",jp:"zhí cháng",en:"Rectum"},
+      {zh:"升结肠",jp:"shēng jié cháng",en:"Ascending colon"},
+      {zh:"横结肠",jp:"héng jié cháng",en:"Transverse colon"},
+      {zh:"降结肠",jp:"jiàng jié cháng",en:"Descending colon"},
+      {zh:"乙状结肠",jp:"yǐ zhuàng jié cháng",en:"Sigmoid colon"},
       {zh:"肝脏",jp:"gān zàng",en:"Liver"},
       {zh:"胆囊",jp:"dǎn náng",en:"Gallbladder"},
       {zh:"胰腺",jp:"yí xiàn",en:"Pancreas"},
       {zh:"阑尾",jp:"lán wěi",en:"Appendix"},
+      {zh:"盲肠",jp:"máng cháng",en:"Appendix (colloquial: 盲肠)"},
     ]},
     { title:"GI Symptoms", zh:"消化系统症状", vocab:[
       {zh:"腹痛",jp:"fù tòng",en:"Abdominal pain"},
@@ -9458,10 +9477,6 @@ const LESSONS_MANDARIN = [
       {zh:"幽门螺旋杆菌",jp:"yōu mén luó xuán gǎn jūn",en:"H. pylori"},
       {zh:"肝功能检查",jp:"gān gōng néng jiǎn chá",en:"Liver function test"},
       {zh:"您多久排便一次？",jp:"nín duō jiǔ pái biàn yī cì?",en:"How often do you have a bowel movement?"},
-      {zh:"升结肠",jp:"shēng jié cháng",en:"Ascending colon"},
-      {zh:"横结肠",jp:"héng jié cháng",en:"Transverse colon"},
-      {zh:"降结肠",jp:"jiàng jié cháng",en:"Descending colon"},
-      {zh:"乙状结肠",jp:"yǐ zhuàng jié cháng",en:"Sigmoid colon"},
       {zh:"乙状结肠镜",jp:"yǐ zhuàng jié cháng jìng",en:"Sigmoidoscopy"},
       {zh:"大便免疫化学测试",jp:"dà biàn miǎn yì huà xué cè shì",en:"Fecal immunochemical test (FIT)"},
       {zh:"您有没有体重下降？",jp:"nín yǒu méi yǒu tǐ zhòng xià jiàng?",en:"Have you lost weight?"},]},
@@ -9469,8 +9484,11 @@ const LESSONS_MANDARIN = [
       {zh:"胃食管反流病",jp:"wèi shí guǎn fǎn liú bìng",en:"GERD / acid reflux disease"},
       {zh:"胃溃疡",jp:"wèi kuì yáng",en:"Gastric ulcer"},
       {zh:"炎症性肠病",jp:"yán zhèng xìng cháng bìng",en:"Inflammatory bowel disease"},
-      {zh:"克罗恩病",jp:"kè luó ēn bìng",en:"Crohn's disease"},
       {zh:"肠易激综合征",jp:"cháng yì jī zōng hé zhēng",en:"Irritable bowel syndrome (IBS)"},
+      {zh:"乳糜泻",jp:"rǔ mí xiè",en:"Celiac disease"},
+      {zh:"麸质不耐受",jp:"fū zhì bù nài shòu",en:"Gluten intolerance"},
+      {zh:"炎症性肠病",jp:"yán zhèng xìng cháng bìng",en:"Inflammatory bowel disease (IBD)"},
+      {zh:"溃疡性结肠炎",jp:"kuì yáng xìng jié cháng yán",en:"Ulcerative colitis (UC)"},
       {zh:"肝炎",jp:"gān yán",en:"Hepatitis"},
       {zh:"肝硬化",jp:"gān yìng huà",en:"Liver cirrhosis"},
       {zh:"胰腺炎",jp:"yí xiàn yán",en:"Pancreatitis"},
@@ -9492,10 +9510,7 @@ const LESSONS_MANDARIN = [
       {zh:"嵌顿性疝",jp:"qiàn dùn xìng shàn",en:"Incarcerated / strangulated hernia"},
       {zh:"您是否发现有突出的肿块？",jp:"nín shì fǒu fā xiàn yǒu tū chū de zhǒng kuài?",en:"Have you noticed a bulge?"},
       {zh:"躺下的时候能否缩回去？",jp:"tǎng xià de shí hòu néng fǒu suō huí qù?",en:"Does it go back in when you lie down?"},
-      {zh:"需要手术修补",jp:"xū yào shǒu shù xiū bǔ",en:"Requires surgical repair"},
-      {zh:"炎症性肠病",jp:"yán zhèng xìng cháng bìng",en:"Inflammatory bowel disease (IBD)"},
-      {zh:"克罗恩病",jp:"kè luó ēn bìng",en:"Crohn's disease"},
-      {zh:"溃疡性结肠炎",jp:"kuì yáng xìng jié cháng yán",en:"Ulcerative colitis (UC)"},]},
+      {zh:"需要手术修补",jp:"xū yào shǒu shù xiū bǔ",en:"Requires surgical repair"},,]},
     { title:"Liver & Hepatitis", zh:"肝脏及肝炎", vocab:[
       {zh:"乙型肝炎",jp:"yǐ xíng gān yán",en:"Hepatitis B"},
       {zh:"丙型肝炎",jp:"bǐng xíng gān yán",en:"Hepatitis C"},
@@ -9506,6 +9521,20 @@ const LESSONS_MANDARIN = [
       {zh:"肝癌",jp:"gān ái",en:"Liver cancer"},
       {zh:"肝移植",jp:"gān yí zhí",en:"Liver transplant"},
       {zh:"戒酒",jp:"jiè jiǔ",en:"Stop drinking alcohol"},
+    ]},
+    { title:"GI Investigations", zh:"消化科检查", vocab:[
+      {zh:"粪便隐血测试",jp:"fèn biàn yǐn xuè cè shì",en:"Fecal occult blood test (FOBT)"},
+      {zh:"粪便免疫化学测试",jp:"fèn biàn miǎn yì huà xué cè shì",en:"Fecal immunochemical test (FIT)"},
+      {zh:"幽门螺旋杆菌粪便测试",jp:"yōu mén luó xuán gǎn jūn fèn biàn cè shì",en:"H. pylori stool antigen test"},
+      {zh:"幽门螺旋杆菌呼气测试",jp:"yōu mén luó xuán gǎn jūn hū qì cè shì",en:"H. pylori urea breath test"},
+      {zh:"上消化道内镜",jp:"shàng xiāo huà dào nèi jìng",en:"Upper endoscopy (EGD)"},
+      {zh:"结肠镜",jp:"jié cháng jìng",en:"Colonoscopy"},
+      {zh:"乙状结肠镜",jp:"yǐ zhuàng jié cháng jìng",en:"Sigmoidoscopy"},
+      {zh:"腹部超声",jp:"fù bù chāo shēng",en:"Abdominal ultrasound"},
+      {zh:"腹部CT扫描",jp:"fù bù CT sǎo miáo",en:"Abdominal CT scan"},
+      {zh:"放射性核素扫描",jp:"fàng shè xìng hé sù sǎo miáo",en:"Radionuclide (tagged RBC) scan"},
+      {zh:"肝功能检查",jp:"gān gōng néng jiǎn chá",en:"Liver function tests (LFTs)"},
+      {zh:"脂肪酶",jp:"zhī fáng méi",en:"Lipase / amylase"},
     ]},
     { title:"GI Medications", zh:"肠胃科药物", vocab:[
       {zh:"抗酸剂",jp:"kàng suān jì",en:"Antacid"},
@@ -9551,6 +9580,12 @@ const LESSONS_MANDARIN = [
       {zh:"甲状旁腺",jp:"jiǎ zhuàng páng xiàn",en:"Parathyroid gland"},
       {zh:"肾上腺",jp:"shèn shàng xiàn",en:"Adrenal gland"},
       {zh:"脑垂体",jp:"nǎo chuí tǐ",en:"Pituitary gland"},
+      {zh:"垂体前叶",jp:"chuí tǐ qián yè",en:"Anterior pituitary"},
+      {zh:"睾丸",jp:"gāo wán",en:"Testes"},
+      {zh:"睾酮",jp:"gāo tóng",en:"Testosterone"},
+      {zh:"卵巢",jp:"luǎn cháo",en:"Ovaries"},
+      {zh:"雌激素",jp:"cí jī sù",en:"Estrogen"},
+      {zh:"孕酮",jp:"yùn tóng",en:"Progesterone"},
       {zh:"胰岛素",jp:"yí dǎo sù",en:"Insulin"},
       {zh:"胰高血糖素",jp:"yí gāo xuè táng sù",en:"Glucagon"},
       {zh:"甲状腺素",jp:"jiǎ zhuàng xiàn sù",en:"Thyroid hormone"},
@@ -9934,10 +9969,11 @@ const LESSONS_MANDARIN = [
       {zh:"肾盂肾炎",jp:"shèn yú shèn yán",en:"Pyelonephritis"},
       {zh:"尿路感染恶化",jp:"niào lù gǎn rǎn è huà",en:"UTI progression to kidneys"},
       {zh:"您的肾脏有感染",jp:"nín de shèn zàng yǒu gǎn rǎn",en:"Your kidney has an infection"},
-      {zh:"需要静脉抗生素",jp:"xū yào jìng mài kàng shēng sù",en:"You need IV antibiotics"},
+      {zh:"需要静脉抗生素",jp:"xū yào jìng mài kàng shēng sù",en:"You need intravenous antibiotics"},
       {zh:"需要住院监察",jp:"xū yào zhù yuàn jiān chá",en:"You need hospital monitoring"},
     ]},,
     { title:"Renal Tests & Monitoring", zh:"肾脏检查及监察", vocab:[
+      {zh:"钠",jp:"nà",en:"Sodium"},
       {zh:"肌酐",jp:"jī gān",en:"Creatinine"},
       {zh:"肾小球滤过率",jp:"shèn xiǎo qiú lǜ guò lǜ",en:"eGFR"},
       {zh:"血尿素氮",jp:"xuè niào sù dàn",en:"BUN"},
@@ -10065,7 +10101,7 @@ const LESSONS_MANDARIN = [
       {zh:"您的关节有感染",jp:"nín de guān jié yǒu gǎn rǎn",en:"Your joint has an infection"},
       {zh:"需要紧急引流",jp:"xū yào jǐn jí yǐn liú",en:"Urgent drainage is required"},
       {zh:"可能需要手术",jp:"kě néng xū yào shǒu shù",en:"Surgery may be required"},
-      {zh:"需要长期静脉抗生素",jp:"xū yào cháng qī jìng mài kàng shēng sù",en:"Long-term IV antibiotics are needed"},
+      {zh:"需要长期静脉抗生素",jp:"xū yào cháng qī jìng mài kàng shēng sù",en:"Long-term intravenous antibiotics are needed"},
       {zh:"感染可能是从血液扩散的",jp:"gǎn rǎn kě néng shì cóng xuè yè kuò sàn de",en:"The infection may have spread through the bloodstream"},
     ]},
     { title:"Physical Exam Commands", zh:"体格检查指令", vocab:[
@@ -10615,15 +10651,14 @@ const LESSONS_MANDARIN = [
       {zh:"心跳不规律",jp:"xīn tiào bù guī lǜ",en:"Irregular heartbeat"},
       {zh:"有心脏病史吗？",jp:"yǒu xīn zàng bìng shǐ ma?",en:"Any history of heart disease?"},
       {zh:"您服用过阿司匹林吗？",jp:"nín fú yòng guò ā sī pǐ lín ma?",en:"Have you taken aspirin?"},
-      {zh:"心电图",jp:"xīn diàn tú",en:"ECG / electrocardiogram"},
+      {zh:"心电图",jp:"xīn diàn tú",en:"EKG (electrocardiogram)"},
     ]},,
     { title:"Acute MI Recognition", zh:"急性心肌梗死识别", vocab:[
       {zh:"急性心肌梗死",jp:"jí xìng xīn jī gěng sǐ",en:"Acute myocardial infarction (heart attack)"},
-      {zh:"STEMI",jp:"STEMI",en:"STEMI (ST-elevation MI)"},
-      {zh:"NSTEMI",jp:"NSTEMI",en:"NSTEMI (non-ST-elevation MI)"},
+
       {zh:"肌钙蛋白",jp:"jī gài dàn bái",en:"Troponin"},
       {zh:"冠状动脉",jp:"guān zhuàng dòng mài",en:"Coronary artery"},
-      {zh:"立即做心电图",jp:"lì jí zuò xīn diàn tú",en:"Do an ECG immediately"},
+      {zh:"立即做心电图",jp:"lì jí zuò xīn diàn tú",en:"Do an EKG immediately"},
       {zh:"心导管手术",jp:"xīn dǎo guǎn shǒu shù",en:"Cardiac catheterization"},
       {zh:"溶栓治疗",jp:"róng shuān zhì liáo",en:"Thrombolysis"},
       {zh:"立即转介急诊室",jp:"lì jí zhuǎn jiè jí zhěn shì",en:"Immediate transfer to ER"},
@@ -10635,7 +10670,7 @@ const LESSONS_MANDARIN = [
       {zh:"突然剧烈头痛",jp:"tū rán jù liè tóu tòng",en:"Sudden severe headache"},
       {zh:"症状什么时候开始？",jp:"zhèng zhuàng shén me shí hòu kāi shǐ?",en:"When exactly did symptoms start?"},
       {zh:"最后正常是什么时候？",jp:"zuì hòu zhèng cháng shì shén me shí hòu?",en:"Last known well time"},
-      {zh:"FAST评估",jp:"FAST píng gū",en:"FAST stroke assessment"},
+
       {zh:"面部下垂",jp:"miàn bù xià chuí",en:"Face drooping"},
       {zh:"手臂无力",jp:"shǒu bì wú lì",en:"Arm weakness"},
       {zh:"tPA溶栓治疗",jp:"tPA róng shuān zhì liáo",en:"tPA thrombolysis"},
@@ -10662,7 +10697,7 @@ const LESSONS_MANDARIN = [
       {zh:"有药物过量吗？",jp:"yǒu yào wù guò liàng ma?",en:"Any medication overdose?"},
       {zh:"血糖是多少？",jp:"xuè táng shì duō shǎo?",en:"What is the blood glucose?"},
       {zh:"有尿路感染吗？",jp:"yǒu niào lù gǎn rǎn ma?",en:"Any urinary tract infection?"},
-      {zh:"老年人突然意识混乱需要查找原因",jp:"lǎo nián rén tū rán yì shí hùn luàn xū yào chá zhǎo yuán yīn",en:"Sudden confusion in elderly requires investigation"},
+
     ]},,
   ],
   dialogue:{
@@ -11707,6 +11742,7 @@ const LESSONS_MANDARIN = [
       {zh:"肠胃科医生",jp:"cháng wèi kē yī shēng",en:"Gastroenterologist"},
       {zh:"皮肤科医生",jp:"pí fū kē yī shēng",en:"Dermatologist"},
       {zh:"眼科医生",jp:"yǎn kē yī shēng",en:"Ophthalmologist"},
+      {zh:"验光师",jp:"yàn guāng shī",en:"Optometrist"},
       {zh:"耳鼻喉科医生",jp:"ěr bí hóu kē yī shēng",en:"ENT specialist"},
       {zh:"妇科医生",jp:"fù kē yī shēng",en:"Gynecologist"},
       {zh:"产科医生",jp:"chǎn kē yī shēng",en:"Obstetrician"},
@@ -11934,6 +11970,7 @@ const LESSONS_MANDARIN = [
       {zh:"尿路感染",jp:"niào lù gǎn rǎn",en:"Urinary tract infection"},
       {zh:"带状疱疹",jp:"dài zhuàng pào zhěn",en:"Shingles"},
       {zh:"流感",jp:"liú gǎn",en:"Influenza"},
+      {zh:"普通感冒",jp:"pǔ tōng gǎn mào",en:"Common cold"},
       {zh:"老年人更容易感染",jp:"lǎo nián rén gèng róng yì gǎn rǎn",en:"Older adults are more vulnerable to infections"},
       {zh:"接种疫苗非常重要",jp:"jiē zhòng yì miáo fēi cháng zhòng yào",en:"Vaccination is very important for older adults"},
       {zh:"感染症状可能不典型",jp:"gǎn rǎn zhèng zhuàng kě néng bù diǎn xíng",en:"Infection symptoms may be atypical in elderly"},
@@ -13217,7 +13254,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v34'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v46'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -14126,9 +14163,11 @@ function renderFavorites() {
     </div>
     <div class="vocab-play-bar" style="margin-bottom:28px">
       <span class="play-bar-label">PLAY ALL OPTIONS:</span>
-      <button class="play-all-btn" id="fav-play-all-btn" onclick="startFavPlay(null)">▶ 中文</button>
-      <button class="play-all-btn drill-btn" id="fav-drill-zh-en-btn" onclick="startFavDrill('zh-en')">▶ 中 → EN Drill</button>
-      <button class="play-all-btn drill-btn" id="fav-drill-en-zh-btn" onclick="startFavDrill('en-zh')">▶ EN → 中 Drill</button>
+      <div class="vocab-play-bar-btns">
+        <button class="play-all-btn" id="fav-play-all-btn" onclick="startFavPlay(null)">▶ 中文</button>
+        <button class="play-all-btn drill-btn" id="fav-drill-zh-en-btn" onclick="startFavDrill('zh-en')">▶ 中→EN Drill</button>
+        <button class="play-all-btn drill-btn" id="fav-drill-en-zh-btn" onclick="startFavDrill('en-zh')">▶ EN→中 Drill</button>
+      </div>
       <button class="stop-btn" id="fav-stop-btn" onclick="stopVocabPlayAll()" style="border-color:rgba(245,240,232,0.2);color:rgba(245,240,232,0.45);">■ Stop</button>
       
       <div class="vocab-play-progress" id="vocab-play-progress">${totalFavs} saved word${totalFavs!==1?'s':''}</div>
@@ -14203,10 +14242,12 @@ function renderVocab() {
     
     <div class="vocab-play-bar">
       <span class="play-bar-label">PLAY ALL OPTIONS:</span>
-      <button class="play-all-btn" id="vocab-play-all-btn" onclick="startVocabPlayAll()">▶ 中文</button>
-      <button class="play-all-btn drill-btn" id="vocab-drill-zh-en-btn" onclick="startDrillZhEn()">▶ 中 → EN Drill</button>
-      <button class="play-all-btn drill-btn" id="vocab-drill-en-zh-btn" onclick="startDrillEnZh()">▶ EN → 中 Drill</button>
-      <button class="stop-btn" id="vocab-stop-btn" onclick="stopVocabPlayAll()" style="border-color:rgba(245,240,232,0.2);color:rgba(245,240,232,0.45);">■ Stop</button>
+      <div class="vocab-play-bar-btns">
+        <button class="play-all-btn" id="vocab-play-all-btn" onclick="startVocabPlayAll()">▶ 中文</button>
+        <button class="play-all-btn drill-btn" id="vocab-drill-zh-en-btn" onclick="startDrillZhEn()">▶ 中→EN Drill</button>
+        <button class="play-all-btn drill-btn" id="vocab-drill-en-zh-btn" onclick="startDrillEnZh()">▶ EN→中 Drill</button>
+        <button class="stop-btn" id="vocab-stop-btn" onclick="stopVocabPlayAll()" style="border-color:rgba(245,240,232,0.2);color:rgba(245,240,232,0.45);">■ Stop</button>
+      </div>
       <div class="vocab-play-progress" id="vocab-play-progress">${totalWords} words across ${L.sections.length} section${L.sections.length>1?'s':''}</div>
     </div>`;
   L.sections.forEach((sec, si) => {
@@ -14214,14 +14255,18 @@ function renderVocab() {
     html += `
       <div class="section-block" style="position:relative">
         <div class="section-header ${isOpen?'open':''}" onclick="toggleSection(${si})">
-          <div>
+          <div class="section-title-row">
             <span class="section-title-en">${sec.title}</span>
-            <span class="section-title-zh">${sec.zh ? "　" + sec.zh : ""}</span>
+            <span class="section-chevron">▼</span>
           </div>
-          <div style="display:flex;align-items:center;gap:6px" onclick="event.stopPropagation()">
-            <button class="section-play-btn" id="secbtn-${si}" onclick="startVocabPlaySection(${si})">▶ 中文</button><button class="section-play-btn" onclick="startSectionDrill(${si},'zh-en')">中→EN</button><button class="section-play-btn" onclick="startSectionDrill(${si},'en-zh')">EN→中</button>
-            <button class="section-thumb-btn" data-sec="${sec.title}" onclick="rateSectionEl(this,'up')" title="Section useful">👍</button><button class="section-thumb-btn" data-sec="${sec.title}" onclick="rateSectionEl(this,'down')" title="Section not useful">👎</button>
-            <span class="section-chevron" onclick="toggleSection(${si})" style="cursor:pointer;padding:4px;position:absolute;top:8px;right:8px">▼</span>
+          ${sec.zh ? `<span class="section-title-zh">${sec.zh}</span>` : ''}
+          <div class="section-controls-row" onclick="event.stopPropagation()">
+            <button class="section-play-btn" id="secbtn-${si}" onclick="startVocabPlaySection(${si})">▶ 中文</button>
+            <button class="section-play-btn" onclick="startSectionDrill(${si},'zh-en')">中→EN Drill</button>
+            <button class="section-play-btn" onclick="startSectionDrill(${si},'en-zh')">EN→中 Drill</button>
+            <div class="section-controls-spacer"></div>
+            <button class="section-thumb-btn" data-sec="${sec.title}" onclick="rateSectionEl(this,'up')" title="Section useful">👍</button>
+            <button class="section-thumb-btn" data-sec="${sec.title}" onclick="rateSectionEl(this,'down')" title="Section not useful">👎</button>
           </div>
         </div>
         <div class="section-body ${isOpen?'open':''}">
@@ -14665,12 +14710,12 @@ function updateVocabPlayUI(isPlaying, activeSi) {
   }
   if (drillEnZhBtn) {
     const active = isPlaying && activeSi === null && drillMode === 'en-zh';
-    drillEnZhBtn.textContent = active ? '⏸️ Drilling...' : '▶ EN → 中 Drill';
+    drillEnZhBtn.textContent = active ? '⏸️ Drilling...' : '▶ EN→中 Drill';
     drillEnZhBtn.classList.toggle('playing', active);
   }
   if (drillZhEnBtn) {
     const active = isPlaying && activeSi === null && drillMode === 'zh-en';
-    drillZhEnBtn.textContent = active ? '⏸️ Drilling...' : '▶ 中 → EN Drill';
+    drillZhEnBtn.textContent = active ? '⏸️ Drilling...' : '▶ 中→EN Drill';
     drillZhEnBtn.classList.toggle('playing', active);
   }
   if (stopBtn) {
@@ -14727,7 +14772,7 @@ function renderAudioSetup(targetEl) {
       <div class="lesson-main-title" style="font-style:italic">Audio & Voice Settings</div>
     </div>
     <div style="font-family:var(--mono);font-size:0.875rem;color:var(--muted);font-style:italic;margin-bottom:20px;line-height:1.9">
-      This is for educational purposes. It does not provide medical advice. Clinical decisions should reflect professional judgment.
+      MedChinese is a Language training tool, and does not provide medical advice. Clinical decisions should reflect professional judgement.
     </div>
 
     <!-- Azure TTS Status -->
@@ -14840,15 +14885,7 @@ function renderAudioSetup(targetEl) {
       </div>
     </div>
 
-    <!-- Browser compatibility note -->
-    <div style="border:1px solid var(--border);padding:16px 20px;margin-bottom:28px;font-family:var(--mono);font-size:0.875rem;line-height:1.9">
-      <div style="font-weight:700;margin-bottom:6px;font-size:0.78rem">Browser Compatibility</div>
-      <div>✅ <strong>Edge</strong> — Full neural voice support</div>
-      <div>✅ <strong>Chrome</strong> — Full neural voice support</div>
-      <div>✅ <strong>Safari (iOS/macOS)</strong> — Full neural voice support</div>
-      <div>✅ <strong>Firefox</strong> — Full neural voice support</div>
-      <div style="margin-top:8px;color:var(--muted);font-size:0.875rem">If audio does not play, check that your browser tab is not muted and your device volume is on.</div>
-    </div>
+
 
     <!-- Feature ratings -->
     <div style="border-top:1px solid var(--border);padding-top:20px;margin-top:8px">
@@ -16255,7 +16292,6 @@ const ANATOMY_HOTSPOTS = {
   ],
 }
 
-
 function getBodySVGSkel() {
   return '<g stroke="#888888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">' + `<path d="M 204.36 75.65 L 201.09 76.74 L 197.82 77.83 L 194.55 78.92 L 191.28 81.10 L 188.01 83.28 L 184.74 86.54 L 182.56 88.72 L 180.38 91.99 L 178.20 95.26 L 177.11 98.53 L 177.11 101.80 L 177.11 105.07 L 176.02 108.34 L 176.02 111.61 L 176.02 114.88 L 177.11 118.15 L 178.20 121.42 L 178.20 124.69 L 179.29 127.96 L 179.29 131.23 L 179.29 134.50 L 180.38 137.77 L 183.65 141.04 L 184.74 144.31 L 185.83 147.57 L 185.83 150.84 L 184.74 154.11 L 184.74 157.38 L 185.83 160.65 L 189.10 163.92 L 191.28 167.19 L 193.46 169.37 L 196.73 171.55 L 198.91 174.82 L 196.73 178.09 L 198.91 181.36 L 198.91 184.63 L 200.00 187.90 L 198.91 191.17 L 197.82 194.44 L 195.64 196.62 L 196.73 199.89 L 194.55 202.07 L 191.28 200.98 L 188.01 199.89 L 184.74 199.89 L 181.47 199.89 L 178.20 200.98 L 174.93 200.98 L 171.66 203.16 L 168.40 203.16 L 165.13 202.07 L 161.86 200.98 L 158.59 199.89 L 155.32 198.80 L 152.05 197.71 L 148.78 197.71 L 145.51 197.71 L 142.24 197.71 L 138.97 196.62 L 135.70 196.62 L 132.43 197.71 L 129.16 197.71 L 125.89 200.98 L 122.62 202.07 L 119.35 203.16 L 116.08 206.43 L 117.17 209.69 L 113.90 211.87 L 111.72 215.14 L 110.63 218.41 L 110.63 221.68 L 110.63 224.95 L 110.63 228.22 L 111.72 231.49 L 112.81 234.76 L 113.90 238.03 L 114.99 241.30 L 114.99 244.57 L 114.99 247.84 L 114.99 251.11 L 113.90 254.38 L 113.90 257.65 L 112.81 260.92 L 112.81 264.19 L 112.81 267.46 L 111.72 270.72 L 111.72 273.99 L 111.72 277.26 L 111.72 280.53 L 111.72 283.80 L 111.72 287.07 L 111.72 290.34 L 111.72 293.61 L 111.72 296.88 L 110.63 300.15 L 110.63 303.42 L 110.63 306.69 L 109.54 309.96 L 108.46 313.23 L 107.37 316.50 L 106.28 319.77 L 104.10 323.04 L 100.83 326.31 L 98.65 329.57 L 96.47 332.84 L 95.38 336.11 L 95.38 339.38 L 96.47 342.65 L 94.29 345.92 L 94.29 349.19 L 94.29 352.46 L 93.20 355.73 L 92.11 359.00 L 91.02 362.27 L 89.93 365.54 L 88.84 368.81 L 87.75 372.08 L 86.66 375.35 L 85.57 378.62 L 84.48 381.89 L 83.39 385.16 L 82.30 388.43 L 81.21 391.69 L 80.12 394.96 L 79.03 398.23 L 77.94 401.50 L 76.85 404.77 L 76.85 408.04 L 75.76 411.31 L 74.67 414.58 L 73.58 417.85 L 72.49 421.12 L 71.40 424.39 L 69.22 427.66 L 67.04 430.93 L 65.95 434.20 L 63.77 437.47 L 63.77 440.74 L 61.59 442.92 L 58.32 442.92 L 55.05 446.19 L 51.78 448.37 L 48.51 449.46 L 45.25 450.54 L 41.98 453.81 L 38.71 455.99 L 35.44 457.08 L 32.17 459.26 L 28.90 461.44 L 26.72 463.62 L 27.81 465.80 L 31.08 465.80 L 34.35 465.80 L 37.62 463.62 L 40.89 462.53 L 44.16 461.44 L 47.43 460.35 L 50.69 458.17 L 52.87 454.90 L 56.14 454.90 L 56.14 458.17 L 53.96 461.44 L 50.69 464.71 L 48.51 467.98 L 46.34 471.25 L 45.25 474.52 L 43.07 477.79 L 40.89 481.06 L 38.71 484.33 L 36.53 487.60 L 34.35 490.87 L 33.26 494.14 L 32.17 497.41 L 34.35 499.59 L 37.62 497.41 L 40.89 494.14 L 43.07 490.87 L 45.25 487.60 L 47.43 484.33 L 49.60 481.06 L 51.78 477.79 L 53.96 474.52 L 57.23 474.52 L 56.14 477.79 L 55.05 481.06 L 53.96 484.33 L 52.87 487.60 L 50.69 490.87 L 49.60 494.14 L 48.51 497.41 L 47.43 500.68 L 46.34 503.95 L 46.34 507.22 L 48.51 509.40 L 51.78 507.22 L 52.87 503.95 L 53.96 500.68 L 56.14 497.41 L 58.32 494.14 L 59.41 490.87 L 60.50 487.60 L 61.59 484.33 L 63.77 481.06 L 64.86 477.79 L 67.04 479.97 L 65.95 483.24 L 65.95 486.51 L 64.86 489.78 L 63.77 493.05 L 62.68 496.32 L 61.59 499.59 L 60.50 502.86 L 59.41 506.13 L 59.41 509.40 L 61.59 510.49 L 63.77 508.31 L 65.95 505.04 L 68.13 501.77 L 69.22 498.50 L 70.31 495.23 L 71.40 491.96 L 72.49 488.69 L 73.58 485.42 L 74.67 482.15 L 75.76 478.88 L 75.76 475.61 L 75.76 472.34 L 77.94 469.07 L 79.03 472.34 L 79.03 475.61 L 79.03 478.88 L 79.03 482.15 L 79.03 485.42 L 79.03 488.69 L 80.12 491.96 L 80.12 495.23 L 80.12 498.50 L 82.30 501.77 L 84.48 500.68 L 84.48 497.41 L 84.48 494.14 L 84.48 490.87 L 84.48 487.60 L 85.57 484.33 L 85.57 481.06 L 85.57 477.79 L 86.66 474.52 L 86.66 471.25 L 86.66 467.98 L 86.66 464.71 L 85.57 461.44 L 84.48 458.17 L 84.48 454.90 L 84.48 451.63 L 82.30 448.37 L 81.21 445.10 L 84.48 444.01 L 87.75 444.01 L 91.02 441.83 L 93.20 438.56 L 94.29 435.29 L 94.29 432.02 L 95.38 428.75 L 96.47 425.48 L 96.47 422.21 L 97.56 418.94 L 98.65 415.67 L 99.74 412.40 L 100.83 409.13 L 101.92 405.86 L 103.01 402.59 L 104.10 399.32 L 105.19 396.05 L 105.19 392.78 L 106.28 389.51 L 107.37 386.25 L 107.37 382.98 L 108.46 379.71 L 109.54 376.44 L 110.63 373.17 L 111.72 369.90 L 112.81 366.63 L 113.90 363.36 L 113.90 360.09 L 116.08 356.82 L 119.35 354.64 L 120.44 351.37 L 121.53 348.10 L 124.80 347.01 L 128.07 344.83 L 130.25 341.56 L 129.16 338.29 L 126.98 335.02 L 124.80 331.75 L 123.71 328.49 L 123.71 325.22 L 123.71 321.95 L 123.71 318.68 L 123.71 315.41 L 123.71 312.14 L 124.80 308.87 L 124.80 305.60 L 124.80 302.33 L 125.89 299.06 L 125.89 295.79 L 126.98 292.52 L 126.98 289.25 L 128.07 285.98 L 128.07 282.71 L 128.07 279.44 L 128.07 276.17 L 129.16 272.90 L 129.16 269.63 L 129.16 266.37 L 129.16 263.10 L 129.16 259.83 L 129.16 256.56 L 129.16 253.29 L 130.25 250.02 L 132.43 251.11 L 133.52 254.38 L 134.61 257.65 L 135.70 260.92 L 137.88 264.19 L 140.06 267.46 L 141.15 270.72 L 141.15 273.99 L 141.15 277.26 L 142.24 280.53 L 141.15 283.80 L 141.15 287.07 L 141.15 290.34 L 142.24 293.61 L 141.15 296.88 L 141.15 300.15 L 142.24 303.42 L 142.24 306.69 L 143.33 309.96 L 143.33 313.23 L 143.33 316.50 L 143.33 319.77 L 145.51 323.04 L 146.60 326.31 L 146.60 329.57 L 148.78 332.84 L 150.96 336.11 L 154.23 338.29 L 157.50 339.38 L 160.77 339.38 L 164.04 338.29 L 167.31 337.20 L 170.57 339.38 L 173.84 339.38 L 177.11 339.38 L 180.38 338.29 L 183.65 338.29 L 186.92 337.20 L 190.19 336.11 L 193.46 335.02 L 196.73 333.93 L 198.91 336.11 L 195.64 338.29 L 193.46 341.56 L 194.55 344.83 L 197.82 344.83 L 197.82 348.10 L 194.55 347.01 L 191.28 350.28 L 191.28 353.55 L 194.55 354.64 L 197.82 356.82 L 197.82 360.09 L 194.55 360.09 L 191.28 360.09 L 190.19 363.36 L 192.37 365.54 L 195.64 366.63 L 197.82 369.90 L 196.73 373.17 L 193.46 375.35 L 191.28 377.53 L 191.28 380.80 L 191.28 384.07 L 188.01 381.89 L 185.83 378.62 L 182.56 375.35 L 179.29 372.08 L 176.02 369.90 L 172.75 368.81 L 169.49 368.81 L 166.22 368.81 L 162.95 369.90 L 159.68 370.99 L 156.41 373.17 L 153.14 376.44 L 150.96 379.71 L 149.87 382.98 L 148.78 386.25 L 148.78 389.51 L 148.78 392.78 L 148.78 396.05 L 149.87 399.32 L 150.96 402.59 L 150.96 405.86 L 150.96 409.13 L 154.23 412.40 L 157.50 413.49 L 158.59 416.76 L 157.50 420.03 L 156.41 423.30 L 155.32 426.57 L 152.05 429.84 L 152.05 433.11 L 153.14 436.38 L 152.05 439.65 L 148.78 438.56 L 145.51 438.56 L 142.24 439.65 L 138.97 441.83 L 137.88 445.10 L 136.79 448.37 L 136.79 451.63 L 137.88 454.90 L 138.97 458.17 L 140.06 461.44 L 142.24 464.71 L 142.24 467.98 L 143.33 471.25 L 144.42 474.52 L 144.42 477.79 L 144.42 481.06 L 144.42 484.33 L 145.51 487.60 L 145.51 490.87 L 146.60 494.14 L 146.60 497.41 L 146.60 500.68 L 146.60 503.95 L 147.69 507.22 L 148.78 510.49 L 148.78 513.75 L 148.78 517.02 L 149.87 520.29 L 149.87 523.56 L 149.87 526.83 L 150.96 530.10 L 150.96 533.37 L 152.05 536.64 L 152.05 539.91 L 152.05 543.18 L 153.14 546.45 L 153.14 549.72 L 153.14 552.99 L 154.23 556.26 L 154.23 559.53 L 154.23 562.80 L 154.23 566.07 L 154.23 569.34 L 155.32 572.60 L 155.32 575.87 L 155.32 579.14 L 155.32 582.41 L 155.32 585.68 L 155.32 588.95 L 154.23 592.22 L 154.23 595.49 L 152.05 598.76 L 149.87 602.03 L 148.78 605.30 L 148.78 608.57 L 149.87 611.84 L 150.96 615.11 L 148.78 618.38 L 148.78 621.65 L 147.69 624.92 L 144.42 627.10 L 142.24 630.37 L 142.24 633.63 L 143.33 636.90 L 144.42 640.17 L 145.51 643.44 L 145.51 646.71 L 146.60 649.98 L 147.69 653.25 L 147.69 656.52 L 148.78 659.79 L 148.78 663.06 L 148.78 666.33 L 149.87 669.60 L 149.87 672.87 L 150.96 676.14 L 150.96 679.41 L 152.05 682.68 L 152.05 685.95 L 153.14 689.22 L 153.14 692.49 L 154.23 695.75 L 155.32 699.02 L 155.32 702.29 L 156.41 705.56 L 157.50 708.83 L 158.59 712.10 L 158.59 715.37 L 159.68 718.64 L 160.77 721.91 L 160.77 725.18 L 161.86 728.45 L 162.95 731.72 L 164.04 734.99 L 164.04 738.26 L 165.13 741.53 L 165.13 744.80 L 166.22 748.07 L 166.22 751.34 L 165.13 754.60 L 165.13 757.87 L 165.13 761.14 L 166.22 764.41 L 167.31 767.68 L 168.40 770.95 L 167.31 774.22 L 166.22 777.49 L 162.95 780.76 L 160.77 784.03 L 157.50 787.30 L 155.32 790.57 L 154.23 793.84 L 150.96 796.02 L 147.69 799.29 L 148.78 802.56 L 152.05 805.83 L 154.23 806.92 L 157.50 809.10 L 159.68 811.28 L 162.95 810.19 L 166.22 811.28 L 168.40 812.37 L 171.66 810.19 L 172.75 806.92 L 174.93 803.65 L 178.20 803.65 L 176.02 806.92 L 173.84 810.19 L 176.02 813.46 L 179.29 812.37 L 182.56 811.28 L 185.83 809.10 L 189.10 806.92 L 191.28 803.65 L 192.37 800.38 L 190.19 797.11 L 190.19 793.84 L 190.19 790.57 L 190.19 787.30 L 189.10 784.03 L 189.10 780.76 L 188.01 777.49 L 188.01 774.22 L 189.10 770.95 L 188.01 767.68 L 185.83 764.41 L 186.92 761.14 L 189.10 757.87 L 190.19 754.60 L 189.10 751.34 L 186.92 748.07 L 185.83 744.80 L 184.74 741.53 L 183.65 738.26 L 183.65 734.99 L 182.56 731.72 L 181.47 728.45 L 181.47 725.18 L 180.38 721.91 L 180.38 718.64 L 180.38 715.37 L 180.38 712.10 L 180.38 708.83 L 180.38 705.56 L 179.29 702.29 L 179.29 699.02 L 178.20 695.75 L 178.20 692.49 L 178.20 689.22 L 178.20 685.95 L 178.20 682.68 L 178.20 679.41 L 178.20 676.14 L 178.20 672.87 L 178.20 669.60 L 178.20 666.33 L 177.11 663.06 L 177.11 659.79 L 177.11 656.52 L 177.11 653.25 L 176.02 649.98 L 176.02 646.71 L 176.02 643.44 L 176.02 640.17 L 176.02 636.90 L 178.20 633.63 L 179.29 630.37 L 181.47 627.10 L 183.65 623.83 L 183.65 620.56 L 183.65 617.29 L 183.65 614.02 L 182.56 610.75 L 184.74 607.48 L 185.83 604.21 L 185.83 600.94 L 184.74 597.67 L 182.56 594.40 L 179.29 593.31 L 177.11 590.04 L 174.93 586.77 L 173.84 583.50 L 173.84 580.23 L 172.75 576.96 L 171.66 573.69 L 171.66 570.43 L 170.57 567.16 L 170.57 563.89 L 169.49 560.62 L 168.40 557.35 L 168.40 554.08 L 167.31 550.81 L 167.31 547.54 L 167.31 544.27 L 166.22 541.00 L 166.22 537.73 L 165.13 534.46 L 165.13 531.19 L 165.13 527.92 L 164.04 524.65 L 164.04 521.38 L 162.95 518.11 L 161.86 514.84 L 161.86 511.57 L 161.86 508.31 L 161.86 505.04 L 160.77 501.77 L 160.77 498.50 L 160.77 495.23 L 159.68 491.96 L 159.68 488.69 L 159.68 485.42 L 158.59 482.15 L 158.59 478.88 L 158.59 475.61 L 157.50 472.34 L 157.50 469.07 L 157.50 465.80 L 158.59 462.53 L 160.77 459.26 L 161.86 455.99 L 160.77 452.72 L 159.68 449.46 L 159.68 446.19 L 162.95 444.01 L 166.22 444.01 L 167.31 447.28 L 170.57 450.54 L 173.84 453.81 L 177.11 455.99 L 180.38 458.17 L 183.65 459.26 L 186.92 459.26 L 190.19 458.17 L 193.46 457.08 L 196.73 454.90 L 200.00 451.63 L 203.27 448.37 L 206.54 448.37 L 209.81 449.46 L 213.08 452.72 L 216.35 455.99 L 219.62 458.17 L 222.89 459.26 L 226.16 460.35 L 229.43 459.26 L 232.69 457.08 L 235.96 455.99 L 239.23 453.81 L 242.50 450.54 L 244.68 447.28 L 247.95 446.19 L 251.22 448.37 L 251.22 451.63 L 250.13 454.90 L 250.13 458.17 L 250.13 461.44 L 252.31 464.71 L 252.31 467.98 L 252.31 471.25 L 252.31 474.52 L 252.31 477.79 L 251.22 481.06 L 251.22 484.33 L 250.13 487.60 L 250.13 490.87 L 249.04 494.14 L 249.04 497.41 L 247.95 500.68 L 247.95 503.95 L 247.95 507.22 L 246.86 510.49 L 246.86 513.75 L 245.77 517.02 L 244.68 520.29 L 244.68 523.56 L 243.59 526.83 L 243.59 530.10 L 242.50 533.37 L 242.50 536.64 L 241.41 539.91 L 240.32 543.18 L 240.32 546.45 L 239.23 549.72 L 239.23 552.99 L 238.14 556.26 L 238.14 559.53 L 237.05 562.80 L 237.05 566.07 L 235.96 569.34 L 234.87 572.60 L 233.78 575.87 L 232.69 579.14 L 231.60 582.41 L 230.51 585.68 L 229.43 588.95 L 227.25 592.22 L 223.98 594.40 L 220.71 597.67 L 219.62 600.94 L 219.62 604.21 L 219.62 607.48 L 222.89 610.75 L 221.80 614.02 L 220.71 617.29 L 220.71 620.56 L 221.80 623.83 L 222.89 627.10 L 225.07 630.37 L 226.16 633.63 L 227.25 636.90 L 228.34 640.17 L 227.25 643.44 L 227.25 646.71 L 227.25 649.98 L 226.16 653.25 L 226.16 656.52 L 226.16 659.79 L 225.07 663.06 L 225.07 666.33 L 225.07 669.60 L 223.98 672.87 L 223.98 676.14 L 223.98 679.41 L 223.98 682.68 L 223.98 685.95 L 222.89 689.22 L 222.89 692.49 L 222.89 695.75 L 222.89 699.02 L 221.80 702.29 L 221.80 705.56 L 220.71 708.83 L 220.71 712.10 L 220.71 715.37 L 220.71 718.64 L 219.62 721.91 L 219.62 725.18 L 218.53 728.45 L 217.44 731.72 L 216.35 734.99 L 216.35 738.26 L 215.26 741.53 L 214.17 744.80 L 211.99 748.07 L 210.90 751.34 L 209.81 754.60 L 209.81 757.87 L 211.99 761.14 L 211.99 764.41 L 209.81 767.68 L 209.81 770.95 L 210.90 774.22 L 209.81 777.49 L 209.81 780.76 L 208.72 784.03 L 207.63 787.30 L 207.63 790.57 L 207.63 793.84 L 207.63 797.11 L 205.45 800.38 L 206.54 803.65 L 208.72 806.92 L 211.99 808.01 L 215.26 810.19 L 218.53 812.37 L 221.80 811.28 L 222.89 808.01 L 220.71 804.74 L 218.53 802.56 L 221.80 802.56 L 225.07 805.83 L 226.16 809.10 L 229.43 810.19 L 232.69 808.01 L 235.96 809.10 L 239.23 808.01 L 241.41 804.74 L 244.68 804.74 L 246.86 801.47 L 249.04 798.20 L 247.95 794.93 L 244.68 792.75 L 242.50 789.48 L 240.32 786.21 L 238.14 782.94 L 235.96 780.76 L 233.78 777.49 L 231.60 774.22 L 229.43 770.95 L 231.60 767.68 L 231.60 764.41 L 232.69 761.14 L 233.78 757.87 L 233.78 754.60 L 233.78 751.34 L 233.78 748.07 L 233.78 744.80 L 234.87 741.53 L 234.87 738.26 L 235.96 734.99 L 237.05 731.72 L 238.14 728.45 L 239.23 725.18 L 239.23 721.91 L 240.32 718.64 L 241.41 715.37 L 242.50 712.10 L 243.59 708.83 L 244.68 705.56 L 245.77 702.29 L 245.77 699.02 L 246.86 695.75 L 247.95 692.49 L 247.95 689.22 L 249.04 685.95 L 249.04 682.68 L 250.13 679.41 L 251.22 676.14 L 251.22 672.87 L 252.31 669.60 L 253.40 666.33 L 253.40 663.06 L 254.49 659.79 L 254.49 656.52 L 255.58 653.25 L 256.67 649.98 L 256.67 646.71 L 257.76 643.44 L 257.76 640.17 L 259.94 636.90 L 261.03 633.63 L 261.03 630.37 L 259.94 627.10 L 256.67 624.92 L 255.58 621.65 L 255.58 618.38 L 253.40 615.11 L 254.49 611.84 L 255.58 608.57 L 255.58 605.30 L 254.49 602.03 L 252.31 598.76 L 251.22 595.49 L 250.13 592.22 L 250.13 588.95 L 250.13 585.68 L 250.13 582.41 L 251.22 579.14 L 251.22 575.87 L 251.22 572.60 L 251.22 569.34 L 252.31 566.07 L 252.31 562.80 L 252.31 559.53 L 252.31 556.26 L 253.40 552.99 L 253.40 549.72 L 254.49 546.45 L 254.49 543.18 L 255.58 539.91 L 255.58 536.64 L 256.67 533.37 L 256.67 530.10 L 257.76 526.83 L 257.76 523.56 L 258.85 520.29 L 258.85 517.02 L 259.94 513.75 L 259.94 510.49 L 261.03 507.22 L 262.12 503.95 L 262.12 500.68 L 263.21 497.41 L 263.21 494.14 L 263.21 490.87 L 264.30 487.60 L 264.30 484.33 L 265.39 481.06 L 265.39 477.79 L 266.48 474.52 L 266.48 471.25 L 267.57 467.98 L 269.75 464.71 L 270.84 461.44 L 271.93 458.17 L 273.02 454.90 L 273.02 451.63 L 273.02 448.37 L 271.93 445.10 L 269.75 441.83 L 266.48 440.74 L 263.21 440.74 L 259.94 441.83 L 257.76 439.65 L 259.94 436.38 L 259.94 433.11 L 257.76 429.84 L 255.58 426.57 L 255.58 423.30 L 253.40 420.03 L 253.40 416.76 L 256.67 414.58 L 259.94 413.49 L 262.12 410.22 L 262.12 406.95 L 262.12 403.68 L 263.21 400.41 L 264.30 397.14 L 264.30 393.87 L 264.30 390.60 L 264.30 387.34 L 263.21 384.07 L 262.12 380.80 L 258.85 377.53 L 255.58 374.26 L 252.31 373.17 L 249.04 372.08 L 245.77 370.99 L 242.50 370.99 L 239.23 370.99 L 235.96 373.17 L 232.69 375.35 L 229.43 378.62 L 227.25 381.89 L 223.98 384.07 L 220.71 384.07 L 217.44 384.07 L 219.62 380.80 L 222.89 379.71 L 222.89 376.44 L 219.62 374.26 L 217.44 372.08 L 217.44 368.81 L 220.71 367.72 L 223.98 365.54 L 223.98 362.27 L 221.80 360.09 L 218.53 361.18 L 215.26 359.00 L 217.44 355.73 L 220.71 354.64 L 221.80 351.37 L 219.62 349.19 L 216.35 349.19 L 216.35 345.92 L 219.62 344.83 L 221.80 342.65 L 220.71 339.38 L 217.44 338.29 L 217.44 335.02 L 220.71 336.11 L 223.98 336.11 L 227.25 337.20 L 230.51 339.38 L 233.78 340.47 L 237.05 341.56 L 240.32 341.56 L 243.59 341.56 L 246.86 340.47 L 250.13 341.56 L 253.40 342.65 L 256.67 342.65 L 259.94 341.56 L 263.21 339.38 L 266.48 336.11 L 267.57 332.84 L 268.66 329.57 L 269.75 326.31 L 270.84 323.04 L 271.93 319.77 L 271.93 316.50 L 271.93 313.23 L 273.02 309.96 L 274.11 306.69 L 274.11 303.42 L 274.11 300.15 L 274.11 296.88 L 275.20 293.61 L 275.20 290.34 L 274.11 287.07 L 274.11 283.80 L 275.20 280.53 L 275.20 277.26 L 275.20 273.99 L 278.47 270.72 L 280.65 267.46 L 281.74 264.19 L 282.83 260.92 L 283.92 257.65 L 283.92 254.38 L 287.19 253.29 L 287.19 256.56 L 287.19 259.83 L 287.19 263.10 L 287.19 266.37 L 287.19 269.63 L 287.19 272.90 L 287.19 276.17 L 287.19 279.44 L 287.19 282.71 L 287.19 285.98 L 288.28 289.25 L 288.28 292.52 L 288.28 295.79 L 288.28 299.06 L 289.37 302.33 L 289.37 305.60 L 289.37 308.87 L 290.46 312.14 L 290.46 315.41 L 290.46 318.68 L 290.46 321.95 L 290.46 325.22 L 290.46 328.49 L 290.46 331.75 L 289.37 335.02 L 288.28 338.29 L 286.10 341.56 L 283.92 344.83 L 283.92 348.10 L 287.19 351.37 L 290.46 352.46 L 292.63 355.73 L 293.72 359.00 L 295.90 362.27 L 298.08 365.54 L 299.17 368.81 L 299.17 372.08 L 300.26 375.35 L 301.35 378.62 L 302.44 381.89 L 302.44 385.16 L 303.53 388.43 L 303.53 391.69 L 304.62 394.96 L 305.71 398.23 L 305.71 401.50 L 306.80 404.77 L 306.80 408.04 L 307.89 411.31 L 308.98 414.58 L 310.07 417.85 L 311.16 421.12 L 312.25 424.39 L 312.25 427.66 L 313.34 430.93 L 314.43 434.20 L 314.43 437.47 L 314.43 440.74 L 315.52 444.01 L 318.79 447.28 L 322.06 448.37 L 325.33 448.37 L 325.33 451.63 L 323.15 454.90 L 323.15 458.17 L 322.06 461.44 L 320.97 464.71 L 320.97 467.98 L 319.88 471.25 L 319.88 474.52 L 319.88 477.79 L 320.97 481.06 L 319.88 484.33 L 320.97 487.60 L 320.97 490.87 L 320.97 494.14 L 320.97 497.41 L 320.97 500.68 L 320.97 503.95 L 323.15 503.95 L 325.33 500.68 L 325.33 497.41 L 325.33 494.14 L 326.42 490.87 L 326.42 487.60 L 326.42 484.33 L 326.42 481.06 L 326.42 477.79 L 326.42 474.52 L 328.60 472.34 L 329.69 475.61 L 329.69 478.88 L 329.69 482.15 L 330.78 485.42 L 330.78 488.69 L 332.96 491.96 L 334.05 495.23 L 334.05 498.50 L 335.14 501.77 L 336.23 505.04 L 337.32 508.31 L 339.50 511.57 L 342.77 513.75 L 343.86 511.57 L 343.86 508.31 L 342.77 505.04 L 341.68 501.77 L 340.59 498.50 L 339.50 495.23 L 339.50 491.96 L 338.41 488.69 L 338.41 485.42 L 339.50 482.15 L 341.68 485.42 L 342.77 488.69 L 344.95 491.96 L 344.95 495.23 L 346.04 498.50 L 348.22 501.77 L 349.31 505.04 L 350.40 508.31 L 352.57 511.57 L 355.84 511.57 L 355.84 508.31 L 355.84 505.04 L 354.75 501.77 L 353.66 498.50 L 352.57 495.23 L 351.49 491.96 L 350.40 488.69 L 349.31 485.42 L 348.22 482.15 L 347.13 478.88 L 350.40 478.88 L 351.49 482.15 L 353.66 485.42 L 355.84 488.69 L 358.02 491.96 L 360.20 495.23 L 362.38 498.50 L 365.65 501.77 L 368.92 502.86 L 368.92 499.59 L 367.83 496.32 L 366.74 493.05 L 364.56 489.78 L 363.47 486.51 L 361.29 483.24 L 359.11 479.97 L 356.93 476.70 L 355.84 473.43 L 353.66 470.16 L 351.49 466.89 L 349.31 463.62 L 349.31 460.35 L 352.57 460.35 L 354.75 463.62 L 358.02 465.80 L 361.29 466.89 L 364.56 469.07 L 367.83 470.16 L 371.10 471.25 L 374.37 471.25 L 376.55 469.07 L 373.28 466.89 L 370.01 463.62 L 366.74 462.53 L 363.47 460.35 L 360.20 457.08 L 356.93 454.90 L 353.66 453.81 L 350.40 450.54 L 347.13 448.37 L 343.86 448.37 L 342.77 445.10 L 341.68 441.83 L 340.59 438.56 L 338.41 435.29 L 337.32 432.02 L 336.23 428.75 L 334.05 425.48 L 334.05 422.21 L 332.96 418.94 L 331.87 415.67 L 331.87 412.40 L 330.78 409.13 L 329.69 405.86 L 328.60 402.59 L 328.60 399.32 L 327.51 396.05 L 326.42 392.78 L 325.33 389.51 L 325.33 386.25 L 324.24 382.98 L 323.15 379.71 L 322.06 376.44 L 320.97 373.17 L 319.88 369.90 L 319.88 366.63 L 318.79 363.36 L 317.70 360.09 L 317.70 356.82 L 317.70 353.55 L 316.61 350.28 L 316.61 347.01 L 316.61 343.74 L 315.52 340.47 L 314.43 337.20 L 312.25 333.93 L 310.07 330.66 L 307.89 327.40 L 306.80 324.13 L 304.62 320.86 L 304.62 317.59 L 303.53 314.32 L 303.53 311.05 L 303.53 307.78 L 303.53 304.51 L 303.53 301.24 L 302.44 297.97 L 302.44 294.70 L 302.44 291.43 L 303.53 288.16 L 303.53 284.89 L 303.53 281.62 L 303.53 278.35 L 303.53 275.08 L 303.53 271.81 L 302.44 268.54 L 302.44 265.28 L 302.44 262.01 L 301.35 258.74 L 301.35 255.47 L 301.35 252.20 L 301.35 248.93 L 302.44 245.66 L 303.53 242.39 L 305.71 239.12 L 306.80 235.85 L 306.80 232.58 L 306.80 229.31 L 306.80 226.04 L 304.62 222.77 L 302.44 219.50 L 301.35 216.23 L 300.26 212.96 L 296.99 210.78 L 293.72 209.69 L 291.54 207.51 L 288.28 205.34 L 285.01 204.25 L 281.74 204.25 L 278.47 204.25 L 275.20 203.16 L 271.93 203.16 L 268.66 203.16 L 265.39 204.25 L 262.12 204.25 L 258.85 205.34 L 255.58 206.43 L 252.31 207.51 L 249.04 207.51 L 245.77 205.34 L 242.50 204.25 L 239.23 203.16 L 235.96 202.07 L 232.69 202.07 L 229.43 202.07 L 226.16 203.16 L 222.89 200.98 L 223.98 197.71 L 222.89 194.44 L 221.80 191.17 L 220.71 187.90 L 220.71 184.63 L 221.80 181.36 L 221.80 178.09 L 221.80 174.82 L 225.07 172.64 L 228.34 170.46 L 231.60 167.19 L 233.78 163.92 L 233.78 160.65 L 233.78 157.38 L 234.87 154.11 L 234.87 150.84 L 235.96 147.57 L 235.96 144.31 L 239.23 142.13 L 242.50 138.86 L 242.50 135.59 L 242.50 132.32 L 243.59 129.05 L 244.68 125.78 L 245.77 122.51 L 246.86 119.24 L 246.86 115.97 L 246.86 112.70 L 246.86 109.43 L 245.77 106.16 L 245.77 102.89 L 245.77 99.62 L 244.68 96.35 L 242.50 93.08 L 241.41 89.81 L 238.14 86.54 L 234.87 83.28 L 231.60 81.10 L 228.34 80.01 L 225.07 78.92 L 221.80 77.83 L 218.53 76.74 L 215.26 75.65 L 211.99 75.65 L 208.72 75.65 L 205.45 75.65" />
     <path d="M 167.31 370.99 L 168.40 369.90 L 169.49 369.90 L 170.57 369.90 L 171.66 369.90 L 172.75 369.90 L 173.84 370.99 L 174.93 372.08 L 176.02 372.08 L 177.11 373.17 L 178.20 374.26 L 179.29 375.35 L 180.38 376.44 L 181.47 377.53 L 182.56 378.62 L 183.65 379.71 L 184.74 380.80 L 185.83 381.89 L 185.83 382.98 L 186.92 384.07 L 188.01 385.16 L 188.01 386.25 L 186.92 387.34 L 186.92 388.43 L 185.83 389.51 L 184.74 390.60 L 183.65 391.69 L 182.56 392.78 L 182.56 393.87 L 181.47 394.96 L 181.47 396.05 L 181.47 397.14 L 181.47 398.23 L 182.56 399.32 L 182.56 400.41 L 183.65 401.50 L 184.74 402.59 L 185.83 402.59 L 186.92 403.68 L 186.92 404.77 L 186.92 405.86 L 188.01 406.95 L 188.01 408.04 L 189.10 409.13 L 189.10 410.22 L 190.19 411.31 L 191.28 412.40 L 191.28 413.49 L 190.19 414.58 L 189.10 414.58 L 188.01 414.58 L 186.92 414.58 L 185.83 415.67 L 184.74 415.67 L 184.74 416.76 L 183.65 417.85 L 183.65 418.94 L 183.65 420.03 L 183.65 421.12 L 183.65 422.21 L 184.74 423.30 L 184.74 424.39 L 185.83 425.48 L 186.92 426.57 L 188.01 427.66 L 189.10 428.75 L 190.19 429.84 L 191.28 430.93 L 192.37 432.02 L 193.46 433.11 L 194.55 434.20 L 195.64 435.29 L 196.73 435.29 L 197.82 436.38 L 198.91 437.47 L 200.00 438.56 L 201.09 438.56 L 202.18 439.65 L 203.27 439.65 L 204.36 439.65 L 205.45 439.65 L 206.54 439.65 L 207.63 439.65 L 208.72 439.65 L 209.81 439.65 L 210.90 438.56 L 211.99 438.56 L 213.08 437.47 L 214.17 437.47 L 215.26 436.38 L 216.35 435.29 L 217.44 434.20 L 218.53 434.20 L 219.62 433.11 L 220.71 432.02 L 221.80 430.93 L 222.89 429.84 L 223.98 428.75 L 225.07 427.66 L 226.16 426.57 L 227.25 425.48 L 228.34 424.39 L 228.34 423.30 L 228.34 422.21 L 229.43 421.12 L 229.43 420.03 L 229.43 418.94 L 228.34 417.85 L 227.25 416.76 L 226.16 415.67 L 225.07 415.67 L 223.98 414.58 L 222.89 414.58 L 221.80 413.49 L 221.80 412.40 L 222.89 411.31 L 223.98 410.22 L 225.07 409.13 L 225.07 408.04 L 226.16 406.95 L 227.25 405.86 L 227.25 404.77 L 228.34 403.68 L 229.43 402.59 L 230.51 401.50 L 231.60 400.41 L 231.60 399.32 L 231.60 398.23 L 231.60 397.14 L 231.60 396.05 L 231.60 394.96 L 230.51 393.87 L 230.51 392.78 L 229.43 391.69 L 228.34 390.60 L 227.25 389.51 L 227.25 388.43 L 226.16 388.43 L 226.16 389.51 L 227.25 390.60 L 227.25 391.69 L 228.34 392.78 L 229.43 393.87 L 230.51 394.96 L 230.51 396.05 L 230.51 397.14 L 230.51 398.23 L 230.51 399.32 L 230.51 400.41 L 229.43 401.50 L 228.34 402.59 L 227.25 402.59 L 226.16 403.68 L 226.16 404.77 L 225.07 405.86 L 225.07 406.95 L 223.98 408.04 L 222.89 409.13 L 221.80 410.22 L 220.71 411.31 L 220.71 412.40 L 219.62 413.49 L 218.53 414.58 L 217.44 413.49 L 216.35 413.49 L 215.26 413.49 L 214.17 413.49 L 214.17 414.58 L 214.17 415.67 L 215.26 416.76 L 215.26 417.85 L 214.17 418.94 L 213.08 420.03 L 213.08 421.12 L 213.08 422.21 L 214.17 423.30 L 215.26 423.30 L 216.35 423.30 L 217.44 423.30 L 218.53 424.39 L 218.53 425.48 L 217.44 426.57 L 216.35 426.57 L 215.26 427.66 L 214.17 427.66 L 213.08 428.75 L 213.08 429.84 L 213.08 430.93 L 211.99 432.02 L 210.90 432.02 L 209.81 433.11 L 208.72 434.20 L 207.63 434.20 L 206.54 435.29 L 205.45 435.29 L 204.36 434.20 L 203.27 433.11 L 202.18 433.11 L 201.09 432.02 L 200.00 430.93 L 200.00 429.84 L 198.91 428.75 L 198.91 427.66 L 197.82 427.66 L 196.73 426.57 L 195.64 426.57 L 194.55 425.48 L 194.55 424.39 L 195.64 423.30 L 196.73 422.21 L 197.82 422.21 L 198.91 422.21 L 200.00 421.12 L 200.00 420.03 L 198.91 418.94 L 197.82 417.85 L 197.82 416.76 L 198.91 415.67 L 198.91 414.58 L 198.91 413.49 L 197.82 413.49 L 196.73 412.40 L 195.64 413.49 L 194.55 414.58 L 193.46 414.58 L 192.37 413.49 L 192.37 412.40 L 192.37 411.31 L 191.28 410.22 L 190.19 409.13 L 189.10 408.04 L 189.10 406.95 L 188.01 405.86 L 188.01 404.77 L 186.92 403.68 L 186.92 402.59 L 185.83 401.50 L 184.74 400.41 L 183.65 399.32 L 182.56 398.23 L 182.56 397.14 L 182.56 396.05 L 182.56 394.96 L 183.65 393.87 L 183.65 392.78 L 184.74 391.69 L 185.83 390.60 L 186.92 389.51 L 188.01 388.43 L 189.10 387.34 L 190.19 387.34 L 191.28 388.43 L 192.37 389.51 L 193.46 390.60 L 194.55 391.69 L 195.64 392.78 L 195.64 393.87 L 195.64 394.96 L 195.64 396.05 L 196.73 397.14 L 196.73 398.23 L 197.82 399.32 L 197.82 400.41 L 198.91 400.41 L 200.00 401.50 L 201.09 401.50 L 202.18 402.59 L 203.27 402.59 L 204.36 402.59 L 205.45 402.59 L 206.54 402.59 L 207.63 402.59 L 208.72 402.59 L 209.81 402.59 L 210.90 402.59 L 211.99 402.59 L 213.08 401.50 L 214.17 401.50 L 215.26 400.41 L 216.35 399.32 L 217.44 398.23 L 217.44 397.14 L 217.44 396.05 L 217.44 394.96 L 217.44 393.87 L 217.44 392.78 L 218.53 391.69 L 219.62 390.60 L 220.71 390.60 L 221.80 389.51 L 222.89 388.43 L 223.98 387.34 L 225.07 386.25 L 226.16 385.16 L 227.25 384.07 L 228.34 382.98 L 229.43 381.89 L 230.51 380.80 L 231.60 379.71 L 232.69 378.62 L 233.78 377.53 L 234.87 376.44 L 235.96 375.35 L 237.05 374.26 L 238.14 374.26 L 239.23 373.17 L 240.32 373.17 L 241.41 372.08 L 242.50 372.08 L 243.59 372.08 L 244.68 372.08 L 245.77 372.08 L 246.86 373.17 L 247.95 373.17 L 249.04 374.26 L 249.04 375.35 L 250.13 375.35 L 251.22 376.44 L 252.31 377.53 L 253.40 378.62 L 253.40 379.71 L 254.49 380.80 L 255.58 381.89 L 255.58 382.98 L 255.58 384.07 L 255.58 385.16 L 256.67 386.25 L 256.67 387.34 L 256.67 388.43 L 256.67 389.51 L 256.67 390.60 L 256.67 391.69 L 256.67 392.78 L 256.67 393.87 L 255.58 394.96 L 255.58 396.05 L 255.58 397.14 L 254.49 398.23 L 254.49 399.32 L 253.40 400.41 L 253.40 401.50 L 253.40 402.59 L 252.31 403.68 L 252.31 404.77 L 251.22 405.86 L 251.22 406.95 L 252.31 406.95 L 252.31 405.86 L 252.31 404.77 L 253.40 403.68 L 253.40 402.59 L 254.49 401.50 L 254.49 400.41 L 255.58 399.32 L 255.58 398.23 L 255.58 397.14 L 256.67 396.05 L 256.67 394.96 L 256.67 393.87 L 257.76 392.78 L 257.76 391.69 L 257.76 390.60 L 257.76 389.51 L 257.76 388.43 L 256.67 387.34 L 256.67 386.25 L 256.67 385.16 L 256.67 384.07 L 256.67 382.98 L 255.58 381.89 L 255.58 380.80 L 254.49 379.71 L 253.40 378.62 L 253.40 377.53 L 253.40 376.44 L 254.49 375.35 L 255.58 376.44 L 256.67 377.53 L 257.76 378.62 L 258.85 379.71 L 259.94 380.80 L 259.94 381.89 L 261.03 382.98 L 261.03 384.07 L 262.12 385.16 L 262.12 386.25 L 262.12 387.34 L 263.21 388.43 L 263.21 389.51 L 263.21 390.60 L 263.21 391.69 L 263.21 392.78 L 263.21 393.87 L 263.21 394.96 L 263.21 396.05 L 263.21 397.14 L 262.12 398.23 L 262.12 399.32 L 262.12 400.41 L 261.03 401.50 L 261.03 402.59 L 261.03 403.68 L 259.94 404.77 L 259.94 405.86 L 259.94 406.95 L 259.94 408.04 L 259.94 409.13 L 259.94 410.22 L 258.85 411.31 L 257.76 412.40 L 256.67 413.49 L 255.58 413.49 L 254.49 413.49 L 253.40 412.40 L 252.31 412.40 L 253.40 413.49 L 253.40 414.58 L 252.31 415.67 L 252.31 416.76 L 251.22 417.85 L 250.13 418.94 L 249.04 418.94 L 247.95 418.94 L 246.86 418.94 L 245.77 418.94 L 244.68 418.94 L 243.59 418.94 L 242.50 417.85 L 241.41 416.76 L 240.32 416.76 L 239.23 416.76 L 238.14 416.76 L 237.05 416.76 L 235.96 416.76 L 237.05 416.76 L 238.14 416.76 L 239.23 416.76 L 240.32 417.85 L 241.41 417.85 L 242.50 418.94 L 243.59 418.94 L 244.68 420.03 L 245.77 420.03 L 246.86 420.03 L 247.95 420.03 L 249.04 420.03 L 250.13 420.03 L 251.22 420.03 L 252.31 421.12 L 253.40 422.21 L 253.40 423.30 L 253.40 424.39 L 252.31 425.48 L 251.22 426.57 L 250.13 426.57 L 249.04 426.57 L 247.95 427.66 L 246.86 427.66 L 245.77 427.66 L 244.68 427.66 L 243.59 428.75 L 242.50 429.84 L 242.50 430.93 L 241.41 432.02 L 241.41 433.11 L 241.41 434.20 L 241.41 435.29 L 241.41 436.38 L 241.41 437.47 L 240.32 438.56 L 239.23 439.65 L 238.14 439.65 L 237.05 439.65 L 235.96 439.65 L 234.87 439.65 L 233.78 439.65 L 232.69 439.65 L 231.60 439.65 L 230.51 439.65 L 229.43 439.65 L 228.34 439.65 L 227.25 439.65 L 226.16 439.65 L 225.07 439.65 L 223.98 439.65 L 222.89 440.74 L 221.80 440.74 L 220.71 441.83 L 219.62 441.83 L 218.53 441.83 L 217.44 442.92 L 216.35 442.92 L 215.26 444.01 L 214.17 444.01 L 213.08 444.01 L 213.08 445.10 L 214.17 445.10 L 215.26 445.10 L 216.35 445.10 L 217.44 446.19 L 217.44 447.28 L 218.53 448.37 L 218.53 449.46 L 219.62 450.54 L 220.71 450.54 L 221.80 451.63 L 222.89 451.63 L 223.98 452.72 L 225.07 452.72 L 226.16 452.72 L 227.25 452.72 L 228.34 452.72 L 229.43 451.63 L 230.51 451.63 L 231.60 450.54 L 232.69 450.54 L 233.78 449.46 L 233.78 448.37 L 234.87 447.28 L 234.87 446.19 L 234.87 445.10 L 234.87 444.01 L 234.87 442.92 L 234.87 441.83 L 235.96 440.74 L 237.05 440.74 L 238.14 440.74 L 239.23 440.74 L 240.32 440.74 L 241.41 440.74 L 242.50 441.83 L 243.59 442.92 L 243.59 444.01 L 243.59 445.10 L 242.50 446.19 L 242.50 447.28 L 241.41 448.37 L 240.32 449.46 L 239.23 450.54 L 238.14 451.63 L 237.05 451.63 L 235.96 452.72 L 234.87 453.81 L 233.78 454.90 L 232.69 454.90 L 231.60 455.99 L 230.51 455.99 L 229.43 457.08 L 228.34 458.17 L 227.25 458.17 L 226.16 458.17 L 225.07 458.17 L 223.98 458.17 L 222.89 457.08 L 221.80 457.08 L 220.71 455.99 L 219.62 455.99 L 218.53 454.90 L 217.44 453.81 L 216.35 453.81 L 215.26 452.72 L 214.17 451.63 L 213.08 450.54 L 211.99 449.46 L 211.99 448.37 L 210.90 448.37 L 209.81 447.28 L 208.72 447.28 L 207.63 446.19 L 206.54 446.19 L 205.45 446.19 L 204.36 446.19 L 203.27 446.19 L 202.18 447.28 L 201.09 447.28 L 200.00 448.37 L 198.91 449.46 L 197.82 450.54 L 196.73 451.63 L 195.64 452.72 L 194.55 452.72 L 193.46 453.81 L 192.37 454.90 L 191.28 455.99 L 190.19 455.99 L 189.10 455.99 L 188.01 457.08 L 186.92 457.08 L 185.83 457.08 L 184.74 457.08 L 183.65 457.08 L 182.56 457.08 L 181.47 455.99 L 180.38 455.99 L 179.29 454.90 L 178.20 453.81 L 177.11 453.81 L 176.02 452.72 L 174.93 451.63 L 173.84 450.54 L 172.75 449.46 L 171.66 448.37 L 170.57 448.37 L 169.49 447.28 L 169.49 446.19 L 168.40 445.10 L 168.40 444.01 L 168.40 442.92 L 168.40 441.83 L 169.49 440.74 L 170.57 439.65 L 171.66 439.65 L 172.75 439.65 L 173.84 439.65 L 174.93 439.65 L 176.02 439.65 L 177.11 440.74 L 177.11 441.83 L 177.11 442.92 L 177.11 444.01 L 177.11 445.10 L 177.11 446.19 L 177.11 447.28 L 178.20 448.37 L 179.29 449.46 L 180.38 450.54 L 181.47 450.54 L 182.56 451.63 L 183.65 451.63 L 184.74 451.63 L 185.83 451.63 L 186.92 451.63 L 188.01 451.63 L 189.10 451.63 L 190.19 450.54 L 191.28 450.54 L 192.37 449.46 L 193.46 448.37 L 193.46 447.28 L 194.55 446.19 L 194.55 445.10 L 195.64 444.01 L 196.73 444.01 L 197.82 444.01 L 196.73 444.01 L 195.64 442.92 L 194.55 442.92 L 193.46 441.83 L 192.37 440.74 L 191.28 440.74 L 190.19 440.74 L 189.10 439.65 L 188.01 439.65 L 186.92 439.65 L 185.83 439.65 L 184.74 439.65 L 183.65 439.65 L 182.56 439.65 L 181.47 438.56 L 180.38 439.65 L 179.29 439.65 L 178.20 438.56 L 177.11 438.56 L 176.02 438.56 L 174.93 438.56 L 173.84 438.56 L 172.75 438.56 L 171.66 437.47 L 170.57 436.38 L 170.57 435.29 L 170.57 434.20 L 170.57 433.11 L 170.57 432.02 L 170.57 430.93 L 169.49 429.84 L 169.49 428.75 L 168.40 427.66 L 167.31 426.57 L 166.22 426.57 L 165.13 425.48 L 164.04 425.48 L 162.95 425.48 L 161.86 425.48 L 160.77 424.39 L 159.68 424.39 L 158.59 423.30 L 158.59 422.21 L 158.59 421.12 L 158.59 420.03 L 159.68 418.94 L 160.77 417.85 L 161.86 417.85 L 162.95 417.85 L 164.04 417.85 L 165.13 418.94 L 166.22 418.94 L 167.31 418.94 L 168.40 417.85 L 169.49 417.85 L 170.57 416.76 L 171.66 416.76 L 172.75 415.67 L 173.84 415.67 L 174.93 415.67 L 176.02 415.67 L 177.11 415.67 L 176.02 414.58 L 174.93 414.58 L 173.84 414.58 L 172.75 414.58 L 171.66 415.67 L 170.57 415.67 L 169.49 416.76 L 168.40 416.76 L 167.31 417.85 L 166.22 417.85 L 165.13 417.85 L 164.04 416.76 L 162.95 416.76 L 161.86 415.67 L 160.77 414.58 L 159.68 413.49 L 159.68 412.40 L 159.68 411.31 L 160.77 410.22 L 159.68 410.22 L 158.59 410.22 L 157.50 411.31 L 156.41 411.31 L 155.32 410.22 L 154.23 410.22 L 153.14 409.13 L 152.05 408.04 L 152.05 406.95 L 152.05 405.86 L 152.05 404.77 L 152.05 403.68 L 152.05 402.59 L 152.05 401.50 L 152.05 400.41 L 152.05 399.32 L 150.96 398.23 L 150.96 397.14 L 150.96 396.05 L 149.87 394.96 L 149.87 393.87 L 149.87 392.78 L 149.87 391.69 L 149.87 390.60 L 149.87 389.51 L 149.87 388.43 L 149.87 387.34 L 150.96 386.25 L 150.96 385.16 L 150.96 384.07 L 150.96 382.98 L 152.05 381.89 L 152.05 380.80 L 153.14 379.71 L 153.14 378.62 L 154.23 377.53 L 155.32 376.44 L 156.41 375.35 L 157.50 374.26 L 158.59 373.17 L 159.68 373.17 L 160.77 372.08 L 161.86 373.17 L 161.86 374.26 L 160.77 375.35 L 159.68 376.44 L 159.68 377.53 L 158.59 378.62 L 157.50 379.71 L 157.50 380.80 L 157.50 381.89 L 156.41 382.98 L 156.41 384.07 L 156.41 385.16 L 156.41 386.25 L 155.32 387.34 L 155.32 388.43 L 155.32 389.51 L 156.41 390.60 L 156.41 391.69 L 156.41 392.78 L 156.41 393.87 L 157.50 394.96 L 157.50 396.05 L 158.59 397.14 L 158.59 398.23 L 158.59 399.32 L 159.68 400.41 L 159.68 401.50 L 160.77 402.59 L 160.77 403.68 L 161.86 403.68 L 160.77 402.59 L 160.77 401.50 L 159.68 400.41 L 159.68 399.32 L 159.68 398.23 L 158.59 397.14 L 158.59 396.05 L 157.50 394.96 L 157.50 393.87 L 157.50 392.78 L 156.41 391.69 L 156.41 390.60 L 156.41 389.51 L 156.41 388.43 L 156.41 387.34 L 156.41 386.25 L 156.41 385.16 L 157.50 384.07 L 157.50 382.98 L 157.50 381.89 L 158.59 380.80 L 158.59 379.71 L 159.68 378.62 L 159.68 377.53 L 160.77 376.44 L 161.86 375.35 L 162.95 374.26 L 164.04 373.17 L 165.13 373.17 L 166.22 372.08" />
@@ -17138,7 +17174,7 @@ renderPathwayBanner();
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
   const swCode = `
-    const CACHE = 'medical-chinese-v34';
+    const CACHE = 'medical-chinese-v46';
     self.addEventListener('install', e => {
       e.waitUntil(
         caches.open(CACHE).then(c => c.addAll(['${location.href}']))
