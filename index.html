@@ -193,11 +193,12 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    padding: 12px 16px;
+    padding: 12px 16px 10px 16px;
     cursor: pointer;
     user-select: none;
     transition: background 0.15s;
     gap: 4px;
+    overflow: hidden;
   }
   .section-header:hover { background: var(--gold-light); }
   .section-header.open { background: var(--ink); color: var(--paper); }
@@ -216,10 +217,11 @@
   .section-controls-row {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
     flex-wrap: nowrap;
     width: 100%;
     margin-top: 2px;
+    overflow: hidden;
   }
   .section-controls-spacer {
     flex: 1;
@@ -548,8 +550,8 @@
     gap: 8px;
     margin-bottom: 20px;
     padding: 12px 16px;
-    background: var(--ink);
-    border: 1px solid rgba(245,240,232,0.1);
+    background: var(--cream);
+    border: 1px solid var(--border);
     flex-wrap: wrap;
   }
   .play-bar-label {
@@ -557,16 +559,16 @@
     font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: 0.2em;
-    color: rgba(245,240,232,0.75);
+    color: var(--muted);
     margin-right: 6px;
     white-space: nowrap;
-    border-right: 1px solid rgba(245,240,232,0.15);
+    border-right: 1px solid var(--border);
     padding-right: 12px;
     flex-shrink: 0;
   }
   .vocab-play-bar-btns {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     flex-wrap: nowrap;
     align-items: center;
     flex: 1;
@@ -576,10 +578,29 @@
     font-size: 0.65rem;
     padding: 7px 14px;
     letter-spacing: 0.06em;
+    background: none;
+    border: 1.5px solid var(--border);
+    color: var(--muted);
+  }
+  .vocab-play-bar .play-all-btn:hover {
+    background: rgba(184,134,11,0.06);
+    border-color: var(--muted);
+    color: var(--ink);
+  }
+  .vocab-play-bar .play-all-btn.playing {
+    background: var(--red);
+    border-color: var(--red);
+    color: var(--paper);
   }
   .drill-btn {
-    border-color: var(--gold) !important;
+    border-color: var(--border) !important;
     color: var(--gold) !important;
+    background: none !important;
+  }
+  .drill-btn:hover {
+    border-color: var(--muted) !important;
+    color: var(--gold) !important;
+    background: rgba(184,134,11,0.06) !important;
   }
   .drill-btn:hover { background: var(--gold) !important; color: var(--ink) !important; }
   .drill-btn.playing { background: var(--gold) !important; color: var(--ink) !important; }
@@ -587,10 +608,10 @@
     flex: 0 0 100%;
     font-family: 'DM Mono', monospace;
     font-size: 0.65rem;
-    color: rgba(245,240,232,0.55);
+    color: var(--muted);
     letter-spacing: 0.08em;
     padding-top: 6px;
-    border-top: 1px solid rgba(245,240,232,0.08);
+    border-top: 1px solid var(--border);
     margin-top: 2px;
   }
   .vocab-play-progress span {
@@ -598,21 +619,21 @@
     font-weight: 500;
   }
   .section-play-btn {
-    padding: 4px 12px;
+    padding: 5px 10px;
     border: 1.5px solid var(--border);
     background: none;
     cursor: pointer;
     font-family: 'DM Mono', monospace;
     font-size: 0.6rem;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--muted);
     transition: all 0.15s;
     white-space: nowrap;
-    margin-left: 8px;
+    flex-shrink: 0;
   }
   .section-play-btn:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-light); }
-  .section-play-btn.playing { border-color: var(--red); color: var(--red); background: var(--red-light); }
+  .section-play-btn.playing { border-color: var(--red); color: var(--red); background: var(--red-light); max-width: 120px; overflow: hidden; text-overflow: ellipsis; }
   .vocab-card.playing-card {
     border-color: var(--gold) !important;
     box-shadow: 3px 3px 0 var(--gold-light);
@@ -887,7 +908,7 @@
 
     /* ── Vocab play bar ── */
     .vocab-play-bar{flex-wrap:wrap;gap:0;padding:10px 8px;overflow-x:hidden}
-    .play-bar-label{width:100%;border-right:none;border-bottom:1px solid rgba(245,240,232,0.12);padding-right:0;padding-bottom:6px;margin-bottom:6px;margin-right:0;font-size:0.6rem}
+    .play-bar-label{width:100%;border-right:none;border-bottom:1px solid var(--border);padding-right:0;padding-bottom:6px;margin-bottom:6px;margin-right:0;font-size:0.6rem}
     .vocab-play-bar-btns{display:flex;width:100%;gap:5px;flex-wrap:nowrap;margin-bottom:6px}
     .vocab-play-bar .play-all-btn{font-size:0.56rem;padding:7px 2px;flex:1 1 0;min-width:0;text-align:center;letter-spacing:0.01em}
     .stop-btn{padding:6px 4px !important;flex:1 1 0;min-width:0;font-size:0.58rem}
@@ -918,7 +939,7 @@
 
     /* ── Section header touch targets ── */
     .section-header{padding:14px 14px;min-height:44px}
-    .section-play-btn{min-height:36px;font-size:0.6rem;padding:6px 10px}
+    .section-play-btn{min-height:0;font-size:0.56rem;padding:5px 8px;letter-spacing:0.03em}
   }
 
   /* Extra small phones */
@@ -13254,7 +13275,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v46'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v50'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -17174,7 +17195,7 @@ renderPathwayBanner();
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
   const swCode = `
-    const CACHE = 'medical-chinese-v46';
+    const CACHE = 'medical-chinese-v50';
     self.addEventListener('install', e => {
       e.waitUntil(
         caches.open(CACHE).then(c => c.addAll(['${location.href}']))
