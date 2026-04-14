@@ -576,11 +576,18 @@
   .vocab-play-bar .play-all-btn {
     flex: 0 0 auto;
     font-size: 0.65rem;
+    font-weight: 700;
     padding: 7px 14px;
     letter-spacing: 0.06em;
     background: none;
     border: 1.5px solid var(--border);
     color: var(--muted);
+  }
+  .vocab-play-bar #vocab-play-all-btn,
+  .vocab-play-bar #fav-play-all-btn {
+    color: var(--gold);
+    font-weight: 700;
+    border-color: rgba(184,134,11,0.5);
   }
   .vocab-play-bar .play-all-btn:hover {
     background: rgba(184,134,11,0.06);
@@ -668,6 +675,7 @@
     border: none; border-right: 1px solid var(--border);
     background: none; cursor: pointer;
     font-family: inherit;
+    color: var(--ink);
     transition: background 0.15s;
     display: flex; flex-direction: column; align-items: center; gap: 1px;
   }
@@ -678,7 +686,7 @@
     border-bottom: 3px solid var(--gold);
     margin-bottom: -2px;
   }
-  .top-nav-zh { font-family: 'Noto Serif TC', serif; font-size: 1rem; font-weight: 600; }
+  .top-nav-zh { font-family: 'Noto Serif TC', serif; font-size: 1rem; font-weight: 600; color: var(--ink); }
   .top-nav-en { font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.12em; color: var(--muted); }
   .top-nav-btn.active .top-nav-en { color: var(--gold); }
 
@@ -844,7 +852,7 @@
     .top-nav-zh { display: none; }
     .top-nav-en { display: none; }
     .top-nav-mobile { display: block; font-size: 0.9rem; font-family: 'DM Mono', monospace; letter-spacing: 0.04em; }
-    .top-nav-btn { padding: 10px 0; flex: 1; font-size: 0.7rem; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .top-nav-btn { padding: 10px 0; flex: 1; font-size: 0.7rem; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--ink); }
     .top-nav { overflow-x: visible; }
 
     /* Header adjustments */
@@ -1278,6 +1286,122 @@
 
   .dial-player-spacer { flex: 0 0 52px; width: 52px; height: 52px; }
 
+
+  /* ── POINTS & STREAK SYSTEM ── */
+  #streak-widget {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    padding: 6px 12px;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .streak-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+  }
+  .streak-val {
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .streak-fire { color: #e67e22; }
+  .streak-rank {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 0.75rem;
+    color: var(--teal);
+    margin-left: 4px;
+  }
+  #points-toast {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    padding: 10px 20px;
+    border-radius: 4px;
+    border: 1.5px solid var(--gold);
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    z-index: 600;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  #points-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  .points-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .points-stat-card {
+    background: var(--section-bg);
+    border: 1px solid var(--border);
+    padding: 14px 16px;
+    text-align: center;
+  }
+  .points-stat-val {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.8rem;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .points-stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .points-rank-banner {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .points-rank-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    font-style: italic;
+  }
+  .points-rank-next {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    color: rgba(245,240,232,0.55);
+    letter-spacing: 0.08em;
+  }
+  .streak-milestone {
+    background: var(--gold-light);
+    border: 1.5px solid var(--gold);
+    padding: 10px 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--ink);
+    margin-bottom: 12px;
+    letter-spacing: 0.06em;
+  }
+
   /* 6 alternating module colors */  /* Lesson list */
   #lesson-list {
     flex: 1;
@@ -1300,7 +1424,7 @@
     width: 100%;
     box-sizing: border-box;
     text-align: left;
-    padding: 9px 14px 9px 10px;
+    padding: 11px 14px 11px 10px;
     border: none;
     border-bottom: 1px solid var(--border);
     border-left: 3px solid transparent;
@@ -1332,25 +1456,25 @@
   /* Lesson text */
   .lesson-num {
     font-family: 'DM Mono', monospace;
-    font-size: 0.68rem;
+    font-size: 0.72rem;
     letter-spacing: 0.08em;
     color: var(--muted);
     display: block;
-    margin-bottom: 1px;
+    margin-bottom: 2px;
   }
   .lesson-btn.active .lesson-num { color: var(--gold); }
   .lesson-title-en {
     font-family: 'DM Mono', monospace;
-    font-size: 0.78rem;
+    font-size: 0.85rem;
     display: block;
     line-height: 1.3;
     letter-spacing: 0.01em;
   }
   .lesson-title-zh {
     font-family: 'Noto Serif TC', serif;
-    font-size: 0.82rem;
+    font-size: 0.9rem;
     display: block;
-    margin-top: 2px;
+    margin-top: 3px;
     line-height: 1.3;
   }
   .lesson-btn.active .lesson-title-en { color: rgba(245,240,232,0.75); }
@@ -2539,6 +2663,122 @@
 
   .dial-player-spacer { flex: 0 0 52px; width: 52px; height: 52px; }
 
+
+  /* ── POINTS & STREAK SYSTEM ── */
+  #streak-widget {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    padding: 6px 12px;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .streak-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+  }
+  .streak-val {
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .streak-fire { color: #e67e22; }
+  .streak-rank {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 0.75rem;
+    color: var(--teal);
+    margin-left: 4px;
+  }
+  #points-toast {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    padding: 10px 20px;
+    border-radius: 4px;
+    border: 1.5px solid var(--gold);
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    z-index: 600;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  #points-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  .points-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .points-stat-card {
+    background: var(--section-bg);
+    border: 1px solid var(--border);
+    padding: 14px 16px;
+    text-align: center;
+  }
+  .points-stat-val {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.8rem;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .points-stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .points-rank-banner {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .points-rank-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    font-style: italic;
+  }
+  .points-rank-next {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    color: rgba(245,240,232,0.55);
+    letter-spacing: 0.08em;
+  }
+  .streak-milestone {
+    background: var(--gold-light);
+    border: 1.5px solid var(--gold);
+    padding: 10px 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--ink);
+    margin-bottom: 12px;
+    letter-spacing: 0.06em;
+  }
+
   /* 6 alternating module colors */  /* Lesson list */
   #lesson-list {
     flex: 1;
@@ -2561,7 +2801,7 @@
     width: 100%;
     box-sizing: border-box;
     text-align: left;
-    padding: 9px 14px 9px 10px;
+    padding: 11px 14px 11px 10px;
     border: none;
     border-bottom: 1px solid var(--border);
     border-left: 3px solid transparent;
@@ -2593,25 +2833,25 @@
   /* Lesson text */
   .lesson-num {
     font-family: 'DM Mono', monospace;
-    font-size: 0.68rem;
+    font-size: 0.72rem;
     letter-spacing: 0.08em;
     color: var(--muted);
     display: block;
-    margin-bottom: 1px;
+    margin-bottom: 2px;
   }
   .lesson-btn.active .lesson-num { color: var(--gold); }
   .lesson-title-en {
     font-family: 'DM Mono', monospace;
-    font-size: 0.78rem;
+    font-size: 0.85rem;
     display: block;
     line-height: 1.3;
     letter-spacing: 0.01em;
   }
   .lesson-title-zh {
     font-family: 'Noto Serif TC', serif;
-    font-size: 0.82rem;
+    font-size: 0.9rem;
     display: block;
-    margin-top: 2px;
+    margin-top: 3px;
     line-height: 1.3;
   }
   .lesson-btn.active .lesson-title-en { color: rgba(245,240,232,0.75); }
@@ -13275,7 +13515,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v50'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v54'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -13708,6 +13948,126 @@ function migrateClinlinguaKeys() {
   });
   localStorage.setItem('medchinese_migrated_v1', '1');
   if (count > 0) console.log(`MedChinese: migrated ${count} localStorage key(s) from clinlingua_ → medchinese_`);
+}
+
+
+// ─── POINTS & STREAK ENGINE ─────────────────────────────────────────────
+const RANKS = [
+  { min:0,     en:'Student',    zh:'學生',     emoji:'📖' },
+  { min:101,   en:'Resident',   zh:'住院醫生', emoji:'🩺' },
+  { min:501,   en:'Attending',  zh:'主治醫生', emoji:'⚕️' },
+  { min:1501,  en:'Specialist', zh:'專科醫生', emoji:'🏅' },
+  { min:5000,  en:'Chief',      zh:'主任醫生', emoji:'🏆' },
+];
+
+function getPoints() {
+  return parseInt(localStorage.getItem('medchinese_points') || '0');
+}
+function setPoints(n) {
+  localStorage.setItem('medchinese_points', String(n));
+}
+function getStreak() {
+  return {
+    count: parseInt(localStorage.getItem('medchinese_streak') || '0'),
+    lastDate: localStorage.getItem('medchinese_streak_date') || '',
+    longest: parseInt(localStorage.getItem('medchinese_streak_longest') || '0'),
+  };
+}
+function getRank(pts) {
+  let rank = RANKS[0];
+  for (const r of RANKS) { if (pts >= r.min) rank = r; }
+  return rank;
+}
+function getNextRank(pts) {
+  for (const r of RANKS) { if (pts < r.min) return r; }
+  return null;
+}
+
+function awardPoints(amount, reason) {
+  const current = getPoints();
+  setPoints(current + amount);
+  showPointsToast(`+${amount} pts — ${reason}`);
+  updateStreakWidget();
+}
+
+let _toastTimer = null;
+function showPointsToast(msg) {
+  let toast = document.getElementById('points-toast');
+  if (!toast) return;
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+function checkDailyLogin() {
+  const today = new Date().toISOString().slice(0, 10);
+  const streak = getStreak();
+  if (streak.lastDate === today) return; // already logged today
+
+  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  let newCount = streak.lastDate === yesterday ? streak.count + 1 : 1;
+  let longest = Math.max(newCount, streak.longest);
+
+  localStorage.setItem('medchinese_streak', String(newCount));
+  localStorage.setItem('medchinese_streak_date', today);
+  localStorage.setItem('medchinese_streak_longest', String(longest));
+
+  // Base points for daily login
+  let pts = 10;
+  let msg = 'Daily login';
+
+  // Streak milestones
+  if (newCount === 7)  { pts += 20; msg = '7-day streak! 🔥'; }
+  if (newCount === 30) { pts += 50; msg = '30-day streak! 🌟'; }
+  if (newCount === 100){ pts += 150; msg = '100-day streak! 🏆'; }
+
+  awardPoints(pts, msg);
+  updateStreakWidget();
+
+  // Show milestone banner if applicable
+  if ([7, 30, 100].includes(newCount)) {
+    setTimeout(() => {
+      const banner = document.querySelector('.streak-milestone');
+      if (banner) {
+        banner.style.display = 'block';
+        banner.textContent = `🔥 ${newCount}-day streak! Keep going!`;
+      }
+    }, 500);
+  }
+}
+
+function updateStreakWidget() {
+  const widget = document.getElementById('streak-widget');
+  if (!widget) return;
+  const pts = getPoints();
+  const streak = getStreak();
+  const rank = getRank(pts);
+  const next = getNextRank(pts);
+  widget.innerHTML = `
+    <div class="streak-item">
+      <span class="streak-fire">🔥</span>
+      <span class="streak-val">${streak.count}</span>
+      <span>day streak</span>
+    </div>
+    <div class="streak-item">
+      <span>⭐</span>
+      <span class="streak-val">${pts.toLocaleString()}</span>
+      <span>pts</span>
+    </div>
+    <div class="streak-item">
+      <span class="streak-rank">${rank.emoji} ${rank.en} ${rank.zh}</span>
+    </div>
+    ${next ? `<div class="streak-item" style="color:var(--muted);">${next.min - pts} pts to ${next.en}</div>` : '<div class="streak-item" style="color:var(--teal);">Max rank achieved! 🏆</div>'}
+  `;
+}
+
+// Track awarded activities to avoid double-counting per session
+const _sessionAwards = new Set();
+function awardOnce(key, pts, reason) {
+  if (_sessionAwards.has(key)) return;
+  _sessionAwards.add(key);
+  awardPoints(pts, reason);
 }
 
 function renderSidebar() {
@@ -14186,8 +14546,8 @@ function renderFavorites() {
       <span class="play-bar-label">PLAY ALL OPTIONS:</span>
       <div class="vocab-play-bar-btns">
         <button class="play-all-btn" id="fav-play-all-btn" onclick="startFavPlay(null)">▶ 中文</button>
-        <button class="play-all-btn drill-btn" id="fav-drill-zh-en-btn" onclick="startFavDrill('zh-en')">▶ 中→EN Drill</button>
-        <button class="play-all-btn drill-btn" id="fav-drill-en-zh-btn" onclick="startFavDrill('en-zh')">▶ EN→中 Drill</button>
+        <button class="play-all-btn drill-btn" id="fav-drill-zh-en-btn" onclick="startFavDrill('zh-en')">▶ 中→ENG Drill</button>
+        <button class="play-all-btn drill-btn" id="fav-drill-en-zh-btn" onclick="startFavDrill('en-zh')">▶ ENG→中 Drill</button>
       </div>
       <button class="stop-btn" id="fav-stop-btn" onclick="stopVocabPlayAll()" style="border-color:rgba(245,240,232,0.2);color:rgba(245,240,232,0.45);">■ Stop</button>
       
@@ -14245,6 +14605,7 @@ function switchTab(t) {
   const tc = document.getElementById('tab-content');
   tc.classList.remove('fade-in'); void tc.offsetWidth; tc.classList.add('fade-in');
   renderTab();
+  setTimeout(() => updateStreakWidget(), 50);
 }
 
 function renderTab() {
@@ -14265,8 +14626,8 @@ function renderVocab() {
       <span class="play-bar-label">PLAY ALL OPTIONS:</span>
       <div class="vocab-play-bar-btns">
         <button class="play-all-btn" id="vocab-play-all-btn" onclick="startVocabPlayAll()">▶ 中文</button>
-        <button class="play-all-btn drill-btn" id="vocab-drill-zh-en-btn" onclick="startDrillZhEn()">▶ 中→EN Drill</button>
-        <button class="play-all-btn drill-btn" id="vocab-drill-en-zh-btn" onclick="startDrillEnZh()">▶ EN→中 Drill</button>
+        <button class="play-all-btn drill-btn" id="vocab-drill-zh-en-btn" onclick="startDrillZhEn()">▶ 中→ENG Drill</button>
+        <button class="play-all-btn drill-btn" id="vocab-drill-en-zh-btn" onclick="startDrillEnZh()">▶ ENG→中 Drill</button>
         <button class="stop-btn" id="vocab-stop-btn" onclick="stopVocabPlayAll()" style="border-color:rgba(245,240,232,0.2);color:rgba(245,240,232,0.45);">■ Stop</button>
       </div>
       <div class="vocab-play-progress" id="vocab-play-progress">${totalWords} words across ${L.sections.length} section${L.sections.length>1?'s':''}</div>
@@ -14283,8 +14644,8 @@ function renderVocab() {
           ${sec.zh ? `<span class="section-title-zh">${sec.zh}</span>` : ''}
           <div class="section-controls-row" onclick="event.stopPropagation()">
             <button class="section-play-btn" id="secbtn-${si}" onclick="startVocabPlaySection(${si})">▶ 中文</button>
-            <button class="section-play-btn" onclick="startSectionDrill(${si},'zh-en')">中→EN Drill</button>
-            <button class="section-play-btn" onclick="startSectionDrill(${si},'en-zh')">EN→中 Drill</button>
+            <button class="section-play-btn" onclick="startSectionDrill(${si},'zh-en')">中→ENG Drill</button>
+            <button class="section-play-btn" onclick="startSectionDrill(${si},'en-zh')">ENG→中 Drill</button>
             <div class="section-controls-spacer"></div>
             <button class="section-thumb-btn" data-sec="${sec.title}" onclick="rateSectionEl(this,'up')" title="Section useful">👍</button>
             <button class="section-thumb-btn" data-sec="${sec.title}" onclick="rateSectionEl(this,'down')" title="Section not useful">👎</button>
@@ -14638,7 +14999,7 @@ function playNextVocab() {
   const L = getLessons()[cur];
   const v = L.sections[si].vocab[vi];
   if (progressEl) {
-    const modeLabel = drillMode === 'en-zh' ? ' EN→中' : drillMode === 'zh-en' ? ' 中→EN' : '';
+    const modeLabel = drillMode === 'en-zh' ? ' ENG→中' : drillMode === 'zh-en' ? ' 中→ENG' : '';
     progressEl.innerHTML = `<span>${vocabPlayPos+1}/${vocabPlayQueue.length}</span>${modeLabel} — ${L.sections[si].title}: ${v.zh}`;
   }
   // Update floating drill player
@@ -14695,6 +15056,11 @@ function playNextVocab() {
 }
 
 function stopVocabPlayAll() {
+  // Award points if played through full queue
+  if (vocabPlayPos >= vocabPlayQueue.length && vocabPlayQueue.length > 0) {
+    const modeKey = `vocab_play_${cur}_${drillMode}`;
+    awardOnce(modeKey, 5, drillMode === 'chinese' ? '中文 play complete' : 'Drill complete');
+  }
   synth && synth.cancel();
   clearTimeout(vocabPlayTimer);
   clearTimeout(vocabIntraTimer);
@@ -14731,12 +15097,12 @@ function updateVocabPlayUI(isPlaying, activeSi) {
   }
   if (drillEnZhBtn) {
     const active = isPlaying && activeSi === null && drillMode === 'en-zh';
-    drillEnZhBtn.textContent = active ? '⏸️ Drilling...' : '▶ EN→中 Drill';
+    drillEnZhBtn.textContent = active ? '⏸️ Drilling...' : '▶ ENG→中 Drill';
     drillEnZhBtn.classList.toggle('playing', active);
   }
   if (drillZhEnBtn) {
     const active = isPlaying && activeSi === null && drillMode === 'zh-en';
-    drillZhEnBtn.textContent = active ? '⏸️ Drilling...' : '▶ 中→EN Drill';
+    drillZhEnBtn.textContent = active ? '⏸️ Drilling...' : '▶ 中→ENG Drill';
     drillZhEnBtn.classList.toggle('playing', active);
   }
   if (stopBtn) {
@@ -15377,6 +15743,13 @@ function _diagCleanup() {
   document.querySelectorAll('.dline-play-btn').forEach(b => { b.classList.remove('playing'); b.textContent = '▶ 中文'; });
   const btn = document.getElementById('play-all-btn');
   if (btn) { btn.textContent = '▶ Play All 全部播放'; btn.classList.remove('playing'); }
+  // Award points if dialogue played through
+  if (typeof playAllIdx !== 'undefined') {
+    const lines = getLessons()[cur]?.dialogue?.lines;
+    if (lines && playAllIdx >= lines.length - 1) {
+      awardOnce(`dial_${cur}`, 5, 'Dialogue complete');
+    }
+  }
   dialPlayerHide();
 }
 
@@ -15445,6 +15818,12 @@ function renderQuiz() {
   if (currentQ >= questions.length) {
     const pct = Math.round(score / questions.length * 100);
     const grade = pct >= 90 ? '優秀 Excellent' : pct >= 70 ? '良好 Good' : pct >= 50 ? '及格 Pass' : '繼續努力 Keep Trying';
+    // Award points for quiz completion
+    if (pct === 100) {
+      awardOnce(`quiz_perfect_${cur}`, 10, 'Perfect quiz score! 🎉');
+    } else {
+      awardOnce(`quiz_${cur}`, 5, 'Quiz completed');
+    }
     const missedHtml = wrong.length > 0 ? `
       <div style="margin-top:28px;text-align:left">
         <div style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Review Missed Words 錯誤詞彙</div>
@@ -15584,6 +15963,7 @@ function renderMain() {
       <div class="lesson-main-title">${L.en}</div>
       <div class="lesson-main-zh">${L.zh}<button class="main-speak-btn" onclick="speakLessonTitle('${zhSafe}')">▶ PLAY</button></div>
     </div>
+    <div id="streak-widget"></div>
     <div class="lesson-rating-bar"><span class="rating-label">Relevant to your practice?</span><button class="lesson-thumb-btn" onclick="rateLesson(this,'up')" title="Relevant">👍</button><button class="lesson-thumb-btn" onclick="rateLesson(this,'down')" title="Not relevant">👎</button></div>
     <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
     <div class="tabs">
@@ -15616,6 +15996,65 @@ function renderSetupPage() {
   renderAbout(target);
   // Append feedback survey after audio setup
   renderFeedbackSurvey(target);
+}
+
+
+function renderPointsStats(targetEl) {
+  const el = targetEl || document.getElementById('setup-content');
+  if (!el) return;
+  const pts = getPoints();
+  const streak = getStreak();
+  const rank = getRank(pts);
+  const next = getNextRank(pts);
+  const pctToNext = next ? Math.round(((pts - rank.min) / (next.min - rank.min)) * 100) : 100;
+
+  const div = document.createElement('div');
+  div.innerHTML = `
+    <div style="margin-top:36px;padding-top:24px;border-top:2px solid var(--border)">
+      <div class="lesson-label" style="margin-bottom:16px">YOUR PROGRESS 學習進度</div>
+      <div class="points-rank-banner">
+        <div>
+          <div class="points-rank-title">${rank.emoji} ${rank.en}</div>
+          <div style="font-family:'DM Mono',monospace;font-size:0.62rem;color:rgba(245,240,232,0.6);letter-spacing:0.08em">${rank.zh}</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-family:'DM Serif Display',serif;font-size:1.6rem;font-style:italic">${pts.toLocaleString()}</div>
+          <div class="points-rank-next">${next ? `${next.min - pts} pts to ${next.en}` : 'Max rank!'}</div>
+        </div>
+      </div>
+      ${next ? `<div style="height:6px;background:var(--border);margin-bottom:20px"><div style="height:100%;background:var(--gold);width:${pctToNext}%;transition:width 0.4s"></div></div>` : ''}
+      <div class="points-stats-grid">
+        <div class="points-stat-card">
+          <div class="points-stat-val">🔥 ${streak.count}</div>
+          <div class="points-stat-label">Current Streak</div>
+        </div>
+        <div class="points-stat-card">
+          <div class="points-stat-val">🏅 ${streak.longest}</div>
+          <div class="points-stat-label">Longest Streak</div>
+        </div>
+        <div class="points-stat-card">
+          <div class="points-stat-val">⭐ ${pts.toLocaleString()}</div>
+          <div class="points-stat-label">Total Points</div>
+        </div>
+        <div class="points-stat-card">
+          <div class="points-stat-val">📚 ${getCompletedLessons().length}</div>
+          <div class="points-stat-label">Lessons Done</div>
+        </div>
+      </div>
+      <div style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);line-height:1.8;margin-bottom:8px">
+        <strong>How to earn points:</strong><br>
+        Daily login: <strong>10 pts</strong> &nbsp;·&nbsp;
+        7-day streak: <strong>+20 bonus</strong> &nbsp;·&nbsp;
+        30-day streak: <strong>+50 bonus</strong><br>
+        Vocab/drill complete: <strong>5 pts</strong> &nbsp;·&nbsp;
+        Dialogue complete: <strong>5 pts</strong> &nbsp;·&nbsp;
+        Quiz: <strong>5 pts</strong> &nbsp;·&nbsp;
+        Perfect quiz: <strong>10 pts</strong>
+      </div>
+      <button onclick="if(confirm('Reset all points and streak data?')){localStorage.removeItem('medchinese_points');localStorage.removeItem('medchinese_streak');localStorage.removeItem('medchinese_streak_date');localStorage.removeItem('medchinese_streak_longest');location.reload();}" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.08em;background:none;border:1px solid var(--border);color:var(--muted);cursor:pointer;padding:5px 12px;margin-top:8px">Reset Progress</button>
+    </div>
+  `;
+  el.appendChild(div);
 }
 
 function renderAbout(targetEl) {
@@ -15807,7 +16246,7 @@ function playNextFavVocab() {
 
   const progressEl = document.getElementById('vocab-play-progress');
   if (progressEl) {
-    const modeLabel = drillMode === 'en-zh' ? ' EN→中' : drillMode === 'zh-en' ? ' 中→EN' : '';
+    const modeLabel = drillMode === 'en-zh' ? ' ENG→中' : drillMode === 'zh-en' ? ' 中→ENG' : '';
     progressEl.innerHTML = `<span>${vocabPlayPos+1}/${vocabPlayQueue.length}</span>${modeLabel} · ${v.zh}`;
   }
   // Update floating drill player for favorites
@@ -16975,6 +17414,7 @@ function renderPathwayScreen() {
 
 function renderPathwayHome() {
   const el = document.getElementById('pathway-content');
+  if (!el) return;
   el.innerHTML = `
     <div class="pathway-hero fade-in">
       <div class="pathway-hero-title">Personalize Your Learning</div>
@@ -16988,6 +17428,7 @@ function renderPathwayHome() {
       <div>✦ Progress tracking across your learning path</div>
       <div>✦ Saved locally — available every time you return</div>
     </div>`;
+  renderPointsStats(el);
 }
 
 function startAssessment() {
@@ -17126,6 +17567,7 @@ function renderPathwayResult(pathway, isReturn) {
       </div>
     </div>
     <div class="feature-rating-bar">Was <strong>My Path</strong> useful?&nbsp;<button class="feature-thumb-btn" onclick="rateFeature(this,'My Path','up')">👍</button>&nbsp;<button class="feature-thumb-btn" onclick="rateFeature(this,'My Path','down')">👎</button></div>`;
+  renderPointsStats(el);
 }
 
 function jumpToLesson(idx) {
@@ -17185,6 +17627,7 @@ function renderPathwayBanner() {
 
 // ─── INIT ───
 if (synth && synth.getVoices().length === 0) synth.addEventListener('voiceschanged', ()=>{});
+checkDailyLogin();
 loadFavorites();
 loadVoicePrefs();
 renderSidebar();
@@ -17194,8 +17637,9 @@ renderPathwayBanner();
 // ─── PWA SERVICE WORKER ───
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
+  const APP_VER = 'medical-chinese-v54';
   const swCode = `
-    const CACHE = 'medical-chinese-v50';
+    const CACHE = '${APP_VER}';
     self.addEventListener('install', e => {
       e.waitUntil(
         caches.open(CACHE).then(c => c.addAll(['${location.href}']))
@@ -17209,29 +17653,56 @@ if ('serviceWorker' in navigator) {
       self.clients.claim();
     });
     self.addEventListener('fetch', e => {
+      // Network-first: always try network, fall back to cache
+      // This ensures updates are picked up immediately
       e.respondWith(
-        caches.match(e.request).then(r => r || fetch(e.request).catch(() => caches.match('${location.href}')))
+        fetch(e.request).then(response => {
+          // Cache the fresh response
+          if (response && response.status === 200 && e.request.method === 'GET') {
+            const clone = response.clone();
+            caches.open(CACHE).then(c => c.put(e.request, clone));
+          }
+          return response;
+        }).catch(() => {
+          // Network failed — serve from cache
+          return caches.match(e.request).then(r => r || caches.match('${location.href}'));
+        })
       );
     });
-  `;
+    // Respond to version check messages
+    self.addEventListener('message', e => {
+      if (e.data === 'GET_VERSION') {
+        e.source.postMessage({ type: 'VERSION', version: CACHE });
+      }
+    });
+  `.replace(/\$\{APP_VER\}/g, APP_VER).replace(/\$\{location\.href\}/g, location.href);
+
   const blob = new Blob([swCode], {type: 'application/javascript'});
   const swUrl = URL.createObjectURL(blob);
   navigator.serviceWorker.register(swUrl, {scope: './'}).then(reg => {
-    // Detect when a new service worker takes over — show update banner
+    // Force check for updates on every page load
+    reg.update().catch(() => {});
+
+    // Detect when a new service worker installs
     reg.addEventListener('updatefound', () => {
       const newWorker = reg.installing;
       if (!newWorker) return;
       newWorker.addEventListener('statechange', () => {
-        if (newWorker.state === 'activated' && navigator.serviceWorker.controller) {
+        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+          // New SW is installed — tell it to skip waiting and take over immediately
+          newWorker.postMessage('SKIP_WAITING');
+        }
+        if (newWorker.state === 'activated') {
           showUpdateBanner();
         }
       });
     });
   }).catch(() => {});
 
-  // Also detect controller change (new SW claimed clients)
+  // When controller changes (new SW activated), reload automatically
   navigator.serviceWorker.addEventListener('controllerchange', () => {
-    showUpdateBanner();
+    // Small delay to let the new SW fully activate
+    setTimeout(() => window.location.reload(), 200);
   });
 }
 
@@ -17761,6 +18232,9 @@ function setSurveyStars(n) {
     </svg>
     Lessons
   </button>
+
+  <!-- Points Toast -->
+  <div id="points-toast"></div>
 
   <!-- Floating Dialogue Player -->
   <div id="dial-player">
