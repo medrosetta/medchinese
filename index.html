@@ -13533,7 +13533,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v73'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v74'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -13545,8 +13545,30 @@ const VOICE_MAP = {
 // For chars Azure HK voices skip entirely, substitute with phonetically
 // similar common characters that Azure reliably pronounces
 function applyTTSSubstitutions(text) {
-  // 跖骨/蹠骨 (metatarsals) — Azure HK skips 跖/蹠, replace whole word
+  // Rare CJK chars Azure HK voices skip
   text = text.replace(/[跖蹠]骨/g, '足掌骨');
+
+  // Special characters that cause TTS to stall or produce noise
+  text = text.replace(/₂/g, '2');
+  text = text.replace(/₃/g, '3');
+  text = text.replace(/[≥≤]/g, ' ');
+  text = text.replace(/[–—]/g, ', ');   // en/em dash → pause
+  text = text.replace(/\*/g, '');        // wildcard chars
+  text = text.replace(/&/g, ' and ');
+
+  // Medical abbreviations with hyphens that TTS mispronounces
+  // Keep the human-readable part, drop the code
+  text = text.replace(/GLP-1/g, 'GLP 1');
+  text = text.replace(/SGLT-2/g, 'SGLT 2');
+  text = text.replace(/AUDIT-C/g, 'AUDIT C');
+  text = text.replace(/CHA₂DS₂-VASc/g, 'CHA2DS2 VASc');
+  text = text.replace(/HLA-B\*[\d:]+/g, 'HLA B');
+  text = text.replace(/PHQ-(\d)/g, 'PHQ $1');
+  text = text.replace(/COVID-19/g, 'COVID 19');
+
+  // Subscript/superscript numbers
+  text = text.replace(/SpO2/g, 'SpO 2');
+
   return text;
 }
 
@@ -17681,7 +17703,7 @@ renderPathwayBanner();
 // ─── PWA SERVICE WORKER ───
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
-  const APP_VER = 'medical-chinese-v73';
+  const APP_VER = 'medical-chinese-v74';
   const swCode = `
     const CACHE = '${APP_VER}';
     self.addEventListener('install', e => {
