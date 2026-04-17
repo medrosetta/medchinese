@@ -13533,7 +13533,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v70'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v73'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -13542,7 +13542,7 @@ const VOICE_MAP = {
   cmn_patient: localStorage.getItem('medchinese_azure_voice_cmn_patient') || 'zh-CN-YunxiNeural',
 };
 
-async // For chars Azure HK voices skip entirely, substitute with phonetically
+// For chars Azure HK voices skip entirely, substitute with phonetically
 // similar common characters that Azure reliably pronounces
 function applyTTSSubstitutions(text) {
   // 跖骨/蹠骨 (metatarsals) — Azure HK skips 跖/蹠, replace whole word
@@ -13550,7 +13550,7 @@ function applyTTSSubstitutions(text) {
   return text;
 }
 
-function speakAzure(text, lang, onEnd) {
+async function speakAzure(text, lang, onEnd) {
   if (!AZURE_WORKER_URL) return false;
   try {
     const voice = VOICE_MAP[lang] || VOICE_MAP.yue;
@@ -14094,6 +14094,19 @@ function awardOnce(key, pts, reason) {
   if (_sessionAwards.has(key)) return;
   _sessionAwards.add(key);
   awardPoints(pts, reason);
+  checkLessonComplete();
+}
+
+function checkLessonComplete() {
+  // Lesson complete = vocab/drill + dialogue + quiz all done this session
+  const hasVocab = [..._sessionAwards].some(k => k.startsWith(`vocab_play_${cur}_`));
+  const hasDial  = _sessionAwards.has(`dial_${cur}`);
+  const hasQuiz  = _sessionAwards.has(`quiz_perfect_${cur}`) || _sessionAwards.has(`quiz_${cur}`);
+  const bonusKey = `lesson_complete_${cur}`;
+  if (hasVocab && hasDial && hasQuiz && !_sessionAwards.has(bonusKey)) {
+    _sessionAwards.add(bonusKey);
+    awardPoints(20, 'Lesson complete! 🏆');
+  }
 }
 
 function renderSidebar() {
@@ -15089,7 +15102,7 @@ function stopVocabPlayAll() {
   // Award points if played through full queue
   if (vocabPlayPos >= vocabPlayQueue.length && vocabPlayQueue.length > 0) {
     const modeKey = `vocab_play_${cur}_${drillMode}`;
-    awardOnce(modeKey, 5, drillMode === 'chinese' ? '中文 play complete' : 'Drill complete');
+    awardOnce(modeKey, 10, drillMode === 'chinese' ? '中文 play complete' : 'Drill complete');
   }
   synth && synth.cancel();
   clearTimeout(vocabPlayTimer);
@@ -15849,8 +15862,8 @@ function renderQuiz() {
     const pct = Math.round(score / questions.length * 100);
     const grade = pct >= 90 ? '優秀 Excellent' : pct >= 70 ? '良好 Good' : pct >= 50 ? '及格 Pass' : '繼續努力 Keep Trying';
     // Award points for quiz completion
-    if (pct === 100) {
-      awardOnce(`quiz_perfect_${cur}`, 10, 'Perfect quiz score! 🎉');
+    if (pct >= 90) {
+      awardOnce(`quiz_perfect_${cur}`, 10, pct === 100 ? 'Perfect quiz! 🎉' : '90%+ quiz score! 🎉');
     } else {
       awardOnce(`quiz_${cur}`, 5, 'Quiz completed');
     }
@@ -16076,10 +16089,11 @@ function renderPointsStats(targetEl) {
         Daily login: <strong>10 pts</strong> &nbsp;·&nbsp;
         7-day streak: <strong>+20 bonus</strong> &nbsp;·&nbsp;
         30-day streak: <strong>+50 bonus</strong><br>
-        Vocab/drill complete: <strong>5 pts</strong> &nbsp;·&nbsp;
+        Vocab/drill complete: <strong>10 pts</strong> &nbsp;·&nbsp;
         Dialogue complete: <strong>5 pts</strong> &nbsp;·&nbsp;
-        Quiz: <strong>5 pts</strong> &nbsp;·&nbsp;
-        Perfect quiz: <strong>10 pts</strong>
+        Quiz ≥90%: <strong>10 pts</strong> &nbsp;·&nbsp;
+        Quiz any: <strong>5 pts</strong><br>
+        Lesson complete (all 3): <strong>+20 pts bonus</strong>
       </div>
       <button onclick="if(confirm('Reset all points and streak data?')){localStorage.removeItem('medchinese_points');localStorage.removeItem('medchinese_streak');localStorage.removeItem('medchinese_streak_date');localStorage.removeItem('medchinese_streak_longest');location.reload();}" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.08em;background:none;border:1px solid var(--border);color:var(--muted);cursor:pointer;padding:5px 12px;margin-top:8px">Reset Progress</button>
     </div>
@@ -17667,7 +17681,7 @@ renderPathwayBanner();
 // ─── PWA SERVICE WORKER ───
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
-  const APP_VER = 'medical-chinese-v70';
+  const APP_VER = 'medical-chinese-v73';
   const swCode = `
     const CACHE = '${APP_VER}';
     self.addEventListener('install', e => {
