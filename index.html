@@ -4454,8 +4454,8 @@ const LESSONS = [
       {sp:"doctor",zh:"你對腳有冇腫脹？我按落去會唔會留低一個凹？",jp:"nei5 deoi3 goek3 jau5 mou5 zung2 zoeng3? ngo5 on3 lok6 heoi3 wui5 m4 wui5 lau4 dai1 jat1 go3 aau3?",en:"Is there swelling in your legs? Does pressing leave a dent?"},
       {sp:"patient",zh:"有，下午嗰陣腳踝腫得好厲害。",jp:"jau5, haa6 ng3 go2 zan6 goek3 waai4 zung2 dak1 hou2 lei6 hoi3.",en:"Yes, by afternoon my ankles are very swollen."},
       {sp:"doctor",zh:"腳腫加上瞓低唔夠氣，我估係心臟衰竭。我幫你做心電圖同超聲波，仲開利尿劑俾你。",jp:"goek3 zung2 gaa1 soeng6 fan3 dai1 m4 gau3 hei3, ngo5 gu2 hai6 sam1 zong6 seoi1 kit3. ngo5 bong1 nei5 zou6 sam1 din6 tou4 tung4 ciu1 sing1 bo1, zung6 hoi1 lei6 niu6 zai1 bei2 nei5.",en:"Leg swelling plus breathlessness lying down — I suspect heart failure. I'll do an EKG and echo, and prescribe a diuretic."},
-      {sp:"patient",zh:"你有冇定時食血壓藥呀？",jp:"nei5 jau5 mou5 ding6 si4 sik6 hyut3 aat3 joek6 aa3?",en:"Have you been taking your blood pressure medication regularly?"},
-      {sp:"doctor",zh:"係，每日都有食。",jp:"hai6, mui5 jat6 dou1 jau5 sik6.",en:"Yes, every day."},
+      {sp:"doctor",zh:"你有冇定時食血壓藥呀？",jp:"nei5 jau5 mou5 ding6 si4 sik6 hyut3 aat3 joek6 aa3?",en:"Have you been taking your blood pressure medication regularly?"},
+      {sp:"patient",zh:"係，每日都有食。",jp:"hai6, mui5 jat6 dou1 jau5 sik6.",en:"Yes, every day."},
     ]
   }
   },
@@ -5680,6 +5680,7 @@ const LESSONS = [
       {zh:"濕疹",jp:"sap1 cam2",en:"Eczema"},
       {zh:"牛皮癬",jp:"ngau4 pei4 sin1",en:"Psoriasis"},
       {zh:"暗瘡",jp:"am3 cong1",en:"Acne"},
+      {zh:"玫瑰痤瘡",jp:"mui4 gwai3 zeoi6 cong1",en:"Rosacea"},
       {zh:"皮膚炎",jp:"pei4 fu1 jim4",en:"Dermatitis"},
       {zh:"接觸性皮膚炎",jp:"zip3 zuk1 sing3 pei4 fu1 jim4",en:"Contact dermatitis"},
       {zh:"脂溢性皮膚炎",jp:"zi1 jat6 sing3 pei4 fu1 jim4",en:"Seborrheic dermatitis"},
@@ -9141,7 +9142,22 @@ const LESSONS_MANDARIN = [
       {zh:"胆碱酯酶抑制剂",jp:"dǎn jiǎn zhǐ méi yì zhì jì",en:"Cholinesterase inhibitor (dementia medication)"},
       {zh:"帕金森病药物",jp:"pà jīn sēn bìng yào wù",en:"Parkinson's disease medication"},
       {zh:"这些药需要定时服用，不可以漏服",jp:"zhè xiē yào xū yào dìng shí fú yòng, bù kě yǐ lòu fú",en:"These medications must be taken on time — do not miss doses"},
-    ]},    {  title:"Cardiac Conditions & Infections", zh:"心脏疾病及感染", vocab:[
+    ]},
+  ],
+
+  dialogue:{
+    title:"Dialogue: Neurology — Stroke Assessment",
+    lines:[
+      {sp:"doctor",zh:"您好，我是汤医生。您家人说您突然说话困难、右手无力，是吗？",jp:"nín hǎo, wǒ shì Tāng yī shēng. nín jiā rén shuō nín tū rán shuō huà kùn nán, yòu shǒu wú lì, shì ma?",en:"Hello, I'm Dr. Tong. Your family said you suddenly had difficulty speaking and right arm weakness — is that right?"},
+      {sp:"patient",zh:"是的，大概半小时前开始的。",jp:"shì de, dà gài bàn xiǎo shí qián kāi shǐ de.",en:"Yes, it started about half an hour ago."},
+      {sp:"doctor",zh:"这些是中风的迹象，我们需要立即做CT扫描。时间至关重要。",jp:"zhè xiē shì zhòng fēng de jì xiàng, wǒ men xū yào lì jí zuò CT sǎo miáo. shí jiān zhì guān zhòng yào.",en:"These are signs of a stroke — we need a CT scan immediately. Time is critical."},
+    ]
+  }
+  },
+  {
+  id:8, zh:"心脏科", en:"Cardiology",
+  sections:[
+    { title:"Cardiac Conditions & Infections", zh:"心脏疾病及感染", vocab:[
       {zh:"冠心病",jp:"guān xīn bìng",en:"Coronary artery disease"},
       {zh:"心肌梗死",jp:"xīn jī gěng sǐ",en:"Heart attack / myocardial infarction"},
       {zh:"心力衰竭",jp:"xīn lì shuāi jié",en:"Heart failure"},
@@ -9272,7 +9288,6 @@ const LESSONS_MANDARIN = [
       {zh:"需要转介心脏科",jp:"xū yào zhuǎn jiè xīn zàng kē",en:"Referring to cardiology"},
       {zh:"胸痛是否在运动时发生？",jp:"xiōng tòng shì fǒu zài yùn dòng shí fā shēng?",en:"Does chest pain occur with exertion?"},]},,
   ],
-
   dialogue:{
     title:"Dialogue: Cardiology — Heart Failure",
     lines:[
@@ -10577,6 +10592,7 @@ const LESSONS_MANDARIN = [
       {zh:"特应性皮炎",jp:"tè yìng xìng pí yán",en:"Atopic dermatitis"},
       {zh:"银屑病",jp:"yín xiè bìng",en:"Psoriasis"},
       {zh:"痤疮",jp:"cuó chuāng",en:"Acne"},
+      {zh:"玫瑰痤疮",jp:"méi guī cuó chuāng",en:"Rosacea"},
       {zh:"荨麻疹",jp:"qián má zhěn",en:"Hives / urticaria"},
       {zh:"癣",jp:"xuǎn",en:"Ringworm / tinea"},
       {zh:"带状疱疹",jp:"dài zhuàng pào zhěn",en:"Shingles / herpes zoster"},
@@ -13515,7 +13531,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v56'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v61'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -13953,11 +13969,11 @@ function migrateClinlinguaKeys() {
 
 // ─── POINTS & STREAK ENGINE ─────────────────────────────────────────────
 const RANKS = [
-  { min:0,     en:'Student',    zh:'學生',     emoji:'📖' },
-  { min:101,   en:'Resident',   zh:'住院醫生', emoji:'🩺' },
-  { min:501,   en:'Attending',  zh:'主治醫生', emoji:'⚕️' },
-  { min:1501,  en:'Specialist', zh:'專科醫生', emoji:'🏅' },
-  { min:5000,  en:'Chief',      zh:'主任醫生', emoji:'🏆' },
+  { min:0,     en:'Student',  zh:'學生',     emoji:'📖' },
+  { min:101,   en:'Resident', zh:'住院醫生', emoji:'🩺' },
+  { min:501,   en:'Fellow',   zh:'研究員',   emoji:'⚕️' },
+  { min:1501,  en:'Attending',zh:'主治醫生', emoji:'🏅' },
+  { min:5000,  en:'Chief',    zh:'主任醫生', emoji:'🏆' },
 ];
 
 function getPoints() {
@@ -17637,7 +17653,7 @@ renderPathwayBanner();
 // ─── PWA SERVICE WORKER ───
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
-  const APP_VER = 'medical-chinese-v56';
+  const APP_VER = 'medical-chinese-v61';
   const swCode = `
     const CACHE = '${APP_VER}';
     self.addEventListener('install', e => {
