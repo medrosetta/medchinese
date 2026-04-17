@@ -278,6 +278,8 @@
     color: var(--teal);
     margin-bottom: 3px;
     letter-spacing: 0.04em;
+    white-space: normal;
+    word-break: break-word;
   }
   .vocab-en {
     font-family: 'Noto Sans HK', sans-serif;
@@ -3882,7 +3884,7 @@ const LESSONS = [
     { title:"Pain Management", zh:"疼痛管理", vocab:[
       {zh:"止痛藥",jp:"zi2 tung3 joek6",en:"Painkiller / analgesic"},
       {zh:"撲熱息痛",jp:"pok3 jit6 sik1 tung3",en:"Paracetamol / acetaminophen"},
-      {zh:"非類固醇消炎藥",jp:"fei1 leoi6 gu2 jeun4 siu1 jim4 joek6",en:"NSAIDs (ibuprofen etc.)"},
+      {zh:"非類固醇消炎藥",jp:"fei1 leoi6 gu2 jeun4 siu1 jim4 joek6",en:"NSAIDs"},
       {zh:"類固醇",jp:"leoi6 gu2 jeun4",en:"Corticosteroid"},
       {zh:"鴉片類止痛藥",jp:"aa1 pin3 leoi6 zi2 tung3 joek6",en:"Opioid analgesic"},
       {zh:"神經痛藥物",jp:"san4 ging1 tung3 joek6 mat6",en:"Neuropathic pain medication"},
@@ -4573,7 +4575,7 @@ const LESSONS = [
 
     { title:"Hematology Symptoms", zh:"血液病症狀", vocab:[
       {zh:"疲倦",jp:"pei4 gyun6",en:"Fatigue"},
-      {zh:"面色蒼白",jp:"min6 sik1 cong1 baak6",en:"Pallor (pale appearance)"},
+      {zh:"面色蒼白",jp:"min6 sik1 cong1 baak6",en:"Pallor"},
       {zh:"出血",jp:"ceot1 hyut3",en:"Bleeding"},
       {zh:"瘀青",jp:"jyu1 ceng1",en:"Bruising easily"},
       {zh:"淋巴結腫大",jp:"lam4 baa1 git3 zung2 daai6",en:"Swollen lymph nodes"},
@@ -5505,7 +5507,7 @@ const LESSONS = [
       {zh:"富血小板血漿注射",jp:"fu3 hyut3 siu2 baan2 hyut3 zoeng1 zyu3 se6",en:"PRP injection (platelet-rich plasma)"},
     ]},
     { title:"Musculoskeletal Medications", zh:"骨骼肌肉科藥物", vocab:[
-      {zh:"非類固醇消炎藥",jp:"fei1 leoi6 gu2 jeun4 siu1 jim4 joek6",en:"NSAIDs (ibuprofen, naproxen)"},
+      {zh:"非類固醇消炎藥",jp:"fei1 leoi6 gu2 jeun4 siu1 jim4 joek6",en:"NSAIDs"},
       {zh:"肌肉鬆弛劑",jp:"gei1 juk6 sung1 ci1 zai1",en:"Muscle relaxant"},
       {zh:"類固醇注射",jp:"leoi6 gu2 jeun4 zyu3 se6",en:"Corticosteroid injection"},
       {zh:"關節腔注射",jp:"gwaan1 zit3 hong1 zyu3 se6",en:"Intra-articular injection"},
@@ -5880,7 +5882,7 @@ const LESSONS = [
     ]},
     { title:"Oncology Medications", zh:"腫瘤科藥物", vocab:[
       {zh:"化療藥物",jp:"faa3 liu4 joek6 mat6",en:"Chemotherapy medication"},
-      {zh:"止嘔藥",jp:"zi2 au2 joek6",en:"Anti-emetic (anti-nausea) medication"},
+      {zh:"止嘔藥",jp:"zi2 au2 joek6",en:"Anti-emetic medication"},
       {zh:"化療前後都會有止嘔藥",jp:"faa3 liu4 cin4 hau6 dou1 wui5 jau5 zi2 au2 joek6",en:"Anti-emetics are given before and after chemotherapy"},
       {zh:"止痛藥階梯",jp:"zi2 tung3 joek6 gaai1 tai1",en:"Pain medication ladder (WHO analgesic ladder)"},
       {zh:"類固醇用於減少炎症同副作用",jp:"leoi6 gu2 jeun4 jung6 jyu1 gaam2 siu2 jim4 zing3 tung4 fu3 zok3 jung6",en:"Corticosteroids used to reduce inflammation and side effects"},
@@ -6525,7 +6527,7 @@ const LESSONS = [
       {zh:"酒精戒斷",jp:"zau2 zing1 gaai3 dyun6",en:"Alcohol withdrawal"},
       {zh:"震顫性譫妄",jp:"zan3 cin2 sing3 zim1 maang4",en:"Delirium tremens (DTs)"},
       {zh:"韋尼克腦病",jp:"wai4 nei4 hak1 nou5 beng6",en:"Wernicke's encephalopathy"},
-      {zh:"硫胺素",jp:"lau4 on3 sou3",en:"Thiamine (vitamin B1) — critical in alcohol withdrawal"},
+      {zh:"硫胺素",jp:"lau4 on3 sou3",en:"Thiamine, vitamin B1, critical in alcohol withdrawal"},
       {zh:"納曲酮",jp:"naap6 ceoi1 tung4",en:"Naltrexone (for AUD treatment)"},
     ]},
     { title:"Opioid Use Disorder", zh:"阿片類藥物使用障礙", vocab:[
@@ -7582,7 +7584,7 @@ const LESSONS = [
       {zh:"你嘅意願係會受到尊重嘅",jp:"nei5 ge3 ji3 jyun6 hai6 wui5 sau6 dou3 zyun1 zung6 ge3",en:"Your wishes will be respected"},
     ]},
     { title:"POLST — Physician Orders for Life-Sustaining Treatment", zh:"維持生命治療醫囑", vocab:[
-      {zh:"維持生命治療醫囑",jp:"wai4 ci4 sang1 ming6 zi6 liu4 ji1 zuk1",en:"POLST (Physician Orders for Life-Sustaining Treatment)"},
+      {zh:"維持生命治療醫囑",jp:"wai4 ci4 sang1 ming6 zi6 liu4 ji1 zuk1",en:"POLST, Physician Orders for Life-Sustaining Treatment"},
       {zh:"心肺復甦術",jp:"sam1 fai3 fuk6 sou1 seot3",en:"Cardiopulmonary resuscitation (CPR)"},
       {zh:"唔好搶救",jp:"m4 hou2 coeng2 gau3",en:"Do not resuscitate (DNR)"},
       {zh:"唔好插喉",jp:"m4 hou2 caap3 hau4",en:"Do not intubate (DNI)"},
@@ -8728,7 +8730,7 @@ const LESSONS_MANDARIN = [
     { title:"Pain Management", zh:"疼痛管理", vocab:[
       {zh:"止痛药",jp:"zhǐ tòng yào",en:"Painkiller / analgesic"},
       {zh:"扑热息痛",jp:"pū rè xī tòng",en:"Paracetamol / acetaminophen"},
-      {zh:"非甾体抗炎药",jp:"fēi zāi tǐ kàng yán yào",en:"NSAIDs (ibuprofen etc.)"},
+      {zh:"非甾体抗炎药",jp:"fēi zāi tǐ kàng yán yào",en:"NSAIDs"},
       {zh:"类固醇",jp:"lèi gù chún",en:"Corticosteroid"},
       {zh:"阿片类止痛药",jp:"ā piàn lèi zhǐ tòng yào",en:"Opioid analgesic"},
       {zh:"神经痛药物",jp:"shén jīng tòng yào wù",en:"Neuropathic pain medication"},
@@ -10163,11 +10165,11 @@ const LESSONS_MANDARIN = [
       {zh:"高血压",jp:"gāo xuè yā",en:"High blood pressure"},]},
     { title:"CKD Staging", zh:"慢性肾病分期", vocab:[
       {zh:"慢性肾病",jp:"màn xìng shèn bìng",en:"Chronic kidney disease (CKD)"},
-      {zh:"第一期：eGFR≥90",jp:"dì yī qī: eGFR dà yú jiǔ shí",en:"Stage 1: eGFR ≥90 (kidney damage, normal function)"},
-      {zh:"第二期：eGFR 60–89",jp:"dì èr qī: eGFR liù shí dào bā shí jiǔ",en:"Stage 2: eGFR 60–89 (mildly reduced)"},
-      {zh:"第三期：eGFR 30–59",jp:"dì sān qī: eGFR sān shí dào wǔ shí jiǔ",en:"Stage 3: eGFR 30–59 (moderately reduced)"},
-      {zh:"第四期：eGFR 15–29",jp:"dì sì qī: eGFR shí wǔ dào èr shí jiǔ",en:"Stage 4: eGFR 15–29 (severely reduced)"},
-      {zh:"第五期：eGFR\u003c15",jp:"dì wǔ qī: eGFR xiǎo yú shí wǔ",en:"Stage 5: eGFR \u003c15 (kidney failure)"},
+      {zh:"第一期：eGFR≥90",jp:"dì yī qī: eGFR dà yú jiǔ shí",en:"Stage 1: eGFR 90 or above"},
+      {zh:"第二期：eGFR 60–89",jp:"dì èr qī: eGFR liù shí dào bā shí jiǔ",en:"Stage 2: eGFR 60 to 89, mildly reduced"},
+      {zh:"第三期：eGFR 30–59",jp:"dì sān qī: eGFR sān shí dào wǔ shí jiǔ",en:"Stage 3: eGFR 30 to 59, moderately reduced"},
+      {zh:"第四期：eGFR 15–29",jp:"dì sì qī: eGFR shí wǔ dào èr shí jiǔ",en:"Stage 4: eGFR 15 to 29, severely reduced"},
+      {zh:"第五期：eGFR\u003c15",jp:"dì wǔ qī: eGFR xiǎo yú shí wǔ",en:"Stage 5: eGFR below 15, kidney failure"},
     ]},
     { title:"Symptoms & Monitoring", zh:"症状及监测", vocab:[
       {zh:"水肿",jp:"shuǐ zhǒng",en:"Edema / Swelling"},
@@ -10414,7 +10416,7 @@ const LESSONS_MANDARIN = [
       {zh:"消毒皮肤",jp:"xiāo dú pí fū",en:"Disinfect the skin"},
     ]},
     { title:"Musculoskeletal Medications", zh:"骨骼肌肉科药物", vocab:[
-      {zh:"非甾体抗炎药",jp:"fēi zāi tǐ kàng yán yào",en:"NSAIDs (ibuprofen, naproxen)"},
+      {zh:"非甾体抗炎药",jp:"fēi zāi tǐ kàng yán yào",en:"NSAIDs"},
       {zh:"肌肉松弛剂",jp:"jī ròu sōng chí jì",en:"Muscle relaxant"},
       {zh:"类固醇注射",jp:"lèi gù chún zhù shè",en:"Corticosteroid injection"},
       {zh:"关节腔注射",jp:"guān jié qiāng zhù shè",en:"Intra-articular injection"},
@@ -10794,7 +10796,7 @@ const LESSONS_MANDARIN = [
     ]},
     { title:"Oncology Medications", zh:"肿瘤科药物", vocab:[
       {zh:"化疗药物",jp:"huà liáo yào wù",en:"Chemotherapy medication"},
-      {zh:"止吐药",jp:"zhǐ tù yào",en:"Anti-emetic (anti-nausea) medication"},
+      {zh:"止吐药",jp:"zhǐ tù yào",en:"Anti-emetic medication"},
       {zh:"化疗前后都会有止吐药",jp:"huà liáo qián hòu dōu huì yǒu zhǐ tù yào",en:"Anti-emetics are given before and after chemotherapy"},
       {zh:"止痛药阶梯",jp:"zhǐ tòng yào jiē tī",en:"Pain medication ladder (WHO analgesic ladder)"},
       {zh:"类固醇用于减少炎症和副作用",jp:"lèi gù chún yòng yú jiǎn shǎo yán zhèng hé fù zuò yòng",en:"Corticosteroids used to reduce inflammation and side effects"},
@@ -12511,7 +12513,7 @@ const LESSONS_MANDARIN = [
       {zh:"您的意愿将会受到尊重",jp:"nín de yì yuàn jiāng huì shòu dào zūn zhòng",en:"Your wishes will be respected"},
     ]},
     { title:"POLST — Physician Orders for Life-Sustaining Treatment", zh:"维持生命治疗医嘱", vocab:[
-      {zh:"维持生命治疗医嘱",jp:"wéi chí shēng mìng zhì liáo yī zhǔ",en:"POLST (Physician Orders for Life-Sustaining Treatment)"},
+      {zh:"维持生命治疗医嘱",jp:"wéi chí shēng mìng zhì liáo yī zhǔ",en:"POLST, Physician Orders for Life-Sustaining Treatment"},
       {zh:"心肺复苏术",jp:"xīn fèi fù sū shù",en:"Cardiopulmonary resuscitation (CPR)"},
       {zh:"不要抢救",jp:"bú yào qiǎng jiù",en:"Do not resuscitate (DNR)"},
       {zh:"不要插管",jp:"bú yào chā guǎn",en:"Do not intubate (DNI)"},
@@ -13531,7 +13533,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v61'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v66'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -17653,7 +17655,7 @@ renderPathwayBanner();
 // ─── PWA SERVICE WORKER ───
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
-  const APP_VER = 'medical-chinese-v61';
+  const APP_VER = 'medical-chinese-v66';
   const swCode = `
     const CACHE = '${APP_VER}';
     self.addEventListener('install', e => {
