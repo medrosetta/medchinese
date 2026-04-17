@@ -13533,7 +13533,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v74'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v77'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -13547,6 +13547,18 @@ const VOICE_MAP = {
 function applyTTSSubstitutions(text) {
   // Rare CJK chars Azure HK voices skip
   text = text.replace(/[跖蹠]骨/g, '足掌骨');
+
+  // British spellings Jenny (en-US) mispronounces or stalls on
+  text = text.replace(/dysmenorrhoea/gi, 'dysmenorrhea');
+  text = text.replace(/diarrhoea/gi, 'diarrhea');
+  text = text.replace(/haematuria/gi, 'hematuria');
+  text = text.replace(/haemolysis/gi, 'hemolysis');
+  text = text.replace(/haemophilia/gi, 'hemophilia');
+  text = text.replace(/haemorrhag/gi, 'hemorrhag');
+  text = text.replace(/haemodialysis/gi, 'hemodialysis');
+  text = text.replace(/haematologist/gi, 'hematologist');
+  text = text.replace(/ischaemi/gi, 'ischemi');
+  text = text.replace(/anaesthesiol/gi, 'anesthesiol');
 
   // Special characters that cause TTS to stall or produce noise
   text = text.replace(/₂/g, '2');
@@ -14984,7 +14996,8 @@ function prefetchVocabAhead(count) {
     if (drillMode === 'en-zh' || drillMode === 'zh-en') {
       // Buffer both Chinese and English
       prefetchAudio(v.zh, voice);
-      const enVoice = localStorage.getItem('medchinese_azure_voice_en') || 'en-US-JennyNeural';
+      const rawEnVoice = localStorage.getItem('medchinese_azure_voice_en') || 'en-US-JennyNeural';
+  const enVoice = rawEnVoice === 'en-GB-SoniaNeural' ? 'en-US-JennyNeural' : rawEnVoice;
       prefetchAudio(v.en, enVoice);
     } else {
       prefetchAudio(v.zh, voice);
@@ -15101,7 +15114,8 @@ function playNextVocab() {
 
   if (drillMode === 'en-zh') {
     // English first, pause 800ms, then Chinese
-    const enVoice = localStorage.getItem('medchinese_azure_voice_en') || 'en-US-JennyNeural';
+    const rawEnVoice = localStorage.getItem('medchinese_azure_voice_en') || 'en-US-JennyNeural';
+  const enVoice = rawEnVoice === 'en-GB-SoniaNeural' ? 'en-US-JennyNeural' : rawEnVoice;
     playBuffered(stripParens(v.en), enVoice, () => {
       vocabIntraTimer = setTimeout(() => {
         playBuffered(v.zh, VOICE_MAP[currentLang] || VOICE_MAP.yue, afterItem, 'zh');
@@ -15109,7 +15123,8 @@ function playNextVocab() {
     }, 'en');
   } else if (drillMode === 'zh-en') {
     // Chinese first, pause 800ms, then English
-    const enVoice = localStorage.getItem('medchinese_azure_voice_en') || 'en-US-JennyNeural';
+    const rawEnVoice = localStorage.getItem('medchinese_azure_voice_en') || 'en-US-JennyNeural';
+  const enVoice = rawEnVoice === 'en-GB-SoniaNeural' ? 'en-US-JennyNeural' : rawEnVoice;
     playBuffered(v.zh, VOICE_MAP[currentLang] || VOICE_MAP.yue, () => {
       vocabIntraTimer = setTimeout(() => {
         playBuffered(stripParens(v.en), enVoice, afterItem, 'en');
@@ -15323,7 +15338,6 @@ function renderAudioSetup(targetEl) {
           <option value="en-US-AriaNeural"    ${savedEnVoice === 'en-US-AriaNeural'    ? 'selected' : ''}>Aria (F), US</option>
           <option value="en-US-GuyNeural"     ${savedEnVoice === 'en-US-GuyNeural'     ? 'selected' : ''}>Guy (M), US</option>
           <option value="en-US-DavisNeural"   ${savedEnVoice === 'en-US-DavisNeural'   ? 'selected' : ''}>Davis (M), US</option>
-          <option value="en-GB-SoniaNeural"   ${savedEnVoice === 'en-GB-SoniaNeural'   ? 'selected' : ''}>Sonia (F), UK</option>
           <option value="en-GB-RyanNeural"    ${savedEnVoice === 'en-GB-RyanNeural'    ? 'selected' : ''}>Ryan (M), UK</option>
           <option value="en-AU-NatashaNeural" ${savedEnVoice === 'en-AU-NatashaNeural' ? 'selected' : ''}>Natasha (F), AU</option>
           <option value="en-AU-WilliamNeural" ${savedEnVoice === 'en-AU-WilliamNeural' ? 'selected' : ''}>William (M), AU</option>
@@ -17703,7 +17717,7 @@ renderPathwayBanner();
 // ─── PWA SERVICE WORKER ───
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
-  const APP_VER = 'medical-chinese-v74';
+  const APP_VER = 'medical-chinese-v77';
   const swCode = `
     const CACHE = '${APP_VER}';
     self.addEventListener('install', e => {
