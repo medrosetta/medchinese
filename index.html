@@ -5552,7 +5552,7 @@ const LESSONS = [
       {zh:"趾頭",jp:"zi2 tau4",en:"Toes"},
       {zh:"拇趾",jp:"mou5 zi2",en:"Big toe (hallux)"},
       {zh:"趾甲",jp:"zi2 gaap3",en:"Toenail"},
-      {zh:"蹠骨",jp:"zik3 gwat1",en:"Metatarsals"},
+      {zh:"跖骨",jp:"zik3 gwat1",en:"Metatarsals"},
       {zh:"踝關節",jp:"waa6 gwaan1 zit3",en:"Ankle joint"},
       {zh:"阿基里斯腱",jp:"aa3 gei1 lei5 si1 gin3",en:"Achilles tendon"},
       {zh:"足底筋膜",jp:"zuk1 dai2 gan1 mok6",en:"Plantar fascia"},
@@ -13533,7 +13533,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v66'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v70'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -13542,7 +13542,15 @@ const VOICE_MAP = {
   cmn_patient: localStorage.getItem('medchinese_azure_voice_cmn_patient') || 'zh-CN-YunxiNeural',
 };
 
-async function speakAzure(text, lang, onEnd) {
+async // For chars Azure HK voices skip entirely, substitute with phonetically
+// similar common characters that Azure reliably pronounces
+function applyTTSSubstitutions(text) {
+  // 跖骨/蹠骨 (metatarsals) — Azure HK skips 跖/蹠, replace whole word
+  text = text.replace(/[跖蹠]骨/g, '足掌骨');
+  return text;
+}
+
+function speakAzure(text, lang, onEnd) {
   if (!AZURE_WORKER_URL) return false;
   try {
     const voice = VOICE_MAP[lang] || VOICE_MAP.yue;
@@ -13569,7 +13577,7 @@ async function speakAzure(text, lang, onEnd) {
     const response = await fetch(AZURE_WORKER_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text, voice, rate: '0%', pitch: '0%' }),
+      body: JSON.stringify({ text: applyTTSSubstitutions(text), voice, rate: '0%', pitch: '0%' }),
       signal: controller.signal
     });
     clearTimeout(timeoutId);
@@ -13758,7 +13766,7 @@ async function speakAzureVoice(text, voice, onEnd) {
     const response = await fetch(AZURE_WORKER_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text, voice, rate: '0%', pitch: '0%' }),
+      body: JSON.stringify({ text: applyTTSSubstitutions(text), voice, rate: '0%', pitch: '0%' }),
       signal: controller.signal
     });
     clearTimeout(timeoutId);
@@ -14142,6 +14150,8 @@ function selectLesson(i) {
   synth && synth.cancel();
   clearTimeout(playAllTimer); playAllIdx = -1;
   stopVocabPlayAll();
+  hideDrillPlayer();
+  dialPlayerStop();
   anatMode = false;
   cur = i; tab = 'vocab'; quizState = null; openSections = {};
   renderSidebar(); renderMain();
@@ -14618,6 +14628,8 @@ function switchTab(t) {
   synth && synth.cancel();
   clearTimeout(playAllTimer); playAllIdx = -1;
   stopVocabPlayAll();
+  hideDrillPlayer();
+  dialPlayerHide();
   tab = t;
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.getAttribute('onclick') === `switchTab('${t}')`));
   const tc = document.getElementById('tab-content');
@@ -14855,7 +14867,7 @@ async function prefetchAudio(text, voice) {
       const response = await fetch(AZURE_WORKER_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text, voice, rate: '0%', pitch: '0%' }),
+        body: JSON.stringify({ text: applyTTSSubstitutions(text), voice, rate: '0%', pitch: '0%' }),
         signal: controller.signal
       });
       clearTimeout(tid);
@@ -15666,7 +15678,7 @@ async function _fetchAndDecode(text, voice) {
     const res = await fetch(AZURE_WORKER_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text, voice, rate: '0%', pitch: '0%' }),
+      body: JSON.stringify({ text: applyTTSSubstitutions(text), voice, rate: '0%', pitch: '0%' }),
       signal: controller.signal
     });
     clearTimeout(tid);
@@ -17655,7 +17667,7 @@ renderPathwayBanner();
 // ─── PWA SERVICE WORKER ───
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
-  const APP_VER = 'medical-chinese-v66';
+  const APP_VER = 'medical-chinese-v70';
   const swCode = `
     const CACHE = '${APP_VER}';
     self.addEventListener('install', e => {
