@@ -8449,6 +8449,77 @@ const LESSONS = [
   }
   },
   {
+  id:41, zh:"藥劑", en:"Pharmacy",
+  sections:[
+    { title:"Prescription Basics", zh:"處方基礎", vocab:[
+      {zh:"處方",jp:"cyu3 fong1",en:"Prescription"},
+      {zh:"藥物名稱",jp:"joek6 mat6 ming4 cing1",en:"Medication name"},
+      {zh:"劑量",jp:"zai3 loeng6",en:"Dosage"},
+      {zh:"服用頻率",jp:"fuk6 jung6 pan4 leot6",en:"Frequency"},
+      {zh:"服用方法",jp:"fuk6 jung6 fong1 faat3",en:"Route of administration"},
+      {zh:"補藥",jp:"bou2 joek6",en:"Refill"},
+      {zh:"原廠藥",jp:"jyun4 cong2 joek6",en:"Brand-name drug"},
+      {zh:"學名藥",jp:"hok6 ming4 joek6",en:"Generic drug"},
+      {zh:"藥物說明書",jp:"joek6 mat6 syut3 ming4 syu1",en:"Medication information leaflet"},
+    ]},
+    { title:"Dosing Instructions", zh:"服藥指示", vocab:[
+      {zh:"每日一次",jp:"mui5 jat6 jat1 ci3",en:"Once daily"},
+      {zh:"每日兩次",jp:"mui5 jat6 loeng5 ci3",en:"Twice daily"},
+      {zh:"每日三次",jp:"mui5 jat6 saam1 ci3",en:"Three times daily"},
+      {zh:"飯前食",jp:"faan6 cin4 sik6",en:"Take before meals"},
+      {zh:"飯後食",jp:"faan6 hau6 sik6",en:"Take after meals"},
+      {zh:"需要時食",jp:"seoi1 jiu3 si4 sik6",en:"Take as needed"},
+      {zh:"唔好超過建議劑量",jp:"m4 hou2 ciu1 gwo3 gin3 ji5 zai3 loeng6",en:"Do not exceed the recommended dose"},
+      {zh:"唔好停藥前先問醫生",jp:"m4 hou2 ting4 joek6 cin4 sin1 man6 ji1 sang1",en:"Do not stop medication without asking your doctor"},
+    ]},
+    { title:"Drug Interactions & Storage", zh:"藥物相互作用及儲存", vocab:[
+      {zh:"藥物相互作用",jp:"joek6 mat6 soeng1 wu6 zok3 jung6",en:"Drug interaction"},
+      {zh:"避免飲酒",jp:"bei6 min5 jam2 zau2",en:"Avoid alcohol"},
+      {zh:"唔好同葡萄柚汁一齊食",jp:"m4 hou2 tung4 pou4 tou4 jau6 zap1 jat1 cai4 sik6",en:"Do not take with grapefruit juice"},
+      {zh:"放喺陰涼乾燥地方",jp:"fong3 hai2 jam1 loeng4 gon1 cou3 dei6 fong1",en:"Store in a cool dry place"},
+      {zh:"遠離小孩",jp:"jyun5 lei4 siu2 hai2",en:"Keep away from children"},
+      {zh:"過期藥物唔好食",jp:"gwo3 kei4 joek6 mat6 m4 hou2 sik6",en:"Do not take expired medication"},
+    ]},
+    { title:"Over-the-Counter Medications", zh:"非處方藥", vocab:[
+      {zh:"非處方藥",jp:"fei1 cyu3 fong1 joek6",en:"Over-the-counter medication"},
+      {zh:"止痛藥",jp:"zi2 tung3 joek6",en:"Pain reliever"},
+      {zh:"退燒藥",jp:"teoi3 siu1 joek6",en:"Fever reducer"},
+      {zh:"抗組胺藥",jp:"kong3 zou2 on3 joek6",en:"Antihistamine"},
+      {zh:"鼻塞噴劑",jp:"bei6 sak1 pan3 zai1",en:"Nasal decongestant spray"},
+      {zh:"止咳糖漿",jp:"zi2 kat1 tong4 coeng4",en:"Cough syrup"},
+      {zh:"腸胃藥",jp:"coeng4 wai6 joek6",en:"Antacid"},
+    ]},
+    { title:"Side Effects & Reporting", zh:"副作用及匯報", vocab:[
+      {zh:"副作用",jp:"fu3 zok3 jung6",en:"Side effect"},
+      {zh:"過敏反應",jp:"gwo3 man5 faan2 jing3",en:"Allergic reaction"},
+      {zh:"蕁麻疹",jp:"cam4 maa4 zan2",en:"Hives"},
+      {zh:"如有嚴重副作用請即時聯絡我哋",jp:"jyu4 jau5 jim4 zung6 fu3 zok3 jung6 cing2 zik1 si4 lyun4 lok3 ngo5 dei6",en:"Contact us immediately if you have serious side effects"},
+      {zh:"呢個副作用通常會自行消退",jp:"ni1 go3 fu3 zok3 jung6 tung1 soeng4 wui5 zi6 hang4 siu1 teoi3",en:"This side effect usually resolves on its own"},
+    ]},
+    { title:"Pharmacy Clinical Phrases", zh:"藥劑臨床用語", vocab:[
+      {zh:"你今日係嚟取藥？",jp:"nei5 gam1 jat6 hai6 lai4 ceoi2 joek6?",en:"Are you here to pick up a prescription?"},
+      {zh:"你有冇藥物過敏？",jp:"nei5 jau5 mou5 joek6 mat6 gwo3 man5?",en:"Do you have any medication allergies?"},
+      {zh:"你係咪仲有其他藥食緊？",jp:"nei5 hai6 mai6 zung6 jau5 kei4 taa1 joek6 sik6 gan2?",en:"Are you taking any other medications?"},
+      {zh:"學名藥同原廠藥一樣有效",jp:"hok6 ming4 joek6 tung4 jyun4 cong2 joek6 jat1 joeng6 jau5 hiu6",en:"Generic medications are equally effective"},
+      {zh:"需要轉介藥劑師",jp:"seoi1 jiu3 zyun2 gaai3 joek6 zai1 si1",en:"Referring to pharmacist"},
+    ]},
+  ],
+
+  dialogue:{
+    title:"Dialogue: Pharmacy — Medication Counseling",
+    lines:[
+      {sp:"doctor",zh:"你好，你今日係嚟取咩藥？",jp:"nei5 hou2, nei5 gam1 jat6 hai6 lai4 ceoi2 me1 joek6?",en:"Hi, what medication are you picking up today?"},
+      {sp:"patient",zh:"降壓藥，Lisinopril。",jp:"gong3 aat3 joek6, Lisinopril.",en:"Blood pressure medication — Lisinopril."},
+      {sp:"doctor",zh:"我哋有學名藥，效果一樣，但平好多。你有冇興趣？",jp:"ngo5 dei6 jau5 hok6 ming4 joek6, hiu6 gwo2 jat1 joeng6, daan6 peng4 hou2 do1. nei5 jau5 mou5 hing3 ceoi3?",en:"We have a generic version — same effect, much cheaper. Interested?"},
+      {sp:"patient",zh:"學名藥真係一樣有效？",jp:"hok6 ming4 joek6 zan1 hai6 jat1 joeng6 jau5 hiu6?",en:"Is the generic really just as effective?"},
+      {sp:"doctor",zh:"係，FDA要求學名藥有相同嘅有效成分同劑量。",jp:"hai6, FDA jiu1 kau4 hok6 ming4 joek6 jau5 soeng1 tung4 ge3 jau5 hiu6 sing4 fan6 tung4 zai3 loeng6.",en:"Yes — FDA requires generics to have the same active ingredient and dosage."},
+      {sp:"patient",zh:"好，我試下。有冇副作用？",jp:"hou2, ngo5 si3 haa5. jau5 mou5 fu3 zok3 jung6?",en:"Okay, I'll try it. Any side effects?"},
+      {sp:"doctor",zh:"有些人會有乾咳或頭暈。如果有嚴重副作用請聯絡我哋。",jp:"jau5 se1 jan4 wui5 jau5 gon1 kat1 waak6 tau4 wan4. jyu4 gwo2 jau5 jim4 zung6 fu3 zok3 jung6 cing2 lyun4 lok3 ngo5 dei6.",en:"Some people get a dry cough or dizziness. Contact us if side effects are severe."},
+      {sp:"patient",zh:"明白，多謝。",jp:"ming4 baak6, do1 ze6.",en:"Understood, thank you."},
+    ]
+  }
+  },
+  {
   id:42, zh:"服藥依從性及自我測試", en:"Medication Adherence & Self-Testing",
   sections:[
     { title:"Medication Adherence", zh:"服藥依從性", vocab:[
@@ -8529,77 +8600,6 @@ const LESSONS = [
       {sp:"doctor",zh:"我哋亦都可以簡化你嘅用藥方案——減少藥丸數目，每日一次。會有幫助嗎？",jp:"ngo5 dei6 jik6 dou1 ho2 ji5 gaan2 faa3 nei5 ge3 jung6 joek6 fong1 on3 — gaam2 siu2 joek6 jyun4 sou3 muk6, mui5 jat6 jat1 ci3. wui5 jau5 bong1 zo6 maa3?",en:"We can also simplify your regimen — fewer pills, once a day. Would that help?"},
       {sp:"patient",zh:"係，呢樣會容易啲。",jp:"hai6, ni1 joeng6 wui5 jung4 ji6 di1.",en:"Yes, that would make it easier."},
       {sp:"doctor",zh:"今日我哋兩樣都解決。",jp:"gam1 jat6 ngo5 dei6 loeng5 joeng6 dou1 gaai2 kyut3.",en:"Let's sort both of those out today."},
-    ]
-  }
-  },
-  {
-  id:41, zh:"藥劑", en:"Pharmacy",
-  sections:[
-    { title:"Prescription Basics", zh:"處方基礎", vocab:[
-      {zh:"處方",jp:"cyu3 fong1",en:"Prescription"},
-      {zh:"藥物名稱",jp:"joek6 mat6 ming4 cing1",en:"Medication name"},
-      {zh:"劑量",jp:"zai3 loeng6",en:"Dosage"},
-      {zh:"服用頻率",jp:"fuk6 jung6 pan4 leot6",en:"Frequency"},
-      {zh:"服用方法",jp:"fuk6 jung6 fong1 faat3",en:"Route of administration"},
-      {zh:"補藥",jp:"bou2 joek6",en:"Refill"},
-      {zh:"原廠藥",jp:"jyun4 cong2 joek6",en:"Brand-name drug"},
-      {zh:"學名藥",jp:"hok6 ming4 joek6",en:"Generic drug"},
-      {zh:"藥物說明書",jp:"joek6 mat6 syut3 ming4 syu1",en:"Medication information leaflet"},
-    ]},
-    { title:"Dosing Instructions", zh:"服藥指示", vocab:[
-      {zh:"每日一次",jp:"mui5 jat6 jat1 ci3",en:"Once daily"},
-      {zh:"每日兩次",jp:"mui5 jat6 loeng5 ci3",en:"Twice daily"},
-      {zh:"每日三次",jp:"mui5 jat6 saam1 ci3",en:"Three times daily"},
-      {zh:"飯前食",jp:"faan6 cin4 sik6",en:"Take before meals"},
-      {zh:"飯後食",jp:"faan6 hau6 sik6",en:"Take after meals"},
-      {zh:"需要時食",jp:"seoi1 jiu3 si4 sik6",en:"Take as needed"},
-      {zh:"唔好超過建議劑量",jp:"m4 hou2 ciu1 gwo3 gin3 ji5 zai3 loeng6",en:"Do not exceed the recommended dose"},
-      {zh:"唔好停藥前先問醫生",jp:"m4 hou2 ting4 joek6 cin4 sin1 man6 ji1 sang1",en:"Do not stop medication without asking your doctor"},
-    ]},
-    { title:"Drug Interactions & Storage", zh:"藥物相互作用及儲存", vocab:[
-      {zh:"藥物相互作用",jp:"joek6 mat6 soeng1 wu6 zok3 jung6",en:"Drug interaction"},
-      {zh:"避免飲酒",jp:"bei6 min5 jam2 zau2",en:"Avoid alcohol"},
-      {zh:"唔好同葡萄柚汁一齊食",jp:"m4 hou2 tung4 pou4 tou4 jau6 zap1 jat1 cai4 sik6",en:"Do not take with grapefruit juice"},
-      {zh:"放喺陰涼乾燥地方",jp:"fong3 hai2 jam1 loeng4 gon1 cou3 dei6 fong1",en:"Store in a cool dry place"},
-      {zh:"遠離小孩",jp:"jyun5 lei4 siu2 hai2",en:"Keep away from children"},
-      {zh:"過期藥物唔好食",jp:"gwo3 kei4 joek6 mat6 m4 hou2 sik6",en:"Do not take expired medication"},
-    ]},
-    { title:"Over-the-Counter Medications", zh:"非處方藥", vocab:[
-      {zh:"非處方藥",jp:"fei1 cyu3 fong1 joek6",en:"Over-the-counter medication"},
-      {zh:"止痛藥",jp:"zi2 tung3 joek6",en:"Pain reliever"},
-      {zh:"退燒藥",jp:"teoi3 siu1 joek6",en:"Fever reducer"},
-      {zh:"抗組胺藥",jp:"kong3 zou2 on3 joek6",en:"Antihistamine"},
-      {zh:"鼻塞噴劑",jp:"bei6 sak1 pan3 zai1",en:"Nasal decongestant spray"},
-      {zh:"止咳糖漿",jp:"zi2 kat1 tong4 coeng4",en:"Cough syrup"},
-      {zh:"腸胃藥",jp:"coeng4 wai6 joek6",en:"Antacid"},
-    ]},
-    { title:"Side Effects & Reporting", zh:"副作用及匯報", vocab:[
-      {zh:"副作用",jp:"fu3 zok3 jung6",en:"Side effect"},
-      {zh:"過敏反應",jp:"gwo3 man5 faan2 jing3",en:"Allergic reaction"},
-      {zh:"蕁麻疹",jp:"cam4 maa4 zan2",en:"Hives"},
-      {zh:"如有嚴重副作用請即時聯絡我哋",jp:"jyu4 jau5 jim4 zung6 fu3 zok3 jung6 cing2 zik1 si4 lyun4 lok3 ngo5 dei6",en:"Contact us immediately if you have serious side effects"},
-      {zh:"呢個副作用通常會自行消退",jp:"ni1 go3 fu3 zok3 jung6 tung1 soeng4 wui5 zi6 hang4 siu1 teoi3",en:"This side effect usually resolves on its own"},
-    ]},
-    { title:"Pharmacy Clinical Phrases", zh:"藥劑臨床用語", vocab:[
-      {zh:"你今日係嚟取藥？",jp:"nei5 gam1 jat6 hai6 lai4 ceoi2 joek6?",en:"Are you here to pick up a prescription?"},
-      {zh:"你有冇藥物過敏？",jp:"nei5 jau5 mou5 joek6 mat6 gwo3 man5?",en:"Do you have any medication allergies?"},
-      {zh:"你係咪仲有其他藥食緊？",jp:"nei5 hai6 mai6 zung6 jau5 kei4 taa1 joek6 sik6 gan2?",en:"Are you taking any other medications?"},
-      {zh:"學名藥同原廠藥一樣有效",jp:"hok6 ming4 joek6 tung4 jyun4 cong2 joek6 jat1 joeng6 jau5 hiu6",en:"Generic medications are equally effective"},
-      {zh:"需要轉介藥劑師",jp:"seoi1 jiu3 zyun2 gaai3 joek6 zai1 si1",en:"Referring to pharmacist"},
-    ]},
-  ],
-
-  dialogue:{
-    title:"Dialogue: Pharmacy — Medication Counseling",
-    lines:[
-      {sp:"doctor",zh:"你好，你今日係嚟取咩藥？",jp:"nei5 hou2, nei5 gam1 jat6 hai6 lai4 ceoi2 me1 joek6?",en:"Hi, what medication are you picking up today?"},
-      {sp:"patient",zh:"降壓藥，Lisinopril。",jp:"gong3 aat3 joek6, Lisinopril.",en:"Blood pressure medication — Lisinopril."},
-      {sp:"doctor",zh:"我哋有學名藥，效果一樣，但平好多。你有冇興趣？",jp:"ngo5 dei6 jau5 hok6 ming4 joek6, hiu6 gwo2 jat1 joeng6, daan6 peng4 hou2 do1. nei5 jau5 mou5 hing3 ceoi3?",en:"We have a generic version — same effect, much cheaper. Interested?"},
-      {sp:"patient",zh:"學名藥真係一樣有效？",jp:"hok6 ming4 joek6 zan1 hai6 jat1 joeng6 jau5 hiu6?",en:"Is the generic really just as effective?"},
-      {sp:"doctor",zh:"係，FDA要求學名藥有相同嘅有效成分同劑量。",jp:"hai6, FDA jiu1 kau4 hok6 ming4 joek6 jau5 soeng1 tung4 ge3 jau5 hiu6 sing4 fan6 tung4 zai3 loeng6.",en:"Yes — FDA requires generics to have the same active ingredient and dosage."},
-      {sp:"patient",zh:"好，我試下。有冇副作用？",jp:"hou2, ngo5 si3 haa5. jau5 mou5 fu3 zok3 jung6?",en:"Okay, I'll try it. Any side effects?"},
-      {sp:"doctor",zh:"有些人會有乾咳或頭暈。如果有嚴重副作用請聯絡我哋。",jp:"jau5 se1 jan4 wui5 jau5 gon1 kat1 waak6 tau4 wan4. jyu4 gwo2 jau5 jim4 zung6 fu3 zok3 jung6 cing2 lyun4 lok3 ngo5 dei6.",en:"Some people get a dry cough or dizziness. Contact us if side effects are severe."},
-      {sp:"patient",zh:"明白，多謝。",jp:"ming4 baak6, do1 ze6.",en:"Understood, thank you."},
     ]
   }
   },
@@ -13970,6 +13970,77 @@ const LESSONS_MANDARIN = [
   }
   },
   {
+  id:41, zh:"药剂", en:"Pharmacy",
+  sections:[
+    { title:"Prescription Basics", zh:"处方基础", vocab:[
+      {zh:"处方",jp:"chǔ fāng",en:"Prescription"},
+      {zh:"药物名称",jp:"yào wù míng chēng",en:"Medication name"},
+      {zh:"剂量",jp:"jì liàng",en:"Dosage"},
+      {zh:"服用频率",jp:"fú yòng pín lǜ",en:"Frequency"},
+      {zh:"服用方法",jp:"fú yòng fāng fǎ",en:"Route of administration"},
+      {zh:"补药",jp:"bǔ yào",en:"Refill"},
+      {zh:"品牌药",jp:"pǐn pái yào",en:"Brand-name drug"},
+      {zh:"仿制药",jp:"fǎng zhì yào",en:"Generic drug"},
+      {zh:"药物说明书",jp:"yào wù shuō míng shū",en:"Medication information leaflet"},
+    ]},
+    { title:"Dosing Instructions", zh:"服药指示", vocab:[
+      {zh:"每日一次",jp:"měi rì yī cì",en:"Once daily"},
+      {zh:"每日两次",jp:"měi rì liǎng cì",en:"Twice daily"},
+      {zh:"每日三次",jp:"měi rì sān cì",en:"Three times daily"},
+      {zh:"饭前服",jp:"fàn qián fú",en:"Take before meals"},
+      {zh:"饭后服",jp:"fàn hòu fú",en:"Take after meals"},
+      {zh:"需要时服",jp:"xū yào shí fú",en:"Take as needed"},
+      {zh:"不要超过建议剂量",jp:"bù yào chāo guò jiàn yì jì liàng",en:"Do not exceed the recommended dose"},
+      {zh:"未咨询医生前不要停药",jp:"wèi zī xún yī shēng qián bù yào tíng yào",en:"Do not stop medication without asking your doctor"},
+    ]},
+    { title:"Drug Interactions & Storage", zh:"药物相互作用及储存", vocab:[
+      {zh:"药物相互作用",jp:"yào wù xiāng hù zuò yòng",en:"Drug interaction"},
+      {zh:"避免饮酒",jp:"bì miǎn yǐn jiǔ",en:"Avoid alcohol"},
+      {zh:"不要与葡萄柚汁同服",jp:"bù yào yǔ pú táo yòu zhī tóng fú",en:"Do not take with grapefruit juice"},
+      {zh:"存放在阴凉干燥处",jp:"cún fàng zài yīn liáng gān zào chù",en:"Store in a cool dry place"},
+      {zh:"远离儿童",jp:"yuǎn lí ér tóng",en:"Keep away from children"},
+      {zh:"不要服用过期药物",jp:"bù yào fú yòng guò qī yào wù",en:"Do not take expired medication"},
+    ]},
+    { title:"Over-the-Counter Medications", zh:"非处方药", vocab:[
+      {zh:"非处方药",jp:"fēi chǔ fāng yào",en:"Over-the-counter medication"},
+      {zh:"止痛药",jp:"zhǐ tòng yào",en:"Pain reliever"},
+      {zh:"退烧药",jp:"tuì shāo yào",en:"Fever reducer"},
+      {zh:"抗组胺药",jp:"kàng zǔ àn yào",en:"Antihistamine"},
+      {zh:"鼻塞喷剂",jp:"bí sāi pēn jì",en:"Nasal decongestant spray"},
+      {zh:"止咳糖浆",jp:"zhǐ ké táng jiāng",en:"Cough syrup"},
+      {zh:"胃药",jp:"wèi yào",en:"Antacid"},
+    ]},
+    { title:"Side Effects & Reporting", zh:"副作用及汇报", vocab:[
+      {zh:"副作用",jp:"fù zuò yòng",en:"Side effect"},
+      {zh:"过敏反应",jp:"guò mǐn fǎn yìng",en:"Allergic reaction"},
+      {zh:"荨麻疹",jp:"xún má zhěn",en:"Hives"},
+      {zh:"如有严重副作用请立即联系我们",jp:"rú yǒu yán zhòng fù zuò yòng qǐng lì jí lián xì wǒ men",en:"Contact us immediately if you have serious side effects"},
+      {zh:"这种副作用通常会自行消退",jp:"zhè zhǒng fù zuò yòng tōng cháng huì zì xíng xiāo tuì",en:"This side effect usually resolves on its own"},
+    ]},
+    { title:"Pharmacy Clinical Phrases", zh:"药剂临床用语", vocab:[
+      {zh:"您今天是来取药的吗？",jp:"nín jīn tiān shì lái qǔ yào de ma?",en:"Are you here to pick up a prescription?"},
+      {zh:"您有药物过敏吗？",jp:"nín yǒu yào wù guò mǐn ma?",en:"Do you have any medication allergies?"},
+      {zh:"您还在服用其他药物吗？",jp:"nín hái zài fú yòng qí tā yào wù ma?",en:"Are you taking any other medications?"},
+      {zh:"仿制药与品牌药同样有效",jp:"fǎng zhì yào yǔ pǐn pái yào tóng yàng yǒu xiào",en:"Generic medications are equally effective"},
+      {zh:"需要转介药剂师",jp:"xū yào zhuǎn jiè yào jì shī",en:"Referring to pharmacist"},
+    ]},
+  ],
+
+  dialogue:{
+    title:"Dialogue: Pharmacy — Medication Counseling",
+    lines:[
+      {sp:"doctor",zh:"您好，您今天是来取什么药的？",jp:"nín hǎo, nín jīn tiān shì lái qǔ shén me yào de?",en:"Hi, what medication are you picking up today?"},
+      {sp:"patient",zh:"降压药，Lisinopril。",jp:"jiàng yā yào, Lisinopril.",en:"Blood pressure medication — Lisinopril."},
+      {sp:"doctor",zh:"我们有仿制药，效果一样，但便宜很多。您有兴趣吗？",jp:"wǒ men yǒu fǎng zhì yào, xiào guǒ yī yàng, dàn pián yi hěn duō. nín yǒu xìng qù ma?",en:"We have a generic version — same effect, much cheaper. Interested?"},
+      {sp:"patient",zh:"仿制药真的一样有效吗？",jp:"fǎng zhì yào zhēn de yī yàng yǒu xiào ma?",en:"Is the generic really just as effective?"},
+      {sp:"doctor",zh:"是的，FDA要求仿制药有相同的有效成分和剂量。",jp:"shì de, FDA yāo qiú fǎng zhì yào yǒu xiāng tóng de yǒu xiào chéng fèn hé jì liàng.",en:"Yes — FDA requires generics to have the same active ingredient and dosage."},
+      {sp:"patient",zh:"好，我试试。有副作用吗？",jp:"hǎo, wǒ shì shi. yǒu fù zuò yòng ma?",en:"Okay, I'll try it. Any side effects?"},
+      {sp:"doctor",zh:"有些人会有干咳或头晕。如有严重副作用请联系我们。",jp:"yǒu xiē rén huì yǒu gān ké huò tóu yūn. rú yǒu yán zhòng fù zuò yòng qǐng lián xì wǒ men.",en:"Some people get a dry cough or dizziness. Contact us if side effects are severe."},
+      {sp:"patient",zh:"明白，谢谢。",jp:"míng bái, xiè xiè.",en:"Understood, thank you."},
+    ]
+  }
+  },
+  {
   id:42, zh:"服药依从性及自我检测", en:"Medication Adherence & Self-Testing",
   sections:[
     { title:"Medication Adherence", zh:"服药依从性", vocab:[
@@ -14049,77 +14120,6 @@ const LESSONS_MANDARIN = [
       {sp:"doctor",zh:"我们也可以简化您的用药方案——减少药片数目，每天一次。会有帮助吗？",jp:"wǒ men yě kě yǐ jiǎn huà nín de yòng yào fāng àn — jiǎn shǎo yào piàn shù mù, měi tiān yī cì. huì yǒu bāng zhù ma?",en:"We can also simplify your regimen — fewer pills, once a day. Would that help?"},
       {sp:"patient",zh:"是的，这样会容易一些。",jp:"shì de, zhè yàng huì róng yì yī xiē.",en:"Yes, that would make it easier."},
       {sp:"doctor",zh:"今天我们两样都解决。",jp:"jīn tiān wǒ men liǎng yàng dōu jiě jué.",en:"Let's sort both of those out today."},
-    ]
-  }
-  },
-  {
-  id:41, zh:"药剂", en:"Pharmacy",
-  sections:[
-    { title:"Prescription Basics", zh:"处方基础", vocab:[
-      {zh:"处方",jp:"chǔ fāng",en:"Prescription"},
-      {zh:"药物名称",jp:"yào wù míng chēng",en:"Medication name"},
-      {zh:"剂量",jp:"jì liàng",en:"Dosage"},
-      {zh:"服用频率",jp:"fú yòng pín lǜ",en:"Frequency"},
-      {zh:"服用方法",jp:"fú yòng fāng fǎ",en:"Route of administration"},
-      {zh:"补药",jp:"bǔ yào",en:"Refill"},
-      {zh:"品牌药",jp:"pǐn pái yào",en:"Brand-name drug"},
-      {zh:"仿制药",jp:"fǎng zhì yào",en:"Generic drug"},
-      {zh:"药物说明书",jp:"yào wù shuō míng shū",en:"Medication information leaflet"},
-    ]},
-    { title:"Dosing Instructions", zh:"服药指示", vocab:[
-      {zh:"每日一次",jp:"měi rì yī cì",en:"Once daily"},
-      {zh:"每日两次",jp:"měi rì liǎng cì",en:"Twice daily"},
-      {zh:"每日三次",jp:"měi rì sān cì",en:"Three times daily"},
-      {zh:"饭前服",jp:"fàn qián fú",en:"Take before meals"},
-      {zh:"饭后服",jp:"fàn hòu fú",en:"Take after meals"},
-      {zh:"需要时服",jp:"xū yào shí fú",en:"Take as needed"},
-      {zh:"不要超过建议剂量",jp:"bù yào chāo guò jiàn yì jì liàng",en:"Do not exceed the recommended dose"},
-      {zh:"未咨询医生前不要停药",jp:"wèi zī xún yī shēng qián bù yào tíng yào",en:"Do not stop medication without asking your doctor"},
-    ]},
-    { title:"Drug Interactions & Storage", zh:"药物相互作用及储存", vocab:[
-      {zh:"药物相互作用",jp:"yào wù xiāng hù zuò yòng",en:"Drug interaction"},
-      {zh:"避免饮酒",jp:"bì miǎn yǐn jiǔ",en:"Avoid alcohol"},
-      {zh:"不要与葡萄柚汁同服",jp:"bù yào yǔ pú táo yòu zhī tóng fú",en:"Do not take with grapefruit juice"},
-      {zh:"存放在阴凉干燥处",jp:"cún fàng zài yīn liáng gān zào chù",en:"Store in a cool dry place"},
-      {zh:"远离儿童",jp:"yuǎn lí ér tóng",en:"Keep away from children"},
-      {zh:"不要服用过期药物",jp:"bù yào fú yòng guò qī yào wù",en:"Do not take expired medication"},
-    ]},
-    { title:"Over-the-Counter Medications", zh:"非处方药", vocab:[
-      {zh:"非处方药",jp:"fēi chǔ fāng yào",en:"Over-the-counter medication"},
-      {zh:"止痛药",jp:"zhǐ tòng yào",en:"Pain reliever"},
-      {zh:"退烧药",jp:"tuì shāo yào",en:"Fever reducer"},
-      {zh:"抗组胺药",jp:"kàng zǔ àn yào",en:"Antihistamine"},
-      {zh:"鼻塞喷剂",jp:"bí sāi pēn jì",en:"Nasal decongestant spray"},
-      {zh:"止咳糖浆",jp:"zhǐ ké táng jiāng",en:"Cough syrup"},
-      {zh:"胃药",jp:"wèi yào",en:"Antacid"},
-    ]},
-    { title:"Side Effects & Reporting", zh:"副作用及汇报", vocab:[
-      {zh:"副作用",jp:"fù zuò yòng",en:"Side effect"},
-      {zh:"过敏反应",jp:"guò mǐn fǎn yìng",en:"Allergic reaction"},
-      {zh:"荨麻疹",jp:"xún má zhěn",en:"Hives"},
-      {zh:"如有严重副作用请立即联系我们",jp:"rú yǒu yán zhòng fù zuò yòng qǐng lì jí lián xì wǒ men",en:"Contact us immediately if you have serious side effects"},
-      {zh:"这种副作用通常会自行消退",jp:"zhè zhǒng fù zuò yòng tōng cháng huì zì xíng xiāo tuì",en:"This side effect usually resolves on its own"},
-    ]},
-    { title:"Pharmacy Clinical Phrases", zh:"药剂临床用语", vocab:[
-      {zh:"您今天是来取药的吗？",jp:"nín jīn tiān shì lái qǔ yào de ma?",en:"Are you here to pick up a prescription?"},
-      {zh:"您有药物过敏吗？",jp:"nín yǒu yào wù guò mǐn ma?",en:"Do you have any medication allergies?"},
-      {zh:"您还在服用其他药物吗？",jp:"nín hái zài fú yòng qí tā yào wù ma?",en:"Are you taking any other medications?"},
-      {zh:"仿制药与品牌药同样有效",jp:"fǎng zhì yào yǔ pǐn pái yào tóng yàng yǒu xiào",en:"Generic medications are equally effective"},
-      {zh:"需要转介药剂师",jp:"xū yào zhuǎn jiè yào jì shī",en:"Referring to pharmacist"},
-    ]},
-  ],
-
-  dialogue:{
-    title:"Dialogue: Pharmacy — Medication Counseling",
-    lines:[
-      {sp:"doctor",zh:"您好，您今天是来取什么药的？",jp:"nín hǎo, nín jīn tiān shì lái qǔ shén me yào de?",en:"Hi, what medication are you picking up today?"},
-      {sp:"patient",zh:"降压药，Lisinopril。",jp:"jiàng yā yào, Lisinopril.",en:"Blood pressure medication — Lisinopril."},
-      {sp:"doctor",zh:"我们有仿制药，效果一样，但便宜很多。您有兴趣吗？",jp:"wǒ men yǒu fǎng zhì yào, xiào guǒ yī yàng, dàn pián yi hěn duō. nín yǒu xìng qù ma?",en:"We have a generic version — same effect, much cheaper. Interested?"},
-      {sp:"patient",zh:"仿制药真的一样有效吗？",jp:"fǎng zhì yào zhēn de yī yàng yǒu xiào ma?",en:"Is the generic really just as effective?"},
-      {sp:"doctor",zh:"是的，FDA要求仿制药有相同的有效成分和剂量。",jp:"shì de, FDA yāo qiú fǎng zhì yào yǒu xiāng tóng de yǒu xiào chéng fèn hé jì liàng.",en:"Yes — FDA requires generics to have the same active ingredient and dosage."},
-      {sp:"patient",zh:"好，我试试。有副作用吗？",jp:"hǎo, wǒ shì shi. yǒu fù zuò yòng ma?",en:"Okay, I'll try it. Any side effects?"},
-      {sp:"doctor",zh:"有些人会有干咳或头晕。如有严重副作用请联系我们。",jp:"yǒu xiē rén huì yǒu gān ké huò tóu yūn. rú yǒu yán zhòng fù zuò yòng qǐng lián xì wǒ men.",en:"Some people get a dry cough or dizziness. Contact us if side effects are severe."},
-      {sp:"patient",zh:"明白，谢谢。",jp:"míng bái, xiè xiè.",en:"Understood, thank you."},
     ]
   }
   },
@@ -14702,7 +14702,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v106'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v107'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -18915,7 +18915,7 @@ renderPathwayBanner();
 // ─── PWA SERVICE WORKER ───
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
-  const APP_VER = 'medical-chinese-v106';
+  const APP_VER = 'medical-chinese-v107';
   const swCode = `
     const CACHE = '${APP_VER}';
     self.addEventListener('install', e => {
