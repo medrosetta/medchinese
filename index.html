@@ -14714,7 +14714,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v119'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v120'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -15170,7 +15170,7 @@ let anatMode = false;
 function migrateClinlinguaKeys() {
   const prefix = 'clinlingua_';
   const newPrefix = 'medchinese_';
-  const migrated = localStorage.getItem('medchinese_migrated_v1');
+  const migrated = localStorage.getItem('clinlingua_migrated_v1');
   if (migrated) return; // already done
   let count = 0;
   const keys = [];
@@ -15187,7 +15187,7 @@ function migrateClinlinguaKeys() {
     localStorage.removeItem(oldKey);
     count++;
   });
-  localStorage.setItem('medchinese_migrated_v1', '1');
+  localStorage.setItem('clinlingua_migrated_v1', '1');
   if (count > 0) console.log(`MedChinese: migrated ${count} localStorage key(s) from clinlingua_ → medchinese_`);
 }
 
@@ -15202,16 +15202,16 @@ const RANKS = [
 ];
 
 function getPoints() {
-  return parseInt(localStorage.getItem('medchinese_points') || '0');
+  return parseInt(localStorage.getItem('clinlingua_points') || '0');
 }
 function setPoints(n) {
-  localStorage.setItem('medchinese_points', String(n));
+  localStorage.setItem('clinlingua_points', String(n));
 }
 function getStreak() {
   return {
-    count: parseInt(localStorage.getItem('medchinese_streak') || '0'),
-    lastDate: localStorage.getItem('medchinese_streak_date') || '',
-    longest: parseInt(localStorage.getItem('medchinese_streak_longest') || '0'),
+    count: parseInt(localStorage.getItem('clinlingua_streak') || '0'),
+    lastDate: localStorage.getItem('clinlingua_streak_date') || '',
+    longest: parseInt(localStorage.getItem('clinlingua_streak_longest') || '0'),
   };
 }
 function getRank(pts) {
@@ -15250,9 +15250,9 @@ function checkDailyLogin() {
   let newCount = streak.lastDate === yesterday ? streak.count + 1 : 1;
   let longest = Math.max(newCount, streak.longest);
 
-  localStorage.setItem('medchinese_streak', String(newCount));
-  localStorage.setItem('medchinese_streak_date', today);
-  localStorage.setItem('medchinese_streak_longest', String(longest));
+  localStorage.setItem('clinlingua_streak', String(newCount));
+  localStorage.setItem('clinlingua_streak_date', today);
+  localStorage.setItem('clinlingua_streak_longest', String(longest));
 
   // Base points for daily login
   let pts = 10;
@@ -17515,7 +17515,7 @@ function renderPointsStats(targetEl) {
         Quiz any: <strong>5 pts</strong><br>
         Lesson complete (all 3): <strong>+20 pts bonus</strong>
       </div>
-      <button onclick="if(confirm('Reset all points and streak data?')){localStorage.removeItem('medchinese_points');localStorage.removeItem('medchinese_streak');localStorage.removeItem('medchinese_streak_date');localStorage.removeItem('medchinese_streak_longest');location.reload();}" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.08em;background:none;border:1px solid var(--border);color:var(--muted);cursor:pointer;padding:5px 12px;margin-top:8px">Reset Progress</button>
+      <button onclick="if(confirm('Reset all points and streak data?')){localStorage.removeItem('clinlingua_points');localStorage.removeItem('clinlingua_streak');localStorage.removeItem('clinlingua_streak_date');localStorage.removeItem('clinlingua_streak_longest');location.reload();}" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.08em;background:none;border:1px solid var(--border);color:var(--muted);cursor:pointer;padding:5px 12px;margin-top:8px">Reset Progress</button>
     </div>
   `;
   el.appendChild(div);
@@ -18757,7 +18757,7 @@ function clearPathway() {
 
 function getCompletedLessons() {
   try {
-    const raw = localStorage.getItem('medchinese_completed');
+    const raw = localStorage.getItem('clinlingua_completed');
     return raw ? JSON.parse(raw) : [];
   } catch(e) { return []; }
 }
@@ -18766,7 +18766,7 @@ function markLessonComplete(idx) {
   const completed = getCompletedLessons();
   if (!completed.includes(idx)) {
     completed.push(idx);
-    try { localStorage.setItem('medchinese_completed', JSON.stringify(completed)); } catch(e) {}
+    try { localStorage.setItem('clinlingua_completed', JSON.stringify(completed)); } catch(e) {}
   }
   renderSidebar();
 }
@@ -19129,7 +19129,7 @@ renderPathwayBanner();
 // ─── PWA SERVICE WORKER ───
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
-  const APP_VER = 'medical-chinese-v119';
+  const APP_VER = 'medical-chinese-v120';
   const swCode = `
     const CACHE = '${APP_VER}';
     self.addEventListener('install', e => {
