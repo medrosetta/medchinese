@@ -948,8 +948,15 @@
     .choice-btn{font-size:0.75rem;padding:12px 14px;min-height:44px}
 
     /* ── Anatomy ── */
-    .anat-main{grid-template-columns:1fr}
-    .anat-controls{flex-direction:column;gap:8px}
+    .anat-main{grid-template-columns:1fr 1fr;gap:8px;align-items:start}
+    .anat-controls{flex-direction:row;gap:8px;flex-wrap:nowrap}
+    .anat-layer-group,.anat-fig-group{flex:1;min-width:0}
+    .anat-layer-btn,.anat-fig-btn{font-size:0.58rem;padding:5px 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .anat-info-zh{font-size:1.6rem}
+    .anat-info-en{font-size:0.95rem}
+    .anat-info-jp{font-size:0.7rem}
+    .anat-info-card{padding:14px 10px}
+    .anat-info-placeholder{padding:20px 10px}
 
     /* ── Section header touch targets ── */
     .section-header{padding:14px 14px;min-height:44px}
@@ -14706,7 +14713,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v108'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v109'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -17853,7 +17860,7 @@ function renderAnatBodySVG(dots) {
   if (isSkel) bodySVG = getBodySVGSkel();
   else if (isPost) bodySVG = getBodySVGPost();
   else bodySVG = getBodySVGAnt();
-  return '<svg class="anat-svg" viewBox="20 40 360 780" xmlns="http://www.w3.org/2000/svg" style="max-width:200px;width:100%;height:auto;cursor:default"><rect width="400" height="900" fill="white"/>' + bodySVG + dots + '</svg>';
+  return '<svg class="anat-svg" viewBox="20 40 360 780" xmlns="http://www.w3.org/2000/svg" style="max-width:200px;width:100%;height:auto;cursor:default">' + bodySVG + dots + '</svg>';
 }
 
 function getBodySVGAnt() {
@@ -18918,7 +18925,7 @@ renderPathwayBanner();
 // ─── PWA SERVICE WORKER ───
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
-  const APP_VER = 'medical-chinese-v108';
+  const APP_VER = 'medical-chinese-v109';
   const swCode = `
     const CACHE = '${APP_VER}';
     self.addEventListener('install', e => {
