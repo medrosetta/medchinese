@@ -14714,7 +14714,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v118'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v117'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -15280,7 +15280,7 @@ function checkDailyLogin() {
 
 function updateStreakWidget() {
   const widget = document.getElementById('streak-widget');
-  if (!widget || widget.style.display === 'none') return;
+  if (!widget) return;
   const pts = getPoints();
   const streak = getStreak();
   const rank = getRank(pts);
@@ -17441,7 +17441,7 @@ function renderMain() {
       <div class="lesson-main-title">${L.en}</div>
       <div class="lesson-main-zh">${L.zh}<button class="main-speak-btn" onclick="speakLessonTitle('${zhSafe}')">▶ PLAY</button></div>
     </div>
-    <div id="streak-widget" style="display:none"></div>
+    <div id="streak-widget"></div>
     <div class="tabs">
       <button class="tab-btn ${tab==='vocab'?'active':''}" onclick="switchTab('vocab')">VOCAB 詞彙</button>
       <button class="tab-btn ${tab==='dialogue'?'active':''}" onclick="switchTab('dialogue')">DIALOGUE 對話</button>
@@ -19129,7 +19129,7 @@ renderPathwayBanner();
 // ─── PWA SERVICE WORKER ───
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
-  const APP_VER = 'medical-chinese-v118';
+  const APP_VER = 'medical-chinese-v117';
   const swCode = `
     const CACHE = '${APP_VER}';
     self.addEventListener('install', e => {
