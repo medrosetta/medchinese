@@ -14714,7 +14714,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v115'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v118'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -15280,7 +15280,7 @@ function checkDailyLogin() {
 
 function updateStreakWidget() {
   const widget = document.getElementById('streak-widget');
-  if (!widget) return;
+  if (!widget || widget.style.display === 'none') return;
   const pts = getPoints();
   const streak = getStreak();
   const rank = getRank(pts);
@@ -15553,7 +15553,7 @@ function playAnatQuizAudio() {
 
 function startAnatPlayAll() {
   stopAnatPlayAll();
-  const terms = Object.values(ANATOMY_HOTSPOTS).flat().filter(h => h.fig === anatFig);
+  const terms = (ANATOMY_HOTSPOTS[anatLayer] || []).filter(h => h.fig === anatFig);
   if (!terms.length) return;
   _anatPlayAllTerms = [...terms];
   _anatPlayAllIndex = 0;
@@ -15616,8 +15616,7 @@ function anatPlayForward() {
 
 function anatPlayShuffle() {
   if (!_anatPlayAllTerms.length) {
-    const terms = Object.values(ANATOMY_HOTSPOTS).flat().filter(h => h.fig === anatFig);
-    _anatPlayAllTerms = [...terms];
+    _anatPlayAllTerms = [...(ANATOMY_HOTSPOTS[anatLayer] || []).filter(h => h.fig === anatFig)];
   }
   // Fisher-Yates shuffle
   for (let i = _anatPlayAllTerms.length - 1; i > 0; i--) {
@@ -15632,10 +15631,7 @@ function anatPlayShuffle() {
 function anatPlayCycle() {
   _anatPlayAllLoop = !_anatPlayAllLoop;
   const btn = document.getElementById('anat-cycle-btn');
-  if (btn) {
-    btn.style.color = _anatPlayAllLoop ? 'var(--teal)' : 'var(--muted)';
-    btn.style.borderColor = _anatPlayAllLoop ? 'var(--teal)' : 'var(--border)';
-  }
+  if (btn) btn.style.opacity = _anatPlayAllLoop ? '1' : '0.5';
 }
 
 function _updatePlayPauseBtn() {
@@ -17438,17 +17434,14 @@ function nextQuestion() {
 
 function renderMain() {
   const L = getLessons()[cur];
-  const pct = ((cur+1)/getLessons().length*100).toFixed(0);
   const zhSafe = L.zh.replace(/'/g, "\\'");
   document.getElementById('main-content').innerHTML = `
     <div class="lesson-header fade-in">
-      <div class="lesson-label">${(()=>{ let n=1; for(const m of MODULES){ for(const li of m.lessons){ if(li===cur) return `Lesson ${n} of ${getLessons().length}`; n++; } } return `Lesson ${cur+1}`; })()} </div>
+      <div class="lesson-label" style="display:flex;align-items:center;justify-content:space-between">${(()=>{ let n=1; for(const m of MODULES){ for(const li of m.lessons){ if(li===cur) return `Lesson ${n} of ${getLessons().length}`; n++; } } return `Lesson ${cur+1}`; })()}<span style="display:flex;gap:4px;margin-left:auto"><button class="lesson-thumb-btn" onclick="rateLesson(this,'up')" title="Relevant">👍</button><button class="lesson-thumb-btn" onclick="rateLesson(this,'down')" title="Not relevant">👎</button></span></div>
       <div class="lesson-main-title">${L.en}</div>
       <div class="lesson-main-zh">${L.zh}<button class="main-speak-btn" onclick="speakLessonTitle('${zhSafe}')">▶ PLAY</button></div>
     </div>
-    <div id="streak-widget"></div>
-    <div class="lesson-rating-bar"><span class="rating-label">Relevant to your practice?</span><button class="lesson-thumb-btn" onclick="rateLesson(this,'up')" title="Relevant">👍</button><button class="lesson-thumb-btn" onclick="rateLesson(this,'down')" title="Not relevant">👎</button></div>
-    <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+    <div id="streak-widget" style="display:none"></div>
     <div class="tabs">
       <button class="tab-btn ${tab==='vocab'?'active':''}" onclick="switchTab('vocab')">VOCAB 詞彙</button>
       <button class="tab-btn ${tab==='dialogue'?'active':''}" onclick="switchTab('dialogue')">DIALOGUE 對話</button>
@@ -17456,19 +17449,6 @@ function renderMain() {
       <button class="tab-btn ${tab==='audio'?'active':''}" onclick="switchTab('audio')"><span class="tab-audio-full">🔊 AUDIO SETUP</span><span class="tab-audio-mobile">🔊 Setup</span></button>
     </div>
     <div id="tab-content" class="fade-in"></div>`;
-  // Priority section banner
-  setTimeout(() => {
-    const priorities = getPrioritySections(cur);
-    if (priorities.length > 0) {
-      const firstSection = document.querySelector('#main-content .section-block');
-      if (firstSection) {
-        const b = document.createElement('div');
-        b.className = 'section-priority-banner fade-in';
-        b.innerHTML = '<strong>YOUR PATH · FOCUS ON</strong> ' + priorities.slice(0,3).join(' · ');
-        firstSection.parentNode.insertBefore(b, firstSection);
-      }
-    }
-  }, 50);
   renderTab();
 }
 
@@ -18597,11 +18577,11 @@ function renderAnatomyMap() {
         <button class="play-all-btn ${_anatPlayMode==='en-zh'?'active':''}" onclick="startAnatPlayMode('en-zh')" style="font-family:var(--mono);font-size:0.62rem;letter-spacing:0.06em;padding:7px 14px;border:1.5px solid var(--border);background:none;cursor:pointer;color:var(--ink)">▶ EN→中</button>
       </div>
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-        <button onclick="anatPlayShuffle()" title="Shuffle" style="font-size:1rem;background:none;border:1px solid var(--border);padding:6px 10px;cursor:pointer;color:var(--ink)">⇄</button>
-        <button onclick="anatPlayBack()" title="Previous" style="font-size:1rem;background:none;border:1px solid var(--border);padding:6px 10px;cursor:pointer;color:var(--ink)">⏮</button>
-        <button id="anat-playpause-btn" onclick="anatPlayPause()" title="Play / Pause" style="font-size:1rem;background:var(--teal);color:var(--paper);border:none;padding:6px 14px;cursor:pointer;min-width:44px">▶</button>
-        <button onclick="anatPlayForward()" title="Next" style="font-size:1rem;background:none;border:1px solid var(--border);padding:6px 10px;cursor:pointer;color:var(--ink)">⏭</button>
-        <button onclick="anatPlayCycle()" title="Cycle / Loop" id="anat-cycle-btn" style="font-size:1rem;background:none;border:1px solid var(--border);padding:6px 10px;cursor:pointer;color:var(--muted)">↻</button>
+        <button onclick="anatPlayShuffle()" title="Shuffle" style="width:44px;height:44px;background:#2563eb;border:none;color:white;font-size:1.3rem;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center">⇄</button>
+        <button onclick="anatPlayBack()" title="Previous" style="width:44px;height:44px;background:#2563eb;border:none;color:white;font-size:1.3rem;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center">⏮</button>
+        <button id="anat-playpause-btn" onclick="anatPlayPause()" title="Play / Pause" style="width:44px;height:44px;background:#2563eb;border:none;color:white;font-size:1.3rem;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center">▶</button>
+        <button onclick="anatPlayForward()" title="Next" style="width:44px;height:44px;background:#2563eb;border:none;color:white;font-size:1.3rem;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center">⏭</button>
+        <button onclick="anatPlayCycle()" title="Cycle / Loop" id="anat-cycle-btn" style="width:44px;height:44px;background:#2563eb;border:none;color:white;font-size:1.3rem;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0.5">↻</button>
         <span id="anat-playall-status" style="font-family:var(--mono);font-size:0.6rem;color:var(--muted);margin-left:4px"></span>
       </div>
     </div>
@@ -19149,7 +19129,7 @@ renderPathwayBanner();
 // ─── PWA SERVICE WORKER ───
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
-  const APP_VER = 'medical-chinese-v115';
+  const APP_VER = 'medical-chinese-v118';
   const swCode = `
     const CACHE = '${APP_VER}';
     self.addEventListener('install', e => {
