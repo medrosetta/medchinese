@@ -14714,7 +14714,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v111'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v112'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -15557,56 +15557,159 @@ function startAnatPlayAll() {
   if (!terms.length) return;
   _anatPlayAllTerms = [...terms];
   _anatPlayAllIndex = 0;
-  const btn = document.getElementById('anat-play-btn');
-  if (btn) btn.textContent = '▶ Playing...';
-  playNextAnatTerm();
+  _anatPlayAllPlaying = true;
+  _updatePlayPauseBtn();
+  _playAnatCurrent();
 }
 
 function stopAnatPlayAll() {
   clearTimeout(_anatPlayAllTimer);
   _anatPlayAllTimer = null;
-  _anatPlayAllIndex = 0;
+  _anatPlayAllPlaying = false;
+  _updatePlayPauseBtn();
   anatActive = null;
   renderAnatSVGInPlace();
-  const btn = document.getElementById('anat-play-btn');
-  if (btn) btn.textContent = '▶ Start';
   const status = document.getElementById('anat-playall-status');
   if (status) status.textContent = '';
   const info = document.getElementById('anat-info');
-  if (info) info.innerHTML = '';
+  if (info) info.innerHTML = '<div class="anat-info-placeholder"><div style="font-size:2rem;margin-bottom:10px">👆</div><div style="font-family:\'DM Mono\',monospace;font-size:0.65rem;letter-spacing:0.12em;color:var(--muted)">TAP ANY DOT<br>點擊任何位置</div></div>';
 }
 
-function playNextAnatTerm() {
-  if (_anatPlayAllIndex >= _anatPlayAllTerms.length) {
-    stopAnatPlayAll();
-    const status = document.getElementById('anat-playall-status');
-    if (status) status.textContent = 'Done ✓';
-    return;
+let _anatPlayAllPlaying = false;
+let _anatPlayAllLoop = false;
+
+function anatPlayPause() {
+  if (!_anatPlayAllTerms.length) {
+    startAnatPlayAll(); return;
   }
+  _anatPlayAllPlaying = !_anatPlayAllPlaying;
+  _updatePlayPauseBtn();
+  if (_anatPlayAllPlaying) _playAnatCurrent();
+  else { clearTimeout(_anatPlayAllTimer); _anatPlayAllTimer = null; }
+}
+
+function anatPlayBack() {
+  clearTimeout(_anatPlayAllTimer);
+  if (!_anatPlayAllTerms.length) return;
+  _anatPlayAllIndex = Math.max(0, _anatPlayAllIndex - 1);
+  _showAnatTerm(_anatPlayAllTerms[_anatPlayAllIndex]);
+  if (_anatPlayAllPlaying) {
+    _anatPlayAllTimer = setTimeout(() => _speakAnatCurrent(), 200);
+  }
+}
+
+function anatPlayForward() {
+  clearTimeout(_anatPlayAllTimer);
+  if (!_anatPlayAllTerms.length) return;
+  _anatPlayAllIndex = (_anatPlayAllIndex + 1) % _anatPlayAllTerms.length;
+  _showAnatTerm(_anatPlayAllTerms[_anatPlayAllIndex]);
+  if (_anatPlayAllPlaying) {
+    _anatPlayAllTimer = setTimeout(() => _speakAnatCurrent(), 200);
+  }
+}
+
+function anatPlayShuffle() {
+  if (!_anatPlayAllTerms.length) {
+    const terms = Object.values(ANATOMY_HOTSPOTS).flat().filter(h => h.fig === anatFig);
+    _anatPlayAllTerms = [...terms];
+  }
+  // Fisher-Yates shuffle
+  for (let i = _anatPlayAllTerms.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [_anatPlayAllTerms[i], _anatPlayAllTerms[j]] = [_anatPlayAllTerms[j], _anatPlayAllTerms[i]];
+  }
+  _anatPlayAllIndex = 0;
+  _showAnatTerm(_anatPlayAllTerms[0]);
+  if (_anatPlayAllPlaying) _speakAnatCurrent();
+}
+
+function anatPlayCycle() {
+  _anatPlayAllLoop = !_anatPlayAllLoop;
+  const btn = document.getElementById('anat-cycle-btn');
+  if (btn) {
+    btn.style.color = _anatPlayAllLoop ? 'var(--teal)' : 'var(--muted)';
+    btn.style.borderColor = _anatPlayAllLoop ? 'var(--teal)' : 'var(--border)';
+  }
+}
+
+function _updatePlayPauseBtn() {
+  const btn = document.getElementById('anat-playpause-btn');
+  if (btn) btn.textContent = _anatPlayAllPlaying ? '⏸' : '▶';
+}
+
+function _showAnatTerm(term) {
+  if (!term) return;
+  const isCmn = currentLang === 'cmn';
+  const zh = isCmn ? term.zhCmn : term.zh;
+  anatActive = term.id;
+  // Switch layer if needed
+  const termLayer = Object.entries(ANATOMY_HOTSPOTS).find(([k,v]) => v.some(h => h.id === term.id));
+  if (termLayer && anatLayer !== termLayer[0]) { anatLayer = termLayer[0]; }
+  renderAnatSVGInPlace();
+  const info = document.getElementById('anat-info');
+  if (info) info.innerHTML = `<div class="anat-info-card">
+    <div class="anat-info-zh">${zh}</div>
+    <div class="anat-info-jp">${term.jp}</div>
+    <div class="anat-info-en">${term.en}</div>
+  </div>`;
+  const status = document.getElementById('anat-playall-status');
+  if (status) status.textContent = `${_anatPlayAllIndex + 1} / ${_anatPlayAllTerms.length} · ${term.en}`;
+}
+
+function _playAnatCurrent() {
+  if (!_anatPlayAllPlaying || !_anatPlayAllTerms.length) return;
+  const term = _anatPlayAllTerms[_anatPlayAllIndex];
+  _showAnatTerm(term);
+  _speakAnatCurrent();
+}
+
+function _speakAnatCurrent() {
+  if (!_anatPlayAllTerms.length) return;
   const term = _anatPlayAllTerms[_anatPlayAllIndex];
   const isCmn = currentLang === 'cmn';
   const zh = isCmn ? term.zhCmn : term.zh;
-
-  // Highlight dot
-  anatActive = term.id;
-  renderAnatSVGInPlace();
-
-  // Update right panel
-  const info = document.getElementById('anat-info');
-  if (info) info.innerHTML = `
-    <div class="anat-info-card">
-      <div class="anat-info-zh">${zh}</div>
-      <div class="anat-info-jp">${term.jp}</div>
-      <div class="anat-info-en">${term.en}</div>
-    </div>`;
-
-  const status = document.getElementById('anat-playall-status');
-  if (status) status.textContent = `${_anatPlayAllIndex + 1} / ${_anatPlayAllTerms.length} · ${term.en}`;
-
-  // Speak via Azure TTS
-  speakAzureVoice(zh, isCmn ? 'cmn' : 'yue', () => {
-    _anatPlayAllIndex++;
-    _anatPlayAllTimer = setTimeout(playNextAnatTerm, 800);
+  const voice = isCmn
+    ? (localStorage.getItem('medchinese_azure_voice_cmn') || 'zh-CN-XiaoxiaoNeural')
+    : (localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural');
+  const ttsUrl = 'https://medchinese-tts.medrosettaapp.workers.dev';
+  fetch(ttsUrl, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ text: zh, voice })
+  }).then(r => r.arrayBuffer()).then(buf => {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    ctx.decodeAudioData(buf, decoded => {
+      const src = ctx.createBufferSource();
+      src.buffer = decoded;
+      src.connect(ctx.destination);
+      src.onended = () => {
+        if (!_anatPlayAllPlaying) return;
+        _anatPlayAllIndex++;
+        if (_anatPlayAllIndex >= _anatPlayAllTerms.length) {
+          if (_anatPlayAllLoop) {
+            _anatPlayAllIndex = 0;
+          } else {
+            _anatPlayAllPlaying = false;
+            _updatePlayPauseBtn();
+            const status = document.getElementById('anat-playall-status');
+            if (status) status.textContent = 'Done ✓';
+            return;
+          }
+        }
+        _anatPlayAllTimer = setTimeout(_playAnatCurrent, 600);
+      };
+      src.start();
+    });
+  }).catch(() => {
+    // On TTS failure, just advance
+    if (_anatPlayAllPlaying) {
+      _anatPlayAllIndex++;
+      if (_anatPlayAllIndex >= _anatPlayAllTerms.length) {
+        if (_anatPlayAllLoop) _anatPlayAllIndex = 0;
+        else { _anatPlayAllPlaying = false; _updatePlayPauseBtn(); return; }
+      }
+      _anatPlayAllTimer = setTimeout(_playAnatCurrent, 400);
+    }
   });
 }
 
@@ -17656,13 +17759,9 @@ let _anatQuizAnswered = false;
 
 function startAnatQuiz() {
   const isCmn = currentLang === 'cmn';
-  const quizTerms = getQuizTerms();
+  const quizTerms = Object.values(ANATOMY_HOTSPOTS).flat();
 
-  if (!quizTerms || quizTerms.length < 2) {
-    const panel = document.getElementById('anat-quiz-panel');
-    if (panel) panel.innerHTML = '<div style="padding:16px;font-family:var(--mono);font-size:0.65rem;color:var(--muted)">Not enough anatomy terms in this lesson for quiz.</div>';
-    return;
-  }
+  if (!quizTerms || quizTerms.length < 2) return;
 
   // Shuffle terms
   _anatQuizTerms = [...quizTerms].sort(() => Math.random() - 0.5);
@@ -18423,22 +18522,14 @@ function renderAnatomyMap() {
       </div>
     </div>
 
-    <!-- Quiz prompt area -->
-    <div id="anat-quiz-prompt" style="display:${anatQuizMode==='identify'?'block':'none'}">
-      <div class="anat-quiz-panel" id="anat-quiz-panel">
-        <div id="anat-quiz-instruction"></div>
-        <div id="anat-quiz-options" class="anat-quiz-options"></div>
-        <div id="anat-quiz-feedback" class="anat-quiz-feedback"></div>
-        <div id="anat-quiz-score" class="anat-quiz-score"></div>
-        <button class="anat-quiz-next-btn" id="anat-quiz-next" onclick="nextAnatQuiz()" style="display:none">Next →</button>
-      </div>
-    </div>
-
-    <!-- Play All controls -->
-    <div id="anat-playall-bar" style="display:${anatQuizMode==='playall'?'flex':'none'};align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap">
-      <button id="anat-play-btn" onclick="startAnatPlayAll()" style="font-family:var(--mono);font-size:0.62rem;letter-spacing:0.08em;background:var(--teal);color:var(--paper);border:none;padding:8px 18px;cursor:pointer">▶ Start</button>
-      <button onclick="stopAnatPlayAll()" style="font-family:var(--mono);font-size:0.62rem;letter-spacing:0.08em;background:none;border:1px solid var(--border);color:var(--muted);padding:8px 14px;cursor:pointer">■ Stop</button>
-      <span id="anat-playall-status" style="font-family:var(--mono);font-size:0.6rem;color:var(--muted)"></span>
+    <!-- Play All transport bar -->
+    <div id="anat-playall-bar" style="display:${anatQuizMode==='playall'?'flex':'none'};align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+      <button onclick="anatPlayShuffle()" title="Shuffle" style="font-size:1rem;background:none;border:1px solid var(--border);padding:6px 10px;cursor:pointer;color:var(--ink)">⇄</button>
+      <button onclick="anatPlayBack()" title="Previous" style="font-size:1rem;background:none;border:1px solid var(--border);padding:6px 10px;cursor:pointer;color:var(--ink)">⏮</button>
+      <button id="anat-playpause-btn" onclick="anatPlayPause()" title="Play / Pause" style="font-size:1rem;background:var(--teal);color:var(--paper);border:none;padding:6px 14px;cursor:pointer;min-width:44px">▶</button>
+      <button onclick="anatPlayForward()" title="Next" style="font-size:1rem;background:none;border:1px solid var(--border);padding:6px 10px;cursor:pointer;color:var(--ink)">⏭</button>
+      <button onclick="anatPlayCycle()" title="Cycle / Loop" id="anat-cycle-btn" style="font-size:1rem;background:none;border:1px solid var(--border);padding:6px 10px;cursor:pointer;color:var(--muted)">↻</button>
+      <span id="anat-playall-status" style="font-family:var(--mono);font-size:0.6rem;color:var(--muted);margin-left:4px"></span>
     </div>
 
     <div class="anat-main">
@@ -18984,7 +19075,7 @@ renderPathwayBanner();
 // ─── PWA SERVICE WORKER ───
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
-  const APP_VER = 'medical-chinese-v111';
+  const APP_VER = 'medical-chinese-v112';
   const swCode = `
     const CACHE = '${APP_VER}';
     self.addEventListener('install', e => {
