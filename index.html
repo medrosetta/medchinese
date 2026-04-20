@@ -14714,7 +14714,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v121'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v122'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -15276,6 +15276,18 @@ function checkDailyLogin() {
       }
     }, 500);
   }
+}
+
+function runStorageDiag() {
+  var keys = Object.keys(localStorage)
+    .filter(function(k){ return k.indexOf('clinlingua_') !== -1 || k.indexOf('medchinese_') !== -1; })
+    .sort();
+  var out = keys.length
+    ? keys.map(function(k){ return k + ': ' + localStorage.getItem(k); }).join('\n')
+    : 'No progress keys found in localStorage.';
+  var d = document.getElementById('ls-diag');
+  if (d) { d.textContent = out; d.style.display = 'block'; }
+  else { alert(out); }
 }
 
 function updateStreakWidget() {
@@ -17516,7 +17528,7 @@ function renderPointsStats(targetEl) {
         Lesson complete (all 3): <strong>+20 pts bonus</strong>
       </div>
       <button onclick="if(confirm('Reset all points and streak data?')){localStorage.removeItem('clinlingua_points');localStorage.removeItem('clinlingua_streak');localStorage.removeItem('clinlingua_streak_date');localStorage.removeItem('clinlingua_streak_longest');location.reload();}" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.08em;background:none;border:1px solid var(--border);color:var(--muted);cursor:pointer;padding:5px 12px;margin-top:8px">Reset Progress</button>
-      <button onclick="(function(){var keys=Object.keys(localStorage).filter(k=>k.includes('clinlingua_')||k.includes('medchinese_')).sort();var out=keys.length?keys.map(k=>k+': '+localStorage.getItem(k)).join('\n'):'No progress keys found.';var d=document.getElementById('ls-diag');d.textContent=out;d.style.display='block';})()" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.08em;background:none;border:1px solid var(--teal);color:var(--teal);cursor:pointer;padding:5px 12px;margin-top:8px">🔍 Diagnose Storage</button>
+      <button onclick="runStorageDiag()" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.08em;background:none;border:1px solid var(--teal);color:var(--teal);cursor:pointer;padding:5px 12px;margin-top:8px">🔍 Diagnose Storage</button>
       <pre id="ls-diag" style="display:none;font-family:'DM Mono',monospace;font-size:0.58rem;margin-top:8px;padding:10px;background:var(--cream);border:1px solid var(--border);white-space:pre-wrap;word-break:break-all;max-width:100%"></pre>
     </div>
   `;
@@ -19131,7 +19143,7 @@ renderPathwayBanner();
 // ─── PWA SERVICE WORKER ───
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
-  const APP_VER = 'medical-chinese-v121';
+  const APP_VER = 'medical-chinese-v122';
   const swCode = `
     const CACHE = '${APP_VER}';
     self.addEventListener('install', e => {
