@@ -14714,7 +14714,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v117'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v118'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -15636,7 +15636,7 @@ function anatPlayCycle() {
 
 function _updatePlayPauseBtn() {
   const btn = document.getElementById('anat-playpause-btn');
-  if (btn) btn.textContent = _anatPlayAllPlaying ? '⏸' : '▶';
+  if (btn) btn.textContent = _anatPlayAllPlaying ? '⏸️' : '▶️';
 }
 
 function _showAnatTerm(term) {
@@ -18577,11 +18577,11 @@ function renderAnatomyMap() {
         <button class="play-all-btn ${_anatPlayMode==='en-zh'?'active':''}" onclick="startAnatPlayMode('en-zh')" style="font-family:var(--mono);font-size:0.62rem;letter-spacing:0.06em;padding:7px 14px;border:1.5px solid var(--border);background:none;cursor:pointer;color:var(--ink)">▶ EN→中</button>
       </div>
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-        <button onclick="anatPlayShuffle()" title="Shuffle" style="width:44px;height:44px;background:#2563eb;border:none;color:white;font-size:1.3rem;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center">⇄</button>
-        <button onclick="anatPlayBack()" title="Previous" style="width:44px;height:44px;background:#2563eb;border:none;color:white;font-size:1.3rem;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center">⏮</button>
-        <button id="anat-playpause-btn" onclick="anatPlayPause()" title="Play / Pause" style="width:44px;height:44px;background:#2563eb;border:none;color:white;font-size:1.3rem;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center">▶</button>
-        <button onclick="anatPlayForward()" title="Next" style="width:44px;height:44px;background:#2563eb;border:none;color:white;font-size:1.3rem;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center">⏭</button>
-        <button onclick="anatPlayCycle()" title="Cycle / Loop" id="anat-cycle-btn" style="width:44px;height:44px;background:#2563eb;border:none;color:white;font-size:1.3rem;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0.5">↻</button>
+        <button onclick="anatPlayShuffle()" title="Shuffle" style="width:44px;height:44px;background:#2563eb;border:none;color:white;font-size:1.3rem;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center">🔀</button>
+        <button onclick="anatPlayBack()" title="Previous" style="width:44px;height:44px;background:#2563eb;border:none;color:white;font-size:1.3rem;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center">⏪</button>
+        <button id="anat-playpause-btn" onclick="anatPlayPause()" title="Play / Pause" style="width:44px;height:44px;background:#2563eb;border:none;color:white;font-size:1.3rem;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center">▶️</button>
+        <button onclick="anatPlayForward()" title="Next" style="width:44px;height:44px;background:#2563eb;border:none;color:white;font-size:1.3rem;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center">⏩</button>
+        <button onclick="anatPlayCycle()" title="Cycle / Loop" id="anat-cycle-btn" style="width:44px;height:44px;background:#2563eb;border:none;color:white;font-size:1.3rem;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0.5">🔁</button>
         <span id="anat-playall-status" style="font-family:var(--mono);font-size:0.6rem;color:var(--muted);margin-left:4px"></span>
       </div>
     </div>
@@ -19129,7 +19129,7 @@ renderPathwayBanner();
 // ─── PWA SERVICE WORKER ───
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
-  const APP_VER = 'medical-chinese-v117';
+  const APP_VER = 'medical-chinese-v118';
   const swCode = `
     const CACHE = '${APP_VER}';
     self.addEventListener('install', e => {
