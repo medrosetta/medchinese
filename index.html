@@ -794,7 +794,7 @@
   .anat-fig-btn.active  { background:var(--ink);  color:var(--paper); border-color:var(--ink); }
 
   .anat-main { display:grid; grid-template-columns:440px 1fr; gap:32px; align-items:start; margin-bottom:32px; }
-  .anat-svg-panel { background:var(--section-bg); border:1px solid var(--border); padding:20px; display:flex; justify-content:center; align-items:flex-start; min-height:480px; }
+  .anat-svg-panel { background:var(--section-bg); border:1px solid var(--border); padding:4px; display:flex; justify-content:center; align-items:flex-start; }
   .anat-svg { width:400px; height:auto; display:block; overflow:visible; }
 
   .anat-info-panel { position:sticky; top:20px; }
@@ -867,6 +867,10 @@
     /* ── Layout ── */
     .app-container{display:block;margin-left:0;padding-top:94px}
     #anatomy-container, #setup-container, #pathway-container, #favorites-container { padding-top: 94px; }
+    #anatomy-content { padding: 10px 8px !important; }
+    .anat-header { margin-bottom: 10px; padding-bottom: 8px; }
+    .anat-mode-group { margin-bottom: 8px; }
+    .anat-controls { margin-bottom: 8px !important; }
 
     aside{position:relative;height:auto;max-height:220px;min-width:0}
     main{padding:20px 14px;max-width:100%}
@@ -14702,7 +14706,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v107'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v108'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -17849,7 +17853,7 @@ function renderAnatBodySVG(dots) {
   if (isSkel) bodySVG = getBodySVGSkel();
   else if (isPost) bodySVG = getBodySVGPost();
   else bodySVG = getBodySVGAnt();
-  return '<svg class="anat-svg" viewBox="0 0 400 900" xmlns="http://www.w3.org/2000/svg" style="max-width:200px;width:100%;height:auto;cursor:default"><rect width="400" height="900" fill="white"/>' + bodySVG + dots + '</svg>';
+  return '<svg class="anat-svg" viewBox="20 40 360 780" xmlns="http://www.w3.org/2000/svg" style="max-width:200px;width:100%;height:auto;cursor:default"><rect width="400" height="900" fill="white"/>' + bodySVG + dots + '</svg>';
 }
 
 function getBodySVGAnt() {
@@ -18326,45 +18330,37 @@ function renderAnatomyMap() {
     });
   }
   const hasLessonTerms = lessonAnatTerms.length > 0;
-  const quizTerms = hasLessonTerms ? lessonAnatTerms : Object.values(ANATOMY_HOTSPOTS).flat();
+  const quizTerms = Object.values(ANATOMY_HOTSPOTS).flat();
 
   el.innerHTML = `
   <div class="anat-container fade-in">
     <div class="anat-header">
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
-        <div>
-          <div class="lesson-label">INTERACTIVE BODY MAP 互動人體圖</div>
-          <div class="lesson-main-title" style="font-style:italic">Anatomy Reference & Quiz</div>
-        </div>
-        <div style="display:flex;gap:8px;align-items:center">
-          <button class="feature-thumb-btn" onclick="rateFeature(this,'Anatomy Map','up')" title="Feature useful">👍</button>
-          <button class="feature-thumb-btn" onclick="rateFeature(this,'Anatomy Map','down')" title="Not useful">👎</button>
-          <button class="flag-btn" style="opacity:0.5" title="Report issue with Body Map" onclick="openFeedback('Anatomy Map','Interactive Body Map','Anatomy Map',this)">💬</button>
-        </div>
+      <div>
+        <div class="lesson-label">INTERACTIVE BODY MAP 互動人體圖</div>
+        <div class="lesson-main-title" style="font-style:italic">Anatomy Reference & Quiz</div>
       </div>
     </div>
 
-    <!-- Mode selector -->
+    <!-- Mode selector — one row, abbreviated labels -->
     <div class="anat-mode-group">
       <span class="anat-ctrl-label">MODE</span>
-      <button class="anat-mode-btn ${anatQuizMode==='reference'?'active':''}" onclick="setAnatMode('reference')">📖 Reference</button>
-      <button class="anat-mode-btn ${anatQuizMode==='tap'?'active':''}" onclick="setAnatMode('tap')" ${!hasLessonTerms?'style="opacity:0.4"':''}>👆 Tap the Body</button>
-      <button class="anat-mode-btn ${anatQuizMode==='identify'?'active':''}" onclick="setAnatMode('identify')" ${!hasLessonTerms?'style="opacity:0.4"':''}>🔤 Identify Term</button>
-      <span id="anat-quiz-hint" style="font-size:0.58rem;color:var(--muted);font-family:var(--mono)">${hasLessonTerms ? lessonAnatTerms.length + ' terms from current lesson' : 'Quiz uses all terms — no anatomy in current lesson'}</span>
+      <button class="anat-mode-btn ${anatQuizMode==='reference'?'active':''}" onclick="setAnatMode('reference')">📖 Ref</button>
+      <button class="anat-mode-btn ${anatQuizMode==='tap'?'active':''}" onclick="setAnatMode('tap')">👆 Body</button>
+      <button class="anat-mode-btn ${anatQuizMode==='identify'?'active':''}" onclick="setAnatMode('identify')">🔤 Term</button>
     </div>
 
-    <!-- Controls -->
-    <div class="anat-controls">
-      <div class="anat-layer-group">
+    <!-- Controls — Layer and View side by side -->
+    <div class="anat-controls" style="display:flex;gap:12px;margin-bottom:12px;flex-wrap:nowrap">
+      <div class="anat-layer-group" style="flex:1;min-width:0">
         <span class="anat-ctrl-label">LAYER 層次</span>
         ${Object.entries(ANATOMY_LAYERS).map(([k,v]) => `
-          <button class="anat-layer-btn ${anatLayer===k?'active':''}" onclick="setAnatLayer('${k}')">${v.label}</button>
+          <button class="anat-layer-btn ${anatLayer===k?'active':''}" onclick="setAnatLayer('${k}')" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${v.label}</button>
         `).join('')}
       </div>
-      <div class="anat-fig-group">
+      <div class="anat-fig-group" style="flex:1;min-width:0">
         <span class="anat-ctrl-label">VIEW 視圖</span>
-        <button class="anat-fig-btn ${anatFig==='adult-ant'?'active':''}" onclick="setAnatFig('adult-ant')">Anterior 前面</button>
-        ${anatLayer !== 'skeletal' ? `<button class="anat-fig-btn ${anatFig==='adult-post'?'active':''}" onclick="setAnatFig('adult-post')">Posterior 後面</button>` : ''}
+        <button class="anat-fig-btn ${anatFig==='adult-ant'?'active':''}" onclick="setAnatFig('adult-ant')" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Anterior 前面</button>
+        ${anatLayer !== 'skeletal' ? `<button class="anat-fig-btn ${anatFig==='adult-post'?'active':''}" onclick="setAnatFig('adult-post')" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Posterior 後面</button>` : ''}
       </div>
     </div>
 
@@ -18389,6 +18385,13 @@ function renderAnatomyMap() {
           <div style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.12em;color:var(--muted)">CLICK ANY DOT<br>點擊任何位置</div>
         </div>
       </div>
+    </div>
+
+    <!-- Thumbs below answer -->
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:16px">
+      <button class="feature-thumb-btn" onclick="rateFeature(this,'Anatomy Map','up')" title="Feature useful">👍</button>
+      <button class="feature-thumb-btn" onclick="rateFeature(this,'Anatomy Map','down')" title="Not useful">👎</button>
+      <button class="flag-btn" style="opacity:0.5" title="Report issue with Body Map" onclick="openFeedback('Anatomy Map','Interactive Body Map','Anatomy Map',this)">💬</button>
     </div>
     <div class="anat-legend" id="anat-legend-wrap">
       ${renderAnatLegend()}
@@ -18915,7 +18918,7 @@ renderPathwayBanner();
 // ─── PWA SERVICE WORKER ───
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
-  const APP_VER = 'medical-chinese-v107';
+  const APP_VER = 'medical-chinese-v108';
   const swCode = `
     const CACHE = '${APP_VER}';
     self.addEventListener('install', e => {
