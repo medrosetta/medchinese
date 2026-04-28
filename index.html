@@ -6495,6 +6495,26 @@ const LESSONS = [
       {zh:"羊水",jp:"joeng4 seoi2",en:"Amniotic fluid"},
       {zh:"乳房",jp:"jyu5 fong4",en:"Breast"},
       {zh:"骨盆",jp:"gwat1 pun4",en:"Pelvis"},
+      {zh:"阴道口",jp:"yīndàokǒu",en:"Vaginal orifice"},
+      {zh:"外阴",jp:"wàiyīn",en:"Vulva"},
+      {zh:"大阴唇",jp:"dàyīnchún",en:"Labia majora"},
+      {zh:"小阴唇",jp:"xiǎoyīnchún",en:"Labia minora"},
+      {zh:"阴蒂",jp:"yīndì",en:"Clitoris"},
+      {zh:"直肠",jp:"zhícháng",en:"Rectum"},
+      {zh:"肛门",jp:"gāngmén",en:"Anus"},
+      {zh:"会阴",jp:"huìyīn",en:"Perineum"},
+      {zh:"处女膜",jp:"chǔnǚmó",en:"Hymen"},
+      {zh:"巴氏腺",jp:"bāshìxiàn",en:"Bartholin's gland"},
+      {zh:"陰道口",jp:"jam1 dou6 hau2",en:"Vaginal orifice"},
+      {zh:"外陰",jp:"ngoi6 jam1",en:"Vulva"},
+      {zh:"大陰唇",jp:"daai6 jam1 seon4",en:"Labia majora"},
+      {zh:"小陰唇",jp:"siu2 jam1 seon4",en:"Labia minora"},
+      {zh:"陰蒂",jp:"jam1 dai3",en:"Clitoris"},
+      {zh:"直腸",jp:"zik6 coeng4",en:"Rectum"},
+      {zh:"肛門",jp:"kong1 mun4",en:"Anus"},
+      {zh:"會陰",jp:"wui6 jam1",en:"Perineum"},
+      {zh:"處女膜",jp:"cyu3 neoi5 mok6",en:"Hymen"},
+      {zh:"巴氏腺",jp:"baa1 si6 sin3",en:"Bartholin's gland"},
     ]},
 
     { title:"OB/GYN Symptoms", zh:"婦產科症狀", vocab:[
@@ -6701,6 +6721,17 @@ const LESSONS = [
       {zh:"膀胱",jp:"pong5 gwong1",en:"Bladder"},
       {zh:"尿道",jp:"niu6 dou6",en:"Urethra"},
       {zh:"前列腺",jp:"cin4 lit6 sin3",en:"Prostate"},
+      {zh:"陰莖",jp:"jam1 ging1",en:"Penis"},
+      {zh:"龜頭",jp:"gwai1 tau4",en:"Glans"},
+      {zh:"包皮",jp:"baau1 pei4",en:"Foreskin"},
+      {zh:"陰囊",jp:"jam1 long4",en:"Scrotum"},
+      {zh:"睪丸",jp:"gou1 jyun2",en:"Testicle"},
+      {zh:"副睪",jp:"fu3 gou1",en:"Epididymis"},
+      {zh:"輸精管",jp:"syu1 zing1 gun2",en:"Vas deferens"},
+      {zh:"精囊",jp:"zing1 long4",en:"Seminal vesicle"},
+      {zh:"直腸",jp:"zik6 coeng4",en:"Rectum"},
+      {zh:"肛門",jp:"kong1 mun4",en:"Anus"},
+      {zh:"會陰",jp:"wui6 jam1",en:"Perineum"}
     ]},
     { title:"Urinary Symptoms", zh:"泌尿系統症狀", vocab:[
       {zh:"排尿困難",jp:"paai4 niu6 kwan3 naan4",en:"Difficulty urinating"},
@@ -12174,6 +12205,17 @@ const LESSONS_MANDARIN = [
       {zh:"膀胱",jp:"páng guāng",en:"Bladder"},
       {zh:"尿道",jp:"niào dào",en:"Urethra"},
       {zh:"前列腺",jp:"qián liè xiàn",en:"Prostate"},
+      {zh:"阴茎",jp:"yīnjīng",en:"Penis"},
+      {zh:"龟头",jp:"guītóu",en:"Glans"},
+      {zh:"包皮",jp:"bāopí",en:"Foreskin"},
+      {zh:"阴囊",jp:"yīnnáng",en:"Scrotum"},
+      {zh:"睾丸",jp:"gāowán",en:"Testicle"},
+      {zh:"附睾",jp:"fùgāo",en:"Epididymis"},
+      {zh:"输精管",jp:"shūjīngguǎn",en:"Vas deferens"},
+      {zh:"精囊",jp:"jīngnáng",en:"Seminal vesicle"},
+      {zh:"直肠",jp:"zhícháng",en:"Rectum"},
+      {zh:"肛门",jp:"gāngmén",en:"Anus"},
+      {zh:"会阴",jp:"huìyīn",en:"Perineum"}
     ]},
     { title:"Urinary Symptoms", zh:"泌尿系统症状", vocab:[
       {zh:"尿频",jp:"niào pín",en:"Frequent urination"},
@@ -14714,7 +14756,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v124'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v125'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -19170,7 +19212,7 @@ renderPathwayBanner();
 // ─── PWA SERVICE WORKER ───
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
-  const APP_VER = 'medical-chinese-v124';
+  const APP_VER = 'medical-chinese-v125';
   const swCode = `
     const CACHE = '${APP_VER}';
     self.addEventListener('install', e => {
