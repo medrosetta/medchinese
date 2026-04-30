@@ -6505,16 +6505,6 @@ const LESSONS = [
       {zh:"会阴",jp:"huìyīn",en:"Perineum"},
       {zh:"处女膜",jp:"chǔnǚmó",en:"Hymen"},
       {zh:"巴氏腺",jp:"bāshìxiàn",en:"Bartholin's gland"},
-      {zh:"陰道口",jp:"jam1 dou6 hau2",en:"Vaginal orifice"},
-      {zh:"外陰",jp:"ngoi6 jam1",en:"Vulva"},
-      {zh:"大陰唇",jp:"daai6 jam1 seon4",en:"Labia majora"},
-      {zh:"小陰唇",jp:"siu2 jam1 seon4",en:"Labia minora"},
-      {zh:"陰蒂",jp:"jam1 dai3",en:"Clitoris"},
-      {zh:"直腸",jp:"zik6 coeng4",en:"Rectum"},
-      {zh:"肛門",jp:"kong1 mun4",en:"Anus"},
-      {zh:"會陰",jp:"wui6 jam1",en:"Perineum"},
-      {zh:"處女膜",jp:"cyu3 neoi5 mok6",en:"Hymen"},
-      {zh:"巴氏腺",jp:"baa1 si6 sin3",en:"Bartholin's gland"},
     ]},
 
     { title:"OB/GYN Symptoms", zh:"婦產科症狀", vocab:[
@@ -14756,7 +14746,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v125'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v127'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -15741,8 +15731,72 @@ function _showAnatTerm(term) {
 function _playAnatCurrent() {
   if (!_anatPlayAllPlaying || !_anatPlayAllTerms.length) return;
   const term = _anatPlayAllTerms[_anatPlayAllIndex];
-  _showAnatTerm(term);
+  // For zh-only mode show full card; for drill modes _speakAnatCurrent handles display
+  if (_anatPlayMode === 'zh') _showAnatTerm(term);
   _speakAnatCurrent();
+}
+
+function _playPing() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(660, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.06);
+    gain.gain.setValueAtTime(0.18, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.22);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.25);
+  } catch(e) {}
+}
+
+function _showAnatAnswer(term) {
+  // Reveal answer in right panel
+  const isCmn = currentLang === 'cmn';
+  const zh = isCmn ? term.zhCmn : term.zh;
+  const info = document.getElementById('anat-info');
+  if (!info) return;
+  if (_anatPlayMode === 'zh-en') {
+    // prompt was Chinese, reveal English
+    info.innerHTML = `<div class="anat-info-card">
+      <div class="anat-info-zh">${zh}</div>
+      <div class="anat-info-jp">${term.jp}</div>
+      <div class="anat-info-en" style="color:var(--teal);font-size:1.1rem;font-weight:600">${term.en}</div>
+    </div>`;
+  } else if (_anatPlayMode === 'en-zh') {
+    // prompt was English, reveal Chinese
+    info.innerHTML = `<div class="anat-info-card">
+      <div class="anat-info-en" style="margin-bottom:8px">${term.en}</div>
+      <div class="anat-info-zh" style="color:var(--teal)">${zh}</div>
+      <div class="anat-info-jp">${term.jp}</div>
+    </div>`;
+  }
+}
+
+function _showAnatPrompt(term) {
+  const isCmn = currentLang === 'cmn';
+  const zh = isCmn ? term.zhCmn : term.zh;
+  const info = document.getElementById('anat-info');
+  const status = document.getElementById('anat-playall-status');
+  if (status) status.textContent = `${_anatPlayAllIndex + 1} / ${_anatPlayAllTerms.length} · ${term.en}`;
+  anatActive = term.id;
+  renderAnatSVGInPlace();
+  if (!info) return;
+  if (_anatPlayMode === 'zh-en') {
+    info.innerHTML = `<div class="anat-info-card">
+      <div class="anat-info-zh">${zh}</div>
+      <div class="anat-info-jp">${term.jp}</div>
+      <div class="anat-info-en" style="color:var(--muted);letter-spacing:0.15em;font-size:0.6rem;font-family:var(--mono)">EN →</div>
+    </div>`;
+  } else if (_anatPlayMode === 'en-zh') {
+    info.innerHTML = `<div class="anat-info-card">
+      <div class="anat-info-en" style="margin-bottom:8px">${term.en}</div>
+      <div style="color:var(--muted);letter-spacing:0.15em;font-size:0.6rem;font-family:var(--mono)">中文 →</div>
+    </div>`;
+  }
 }
 
 function _speakAnatCurrent() {
@@ -15788,7 +15842,7 @@ function _speakAnatCurrent() {
         return;
       }
     }
-    _anatPlayAllTimer = setTimeout(_playAnatCurrent, 1200);
+    _anatPlayAllTimer = setTimeout(_playAnatCurrent, 1000);
   }
 
   function onError() {
@@ -15803,33 +15857,53 @@ function _speakAnatCurrent() {
   }
 
   if (_anatPlayMode === 'zh') {
-    fetchTTS(zh, zhVoice)
-      .then(buf => playBuf(buf, advance))
-      .catch(onError);
+    // Simple: ping → play Chinese → advance
+    _playPing();
+    _anatPlayAllTimer = setTimeout(() => {
+      fetchTTS(zh, zhVoice)
+        .then(buf => playBuf(buf, advance))
+        .catch(onError);
+    }, 280);
 
   } else if (_anatPlayMode === 'zh-en') {
-    fetchTTS(zh, zhVoice).then(buf1 => {
-      playBuf(buf1, () => {
+    // Prefetch both in parallel, then: ping → Chinese → 2s recall gap (show prompt) → reveal EN → play EN → advance
+    _showAnatPrompt(term);
+    Promise.all([fetchTTS(zh, zhVoice), fetchTTS(term.en, enVoice)])
+      .then(([buf1, buf2]) => {
         if (!_anatPlayAllPlaying) return;
+        _playPing();
         _anatPlayAllTimer = setTimeout(() => {
-          fetchTTS(term.en, enVoice)
-            .then(buf2 => playBuf(buf2, advance))
-            .catch(advance);
-        }, 800);
-      });
-    }).catch(onError);
+          playBuf(buf1, () => {
+            if (!_anatPlayAllPlaying) return;
+            // 2s recall gap then reveal answer + play
+            _anatPlayAllTimer = setTimeout(() => {
+              if (!_anatPlayAllPlaying) return;
+              _showAnatAnswer(term);
+              playBuf(buf2, advance);
+            }, 2000);
+          });
+        }, 280);
+      }).catch(onError);
 
   } else if (_anatPlayMode === 'en-zh') {
-    fetchTTS(term.en, enVoice).then(buf1 => {
-      playBuf(buf1, () => {
+    // Prefetch both in parallel, then: ping → English → 2s recall gap (show prompt) → reveal ZH → play ZH → advance
+    _showAnatPrompt(term);
+    Promise.all([fetchTTS(term.en, enVoice), fetchTTS(zh, zhVoice)])
+      .then(([buf1, buf2]) => {
         if (!_anatPlayAllPlaying) return;
+        _playPing();
         _anatPlayAllTimer = setTimeout(() => {
-          fetchTTS(zh, zhVoice)
-            .then(buf2 => playBuf(buf2, advance))
-            .catch(advance);
-        }, 800);
-      });
-    }).catch(onError);
+          playBuf(buf1, () => {
+            if (!_anatPlayAllPlaying) return;
+            // 2s recall gap then reveal answer + play
+            _anatPlayAllTimer = setTimeout(() => {
+              if (!_anatPlayAllPlaying) return;
+              _showAnatAnswer(term);
+              playBuf(buf2, advance);
+            }, 2000);
+          });
+        }, 280);
+      }).catch(onError);
   }
 }
 
@@ -19212,7 +19286,7 @@ renderPathwayBanner();
 // ─── PWA SERVICE WORKER ───
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
-  const APP_VER = 'medical-chinese-v125';
+  const APP_VER = 'medical-chinese-v127';
   const swCode = `
     const CACHE = '${APP_VER}';
     self.addEventListener('install', e => {
