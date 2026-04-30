@@ -14746,7 +14746,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v127'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v128'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -15807,27 +15807,7 @@ function _speakAnatCurrent() {
   const zhVoice = isCmn
     ? (localStorage.getItem('medchinese_azure_voice_cmn') || 'zh-CN-XiaoxiaoNeural')
     : (localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural');
-  const enVoice = 'en-US-JennyNeural';
-  const ttsUrl = 'https://medchinese-tts.medrosettaapp.workers.dev';
-
-  function fetchTTS(text, voice) {
-    return fetch(ttsUrl, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ text, voice })
-    }).then(r => r.arrayBuffer());
-  }
-
-  function playBuf(buf, onDone) {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    ctx.decodeAudioData(buf, decoded => {
-      const src = ctx.createBufferSource();
-      src.buffer = decoded;
-      src.connect(ctx.destination);
-      src.onended = onDone;
-      src.start();
-    }, () => onDone());
-  }
+  const enVoice = localStorage.getItem('medchinese_azure_voice_en') || 'en-US-JennyNeural';
 
   function advance() {
     if (!_anatPlayAllPlaying) return;
@@ -15845,65 +15825,41 @@ function _speakAnatCurrent() {
     _anatPlayAllTimer = setTimeout(_playAnatCurrent, 1000);
   }
 
-  function onError() {
-    if (_anatPlayAllPlaying) {
-      _anatPlayAllIndex++;
-      if (_anatPlayAllIndex >= _anatPlayAllTerms.length) {
-        if (_anatPlayAllLoop) _anatPlayAllIndex = 0;
-        else { _anatPlayAllPlaying = false; _updatePlayPauseBtn(); return; }
-      }
-      _anatPlayAllTimer = setTimeout(_playAnatCurrent, 400);
-    }
-  }
-
   if (_anatPlayMode === 'zh') {
-    // Simple: ping → play Chinese → advance
     _playPing();
     _anatPlayAllTimer = setTimeout(() => {
-      fetchTTS(zh, zhVoice)
-        .then(buf => playBuf(buf, advance))
-        .catch(onError);
+      speakAzureVoice(zh, zhVoice, advance);
     }, 280);
 
   } else if (_anatPlayMode === 'zh-en') {
-    // Prefetch both in parallel, then: ping → Chinese → 2s recall gap (show prompt) → reveal EN → play EN → advance
     _showAnatPrompt(term);
-    Promise.all([fetchTTS(zh, zhVoice), fetchTTS(term.en, enVoice)])
-      .then(([buf1, buf2]) => {
+    _playPing();
+    _anatPlayAllTimer = setTimeout(() => {
+      speakAzureVoice(zh, zhVoice, () => {
         if (!_anatPlayAllPlaying) return;
-        _playPing();
+        // 2s recall gap → reveal answer → play English
         _anatPlayAllTimer = setTimeout(() => {
-          playBuf(buf1, () => {
-            if (!_anatPlayAllPlaying) return;
-            // 2s recall gap then reveal answer + play
-            _anatPlayAllTimer = setTimeout(() => {
-              if (!_anatPlayAllPlaying) return;
-              _showAnatAnswer(term);
-              playBuf(buf2, advance);
-            }, 2000);
-          });
-        }, 280);
-      }).catch(onError);
+          if (!_anatPlayAllPlaying) return;
+          _showAnatAnswer(term);
+          speakAzureVoice(term.en, enVoice, advance);
+        }, 2000);
+      });
+    }, 280);
 
   } else if (_anatPlayMode === 'en-zh') {
-    // Prefetch both in parallel, then: ping → English → 2s recall gap (show prompt) → reveal ZH → play ZH → advance
     _showAnatPrompt(term);
-    Promise.all([fetchTTS(term.en, enVoice), fetchTTS(zh, zhVoice)])
-      .then(([buf1, buf2]) => {
+    _playPing();
+    _anatPlayAllTimer = setTimeout(() => {
+      speakAzureVoice(term.en, enVoice, () => {
         if (!_anatPlayAllPlaying) return;
-        _playPing();
+        // 2s recall gap → reveal answer → play Chinese
         _anatPlayAllTimer = setTimeout(() => {
-          playBuf(buf1, () => {
-            if (!_anatPlayAllPlaying) return;
-            // 2s recall gap then reveal answer + play
-            _anatPlayAllTimer = setTimeout(() => {
-              if (!_anatPlayAllPlaying) return;
-              _showAnatAnswer(term);
-              playBuf(buf2, advance);
-            }, 2000);
-          });
-        }, 280);
-      }).catch(onError);
+          if (!_anatPlayAllPlaying) return;
+          _showAnatAnswer(term);
+          speakAzureVoice(zh, zhVoice, advance);
+        }, 2000);
+      });
+    }, 280);
   }
 }
 
@@ -19286,7 +19242,7 @@ renderPathwayBanner();
 // ─── PWA SERVICE WORKER ───
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
-  const APP_VER = 'medical-chinese-v127';
+  const APP_VER = 'medical-chinese-v128';
   const swCode = `
     const CACHE = '${APP_VER}';
     self.addEventListener('install', e => {
