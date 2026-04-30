@@ -14746,7 +14746,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v128'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = (()=>{ const c='medical-chinese-v129'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -14830,10 +14830,13 @@ async function speakAzure(text, lang, onEnd) {
     clearTimeout(timeoutId);
 
     if (!response.ok) {
-      console.warn('Azure TTS response not ok:', response.status, await response.text());
+      console.warn('Azure TTS response not ok:', response.status);
+      try { const t = await response.clone().text(); console.warn('Worker response body:', t); } catch(e) {}
       return false;
     }
     const audioBlob = await response.blob();
+    console.log('Azure TTS blob size:', audioBlob.size, 'type:', audioBlob.type);
+    if (audioBlob.size < 100) { console.warn('Azure TTS blob too small — likely error'); return false; }
     const audioUrl = URL.createObjectURL(audioBlob);
     const audio = new Audio(audioUrl);
     window._currentAzureAudio = audio;
@@ -14875,7 +14878,8 @@ async function speakAzure(text, lang, onEnd) {
 
 function speak(text, onEnd) {
   speakAzure(text, currentLang, onEnd).then(azureSuccess => {
-    if (azureSuccess) return; // onEnd handled inside speakAzure
+    if (azureSuccess) return;
+    console.warn('speak(): Azure failed, using Web Speech fallback for:', text.slice(0,30));
     // Web Speech API fallback
     if (!synth) { if (onEnd) onEnd(); return; }
     synth.cancel();
@@ -15017,8 +15021,10 @@ async function speakAzureVoice(text, voice, onEnd) {
       signal: controller.signal
     });
     clearTimeout(timeoutId);
-    if (!response.ok) return false;
+    if (!response.ok) { console.warn('speakAzureVoice not ok:', response.status); return false; }
     const audioBlob = await response.blob();
+    console.log('speakAzureVoice blob size:', audioBlob.size, 'voice:', voice, 'text:', text.slice(0,30));
+    if (audioBlob.size < 100) { console.warn('speakAzureVoice blob too small'); return false; }
     const audioUrl = URL.createObjectURL(audioBlob);
     const audio = new Audio(audioUrl);
     window._currentAzureAudio = audio;
@@ -19242,7 +19248,7 @@ renderPathwayBanner();
 // ─── PWA SERVICE WORKER ───
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
-  const APP_VER = 'medical-chinese-v128';
+  const APP_VER = 'medical-chinese-v129';
   const swCode = `
     const CACHE = '${APP_VER}';
     self.addEventListener('install', e => {
