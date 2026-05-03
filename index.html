@@ -14746,7 +14746,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = (()=>{ const c='medical-chinese-v131'; const n=c.split('-v')[1]; const d=new Date(); const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; return `1.0${n} · ${mo} ${d.getDate()}, ${d.getFullYear()}`; })();
+const APP_VERSION = '1.0133 · May 3, 2026';
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -17632,8 +17632,6 @@ function renderPointsStats(targetEl) {
         Lesson complete (all 3): <strong>+20 pts bonus</strong>
       </div>
       <button onclick="if(confirm('Reset all points and streak data?')){localStorage.removeItem('medchinese_points');localStorage.removeItem('medchinese_streak');localStorage.removeItem('medchinese_streak_date');localStorage.removeItem('medchinese_streak_longest');location.reload();}" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.08em;background:none;border:1px solid var(--border);color:var(--muted);cursor:pointer;padding:5px 12px;margin-top:8px">Reset Progress</button>
-      <button onclick="runStorageDiag()" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.08em;background:none;border:1px solid var(--teal);color:var(--teal);cursor:pointer;padding:5px 12px;margin-top:8px">🔍 Diagnose Storage</button>
-      <pre id="ls-diag" style="display:none;font-family:'DM Mono',monospace;font-size:0.58rem;margin-top:8px;padding:10px;background:var(--cream);border:1px solid var(--border);white-space:pre-wrap;word-break:break-all;max-width:100%"></pre>
     </div>
   `;
   el.appendChild(div);
@@ -19025,20 +19023,23 @@ function renderPathwayScreen() {
 function renderPathwayHome() {
   const el = document.getElementById('pathway-content');
   if (!el) return;
-  el.innerHTML = `
-    <div class="pathway-hero fade-in">
+  el.innerHTML = '';
+  renderPointsStats(el);
+  const cta = document.createElement('div');
+  cta.innerHTML = `
+    <div class="pathway-hero fade-in" style="margin-top:28px">
       <div class="pathway-hero-title">Personalize Your Learning</div>
       <div class="pathway-hero-sub">6 questions · 2 minutes · saved to your device</div>
       <button class="pathway-start-btn" onclick="startAssessment()">Personalize My Learning Path</button>
       <span class="pathway-skip-link" onclick="navSelectLessons()">Browse all lessons instead</span>
     </div>
-    <div style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);line-height:2;text-align:center">
+    <div style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);line-height:2;text-align:center;margin-bottom:36px">
       <div>✦ Recommended lesson sequence based on your role</div>
       <div>✦ Priority sections flagged inside each lesson</div>
       <div>✦ Progress tracking across your learning path</div>
       <div>✦ Saved locally — available every time you return</div>
     </div>`;
-  renderPointsStats(el);
+  el.appendChild(cta);
 }
 
 function startAssessment() {
@@ -19248,7 +19249,7 @@ renderPathwayBanner();
 // ─── PWA SERVICE WORKER ───
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
-  const APP_VER = 'medical-chinese-v131';
+  const APP_VER = 'medical-chinese-v133';
   const swCode = `
     const CACHE = '${APP_VER}';
     self.addEventListener('install', e => {
