@@ -8,8 +8,17 @@
 <meta name="apple-mobile-web-app-title" content="MedChinese">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a6b6b">
-<meta name="description" content="MedChinese — Learn Medical Cantonese and Mandarin — 33 lessons, vocabulary, dialogues, and drills for healthcare professionals.">
+<meta name="description" content="Medical Cantonese and Mandarin for healthcare professionals. Vocabulary, dialogues, and drills — free to use.">
 <title>MedChinese — Cantonese & Mandarin</title>
+<meta property="og:title" content="MedChinese — Cantonese & Mandarin">
+<meta property="og:description" content="Medical Cantonese and Mandarin for healthcare professionals. Vocabulary, dialogues, and drills — free to use.">
+<meta property="og:image" content="https://medchinese.com/og-image.png">
+<meta property="og:url" content="https://medchinese.com">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MedChinese — Cantonese & Mandarin">
+<meta name="twitter:description" content="Medical Cantonese and Mandarin for healthcare professionals. Vocabulary, dialogues, and drills — free to use.">
+<meta name="twitter:image" content="https://medchinese.com/og-image.png">
 
 <!-- PWA Manifest (inline via data URI) -->
 <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22MedChinese%22%2C%22short_name%22%3A%22MedChinese%22%2C%22description%22%3A%22Medical%20Cantonese%20%26%20Mandarin%20for%20healthcare%20professionals%22%2C%22start_url%22%3A%22%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f5f0e8%22%2C%22theme_color%22%3A%22%231a6b6b%22%2C%22orientation%22%3A%22portrait%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%253D%2522http%253A%252F%252Fwww.w3.org%252F2000%252Fsvg%2522%2520viewBox%253D%25220%25200%2520512%2520512%2522%253E%253Crect%2520width%253D%2522512%2522%2520height%253D%2522512%2522%2520rx%253D%252280%2522%2520fill%253D%2522%25231a6b6b%2522%252F%253E%253Ctext%2520x%253D%2522256%2522%2520y%253D%2522340%2522%2520font-size%253D%2522280%2522%2520text-anchor%253D%2522middle%2522%2520fill%253D%2522white%2522%2520font-family%253D%2522serif%2522%253E%25E9%2586%25AB%253C%252Ftext%253E%253C%252Fsvg%253E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D">
@@ -14771,7 +14780,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = '1.0135 · May 3, 2026';
+const APP_VERSION = '1.0136 · May 3, 2026';
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -19274,7 +19283,7 @@ renderPathwayBanner();
 // ─── PWA SERVICE WORKER ───
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
-  const APP_VER = 'medical-chinese-v135';
+  const APP_VER = 'medical-chinese-v136';
   const swCode = `
     const CACHE = '${APP_VER}';
     self.addEventListener('install', e => {
