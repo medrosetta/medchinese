@@ -231,7 +231,29 @@
     font-size: 0.95rem;
     font-weight: 600;
     opacity: 0.8;
-    display: block;
+  }
+  .section-title-zh-row {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .section-zh-play-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--ink);
+    font-size: 0.55rem;
+    padding: 2px 6px;
+    cursor: pointer;
+    border-radius: 2px;
+    line-height: 1.4;
+    flex-shrink: 0;
+    opacity: 0.7;
+    transition: opacity 0.15s;
+  }
+  .section-zh-play-btn:hover { opacity: 1; }
+  .section-header.open .section-zh-play-btn {
+    border-color: rgba(245,240,232,0.4);
+    color: var(--paper);
   }
   .section-chevron {
     font-size: 0.7rem;
@@ -4764,13 +4786,30 @@ const LESSONS = [
   {
   id:9, zh:"心臟科", en:"Cardiology",
   sections:[
-    { title:"Heart Anatomy", zh:"心臟解剖", vocab:[
+    { title:"Cardiovascular Anatomy", zh:"心血管解剖", vocab:[
       {zh:"心臟",jp:"sam1 zong6",en:"Heart"},
-      {zh:"主動脈",jp:"zyu2 dung6 mak6",en:"Aorta"},
-      {zh:"冠狀動脈",jp:"gun1 zong6 dung6 mak6",en:"Coronary artery"},
-      {zh:"心瓣",jp:"sam1 baan6",en:"Heart valve"},
       {zh:"心房",jp:"sam1 fong4",en:"Atrium"},
-      {zh:"心室",jp:"sam1 sat1",en:"Ventricle"},]},
+      {zh:"心室",jp:"sam1 sat1",en:"Ventricle"},
+      {zh:"心瓣",jp:"sam1 baan6",en:"Heart valve"},
+      {zh:"冠狀動脈",jp:"gun1 zong6 dung6 mak6",en:"Coronary artery"},
+      {zh:"主動脈",jp:"zyu2 dung6 mak6",en:"Aorta"},
+      {zh:"血管",jp:"hyut3 gun2",en:"Blood vessel"},
+      {zh:"脈搏",jp:"mak6 bok3",en:"Pulse"},
+      {zh:"血液循環",jp:"hyut3 jik6 seon4 wun4",en:"Blood circulation"},
+      {zh:"動脈",jp:"dung6 mak6",en:"Artery"},
+      {zh:"靜脈",jp:"zing6 mak6",en:"Vein"},
+      {zh:"微血管",jp:"mei4 hyut3 gun2",en:"Capillary"},
+      {zh:"上腔靜脈",jp:"soeng6 hong4 zing6 mak6",en:"Superior vena cava"},
+      {zh:"下腔靜脈",jp:"haa6 hong4 zing6 mak6",en:"Inferior vena cava"},
+      {zh:"頸動脈",jp:"geng2 dung6 mak6",en:"Carotid artery"},
+      {zh:"股動脈",jp:"gu2 dung6 mak6",en:"Femoral artery"},
+      {zh:"動脈硬化",jp:"dung6 mak6 ngaang6 faa3",en:"Arteriosclerosis / Hardening of arteries"},
+      {zh:"血栓",jp:"hyut3 sin1",en:"Blood clot / Thrombus"},
+      {zh:"腹主動脈",jp:"fuk6 zyu2 dung6 mak6",en:"Abdominal aorta"},
+      {zh:"動脈瘤",jp:"dung6 mak6 lau4",en:"Aneurysm"},
+      {zh:"腹主動脈粥樣硬化",jp:"fuk6 zyu2 dung6 mak6 zuk1 joeng6 ngaang6 faa3",en:"Abdominal aortic atherosclerosis"},
+      {zh:"腹主動脈瘤",jp:"fuk6 zyu2 dung6 mak6 lau4",en:"Abdominal aortic aneurysm (AAA)"},
+      {zh:"腹主動脈瘤篩查",jp:"fuk6 zyu2 dung6 mak6 lau4 sai1 caa4",en:"Abdominal aortic aneurysm screening"},]},
     {  title:"Cardiac Conditions & Infections", zh:"心臟疾病及感染", vocab:[
       {zh:"心絞痛",jp:"sam1 gaau2 tung3",en:"Angina"},
       {zh:"心肌梗塞",jp:"sam1 gei1 gang2 sak1",en:"Heart attack (myocardial infarction)"},
@@ -4832,26 +4871,7 @@ const LESSONS = [
       {zh:"冠狀動脈造影",jp:"gun1 zong6 dung6 mak6 zou6 jing2",en:"Coronary angiography"},
       {zh:"通波仔",jp:"tung1 bo1 zai2",en:"Coronary angioplasty (colloquial)"}, 
       {zh:"冠狀動脈鈣化掃描",jp:"gun1 zong6 dung6 mak6 goi3 faa3 sou3 miu4",en:"Coronary artery calcium (CAC) scan"},]},
-    { title:"Blood Vessels", zh:"血管", vocab:[
-      {zh:"血管",jp:"hyut3 gun2",en:"Blood vessel"},
-      {zh:"動脈",jp:"dung6 mak6",en:"Artery"},
-      {zh:"靜脈",jp:"zing6 mak6",en:"Vein"},
-      {zh:"微血管",jp:"mei4 hyut3 gun2",en:"Capillary"},
-      {zh:"主動脈",jp:"zyu2 dung6 mak6",en:"Aorta"},
-      {zh:"上腔靜脈",jp:"soeng6 hong4 zing6 mak6",en:"Superior vena cava"},
-      {zh:"下腔靜脈",jp:"haa6 hong4 zing6 mak6",en:"Inferior vena cava"},
-      {zh:"冠狀動脈",jp:"gun1 zong6 dung6 mak6",en:"Coronary artery"},
-      {zh:"頸動脈",jp:"geng2 dung6 mak6",en:"Carotid artery"},
-      {zh:"股動脈",jp:"gu2 dung6 mak6",en:"Femoral artery"},
-      {zh:"脈搏",jp:"mak6 bok3",en:"Pulse"},
-      {zh:"血液循環",jp:"hyut3 jik6 seon4 wun4",en:"Blood circulation"},
-      {zh:"動脈硬化",jp:"dung6 mak6 ngaang6 faa3",en:"Arteriosclerosis / Hardening of arteries"},
-      {zh:"血栓",jp:"hyut3 sin1",en:"Blood clot / Thrombus"},
-      {zh:"腹主動脈",jp:"fuk6 zyu2 dung6 mak6",en:"Abdominal aorta"},
-      {zh:"動脈瘤",jp:"dung6 mak6 lau4",en:"Aneurysm"},
-      {zh:"腹主動脈粥樣硬化",jp:"fuk6 zyu2 dung6 mak6 zuk1 joeng6 ngaang6 faa3",en:"Abdominal aortic atherosclerosis"},
-      {zh:"腹主動脈瘤",jp:"fuk6 zyu2 dung6 mak6 lau4",en:"Abdominal aortic aneurysm (AAA)"},
-      {zh:"腹主動脈瘤篩查",jp:"fuk6 zyu2 dung6 mak6 lau4 sai1 caa4",en:"Abdominal aortic aneurysm screening"},]},
+
     { title:"Cardiac Medications", zh:"心臟科藥物", vocab:[
       {zh:"薄血藥／抗凝血劑",jp:"bok6 hyut3 joek6 / kong3 ning4 hyut3 zai1",en:"Blood thinner / anticoagulant"},
       {zh:"阿士匹靈",jp:"aa3 si6 pei1 ling4",en:"Aspirin"},
@@ -10204,6 +10224,30 @@ const LESSONS_MANDARIN = [
   {
   id:9, zh:"心脏科", en:"Cardiology",
   sections:[
+    { title:"Cardiovascular Anatomy", zh:"心血管解剖", vocab:[
+      {zh:"心脏",jp:"xīn zàng",en:"Heart"},
+      {zh:"心房",jp:"xīn fáng",en:"Atrium"},
+      {zh:"心室",jp:"xīn shì",en:"Ventricle"},
+      {zh:"心瓣膜",jp:"xīn bàn mó",en:"Heart valve"},
+      {zh:"冠状动脉",jp:"guān zhuàng dòng mài",en:"Coronary artery"},
+      {zh:"主动脉",jp:"zhǔ dòng mài",en:"Aorta"},
+      {zh:"血管",jp:"xuè guǎn",en:"Blood vessel"},
+      {zh:"脉搏",jp:"mài bó",en:"Pulse"},
+      {zh:"血液循环",jp:"xuè yè xún huán",en:"Blood circulation"},
+      {zh:"动脉",jp:"dòng mài",en:"Artery"},
+      {zh:"静脉",jp:"jìng mài",en:"Vein"},
+      {zh:"毛细血管",jp:"máo xì xuè guǎn",en:"Capillary"},
+      {zh:"上腔静脉",jp:"shàng qiāng jìng mài",en:"Superior vena cava"},
+      {zh:"下腔静脉",jp:"xià qiāng jìng mài",en:"Inferior vena cava"},
+      {zh:"颈动脉",jp:"jǐng dòng mài",en:"Carotid artery"},
+      {zh:"股动脉",jp:"gǔ dòng mài",en:"Femoral artery"},
+      {zh:"动脉硬化",jp:"dòng mài yìng huà",en:"Arteriosclerosis / Hardening of arteries"},
+      {zh:"血栓",jp:"xuè shuān",en:"Blood clot / Thrombus"},
+      {zh:"腹主动脉",jp:"fù zhǔ dòng mài",en:"Abdominal aorta"},
+      {zh:"动脉瘤",jp:"dòng mài liú",en:"Aneurysm"},
+      {zh:"腹主动脉粥样硬化",jp:"fù zhǔ dòng mài zhōu yàng yìng huà",en:"Abdominal aortic atherosclerosis"},
+      {zh:"腹主动脉瘤",jp:"fù zhǔ dòng mài liú",en:"Abdominal aortic aneurysm (AAA)"},
+      {zh:"腹主动脉瘤筛查",jp:"fù zhǔ dòng mài liú shāi chá",en:"Abdominal aortic aneurysm screening"},]},
     { title:"Cardiac Conditions & Infections", zh:"心脏疾病及感染", vocab:[
       {zh:"冠心病",jp:"guān xīn bìng",en:"Coronary artery disease"},
       {zh:"心肌梗死",jp:"xīn jī gěng sǐ",en:"Heart attack / myocardial infarction"},
@@ -10290,26 +10334,7 @@ const LESSONS_MANDARIN = [
       {zh:"晕倒",jp:"yūn dǎo",en:"Fainting / syncope"},
     ]},
 
-    { title:"Blood Vessels", zh:"血管", vocab:[
-      {zh:"血管",jp:"xuè guǎn",en:"Blood vessel"},
-      {zh:"动脉",jp:"dòng mài",en:"Artery"},
-      {zh:"静脉",jp:"jìng mài",en:"Vein"},
-      {zh:"毛细血管",jp:"máo xì xuè guǎn",en:"Capillary"},
-      {zh:"主动脉",jp:"zhǔ dòng mài",en:"Aorta"},
-      {zh:"上腔静脉",jp:"shàng qiāng jìng mài",en:"Superior vena cava"},
-      {zh:"下腔静脉",jp:"xià qiāng jìng mài",en:"Inferior vena cava"},
-      {zh:"冠状动脉",jp:"guān zhuàng dòng mài",en:"Coronary artery"},
-      {zh:"颈动脉",jp:"jǐng dòng mài",en:"Carotid artery"},
-      {zh:"股动脉",jp:"gǔ dòng mài",en:"Femoral artery"},
-      {zh:"脉搏",jp:"mài bó",en:"Pulse"},
-      {zh:"血液循环",jp:"xuè yè xún huán",en:"Blood circulation"},
-      {zh:"动脉硬化",jp:"dòng mài yìng huà",en:"Arteriosclerosis / Hardening of arteries"},
-      {zh:"血栓",jp:"xuè shuān",en:"Blood clot / Thrombus"},
-      {zh:"腹主动脉",jp:"fù zhǔ dòng mài",en:"Abdominal aorta"},
-      {zh:"动脉瘤",jp:"dòng mài liú",en:"Aneurysm"},
-      {zh:"腹主动脉粥样硬化",jp:"fù zhǔ dòng mài zhōu yàng yìng huà",en:"Abdominal aortic atherosclerosis"},
-      {zh:"腹主动脉瘤",jp:"fù zhǔ dòng mài liú",en:"Abdominal aortic aneurysm (AAA)"},
-      {zh:"腹主动脉瘤筛查",jp:"fù zhǔ dòng mài liú shāi chá",en:"Abdominal aortic aneurysm screening"},]},
+
 
     { title:"Cardiac Medications", zh:"心脏科药物", vocab:[
       {zh:"抗凝血剂",jp:"kàng níng xuè jì",en:"Blood thinner / anticoagulant"},
@@ -14746,7 +14771,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = '1.0133 · May 3, 2026';
+const APP_VERSION = '1.0135 · May 3, 2026';
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -16234,7 +16259,7 @@ function renderVocab() {
             <span class="section-title-en">${sec.title}</span>
             <span class="section-chevron">▼</span>
           </div>
-          ${sec.zh ? `<span class="section-title-zh">${sec.zh}</span>` : ''}
+          ${sec.zh ? `<div class="section-title-zh-row" onclick="event.stopPropagation()"><span class="section-title-zh">${sec.zh}</span><button class="section-zh-play-btn" onclick="event.stopPropagation();speakAzureVoice('${sec.zh}', VOICE_MAP[currentLang]||VOICE_MAP.yue, null)" title="Play section title">▶</button></div>` : ''}
           <div class="section-controls-row" onclick="event.stopPropagation()">
             <button class="section-play-btn" id="secbtn-${si}" onclick="startVocabPlaySection(${si})">▶ 中文</button>
             <button class="section-play-btn" onclick="startSectionDrill(${si},'zh-en')">中→ENG Drill</button>
@@ -19249,7 +19274,7 @@ renderPathwayBanner();
 // ─── PWA SERVICE WORKER ───
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
-  const APP_VER = 'medical-chinese-v133';
+  const APP_VER = 'medical-chinese-v135';
   const swCode = `
     const CACHE = '${APP_VER}';
     self.addEventListener('install', e => {
