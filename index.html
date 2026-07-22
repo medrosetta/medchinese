@@ -4167,15 +4167,27 @@ const LESSONS = [
       {zh:"帳單部門",jp:"zoeng3 daan1 bou6 mun4",en:"Billing department"},
       {zh:"帳單有冇問題？",jp:"zoeng3 daan1 jau5 mou5 man6 tai4?",en:"Any questions about your bill?"},
       {zh:"預先授權",jp:"jyu6 sin1 sau6 kyun4",en:"Prior authorization"},
+      {zh:"醫療賬單",jp:"yi1 liu4 zoeng3 daan1",en:"Medical bill"},
+      {zh:"應付總額",jp:"jing1 fu6 zung2 ngaak6",en:"Total amount due"},
+      {zh:"保險支付金額",jp:"bou2 him2 zi1 fu6 gam1 ngaak6",en:"Amount paid by insurance"},
+      {zh:"病人自付餘額",jp:"beng6 jan4 zi6 fu6 jyu4 ngaak6",en:"Patient balance / amount owed"},
+      {zh:"分期付款計劃",jp:"fan1 kei4 fu6 fun2 gai3 waak6",en:"Payment plan"},
+      {zh:"財務援助",jp:"coi4 mou6 wun4 zo6",en:"Financial assistance"},
+      {zh:"慈善醫療",jp:"ci4 sin6 yi1 liu4",en:"Charity care"},
+      {zh:"對賬單提出異議",jp:"deoi3 zoeng3 daan1 tai4 ceot1 ji6 ji5",en:"Dispute a bill"},
+      {zh:"你嘅賬單可能睇落好複雜",jp:"nei5 ge3 zoeng3 daan1 ho2 nang4 tai2 lok6 hou2 fuk6 zaap6",en:"Your bill may look confusing"},
+      {zh:"我哋可以幫你解釋賬單",jp:"ngo5 dei6 ho2 yi5 bong1 nei5 gaai2 sik1 zoeng3 daan1",en:"We can help you understand your bill"},
     ]},
     { title:"Referrals & Records", zh:"轉介及病歷記錄", vocab:[
       {zh:"轉介",jp:"zyun2 gaai3",en:"Referral"},
+      {zh:"轉介去大醫院",jp:"zyun2 gaai3 heoi3 daai6 yi1 jyun2",en:"Refer to hospital (colloquial)"},
       {zh:"專科醫生",jp:"zyun1 fo1 yi1 saang1",en:"Specialist"},
       {zh:"第二意見",jp:"dai6 ji6 ji3 gin3",en:"Second opinion"},
       {zh:"病歷記錄",jp:"beng6 lik6 gei3 luk6",en:"Medical records"},
       {zh:"申請病歷",jp:"san1 cing2 beng6 lik6",en:"Request your medical records"},
       {zh:"轉介信",jp:"zyun2 gaai3 seon3",en:"Referral letter"},
       {zh:"覆診",jp:"fuk6 can2",en:"Follow-up appointment"},
+      {zh:"跟進",jp:"gan1 zeon3",en:"Follow up (colloquial)"},
       {zh:"緊急護理",jp:"gan2 gap1 wu6 lei5",en:"Urgent care"},
       {zh:"下班後求診",jp:"haa6 baan1 hau6 kau4 can2",en:"After-hours care"},
       {zh:"無需預約",jp:"mou4 seoi1 jyu6 joek3",en:"Walk-in"},
@@ -4206,6 +4218,8 @@ const LESSONS = [
       {zh:"麻醉科醫生",jp:"maa4 zeoi3 fo1 yi1 saang1",en:"Anesthesiologist"},
     ]},
     { title:"Visit Types & Communication Channels", zh:"就診類型及溝通渠道", vocab:[
+      {zh:"睇醫生",jp:"tai2 yi1 saang1",en:"See the doctor (colloquial)"},
+      {zh:"家庭醫生",jp:"gaa1 ting4 yi1 saang1",en:"Family doctor (colloquial)"},
       {zh:"面診",jp:"min6 can2",en:"In-person visit"},
       {zh:"視頻診症",jp:"si6 pin3 can2 zing3",en:"Video visit (telehealth)"},
       {zh:"電話診症",jp:"din6 waa2 can2 zing3",en:"Telephone visit"},
@@ -4258,6 +4272,11 @@ const LESSONS = [
       {zh:"醫療助理會幫你安排",jp:"yi1 liu4 zo6 lei5 wui5 bong1 nei5 on1 paai4",en:"The medical assistant will help you schedule this"},
       {zh:"如有問題請打電話俾診所",jp:"jyu4 jau5 man6 tai4 cing2 daa2 din6 waa2 bei2 can2 so2",en:"Call the clinic if you have any questions"},
       {zh:"你嘅下次預約係……",jp:"nei5 ge3 haa6 ci3 jyu6 joek3 hai6……",en:"Your next appointment is…"},
+      {zh:"掛號",jp:"gwaa3 hou6",en:"Register / check in (colloquial)"},
+      {zh:"排隊等",jp:"paai4 deoi6 dang2",en:"Waiting in line / on waitlist (colloquial)"},
+      {zh:"驗血",jp:"jim6 hyut3",en:"Get a blood test (colloquial)"},
+      {zh:"照X光",jp:"ziu3 X gwong1",en:"Get an X-ray (colloquial)"},
+      {zh:"打針",jp:"daa2 zam1",en:"Get a shot / injection (colloquial)"},
     ]},
     { title:"Medication Management", zh:"藥物管理", vocab:[
       {zh:"覆配處方",jp:"fuk6 pui3 cyu3 fong1",en:"Refill (prescription)"},
@@ -5262,6 +5281,37 @@ const LESSONS = [
       {zh:"便秘時可以用呢隻",jp:"bin6 bei3 si4 ho2 yi5 jung6 ni1 zek3",en:"You can use this when constipated"},
     ]},
 
+    { title:"Bowel Habits", zh:"排便習慣", vocab:[
+      {zh:"大便",jp:"daai6 bin6",en:"Bowel movement (colloquial)"},
+      {zh:"出大便",jp:"ceot1 daai6 bin6",en:"Pass stool (colloquial)"},
+      {zh:"大便唔通",jp:"daai6 bin6 m4 tung1",en:"Constipation (colloquial)"},
+      {zh:"便秘",jp:"bin6 bei3",en:"Constipation (formal)"},
+      {zh:"大便好硬",jp:"daai6 bin6 hou2 ngaang6",en:"Hard stool"},
+      {zh:"大便要用力",jp:"daai6 bin6 jiu3 jung6 lik6",en:"Straining with bowel movement"},
+      {zh:"排便唔清",jp:"paai4 bin6 m4 cing1",en:"Incomplete emptying"},
+      {zh:"肚瀉",jp:"tou5 se3",en:"Diarrhea (colloquial)"},
+      {zh:"腹瀉",jp:"fuk1 se3",en:"Diarrhea (formal)"},
+      {zh:"大便稀爛",jp:"daai6 bin6 hei1 laan6",en:"Loose stool"},
+      {zh:"水樣大便",jp:"seoi2 joeng6 daai6 bin6",en:"Watery stool"},
+      {zh:"大便急",jp:"daai6 bin6 gap1",en:"Urgency"},
+      {zh:"忍唔住大便",jp:"jan2 m4 zyu6 daai6 bin6",en:"Bowel incontinence (colloquial)"},
+      {zh:"大便失禁",jp:"daai6 bin6 sat1 gam3",en:"Bowel incontinence (formal)"},
+      {zh:"大便有黏液",jp:"daai6 bin6 jau5 nim4 jik6",en:"Mucus in stool"},
+      {zh:"大便浮喺水面",jp:"daai6 bin6 fau4 hai2 seoi2 min6",en:"Floating stool (steatorrhea sign)"},
+      {zh:"你幾耐大便一次？",jp:"nei5 gei2 noi6 daai6 bin6 jat1 ci3?",en:"How often do you have a bowel movement?"},
+      {zh:"大便係咩顏色？",jp:"daai6 bin6 hai6 me1 ngaan4 sik1?",en:"What color is your stool?"},
+      {zh:"你最後一次大便係幾時？",jp:"nei5 zeoi3 hau6 jat1 ci3 daai6 bin6 hai6 gei2 si4?",en:"When was your last bowel movement?"},
+      {zh:"你控制到大便嗎？",jp:"nei5 hung3 zai3 dou3 daai6 bin6 maa3?",en:"Can you control your bowels?"},
+      {zh:"你係咪好急要去廁所？",jp:"nei5 hai6 mai6 hou2 gap1 jiu3 heoi3 chi3 so2?",en:"Do you need to rush to the toilet?"},
+      {zh:"多食纖維",jp:"do1 sik6 sim1 wai4",en:"Increase fiber intake"},
+      {zh:"多飲水",jp:"do1 jam2 seoi2",en:"Increase water intake"},
+      {zh:"大便軟化劑",jp:"daai6 bin6 jyun5 faa3 zai1",en:"Stool softener"},
+      {zh:"滲透性瀉藥",jp:"sam3 tau3 sing3 se3 joek6",en:"Osmotic laxative (e.g. MiraLax)"},
+      {zh:"刺激性瀉藥",jp:"chi3 gik1 sing3 se3 joek6",en:"Stimulant laxative (e.g. Senna)"},
+      {zh:"塞劑",jp:"sak1 zai1",en:"Suppository"},
+      {zh:"灌腸",jp:"gun3 coeng4",en:"Enema"},
+      {zh:"益生菌",jp:"jik1 sang1 kwan1",en:"Probiotics"},
+      {zh:"止瀉藥",jp:"zi2 se3 joek6",en:"Anti-diarrheal (e.g. Imodium)"},]},
     { title:"GI Clinical Phrases", zh:"消化科臨床用語", vocab:[
       {zh:"我幫你按下個肚",jp:"ngo5 bong1 nei5 on3 haa5 go3 tou5",en:"Pressing on your abdomen"},
       {zh:"呢度痛唔痛？",jp:"ni1 dou6 tung3 m4 tung3?",en:"Does it hurt here?"},
@@ -9596,15 +9646,27 @@ const LESSONS_MANDARIN = [
       {zh:"账单部门",jp:"zhàng dān bù mén",en:"Billing department"},
       {zh:"账单有问题吗？",jp:"zhàng dān yǒu wèn tí ma?",en:"Any questions about your bill?"},
       {zh:"预先授权",jp:"yù xiān shòu quán",en:"Prior authorization"},
+      {zh:"医疗账单",jp:"yī liáo zhàng dān",en:"Medical bill"},
+      {zh:"应付总额",jp:"yīng fù zǒng é",en:"Total amount due"},
+      {zh:"保险支付金额",jp:"bǎo xiǎn zhī fù jīn é",en:"Amount paid by insurance"},
+      {zh:"患者自付余额",jp:"huàn zhě zì fù yú é",en:"Patient balance / amount owed"},
+      {zh:"分期付款计划",jp:"fēn qī fù kuǎn jì huà",en:"Payment plan"},
+      {zh:"财务援助",jp:"cái wù yuán zhù",en:"Financial assistance"},
+      {zh:"慈善医疗",jp:"cí shàn yī liáo",en:"Charity care"},
+      {zh:"对账单提出异议",jp:"duì zhàng dān tí chū yì yì",en:"Dispute a bill"},
+      {zh:"您的账单可能看起来很复杂",jp:"nín de zhàng dān kě néng kàn qǐ lái hěn fù zá",en:"Your bill may look confusing"},
+      {zh:"我们可以帮您解释账单",jp:"wǒ men kě yǐ bāng nín jiě shì zhàng dān",en:"We can help you understand your bill"},
     ]},
     { title:"Referrals & Records", zh:"转介及病历", vocab:[
       {zh:"转介",jp:"zhuǎn jiè",en:"Referral"},
+      {zh:"转介到大医院",jp:"zhuǎn jiè dào dà yī yuàn",en:"Refer to hospital (colloquial)"},
       {zh:"专科医生",jp:"zhuān kē yī shēng",en:"Specialist"},
       {zh:"第二意见",jp:"dì èr yì jiàn",en:"Second opinion"},
       {zh:"病历记录",jp:"bìng lì jì lù",en:"Medical records"},
       {zh:"申请病历",jp:"shēn qǐng bìng lì",en:"Request your medical records"},
       {zh:"转介信",jp:"zhuǎn jiè xìn",en:"Referral letter"},
       {zh:"复诊",jp:"fù zhěn",en:"Follow-up appointment"},
+      {zh:"跟进",jp:"gēn jìn",en:"Follow up (colloquial)"},
       {zh:"紧急护理",jp:"jǐn jí hù lǐ",en:"Urgent care"},
       {zh:"下班后求诊",jp:"xià bān hòu qiú zhěn",en:"After-hours care"},
       {zh:"无需预约",jp:"wú xū yù yuē",en:"Walk-in"},
@@ -9635,6 +9697,8 @@ const LESSONS_MANDARIN = [
       {zh:"麻醉科医生",jp:"má zuì kē yī shēng",en:"Anesthesiologist"},
     ]},
     { title:"Visit Types & Communication Channels", zh:"就诊类型及沟通渠道", vocab:[
+      {zh:"看医生",jp:"kàn yī shēng",en:"See the doctor (colloquial)"},
+      {zh:"家庭医生",jp:"jiā tíng yī shēng",en:"Family doctor (colloquial)"},
       {zh:"门诊预约",jp:"mén zhěn yù yuē",en:"In-person visit"},
       {zh:"视频问诊",jp:"shì pín wèn zhěn",en:"Video visit (telehealth)"},
       {zh:"电话问诊",jp:"diàn huà wèn zhěn",en:"Telephone visit"},
@@ -9687,6 +9751,11 @@ const LESSONS_MANDARIN = [
       {zh:"医疗助理会帮您安排",jp:"yī liáo zhù lǐ huì bāng nín ān pái",en:"The medical assistant will help you schedule this"},
       {zh:"如有问题请拨打诊所电话",jp:"rú yǒu wèn tí qǐng bō dǎ zhěn suǒ diàn huà",en:"Call the clinic if you have any questions"},
       {zh:"您的下次预约是……",jp:"nín de xià cì yù yuē shì……",en:"Your next appointment is…"},
+      {zh:"挂号",jp:"guà hào",en:"Register / check in (colloquial)"},
+      {zh:"排队等",jp:"pái duì děng",en:"Waiting in line / on waitlist (colloquial)"},
+      {zh:"验血",jp:"yàn xuè",en:"Get a blood test (colloquial)"},
+      {zh:"照X光",jp:"zhào X guāng",en:"Get an X-ray (colloquial)"},
+      {zh:"打针",jp:"dǎ zhēn",en:"Get a shot / injection (colloquial)"},
     ]},
     { title:"Medication Management", zh:"药物管理", vocab:[
       {zh:"续配处方",jp:"xù pèi chǔ fāng",en:"Refill (prescription)"},
@@ -10711,6 +10780,37 @@ const LESSONS_MANDARIN = [
       {zh:"便秘时可以用这个",jp:"biàn mì shí kě yǐ yòng zhè gè",en:"You can use this when constipated"},
     ]},
 
+    { title:"Bowel Habits", zh:"排便习惯", vocab:[
+      {zh:"大便",jp:"dà biàn",en:"Bowel movement (colloquial)"},
+      {zh:"排便",jp:"pái biàn",en:"Pass stool"},
+      {zh:"大便不通",jp:"dà biàn bù tōng",en:"Constipation (colloquial)"},
+      {zh:"便秘",jp:"biàn mì",en:"Constipation (formal)"},
+      {zh:"大便很硬",jp:"dà biàn hěn yìng",en:"Hard stool"},
+      {zh:"排便需要用力",jp:"pái biàn xū yào yòng lì",en:"Straining with bowel movement"},
+      {zh:"排便不畅",jp:"pái biàn bù chàng",en:"Incomplete emptying"},
+      {zh:"拉肚子",jp:"lā dù zi",en:"Diarrhea (colloquial)"},
+      {zh:"腹泻",jp:"fù xiè",en:"Diarrhea (formal)"},
+      {zh:"大便稀烂",jp:"dà biàn xī làn",en:"Loose stool"},
+      {zh:"水样大便",jp:"shuǐ yàng dà biàn",en:"Watery stool"},
+      {zh:"大便急迫",jp:"dà biàn jí pò",en:"Urgency"},
+      {zh:"忍不住大便",jp:"rěn bù zhù dà biàn",en:"Bowel incontinence (colloquial)"},
+      {zh:"大便失禁",jp:"dà biàn shī jìn",en:"Bowel incontinence (formal)"},
+      {zh:"大便有黏液",jp:"dà biàn yǒu nián yè",en:"Mucus in stool"},
+      {zh:"大便浮在水面",jp:"dà biàn fú zài shuǐ miàn",en:"Floating stool (steatorrhea sign)"},
+      {zh:"您多久大便一次？",jp:"nín duō jiǔ dà biàn yī cì?",en:"How often do you have a bowel movement?"},
+      {zh:"大便是什么颜色？",jp:"dà biàn shì shén me yán sè?",en:"What color is your stool?"},
+      {zh:"您上次大便是什么时候？",jp:"nín shàng cì dà biàn shì shén me shí hòu?",en:"When was your last bowel movement?"},
+      {zh:"您能控制大便吗？",jp:"nín néng kòng zhì dà biàn ma?",en:"Can you control your bowels?"},
+      {zh:"您是否很急需要去厕所？",jp:"nín shì fǒu hěn jí xū yào qù cè suǒ?",en:"Do you need to rush to the toilet?"},
+      {zh:"多吃纤维",jp:"duō chī xiān wéi",en:"Increase fiber intake"},
+      {zh:"多喝水",jp:"duō hē shuǐ",en:"Increase water intake"},
+      {zh:"大便软化剂",jp:"dà biàn ruǎn huà jì",en:"Stool softener"},
+      {zh:"渗透性泻药",jp:"shèn tòu xìng xiè yào",en:"Osmotic laxative (e.g. MiraLax)"},
+      {zh:"刺激性泻药",jp:"cì jī xìng xiè yào",en:"Stimulant laxative (e.g. Senna)"},
+      {zh:"栓剂",jp:"shuān jì",en:"Suppository"},
+      {zh:"灌肠",jp:"guàn cháng",en:"Enema"},
+      {zh:"益生菌",jp:"yì shēng jūn",en:"Probiotics"},
+      {zh:"止泻药",jp:"zhǐ xiè yào",en:"Anti-diarrheal (e.g. Imodium)"},]},
     { title:"GI Clinical Phrases", zh:"消化科临床用语", vocab:[
       {zh:"我来按一下您的腹部",jp:"wǒ lái àn yī xià nín de fù bù",en:"Pressing on abdomen"},
       {zh:"这里痛吗？",jp:"zhè lǐ tòng ma?",en:"Hurt here?"},
@@ -14780,7 +14880,7 @@ function toggleFavorite(li, si, vi) {
 // ─── SPEECH ───
 // ── AZURE TTS ──────────────────────────────────────────────────────────────
 // Update AZURE_WORKER_URL after deploying the Cloudflare Worker
-const APP_VERSION = '1.0136 · May 3, 2026';
+const APP_VERSION = '1.0137 · Jul 22, 2026';
 const AZURE_WORKER_URL = 'https://medchinese-tts.medrosettaapp.workers.dev';
 const VOICE_MAP = {
   yue: localStorage.getItem('medchinese_azure_voice_yue') || 'zh-HK-WanLungNeural',
@@ -19270,6 +19370,71 @@ function renderPathwayBanner() {
 }
 
 
+// ===================== VERSION & UPDATE CHECK =====================
+const VERSION_URL = 'https://medchinese.com/version.json';
+
+async function checkForUpdate() {
+  try {
+    const res = await fetch(VERSION_URL + '?t=' + Date.now());
+    if (!res.ok) return;
+    const data = await res.json();
+    if (data.version && data.version !== APP_VERSION) {
+      showUpdateBanner(data.version, data.notes || '');
+    }
+  } catch (e) { /* offline — silent */ }
+}
+
+function showUpdateBanner(newVersion, notes) {
+  const banner = document.createElement('div');
+  banner.id = 'update-banner';
+  banner.style.cssText = [
+    'position:fixed','top:0','left:0','right:0','z-index:9999',
+    'background:#1a6b6b','color:#f5f0e8',
+    'font-family:"DM Mono",monospace','font-size:0.72rem','letter-spacing:0.04em',
+    'padding:10px 16px','display:flex','align-items:center',
+    'justify-content:space-between','gap:12px',
+    'border-bottom:2px solid #4a9e8e',
+    'box-shadow:0 2px 8px rgba(0,0,0,0.35)'
+  ].join(';');
+  const msg = document.createElement('div');
+  msg.textContent = '✦ v' + newVersion + ' available' + (notes ? ' — ' + notes : '') + '. Tap to update.';
+  const btnWrap = document.createElement('div');
+  btnWrap.style.cssText = 'display:flex;gap:8px;flex-shrink:0';
+  const updateBtn = document.createElement('button');
+  updateBtn.textContent = 'UPDATE';
+  updateBtn.style.cssText = [
+    'font-family:"DM Mono",monospace','font-size:0.65rem','letter-spacing:0.08em',
+    'padding:5px 14px','background:#4a9e8e','color:#f5f0e8',
+    'border:none','cursor:pointer','border-radius:2px'
+  ].join(';');
+  updateBtn.onclick = doUpdate;
+  const closeBtn = document.createElement('button');
+  closeBtn.textContent = '✕';
+  closeBtn.style.cssText = [
+    'font-family:"DM Mono",monospace','font-size:0.65rem',
+    'padding:5px 10px','background:transparent','color:#f5f0e8',
+    'border:1px solid rgba(245,240,232,0.4)','cursor:pointer','border-radius:2px'
+  ].join(';');
+  closeBtn.onclick = () => banner.remove();
+  btnWrap.appendChild(updateBtn);
+  btnWrap.appendChild(closeBtn);
+  banner.appendChild(msg);
+  banner.appendChild(btnWrap);
+  document.body.prepend(banner);
+}
+
+function doUpdate() {
+  if ('caches' in window) {
+    caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k)))).then(() => {
+      window.location.href = window.location.href.split('?')[0] + '?v=' + Date.now();
+    });
+  } else {
+    window.location.href = window.location.href.split('?')[0] + '?v=' + Date.now();
+  }
+}
+
+setTimeout(checkForUpdate, 3000);
+
 // ─── INIT ───
 if (synth && synth.getVoices().length === 0) synth.addEventListener('voiceschanged', ()=>{});
 recoverProgressKeys();
@@ -19283,7 +19448,7 @@ renderPathwayBanner();
 // ─── PWA SERVICE WORKER ───
 // Registers an inline service worker for offline support & home screen install
 if ('serviceWorker' in navigator) {
-  const APP_VER = 'medical-chinese-v136';
+  const APP_VER = 'medical-chinese-v137';
   const swCode = `
     const CACHE = '${APP_VER}';
     self.addEventListener('install', e => {
